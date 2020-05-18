@@ -35,15 +35,23 @@ create table doginfo (
     on update cascade on delete cascade
 );
 
+create table hashtag (
+	id integer primary key,
+    name varchar(30) not null
+);
+
 create table hotel (
 	hotelnumber integer primary key,
     userid varchar(200) not null,
+    hashid integer ,
     hotelname varchar(50) not null,
     lacation json not null,
     contact varchar(50) not null,
     info text not null,
     detail json not null,
     constraint FK_user_hotel foreign key(userid) references socialuser(userid)
+    on update cascade on delete cascade,
+    constraint FK_hashtag_hotel foreign key(hashid) references hashtag(id)
     on update cascade on delete cascade
 );
 

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gaenolja.model.dao.HotelDAO">
+	<insert id="insert" parameterType="hotel">
+		insert into hotel
+		values(#{hotelnumber}, #{userid}, #{hashid}, #{hotelname}, #{location}, #{contact}, #{info}, #{detail})
+	</insert>
+
+	<update id="update" parameterType="hotel">
+		update hotel set
+		userid = #{userid},
+		hashid = #{hashid},
+		hotelname = #{hotelname},
+		location = #{location},
+		contact = #{contact},
+		info = #{info},
+		detail = #{detail}
+		where hotelnumber = #{hotelnumer}
+	</update>
+
+	<delete id="delete" parameterType="int">
+		delete
+		from hotel
+		where hotelnumber = #{hotelnumber}
+	</delete>
+</mapper>	
