@@ -11,11 +11,13 @@ import org.apache.commons.codec.binary.Base64;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.gaenolja.model.dao.UserDAO;
-import com.gaenolja.model.service.JwtService;
 import com.gaenolja.model.dto.User;
+import com.gaenolja.model.service.JwtService;
 
+@Service
 public class UserServiceImpl implements UserService{
 	@Autowired
 	private UserDAO dao;
@@ -23,7 +25,7 @@ public class UserServiceImpl implements UserService{
 	@Autowired
 	JwtService service;
 	
-	@Autowired
+	@Override
 	public User search(String userid) {
 		try {
 			User user = dao.search(userid);
@@ -34,7 +36,7 @@ public class UserServiceImpl implements UserService{
 		return null;
 	}
 	
-	@Autowired
+	@Override
 	public void insert(User user) {
 		try {
 			dao.insert(user);
@@ -43,7 +45,7 @@ public class UserServiceImpl implements UserService{
 		}
 	}
 	
-	@Autowired
+	@Override
 	public void update(User user) {
 		try {
 			dao.update(user);
@@ -52,7 +54,7 @@ public class UserServiceImpl implements UserService{
 		}
 	}
 	
-	@Autowired
+	@Override
 	public void delete(String userid) {
 		try {
 			dao.delete(userid);

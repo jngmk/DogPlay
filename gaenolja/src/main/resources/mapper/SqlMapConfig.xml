@@ -7,7 +7,7 @@
 		     사용할  VO 클래스에 대한 별칭 설정 
 		  Java AIP에 대한 별칭 설정 정보 : org.apache.ibits.type.TypeAliasRegistry 
 		  -->
-		<typeAlias type="com.gaenolja.model.dto.Dog"				alias="dog"/>
+		<typeAlias type="com.gaenolja.model.dto.Hotel"				alias="hotel"/>
 		<typeAlias type="com.gaenolja.model.dto.User"				alias="user"/>
 	</typeAliases>
 	<mappers>
