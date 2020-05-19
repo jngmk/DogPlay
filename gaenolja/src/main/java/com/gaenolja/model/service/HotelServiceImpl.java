@@ -4,30 +4,36 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.gaenolja.model.dao.HotelDAO;
+import com.gaenolja.model.dto.Hotel;
 
 @Service
-public class HotelServiceImpl {
+public class HotelServiceImpl implements HotelService {
 	
 	@Autowired
 	HotelDAO dao;
 	
-	public void insert() {
+	@Override
+	public void insert(Hotel hotel) {
 		try {
-			dao.insert();
+			dao.insert(hotel);
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
 	};
-	public void update() {
+	
+	@Override
+	public void update(Hotel hotel) {
 		try {
-			dao.update();
+			dao.update(hotel);
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
 	};
-	public void delete() {
+	
+	@Override
+	public void delete(int hotelnumber) {
 		try {
-			dao.delete();
+			dao.delete(hotelnumber);
 		}catch (Exception e) {
 			e.printStackTrace();
 		}

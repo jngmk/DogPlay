@@ -8,8 +8,10 @@
 		  Java AIP에 대한 별칭 설정 정보 : org.apache.ibits.type.TypeAliasRegistry 
 		  -->
 		<typeAlias type="com.gaenolja.model.dto.Dog"				alias="dog"/>
+		<typeAlias type="com.gaenolja.model.dto.User"				alias="user"/>
 	</typeAliases>
 	<mappers>
-	 <mapper resource="mapper/query.xml"/>
+	 <mapper resource="mapper/Hotel_query.xml"/>
+ 	 <mapper resource="mapper/User_query.xml"/>
 	</mappers>
 </configuration>
