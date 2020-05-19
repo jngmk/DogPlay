@@ -7,6 +7,8 @@ public class Hotel {
 	private String hotelname;
 	private Object location;
 	private Object contact;
+	private String info;
+	private Object detail;
 	public int getHotelnumber() {
 		return hotelnumber;
 	}
@@ -55,6 +57,4 @@ public class Hotel {
 	public void setDetail(Object detail) {
 		this.detail = detail;
 	}
-	private String info;
-	private Object detail;
 }

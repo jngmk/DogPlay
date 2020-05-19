@@ -4,7 +4,6 @@ create database gaenolja;
 use gaenolja;
 alter database gaenolja default character set utf8 collate utf8_general_ci;
 show tables;
-drop database gaenolja;
 
 create table user (
 	userid varchar(200) primary key,

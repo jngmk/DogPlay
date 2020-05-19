@@ -30,8 +30,8 @@ public class UserController {
 	public ResponseEntity<Map<String, Object>> handler(Exception e){
 		return handleFail(e.getMessage(), HttpStatus.OK);
 	}
-	
-	@GetMapping("/api/user/searchbyuserid/{userid}")
+
+	@GetMapping("/api/user/searchbyuserid/{userid}/userid")
 	@ApiOperation("userid로 user 찾기")
 	public ResponseEntity<Map<String, Object>> searchbyuserid(@PathVariable String userid){
 		return handleSuccess(service.search(userid));
