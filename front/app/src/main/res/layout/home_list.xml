@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+<!--    <data>-->
+<!--        <variable-->
+<!--            name="hotel"-->
+<!--            type="com.example.dogplay.Hotel" />-->
+<!--    </data>-->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="360dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:cardCornerRadius="15dp"
+            android:layout_marginTop="15dp"
+            >
+
+            <ImageView
+                android:id="@+id/cardImg"
+                android:scaleType="centerCrop"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                app:srcCompat="@drawable/dog" />
+
+            <TextView
+                android:id="@+id/hotelName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="210dp"
+                android:text=""
+                android:textSize="30dp"
+                />
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                app:srcCompat="@drawable/star"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="260dp"
+                />
+
+            <TextView
+                android:id="@+id/eval"
+                android:layout_width="80dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="258dp"
+                android:text=""
+                android:textSize="20dp" />
+
+            <TextView
+                android:id="@+id/review"
+                android:layout_width="100dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="190dp"
+                android:layout_marginTop="257dp"
+                android:text=""
+                android:textSize="22dp" />
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="295dp"
+                android:src="@drawable/marker"
+                />
+
+            <TextView
+                android:id="@+id/address"
+                android:layout_width="250dp"
+                android:layout_height="20dp"
+                android:layout_marginLeft="35dp"
+                android:layout_marginTop="292dp"
+                android:text=""
+                android:textSize="15dp" />
+
+            <TextView
+                android:id="@+id/price"
+                android:layout_width="200dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="315dp"
+                android:text=""
+                android:textSize="27dp" />
+
+        </androidx.cardview.widget.CardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <ImageView
+        android:id="@+id/mainImg"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:scaleType="centerCrop"
+        app:srcCompat="@drawable/dog"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/hotelName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="30dp"
+        android:padding="0dp"
+        android:text="애견호텔이름"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mainImg"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="15dp"
+        />
+
+    <ImageView
+        android:id="@+id/star"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/hotelName"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="5dp"
+        app:srcCompat="@drawable/star"
+        />
+    <TextView
+        android:id="@+id/eval"
+        android:layout_width="wrap_content"
+        android:layout_height="25dp"
+        android:layout_marginTop="1dp"
+        android:text="4.5/5.0"
+        android:textSize="22dp"
+        android:padding="0dp"
+        app:layout_constraintLeft_toRightOf="@id/star"
+        android:layout_marginLeft="10dp"
+        app:layout_constraintTop_toBottomOf="@id/hotelName"
+        />
+
+    <TextView
+        android:id="@+id/reviewcnt"
+        android:layout_width="wrap_content"
+        android:layout_height="25dp"
+        android:textSize="22dp"
+        android:text="후기 2341건"
+        android:layout_marginTop="1dp"
+        app:layout_constraintLeft_toRightOf="@id/eval"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/hotelName"
+
+        />
+
+    <ImageView
+        android:id="@+id/marker"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        app:srcCompat="@drawable/marker"
+        app:layout_constraintRight_toRightOf="@id/star"
+        app:layout_constraintTop_toBottomOf="@id/star"
+        android:layout_marginTop="10dp"
+        />
+
+    <TextView
+        android:id="@+id/address"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:textSize="18dp"
+        android:text="인천광역시 남구 용현동 102-31"
+        app:layout_constraintTop_toBottomOf="@id/star"
+        android:layout_marginTop="7dp"
+        app:layout_constraintLeft_toLeftOf="@id/eval"
+
+        />
+
+    <View
+        android:id="@+id/hr"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#888888"
+        app:layout_constraintTop_toBottomOf="@id/address"
+        android:layout_marginTop="15dp"
+        />
+
+    <TextView
+        android:id="@+id/checkin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/checkout"
+        app:layout_constraintTop_toBottomOf="@id/hr"
+        android:textSize="30dp"
+        android:layout_marginTop="35dp"
+        android:text="5월 30일(수)"
+
+        />
+
+    <TextView
+        android:id="@+id/checkout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="6월 2일(금)"
+        android:textSize="30dp"
+        app:layout_constraintTop_toBottomOf="@id/hr"
+        android:layout_marginTop="35dp"
+        app:layout_constraintLeft_toRightOf="@id/checkin"
+        app:layout_constraintRight_toRightOf="parent"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="15dp"
+        android:text="체크인"
+        app:layout_constraintBottom_toTopOf="@id/checkin"
+        app:layout_constraintLeft_toLeftOf="@id/checkin"
+        app:layout_constraintRight_toRightOf="@id/checkin"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="15dp"
+        android:text="체크아웃"
+        app:layout_constraintBottom_toTopOf="@id/checkout"
+        app:layout_constraintLeft_toLeftOf="@id/checkout"
+        app:layout_constraintRight_toRightOf="@id/checkout"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#888888"
+        android:layout_marginTop="15dp"
+        app:layout_constraintTop_toBottomOf="@id/checkin"
+        />
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
