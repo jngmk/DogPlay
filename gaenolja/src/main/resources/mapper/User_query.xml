@@ -6,7 +6,7 @@
    		select *
    		from USER
    		where userId=#{userId}
-   </select> 
+   </select>
    
 	<insert id="insert" parameterType="user">
 		insert into user

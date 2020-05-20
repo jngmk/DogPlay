@@ -2,7 +2,7 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/gaenolja?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
     username: root
-    password: 28672567
+    password: ssafy
     driver-class-name: com.mysql.cj.jdbc.Driver
 
 mybatis:

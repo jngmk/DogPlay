@@ -23,7 +23,7 @@ public class HotelController {
 		return handleFail(e.getMessage(), HttpStatus.OK);
 	}
 	
-	@GetMapping("/api/test")
+	@GetMapping("/api/v1/test")
 	@ApiOperation("swagger test")
 		public ResponseEntity<Map<String, Object>> fontfinder(){
 		return handleSuccess("hi");
