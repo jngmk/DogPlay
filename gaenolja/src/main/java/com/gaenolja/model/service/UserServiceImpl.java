@@ -5,6 +5,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.codec.binary.Base64;
@@ -24,6 +25,17 @@ public class UserServiceImpl implements UserService{
 	
 	@Autowired
 	JwtService service;
+	
+	@Override
+	public List<User> searchall() {
+		try {
+			List<User> users = dao.searchall();
+			return users;
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 	
 	@Override
 	public User search(String userid) {

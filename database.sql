@@ -36,7 +36,7 @@ create table doginfo (
 );
 
 create table hashtag (
-	id integer primary key,
+	id integer primary key auto_increment,
     name varchar(30) not null
 );
 
@@ -68,7 +68,7 @@ create table hotelroom (
 );
 
 create table cart (
-	id integer primary key,
+	id integer primary key auto_increment,
     userid varchar(200) not null,
     hotelnumber integer not null,
     roomname varchar(30) not null,

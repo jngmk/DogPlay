@@ -1,5 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gaenolja.model.dao.HotelroomDAO">
+	<select id="search" parameterType="int" resultType="hotelroom">
+		select * from hetolroom where id=#{id}
+	</select>
+	
+	<select id="searchbyhotel" parameterType="int" resultType="hotelroom">
+		select * from hetolroom where hotelnumber=#{hotelnumber}
+	</select>
+	
+	<select id="searchbyhotelid" parameterType="hashmap" resultType="hotelroom">
+		select * from hetolroom where roomname=#{roomname} and hotelnumber=#{hotelnumber}
+	</select>
 
+	<insert id="insert" parameterType="hotelroom">
+		insert into hotelroom(hotelnumber, roomname, price, minsize, maxsize, count)
+		values(#{hotelnumber}, #{roomname}, #{price}, #{minsize}, #{maxsize}, #{count})
+	</insert>
+
+	<update id="update" parameterType="hotelroom">
+		update hotelroom set
+		hotelnumber = #{hotelnumber},
+		roomname = #{roomname},
+		price = #{price},
+		minsize = #{minsize},
+		maxsize = #{maxsize},
+		count = #{count}
+		where id = #{id}
+	</update>
+
+	<delete id="delete" parameterType="int">
+		delete
+		from hotelroom
+		where id = #{id}
+	</delete>
 </mapper>	

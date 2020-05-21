@@ -1,10 +1,12 @@
 package com.gaenolja.model.service;
 
+import java.util.List;
 import java.util.Map;
 
 import com.gaenolja.model.dto.User;
 
 public interface UserService {
+	public List<User> searchall();
 	public User search(String userid);
 	public void insert(User user);
 	public void update(User user);

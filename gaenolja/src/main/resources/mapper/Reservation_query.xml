@@ -1,5 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gaenolja.model.dao.ReservationDAO">
+	<select id="searchall" resultType="reservation">
+		select * from reservation
+	</select>
+	
+	<select id="searchbyuserid" parameterType="string" resultType="reservation">
+		select * from reservation where userid=#{userid}
+	</select>
+	
+	<select id="searchbyhotel" parameterType="int" resultType="reservation">
+		select * from reservation where hotelnumber=#{hotelnumber}
+	</select>
+	
+	<select id="search" parameterType="int" resultType="reservation">
+		select * from reservation where id=#{id}
+	</select>
 
+   	<insert id="insert" parameterType="reservateion">
+		insert into reservation(hotelnumber, userid, dog, roomname, startdate, finishdate, paid, visit)
+		values(#{hotelnumber}, #{userid}, #{dog}, #{roomname}, #{startdate}, #{finishdate}, #{paid}, #{viist})
+	</insert>
+
+	<update id="update" parameterType="reservation">
+		update reservation set
+		hotelnumber = #{hotelnumber},
+		userid = #{userid},
+		dog = #{dog},
+		roomname = #{roomname},
+		startdate = #{startdate},
+		finishdate = #{finishdate},
+		paid = #{paid},
+		visit = #{visit}
+		where id = #{id}
+	</update>
+
+	<delete id="delete" parameterType="int">
+		delete
+		from reservation
+		where id = #{id}
+	</delete>
 </mapper>
