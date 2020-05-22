@@ -26,5 +26,11 @@ class HotelDetail:AppCompatActivity(){
             var imgId = this.getResources().getIdentifier(img,"drawable",this.getPackageName())
             mainImg.setImageResource(imgId)
         }
+        val layoutManager = LinearLayoutManager(this)
+        layoutManager.orientation = LinearLayoutManager.VERTICAL
+        roomList.layoutManager = layoutManager
+
+        val adapter = RoomAdapter(this,Supplier.rooms)
+        roomList.adapter = adapter
     }
 }

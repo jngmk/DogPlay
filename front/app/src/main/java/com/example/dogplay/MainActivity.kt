@@ -1,32 +1,75 @@
 package com.example.dogplay
 
+import android.content.Context
+import android.graphics.Rect
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.view.ViewTreeObserver
+import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import android.widget.SearchView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.dogplay.databinding.HomeListBinding
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.view.*
 
-class MainActivity : AppCompatActivity() {
-
+class MainActivity : AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        Toast.makeText(this,"hi i'm", Toast.LENGTH_LONG).show()
         val layoutManager = LinearLayoutManager(this)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
-        recyclerView.layoutManager = layoutManager
+        hotelList.layoutManager = layoutManager
+
+        val layoutManager2 = LinearLayoutManager(this)
+        layoutManager2.orientation = LinearLayoutManager.HORIZONTAL
+        dogList.layoutManager = layoutManager2
+
+//        keyboardListener(MainActivity(), )
+        searchBar.setOnFocusChangeListener(object :View.OnFocusChangeListener{
+            override fun onFocusChange(v: View?, hasFocus: Boolean) {
+                if (hasFocus){
+                    footer.setVisibility(View.GONE)
+                    Log.d("searchBar", "포커스 얻음")
+                } else {
+                    footer.visibility = View.VISIBLE
+                    Log.d("searchBar","포커스 사라짐")
+                }
+            }
+        })
+
         toolbar.setOnClickListener{
-            search_bar.clearFocus()
+            searchBar.clearFocus()
         }
 
         val adapter = HotelAdapter(this, Supplier.hotels)
-        recyclerView.adapter = adapter
+        hotelList.adapter = adapter
+
+        val adapter2 = DogAdapter(this, Supplier.dogs)
+        dogList.adapter = adapter2
     }
+    fun keyboardListener(activity: MainActivity,listener: (visible:Boolean, contentHeight:Int)->Unit){
+        val activityRootView = (activity.findViewById(android.R.id.content) as ViewGroup).getChildAt(0)
+        val viewTreeObserver = activityRootView.viewTreeObserver
+        viewTreeObserver.addOnGlobalLayoutListener(object:ViewTreeObserver.OnGlobalLayoutListener{
+            private val MINIMUM_KEYBOARD_SIZE_DP = 100
+            private val r = Rect()
+
+            override fun onGlobalLayout() {
+                val minimumKeyboardHeight = MINIMUM_KEYBOARD_SIZE_DP
+                activityRootView.getWindowVisibleDisplayFrame(r)
+                val contentHeight = r.bottom - r.top
+                val heightDiff = activityRootView.rootView.height - contentHeight
+                val isVisible = heightDiff >= minimumKeyboardHeight
+                listener(isVisible,contentHeight)
+            }
+        })
+    }
+
 }
