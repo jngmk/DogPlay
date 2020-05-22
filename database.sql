@@ -111,7 +111,7 @@ create table hotelpicture (
 desc hotel;
 
 create table review (
--- 다중 primary key 직접 지정 
+	id integer primary key auto_increment,
 	hotelnumber integer,
     userid varchar(200),
     visitid integer,
@@ -126,10 +126,9 @@ create table review (
 );
 
 create table response (
--- 다중 primary key 직접 지정 
+	id integer primary key auto_increment,
 	hotelnumber integer,
     userid varchar(200),
-    visitid integer,
     heart integer not null,
     content varchar(300),
 	constraint FK_hotel_response foreign key(hotelnumber) references hotel(hotelnumber)
