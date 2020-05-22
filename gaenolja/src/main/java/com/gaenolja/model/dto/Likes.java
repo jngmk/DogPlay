@@ -1,6 +1,6 @@
 package com.gaenolja.model.dto;
 
-public class Like {
+public class Likes {
 	private int hotelnumber;
 	private String userid;
 	public int getHotelnumber() {

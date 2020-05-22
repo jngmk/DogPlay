@@ -2,4 +2,47 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gaenolja.model.dao.NotificationDAO">
 
+	<select id="searchall" resultType="notification">
+   		select * from notification
+    </select>
+
+	<select id="searchbyhotelnumber" parameterType="int" resultType="notification">
+   		select *
+   		from notification
+   		where hotelnumber = #{hotelnumber}
+    </select>
+
+	<select id="searchbyuserid" parameterType="String" resultType="notification">
+   		select *
+   		from notification
+   		where userid = #{userid}
+    </select>
+    
+   	<select id="searchbytarget" parameterType="String" resultType="notification">
+   		select *
+   		from notification
+   		where target = #{target}
+    </select>
+    
+	<insert id="insert" parameterType="notification">
+		insert into notification(userid, target, hotelnumber, subjects, content)
+		values(#{userid}, #{target}, #{hotelnumber}, #{subjects}, #{content})
+	</insert>
+	
+	<update id="update" parameterType="notification">
+		update notification set
+		userid = #{userid},
+		target = #{target},
+		hotelnumber = #{hotelnumber},
+		subjects = #{subjects},
+		content = #{content}
+		where id = #{id}
+	</update>
+
+	<delete id="delete" parameterType="int">
+		delete
+		from notification
+		where id = #{id}
+	</delete>
+	
 </mapper>

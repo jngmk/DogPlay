@@ -2,4 +2,51 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gaenolja.model.dao.ReviewDAO">
 
+	<select id="searchall" resultType="review">
+   		select * from review
+    </select>
+
+	<select id="searchbyhotelnumber" parameterType="int" resultType="review">
+   		select *
+   		from review
+   		where hotelnumber= #{hotelnumber}
+    </select>
+
+	<select id="searchbyuserid" parameterType="String" resultType="review">
+   		select *
+   		from review
+   		where userid = #{userid}
+    </select>
+    
+   	<select id="searchbystar" parameterType="float" resultType="review">
+   		select *
+   		from review
+   		where star = #{star}
+    </select>
+    
+   	<select id="search" parameterType="int" resultType="review">
+   		select *
+   		from review
+   		where id = #{id}
+    </select>
+       
+	<insert id="insert" parameterType="review">
+		insert into review(hotelnumber, userid, visitid, star, content)
+		values(#{hotelnumber}, #{userid}, #{visitid}, #{star}, #{content})
+	</insert>
+	
+	<update id="update" parameterType="review">
+		update review set
+		visitid = #{visitid},
+		star = #{star},
+		content = #{content}
+		where id = #{id}
+	</update>
+
+	<delete id="delete" parameterType="int">
+		delete
+		from review
+		where id = #{id}
+	</delete>
+	
 </mapper>

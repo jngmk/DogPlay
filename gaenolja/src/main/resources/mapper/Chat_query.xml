@@ -2,4 +2,43 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gaenolja.model.dao.ChatDAO">
 
+	<select id="searchall" resultType="chat">
+		select * from chat
+	</select>
+
+	<select id="searchbyreceive" parameterType="String" resultType="chat">
+   		select *
+   		from chat
+   		where receive = #{receive}
+    </select>
+
+	<select id="searchbysend" parameterType="String" resultType="chat">
+   		select *
+   		from chat
+   		where send = #{send}
+    </select>
+    
+   	<select id="searchbytwo" parameterType="hashmap" resultType="chat">
+   		select *
+   		from chat
+   		where receive = #{receive} AND send = #{send}
+    </select>
+    
+   	<select id="search" parameterType="int" resultType="chat">
+   		select *
+   		from chat
+   		where id = #{id}
+    </select>
+   
+	<insert id="insert" parameterType="chat">
+		insert into chat(receive, send, picture, message)
+		values(#{receive}, #{send}, #{picture}, #{message})
+	</insert>
+
+	<delete id="delete" parameterType="int">
+		delete
+		from chat
+		where id = #{id}
+	</delete>
+	
 </mapper>

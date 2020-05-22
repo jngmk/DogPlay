@@ -2,4 +2,45 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gaenolja.model.dao.DoginfoDAO">
 
+	<select id="searchall" resultType="doginfo">
+   		select *
+   		from doginfo
+    </select>	
+
+	<select id="searchbyuserid" parameterType="String" resultType="doginfo">
+   		select *
+   		from doginfo
+   		where userid = #{userid}
+    </select>
+
+	<select id="search" parameterType="int" resultType="doginfo">
+   		select *
+   		from doginfo
+   		where id = #{id}
+    </select>
+   
+	<insert id="insert" parameterType="doginfo">
+		insert into doginfo(userid, dogname, speciesId, size, age, gender, picture, detail)
+		values(#{userid}, #{dogname}, #{speciesId}, #{size}, #{age}, #{gender}, #{picture}, #{detail})
+	</insert>
+
+	<update id="update" parameterType="doginfo">
+		update doginfo set
+		userid = #{userid},
+		dogname = #{dogname},
+		speciesId = #{speciesId},
+		size = #{size},
+		age = #{age},
+		gender = #{gender},
+		picture = #{picture},
+		detail = #{detail}
+		where id = #{id}
+	</update>
+
+	<delete id="delete" parameterType="int">
+		delete
+		from doginfo
+		where id = #{id}
+	</delete>
+
 </mapper>	

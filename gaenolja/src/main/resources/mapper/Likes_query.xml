@@ -2,4 +2,31 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gaenolja.model.dao.LikesDAO">
 
+	<select id="searchall" resultType="likes">
+		select * from likes
+	</select>
+
+	<select id="searchbyuserid" parameterType="String" resultType="likes">
+   		select *
+   		from likes
+   		where userid = #{userid}
+    </select>
+    
+	<select id="searchbyhotelnumber" parameterType="int" resultType="likes">
+   		select *
+   		from likes
+   		where hotelnumber = #{hotelnumber}
+    </select>
+   
+	<insert id="insert" parameterType="likes">
+		insert into likes
+		values(#{hotelnumber}, #{userid})
+	</insert>
+
+	<delete id="delete" parameterType="likes">
+		delete
+		from likes
+		where userid = #{userid} AND hotelnumber = #{hotelnumber}
+	</delete>
+	
 </mapper>

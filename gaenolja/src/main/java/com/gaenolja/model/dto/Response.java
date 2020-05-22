@@ -1,11 +1,17 @@
 package com.gaenolja.model.dto;
 
 public class Response { 	
+	private int id;
 	private int hotelnumber;
 	private String userid;
-	private int visitid;
 	private int heart;
 	private String content;
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	public int getHotelnumber() {
 		return hotelnumber;
 	}
@@ -17,12 +23,6 @@ public class Response {
 	}
 	public void setUserid(String userid) {
 		this.userid = userid;
-	}
-	public int getVisitid() {
-		return visitid;
-	}
-	public void setVisitid(int visitid) {
-		this.visitid = visitid;
 	}
 	public int getHeart() {
 		return heart;
@@ -36,5 +36,5 @@ public class Response {
 	public void setContent(String content) {
 		this.content = content;
 	}
-		
+	
 }
