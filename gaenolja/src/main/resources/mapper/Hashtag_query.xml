@@ -5,7 +5,7 @@
 		select * from hashtag
 	</select>
 
-	<select id="search" parameterType="int" resultType="hashtag">
+	<select id="search" parameterType="string" resultType="hashtag">
 		select * from hashtag where id=#{id}
 	</select>
 
@@ -20,7 +20,7 @@
 		where id = #{id}
 	</update>
 
-	<delete id="delete" parameterType="int">
+	<delete id="delete" parameterType="string">
 		delete
 		from hashtag
 		where id = #{id}

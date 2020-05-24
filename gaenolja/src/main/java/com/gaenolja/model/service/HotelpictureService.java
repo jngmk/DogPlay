@@ -1,17 +1,13 @@
-package com.gaenolja.model.dao;
+package com.gaenolja.model.service;
 
-import java.util.HashMap;
 import java.util.List;
-
-import org.apache.ibatis.annotations.Mapper;
 
 import com.gaenolja.model.dto.Hotelpicture;
 
-@Mapper
-public interface HotelpictureDAO {
+public interface HotelpictureService {
 	public List<Hotelpicture> searchall();
 	public List<Hotelpicture> searchbyhotel(int hotelnumber);
-	public List<Hotelpicture> searchbyhotelandname(HashMap<Object, Object> map);
+	public List<Hotelpicture> searchbyhotelandname(int hotelnumber, String name);
 	public Hotelpicture search(int id);
 	public void insert(Hotelpicture hotelpicture);
 	public void update(Hotelpicture hotelpicture);

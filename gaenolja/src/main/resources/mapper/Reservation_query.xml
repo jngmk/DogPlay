@@ -13,13 +13,21 @@
 		select * from reservation where hotelnumber=#{hotelnumber}
 	</select>
 	
+	<select id="searchbyhotelandroom" parameterType="hashmap" resultType="reservation">
+		select * from reservation where hotelnumber=#{hotelnumber} and roomname=#{roomname}
+	</select>
+	
+	<select id="countbyhotelandroom" parameterType="hashmap" resultType="int">
+		select count(*) from reservation where hotelnumber=#{hotelnumber} and roomname=#{roomname}
+	</select>
+	
 	<select id="search" parameterType="int" resultType="reservation">
 		select * from reservation where id=#{id}
 	</select>
 
    	<insert id="insert" parameterType="reservateion">
 		insert into reservation(hotelnumber, userid, dog, roomname, startdate, finishdate, paid, visit)
-		values(#{hotelnumber}, #{userid}, #{dog}, #{roomname}, #{startdate}, #{finishdate}, #{paid}, #{viist})
+		values(#{hotelnumber}, #{userid}, #{dog}, #{roomname}, #{startdate}, #{finishdate}, #{paid}, #{visit})
 	</insert>
 
 	<update id="update" parameterType="reservation">

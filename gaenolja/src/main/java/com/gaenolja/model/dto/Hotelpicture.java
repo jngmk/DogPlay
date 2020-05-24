@@ -1,6 +1,6 @@
 package com.gaenolja.model.dto;
 
-public class HotelPicture {    
+public class Hotelpicture {    
     private int id;
 	private int hotelnumber;
 	private String name;

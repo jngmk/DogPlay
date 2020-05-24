@@ -16,66 +16,58 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.gaenolja.model.dto.User;
-import com.gaenolja.model.service.UserService;
+import com.gaenolja.model.dto.Cart;
+import com.gaenolja.model.service.CartService;
 
 import io.swagger.annotations.ApiOperation;
 
 @CrossOrigin(origins = {"*"}, maxAge=6000)
 @RestController
-public class UserController {
-	
+public class CartController {
 	@Autowired
-	private UserService service;
+	private CartService service;
 	
 	@ExceptionHandler 
 	public ResponseEntity<Map<String, Object>> handler(Exception e){
 		return handleFail(e.getMessage(), HttpStatus.OK);
 	}
 	
-	@GetMapping("/api/v1/user/searchall")
-	@ApiOperation("모든 user 찾기")
+	@GetMapping("/api/v1/cart/searchall")
+	@ApiOperation("cart 나타내기")
 	public ResponseEntity<Map<String, Object>> searchall(){
 		return handleSuccess(service.searchall());
 	}
 
-	@GetMapping("/api/v1/user/searchbyuserid/{userid}/userid")
-	@ApiOperation("userid로 user 찾기")
-	public ResponseEntity<Map<String, Object>> searchbyuserid(@PathVariable String userid){
-		return handleSuccess(service.search(userid));
+	@GetMapping("/api/v1/cart/search/{id}")
+	@ApiOperation("id로 cart 나타내기")
+	public ResponseEntity<Map<String, Object>> search(@PathVariable int id){
+		return handleSuccess(service.search(id));
 	}
 	
-	@PostMapping("/api/v1/user/signup")
-	@ApiOperation("회원가입")
-	public ResponseEntity<Map<String, Object>> signup(@RequestBody User user){
-		service.insert(user);
+	@GetMapping("/api/v1/cart/search/{userid}/userid")
+	@ApiOperation("userid로 cart 나타내기")
+	public ResponseEntity<Map<String, Object>> searchbyuser(@PathVariable String userid){
+		return handleSuccess(service.searchbyuser(userid));
+	}
+	
+	@PostMapping("/api/v1/cart/insert")
+	@ApiOperation("insert cart")
+	public ResponseEntity<Map<String, Object>> insert(@RequestBody Cart cart){
+		service.insert(cart);
 		return handleSuccess("success");
 	}
-	
-	@PostMapping("/api/v1/user/googlelogin")
-	@ApiOperation("google 로그인")
-	public ResponseEntity<Map<String, Object>> googleLogin(@RequestBody String idToken) {
-		return handleSuccess(service.googleLogin(idToken));
-	}
-	
-	@PostMapping("/api/v1/user/naverlogin")
-	@ApiOperation("naver 로그인")
-	public ResponseEntity<Map<String, Object>> naverLogin(@RequestBody String token) {
-		token = token.substring(0, token.length()-1);
-		return handleSuccess(service.naverLogin(token));
-	}
-	
-	@PutMapping("/api/v1/user/update")
-	@ApiOperation("update user")
-	public ResponseEntity<Map<String, Object>> update(@RequestBody User user){
-		service.update(user);
+		
+	@PutMapping("/api/v1/cart/update")
+	@ApiOperation("update cart")
+	public ResponseEntity<Map<String, Object>> update(@RequestBody Cart cart){
+		service.update(cart);
 		return handleSuccess("success");
 	}	
 
-	@DeleteMapping("/api/v1/user/delete/{userid}")
-	@ApiOperation("delete user")
-	public ResponseEntity<Map<String, Object>> delete(@PathVariable String userid){
-		service.delete(userid);
+	@DeleteMapping("/api/v1/cart/delete/{id}")
+	@ApiOperation("delete cart")
+	public ResponseEntity<Map<String, Object>> delete(@PathVariable int id){
+		service.delete(id);
 		return handleSuccess("success");
 	}
 	

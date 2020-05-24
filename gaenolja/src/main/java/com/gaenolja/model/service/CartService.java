@@ -1,13 +1,10 @@
-package com.gaenolja.model.dao;
+package com.gaenolja.model.service;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Mapper;
-
 import com.gaenolja.model.dto.Cart;
 
-@Mapper
-public interface CartDAO {
+public interface CartService {
 	public List<Cart> searchall();
 	public Cart search(int id);
 	public Cart searchbyuser(String userid);

@@ -1,13 +1,10 @@
-package com.gaenolja.model.dao;
+package com.gaenolja.model.service;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Mapper;
-
 import com.gaenolja.model.dto.Hashtag;
 
-@Mapper
-public interface HashtagDAO {
+public interface HashtagService {
 	public List<Hashtag> searchall();
 	public Hashtag search(String id);
 	public void insert(Hashtag hashtag);

@@ -3,30 +3,78 @@ package com.gaenolja.controller;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.gaenolja.model.dto.Hotel;
+import com.gaenolja.model.service.HotelService;
 
 import io.swagger.annotations.ApiOperation;
 
 @CrossOrigin(origins = {"*"}, maxAge=6000)
 @RestController
 public class HotelController {
+	@Autowired
+	private HotelService service;
 	
 	@ExceptionHandler 
 	public ResponseEntity<Map<String, Object>> handler(Exception e){
 		return handleFail(e.getMessage(), HttpStatus.OK);
 	}
 	
-	@GetMapping("/api/v1/test")
-	@ApiOperation("swagger test")
-		public ResponseEntity<Map<String, Object>> fontfinder(){
-		return handleSuccess("hi");
+	@GetMapping("/api/v1/hotel/searchall")
+	@ApiOperation("hotel")
+	public ResponseEntity<Map<String, Object>> searchall(){
+		return handleSuccess(service.searchall());
+	}
+	
+	@GetMapping("/api/v1/hotel/search/{hotelnumber}")
+	@ApiOperation("id로 hotel 나타내기")
+	public ResponseEntity<Map<String, Object>> search(@PathVariable int hotelnumber){
+		return handleSuccess(service.search(hotelnumber));
+	}
+	
+	@GetMapping("/api/v1/hotel/search/{hotelname}")
+	@ApiOperation("name으로 hotel 찾기")
+	public ResponseEntity<Map<String, Object>> searchbyname(@PathVariable String hotelname){
+		return handleSuccess(service.searchbyname(hotelname));
+	}
+	
+	@GetMapping("/api/v1/hotel/search/{hashtag}")
+	@ApiOperation("hashtag로 hotel 찾기")
+	public ResponseEntity<Map<String, Object>> searchbyhashtag(@PathVariable String hashtag){
+		return handleSuccess(service.searchbyhashtag(hashtag));
+	}
+	
+	@PostMapping("/api/v1/hotel/insert")
+	@ApiOperation("insert hotel")
+	public ResponseEntity<Map<String, Object>> insert(@RequestBody Hotel hotel){
+		service.insert(hotel);
+		return handleSuccess("success");
+	}
+		
+	@PutMapping("/api/v1/hotel/update")
+	@ApiOperation("update hotel")
+	public ResponseEntity<Map<String, Object>> update(@RequestBody Hotel hotel){
+		service.update(hotel);
+		return handleSuccess("success");
+	}	
+
+	@DeleteMapping("/api/v1/hotel/delete/{hotelnumber}")
+	@ApiOperation("delete hotel")
+	public ResponseEntity<Map<String, Object>> delete(@PathVariable int hotelnumber){
+		service.delete(hotelnumber);
+		return handleSuccess("success");
 	}
 	
 	public ResponseEntity<Map<String, Object>> handleSuccess(Object data){

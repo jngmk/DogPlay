@@ -16,66 +16,64 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.gaenolja.model.dto.User;
-import com.gaenolja.model.service.UserService;
+import com.gaenolja.model.dto.Hotelpicture;
+import com.gaenolja.model.service.HotelpictureService;
 
 import io.swagger.annotations.ApiOperation;
 
 @CrossOrigin(origins = {"*"}, maxAge=6000)
 @RestController
-public class UserController {
-	
+public class HotelpictureController {
 	@Autowired
-	private UserService service;
+	private HotelpictureService service;
 	
 	@ExceptionHandler 
 	public ResponseEntity<Map<String, Object>> handler(Exception e){
 		return handleFail(e.getMessage(), HttpStatus.OK);
 	}
 	
-	@GetMapping("/api/v1/user/searchall")
-	@ApiOperation("모든 user 찾기")
+	@GetMapping("/api/v1/hotelpicture/searchall")
+	@ApiOperation("모든 호텔 사진")
 	public ResponseEntity<Map<String, Object>> searchall(){
 		return handleSuccess(service.searchall());
 	}
-
-	@GetMapping("/api/v1/user/searchbyuserid/{userid}/userid")
-	@ApiOperation("userid로 user 찾기")
-	public ResponseEntity<Map<String, Object>> searchbyuserid(@PathVariable String userid){
-		return handleSuccess(service.search(userid));
+	
+	@GetMapping("/api/v1/hotelpicture/search/{id}")
+	@ApiOperation("id로 hotelpicture 나타내기")
+	public ResponseEntity<Map<String, Object>> search(@PathVariable int id){
+		return handleSuccess(service.search(id));
 	}
 	
-	@PostMapping("/api/v1/user/signup")
-	@ApiOperation("회원가입")
-	public ResponseEntity<Map<String, Object>> signup(@RequestBody User user){
-		service.insert(user);
+	@GetMapping("/api/v1/hotelpicture/searchbyhotel/{hotelnumber}")
+	@ApiOperation("호텔별 사진 나타내기")
+	public ResponseEntity<Map<String, Object>> searchbythotel(@PathVariable int hotelnumber){
+		return handleSuccess(service.searchbyhotel(hotelnumber));
+	}
+	
+	@GetMapping("/api/v1/hotelpicture/searchbyhotel/{hotelnumber}/name/{name}")
+	@ApiOperation("호텔 및 이름으로 사진 찾기")
+	public ResponseEntity<Map<String, Object>> search(@PathVariable int hotelnumber,@PathVariable String name){
+		return handleSuccess(service.searchbyhotelandname(hotelnumber, name));
+	}
+		
+	@PostMapping("/api/v1/hotelpicture/insert")
+	@ApiOperation("insert hashtag")
+	public ResponseEntity<Map<String, Object>> insert(@RequestBody Hotelpicture hotelpicture){
+		service.insert(hotelpicture);
 		return handleSuccess("success");
 	}
-	
-	@PostMapping("/api/v1/user/googlelogin")
-	@ApiOperation("google 로그인")
-	public ResponseEntity<Map<String, Object>> googleLogin(@RequestBody String idToken) {
-		return handleSuccess(service.googleLogin(idToken));
-	}
-	
-	@PostMapping("/api/v1/user/naverlogin")
-	@ApiOperation("naver 로그인")
-	public ResponseEntity<Map<String, Object>> naverLogin(@RequestBody String token) {
-		token = token.substring(0, token.length()-1);
-		return handleSuccess(service.naverLogin(token));
-	}
-	
-	@PutMapping("/api/v1/user/update")
-	@ApiOperation("update user")
-	public ResponseEntity<Map<String, Object>> update(@RequestBody User user){
-		service.update(user);
+		
+	@PutMapping("/api/v1/hotelpicture/update")
+	@ApiOperation("update hashtag")
+	public ResponseEntity<Map<String, Object>> update(@RequestBody Hotelpicture hotelpicture){
+		service.update(hotelpicture);
 		return handleSuccess("success");
 	}	
 
-	@DeleteMapping("/api/v1/user/delete/{userid}")
-	@ApiOperation("delete user")
-	public ResponseEntity<Map<String, Object>> delete(@PathVariable String userid){
-		service.delete(userid);
+	@DeleteMapping("/api/v1/hotelpicture/delete/{id}")
+	@ApiOperation("delete hashtag")
+	public ResponseEntity<Map<String, Object>> delete(@PathVariable int id){
+		service.delete(id);
 		return handleSuccess("success");
 	}
 	

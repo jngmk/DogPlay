@@ -16,66 +16,53 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.gaenolja.model.dto.User;
-import com.gaenolja.model.service.UserService;
+import com.gaenolja.model.dto.Species;
+import com.gaenolja.model.service.SpeciesService;
 
 import io.swagger.annotations.ApiOperation;
 
 @CrossOrigin(origins = {"*"}, maxAge=6000)
 @RestController
-public class UserController {
+public class SpeciesController {
 	
 	@Autowired
-	private UserService service;
+	private SpeciesService service;
 	
 	@ExceptionHandler 
 	public ResponseEntity<Map<String, Object>> handler(Exception e){
 		return handleFail(e.getMessage(), HttpStatus.OK);
 	}
 	
-	@GetMapping("/api/v1/user/searchall")
-	@ApiOperation("모든 user 찾기")
+	@GetMapping("/api/v1/species/search/{id}")
+	@ApiOperation("id로 종 찾기")
+	public ResponseEntity<Map<String, Object>> search(@PathVariable int id){
+		return handleSuccess(service.search(id));
+	}
+	
+	@GetMapping("/api/v1/species/searchall")
+	@ApiOperation("모든 종 나타내기")
 	public ResponseEntity<Map<String, Object>> searchall(){
 		return handleSuccess(service.searchall());
 	}
-
-	@GetMapping("/api/v1/user/searchbyuserid/{userid}/userid")
-	@ApiOperation("userid로 user 찾기")
-	public ResponseEntity<Map<String, Object>> searchbyuserid(@PathVariable String userid){
-		return handleSuccess(service.search(userid));
-	}
 	
-	@PostMapping("/api/v1/user/signup")
-	@ApiOperation("회원가입")
-	public ResponseEntity<Map<String, Object>> signup(@RequestBody User user){
-		service.insert(user);
+	@PostMapping("/api/v1/species/insert")
+	@ApiOperation("insert species")
+	public ResponseEntity<Map<String, Object>> insert(@RequestBody Species species){
+		service.insert(species);
 		return handleSuccess("success");
 	}
-	
-	@PostMapping("/api/v1/user/googlelogin")
-	@ApiOperation("google 로그인")
-	public ResponseEntity<Map<String, Object>> googleLogin(@RequestBody String idToken) {
-		return handleSuccess(service.googleLogin(idToken));
-	}
-	
-	@PostMapping("/api/v1/user/naverlogin")
-	@ApiOperation("naver 로그인")
-	public ResponseEntity<Map<String, Object>> naverLogin(@RequestBody String token) {
-		token = token.substring(0, token.length()-1);
-		return handleSuccess(service.naverLogin(token));
-	}
-	
-	@PutMapping("/api/v1/user/update")
-	@ApiOperation("update user")
-	public ResponseEntity<Map<String, Object>> update(@RequestBody User user){
-		service.update(user);
+		
+	@PutMapping("/api/v1/species/update")
+	@ApiOperation("update species")
+	public ResponseEntity<Map<String, Object>> update(@RequestBody Species species){
+		service.update(species);
 		return handleSuccess("success");
 	}	
 
-	@DeleteMapping("/api/v1/user/delete/{userid}")
-	@ApiOperation("delete user")
-	public ResponseEntity<Map<String, Object>> delete(@PathVariable String userid){
-		service.delete(userid);
+	@DeleteMapping("/api/v1/species/delete/{id}")
+	@ApiOperation("delete species")
+	public ResponseEntity<Map<String, Object>> delete(@PathVariable int id){
+		service.delete(id);
 		return handleSuccess("success");
 	}
 	

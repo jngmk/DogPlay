@@ -9,7 +9,7 @@
 		select * from hotelpicture where hotelnumber=#{hotelnumber}
 	</select>
 	
-	<select id="searchbyhotelname" parameterType="hashmap" resultType="hotelpicture">
+	<select id="searchbyhotelandname" parameterType="hashmap" resultType="hotelpicture">
 		select * from hotelpicture where hotelnumber=#{hotelnumber} and name=#{name}
 	</select>
 	
