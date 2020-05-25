@@ -1,6 +1,7 @@
 package com.example.dogplay
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Rect
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -53,6 +54,11 @@ class MainActivity : AppCompatActivity(){
 
         val adapter2 = DogAdapter(this, Supplier.dogs)
         dogList.adapter = adapter2
+
+        curdate.setOnClickListener{
+            val intent = Intent(this, CalendarView::class.java)
+            startActivity(intent)
+        }
     }
     fun keyboardListener(activity: MainActivity,listener: (visible:Boolean, contentHeight:Int)->Unit){
         val activityRootView = (activity.findViewById(android.R.id.content) as ViewGroup).getChildAt(0)
