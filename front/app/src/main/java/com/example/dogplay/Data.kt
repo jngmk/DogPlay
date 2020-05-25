@@ -3,6 +3,7 @@ package com.example.dogplay
 data class Hotel(var title: String, var img:String, var eval:String, var review:String, var address:String, var price:String)
 data class Dog(var img:String)
 data class Room(var title:String)
+data class Info(var title:String, var sub:String)
 
 object Supplier{
 
@@ -21,6 +22,14 @@ object Supplier{
         Room("좋은 방"),
         Room("나쁜 방"),
         Room("이상한 방")
+    )
+
+    var infos = listOf<Info>(
+        Info("주의해야할 점!", "잘 사용해주시고 \n또 잘 사용해주세요!"),
+        Info("해야해야할 점!", "잘 사용해주시고 \n또 시러요!"),
+        Info("몰라몰라 점!", "잘 사용해주시고 \n또 잘 사용해주세요!"),
+        Info("장기숙박 점!", "잘 사용해주시고 \n또 잘 사용해주세요! \n서비스 숙박 35일"),
+        Info("주의해야할 점!", "잘 사용해주시고 \n또 잘 사용해주세요! \n안가르쳐줘")
     )
 }
 

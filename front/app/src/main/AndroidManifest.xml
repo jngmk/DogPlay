@@ -17,6 +17,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".HotelDetail"/>
+        <activity android:name=".InfoDetail"/>
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyDhLtneTTtKswg9a8vTqbkoCzBrKlJd7Y4"
+            />
     </application>
 
 </manifest>

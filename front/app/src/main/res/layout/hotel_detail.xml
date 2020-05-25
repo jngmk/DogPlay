@@ -180,18 +180,30 @@
         app:layout_constraintTop_toBottomOf="@id/checkin"
         />
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/info"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         app:layout_constraintTop_toBottomOf="@id/checkline"
         app:layout_constraintLeft_toLeftOf="parent"
         android:orientation="vertical">
+        <ImageView
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            app:layout_constraintRight_toRightOf="parent"
+            android:src="@drawable/next"
+            />
         <TextView
             android:id="@+id/use"
+            app:layout_constraintLeft_toLeftOf="parent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="이용안내"
+            app:layout_constraintTop_toTopOf="@id/info"
             android:layout_marginTop="15dp"
             android:layout_marginLeft="15dp"
             android:layout_marginBottom="5dp"
@@ -200,11 +212,13 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/use"
+            app:layout_constraintLeft_toLeftOf="parent"
             android:text="애견호텔 이용 세부사항 보러가기"
             android:textSize="15dp"
             android:layout_marginLeft="15dp"
         />
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <View
         android:id="@+id/infounder"
@@ -265,6 +279,7 @@
         />
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/mapPart"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@+id/summaryhr"
@@ -280,21 +295,104 @@
             app:layout_constraintTop_toTopOf="parent"
             />
 
-        <com.google.android.gms.maps.MapView
+        <fragment
             android:id="@+id/hotelLoc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="350dp"
             app:layout_constraintTop_toBottomOf="@id/locText"
-            android:layout_marginTop="15dp"
+            android:layout_margin="15dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
+            tools:context=".HotelDetail"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/hotelLoc"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="20dp"
+            android:text="호텔의 위치가 들어갈 예정"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#888888"
+        app:layout_constraintTop_toBottomOf="@+id/mapPart"
+        android:layout_marginTop="15dp"
+        />
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/reviewPart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/mapPart"
+        android:layout_marginTop="15dp"
+        >
+        <TextView
+            android:id="@+id/reviewText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:text="이용 후기"
+            android:textSize="30dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="15dp"
+            />
+        <ImageView
+            android:id="@+id/reviewStar"
+            android:layout_width="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="2dp"
+            android:layout_height="15dp"
+            app:layout_constraintTop_toBottomOf="@id/reviewText"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:src="@drawable/star"
+            />
+        <TextView
+            app:layout_constraintTop_toBottomOf="@id/reviewText"
+            app:layout_constraintLeft_toRightOf="@id/reviewStar"
+            android:layout_marginLeft="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="4.9/5"
             />
 
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/reviewCarousel"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            app:layout_constraintTop_toBottomOf="@id/reviewStar"
+            android:layout_marginTop="15dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:overScrollMode="never"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="후기 모두 보기"
+            app:layout_constraintTop_toBottomOf="@id/reviewCarousel"
+            android:textSize="20dp"
+            android:background="@drawable/rounded2"
+            android:padding="10dp"
+            android:gravity="center_vertical|center_horizontal"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            />
     </androidx.constraintlayout.widget.ConstraintLayout>
-    
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#888888"
+        app:layout_constraintTop_toBottomOf="@id/reviewPart"
+        android:layout_marginTop="15dp"
+        />
+</androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
     <TextView
         android:layout_width="match_parent"
@@ -307,6 +405,7 @@
         android:background="@drawable/payment"
         android:gravity="center_horizontal|center_vertical"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/scrv"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
