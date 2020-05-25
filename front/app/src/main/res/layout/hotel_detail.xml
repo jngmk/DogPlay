@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout android:layout_height="match_parent"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="match_parent"
     android:layout_width="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -8,12 +9,8 @@
     android:id="@+id/scrv"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
-    android:layout_marginBottom="80dp"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:layout_marginBottom="80dp">
 <androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -108,49 +105,71 @@
         android:layout_marginTop="15dp"
         />
 
-    <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/checkin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        app:layout_constraintRight_toLeftOf="@+id/checkout"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/checkout"
-        app:layout_constraintTop_toBottomOf="@id/hr"
-        android:textSize="30dp"
-        android:layout_marginTop="35dp"
-        android:text="5월 30일(수)"
-
-        />
+        app:layout_constraintTop_toBottomOf="@+id/hr"
+        android:layout_marginBottom="30dp">
 
     <TextView
-        android:id="@+id/checkout"
+        android:id="@+id/cinDate"
+        app:layout_constraintRight_toRightOf="@+id/checkin"
+        app:layout_constraintTop_toTopOf="@id/checkin"
+        app:layout_constraintBottom_toBottomOf="@+id/checkin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="6월 2일(금)"
+        app:layout_constraintLeft_toLeftOf="@id/checkin"
         android:textSize="30dp"
-        app:layout_constraintTop_toBottomOf="@id/hr"
-        android:layout_marginTop="35dp"
-        app:layout_constraintLeft_toRightOf="@id/checkin"
-        app:layout_constraintRight_toRightOf="parent"
+        android:text="5월 30일(수)"
         />
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="15dp"
         android:text="체크인"
-        app:layout_constraintBottom_toTopOf="@id/checkin"
+        app:layout_constraintBottom_toTopOf="@id/cinDate"
         app:layout_constraintLeft_toLeftOf="@id/checkin"
         app:layout_constraintRight_toRightOf="@id/checkin"
         />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/checkout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        app:layout_constraintTop_toBottomOf="@+id/hr"
+        app:layout_constraintLeft_toRightOf="@+id/checkin"
+        app:layout_constraintRight_toRightOf="parent"
+        >
+
+    <TextView
+        android:id="@+id/coutDate"
+        app:layout_constraintTop_toTopOf="@+id/checkout"
+        app:layout_constraintBottom_toBottomOf="@+id/checkout"
+        app:layout_constraintLeft_toLeftOf="@id/checkout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="6월 2일(금)"
+        android:textSize="30dp"
+        app:layout_constraintRight_toRightOf="@id/checkout"
+        />
+
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="15dp"
         android:text="체크아웃"
-        app:layout_constraintBottom_toTopOf="@id/checkout"
+        app:layout_constraintBottom_toTopOf="@id/coutDate"
         app:layout_constraintLeft_toLeftOf="@id/checkout"
         app:layout_constraintRight_toRightOf="@id/checkout"
         />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     <View
         android:id="@+id/checkline"
@@ -206,12 +225,80 @@
         app:layout_constraintTop_toBottomOf="@id/infounder"
         app:layout_constraintLeft_toLeftOf="parent"
         />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/summary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/roomList"
+        android:layout_margin="15dp"
+        >
+        <TextView
+            android:id="@+id/summaryText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="호텔소개"
+            android:textSize="30dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/summaryText"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginTop="5dp"
+            android:textSize="12dp"
+            android:text="너무좋아요 진짜좋아요 진짜 정말로 좋아요 \n
+맨날 여기와요 비자ㅡ이ㅝ랴붇러ㅜㅁ나ㅣ의ㅏㅡㄴ이ㅡ비느아ㅣ므니음나ㅣ음니ㅏㅜ림누어무나어문어
+ㅁ니아ㅡㅁ니움너ㅏ움니ㅏ움나ㅣㅜ이문아ㅣ무니위ㅏ"
+            />
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+    <View
+        android:id="@+id/summaryhr"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#888888"
+        android:layout_marginTop="15dp"
+        app:layout_constraintTop_toBottomOf="@id/summary"
+        />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/summaryhr"
+        android:layout_margin="15dp"
+        >
+        <TextView
+            android:id="@+id/locText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="호텔 위치"
+            android:textSize="30dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
+        <com.google.android.gms.maps.MapView
+            android:id="@+id/hotelLoc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/locText"
+            android:layout_marginTop="15dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 </ScrollView>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        app:layout_constraintTop_toBottomOf="@+id/scrv"
         android:text="결제하러 가기"
         android:textSize="20dp"
         android:textColor="#ffffff"
