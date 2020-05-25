@@ -1,13 +1,10 @@
-package com.gaenolja.model.dao;
+package com.gaenolja.model.service;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Mapper;
-
 import com.gaenolja.model.dto.Notification;
 
-@Mapper
-public interface NotificationDAO {
+public interface NotificationService {
 	public List<Notification> searchall();
 	public List<Notification> searchbyhotelnumber(int hotelnumber);
 	public List<Notification> searchbyuserid(String userid);

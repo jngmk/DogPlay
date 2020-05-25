@@ -1,11 +1,14 @@
 package com.gaenolja.model.dto;
 
+import java.time.LocalDateTime;
+
 public class Chat {
 	private int id;
 	private String receive;
 	private String send;
 	private String picture;
 	private String message;
+	private LocalDateTime created;
 	public int getId() {
 		return id;
 	}

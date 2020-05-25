@@ -122,9 +122,10 @@ create table review (
     on update cascade on delete cascade
 );
 drop table review;
+
 create table response (
 	id integer primary key auto_increment,
-	hotelnumber integer,
+	reviewid integer,
     userid varchar(200),
     heart integer not null,
     content varchar(300),

@@ -1,13 +1,10 @@
-package com.gaenolja.model.dao;
+package com.gaenolja.model.service;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Mapper;
-
 import com.gaenolja.model.dto.Doginfo;
 
-@Mapper
-public interface DoginfoDAO {
+public interface DoginfoService {
 	public List<Doginfo> searchall();
 	public List<Doginfo> searchbyuserid(String userid);
 	public Doginfo search(int id);

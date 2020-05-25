@@ -6,12 +6,6 @@
    		select * from response
     </select>
 
-	<select id="searchbyhotelnumber" parameterType="int" resultType="response">
-   		select *
-   		from response
-   		where hotelnumber= #{hotelnumber}
-    </select>
-
 	<select id="searchbyuserid" parameterType="String" resultType="response">
    		select *
    		from response

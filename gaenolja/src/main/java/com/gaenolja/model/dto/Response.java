@@ -1,22 +1,25 @@
 package com.gaenolja.model.dto;
 
+import java.time.LocalDateTime;
+
 public class Response { 	
 	private int id;
-	private int hotelnumber;
+	private int reviewid;
 	private String userid;
 	private int heart;
 	private String content;
+	private LocalDateTime created;
 	public int getId() {
 		return id;
 	}
 	public void setId(int id) {
 		this.id = id;
 	}
-	public int getHotelnumber() {
-		return hotelnumber;
+	public int getReviewid() {
+		return reviewid;
 	}
-	public void setHotelnumber(int hotelnumber) {
-		this.hotelnumber = hotelnumber;
+	public void setReviewid(int reviewid) {
+		this.reviewid = reviewid;
 	}
 	public String getUserid() {
 		return userid;
@@ -35,6 +38,12 @@ public class Response {
 	}
 	public void setContent(String content) {
 		this.content = content;
+	}
+	public LocalDateTime getCreated() {
+		return created;
+	}
+	public void setCreated(LocalDateTime created) {
+		this.created = created;
 	}
 	
 }

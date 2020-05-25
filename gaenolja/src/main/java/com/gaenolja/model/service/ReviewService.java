@@ -1,13 +1,10 @@
-package com.gaenolja.model.dao;
+package com.gaenolja.model.service;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Mapper;
-
 import com.gaenolja.model.dto.Review;
 
-@Mapper
-public interface ReviewDAO {
+public interface ReviewService {
 	public List<Review> searchall();
 	public List<Review> searchbyhotelnumber(int hotelnumber);
 	public List<Review> searchbyuserid(String userid);

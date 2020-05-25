@@ -1,18 +1,14 @@
-package com.gaenolja.model.dao;
+package com.gaenolja.model.service;
 
-import java.util.HashMap;
 import java.util.List;
-
-import org.apache.ibatis.annotations.Mapper;
 
 import com.gaenolja.model.dto.Chat;
 
-@Mapper
-public interface ChatDAO {
+public interface ChatService {
 	public List<Chat> searchall();
 	public List<Chat> searchbyreceive(String receive);
 	public List<Chat> searchbysend(String send);
-	public List<Chat> searchbytwo(HashMap<Object, Object> map);
+	public List<Chat> searchbytwo(String receive, String send);
 	public Chat search(int id);
 	public void insert(Chat chat);
 	public void delete(int id);

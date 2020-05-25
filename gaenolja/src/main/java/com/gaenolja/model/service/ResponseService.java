@@ -1,15 +1,11 @@
-package com.gaenolja.model.dao;
+package com.gaenolja.model.service;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Mapper;
-
 import com.gaenolja.model.dto.Response;
 
-@Mapper
-public interface ResponseDAO {
+public interface ResponseService {
 	public List<Response> searchall();
-	public List<Response> searchbyhotelnumber(int hotelnumber);
 	public List<Response> searchbyuserid(String userid);
 	public Response search(int reivewid);
 	public void insert(Response response);

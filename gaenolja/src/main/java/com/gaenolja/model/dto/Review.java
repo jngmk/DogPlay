@@ -1,11 +1,14 @@
 package com.gaenolja.model.dto;
 
+import java.time.LocalDateTime;
+
 public class Review {
 	private int id;
 	private int hotelnumber;
 	private String userid;
 	private int visitid;
 	private float star;
+	private LocalDateTime created;
 	private String content;
 	public int getId() {
 		return id;
@@ -43,6 +46,11 @@ public class Review {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	
+	public LocalDateTime getCreated() {
+		return created;
+	}
+	public void setCreated(LocalDateTime created) {
+		this.created = created;
+	}
 	
 }
