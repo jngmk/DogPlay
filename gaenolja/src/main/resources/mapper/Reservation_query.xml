@@ -25,7 +25,7 @@
 		select * from reservation where id=#{id}
 	</select>
 
-   	<insert id="insert" parameterType="reservateion">
+   	<insert id="insert" parameterType="reservation">
 		insert into reservation(hotelnumber, userid, dog, roomname, startdate, finishdate, paid, visit)
 		values(#{hotelnumber}, #{userid}, #{dog}, #{roomname}, #{startdate}, #{finishdate}, #{paid}, #{visit})
 	</insert>

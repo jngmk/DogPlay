@@ -22,7 +22,7 @@
 	</select>
 	
 	<select id="searchbysize" parameterType="int" resultType="hotelroom">
-		select * from hotelroom where minsize <= #{size} and #{size} <= maxsize
+		select * from hotelroom where minsize <![CDATA[<=]]> #{size} and #{size} <![CDATA[<=]]> maxsize
 	</select>
 
 	<insert id="insert" parameterType="hotelroom">

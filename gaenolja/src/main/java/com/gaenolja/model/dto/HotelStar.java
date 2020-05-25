@@ -1,6 +1,6 @@
 package com.gaenolja.model.dto;
 
-public class Hotel {
+public class HotelStar {
     private int hotelnumber;
 	private String userid;
 	private int hashid;
@@ -11,6 +11,7 @@ public class Hotel {
 	private Object contact;
 	private String info;
 	private Object detail;
+	private double star;
 	public int getHotelnumber() {
 		return hotelnumber;
 	}
@@ -35,6 +36,24 @@ public class Hotel {
 	public void setHotelname(String hotelname) {
 		this.hotelname = hotelname;
 	}
+	public double getLatitude() {
+		return latitude;
+	}
+	public void setLatitude(long latitude) {
+		this.latitude = latitude;
+	}
+	public double getLongitude() {
+		return longitude;
+	}
+	public void setLongitude(long longitude) {
+		this.longitude = longitude;
+	}
+	public String getAddress() {
+		return address;
+	}
+	public void setAddress(String address) {
+		this.address = address;
+	}
 	public Object getContact() {
 		return contact;
 	}
@@ -53,22 +72,10 @@ public class Hotel {
 	public void setDetail(Object detail) {
 		this.detail = detail;
 	}
-	public double getLatitude() {
-		return latitude;
+	public double getStar() {
+		return star;
 	}
-	public void setLatitude(long latitude) {
-		this.latitude = latitude;
-	}
-	public double getLongitude() {
-		return longitude;
-	}
-	public void setLongitude(long longitude) {
-		this.longitude = longitude;
-	}
-	public String getAddress() {
-		return address;
-	}
-	public void setAddress(String address) {
-		this.address = address;
+	public void setStar(long star) {
+		this.star = star;
 	}
 }

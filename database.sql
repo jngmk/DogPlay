@@ -45,7 +45,9 @@ create table hotel (
     userid varchar(200) not null,
     hashid integer ,
     hotelname varchar(50) not null,
-    lacation json not null,
+    latitude float not null,
+    longitude float not null,
+    address varchar(200) not null,
     contact varchar(50) not null,
     info text not null,
     detail json not null,
@@ -77,10 +79,6 @@ create table cart (
     on update cascade on delete cascade,
     constraint FK_user_cart foreign key(userid) references user(userid)
     on update cascade on delete cascade
---     constraint FK_hotelroom_cart foreign key(roomname) references hotelroom(roomname)
---     on update cascade on delete cascade,
--- 	constraint FK_hotelroom_cart foreign key(price) references hotelroom(price)
---     on update cascade on delete cascade
 );
 
 create table reservation (
@@ -117,26 +115,24 @@ create table review (
     visitid integer,
     star float not null,
     content varchar(300),
+    created datetime not null default now(),
 	constraint FK_hotel_review foreign key(hotelnumber) references hotel(hotelnumber)
     on update cascade on delete cascade,
     constraint FK_user_review foreign key(userid) references user(userid)
     on update cascade on delete cascade
---     constraint FK_reservation_review foreign key(visitid) references reservation(visit)
---     on update cascade on delete cascade
 );
-
+drop table review;
 create table response (
 	id integer primary key auto_increment,
 	hotelnumber integer,
     userid varchar(200),
     heart integer not null,
     content varchar(300),
+    created datetime not null default now(),
 	constraint FK_hotel_response foreign key(hotelnumber) references hotel(hotelnumber)
     on update cascade on delete cascade,
     constraint FK_user_response foreign key(userid) references user(userid)
     on update cascade on delete cascade
---     constraint FK_reservation_reponse foreign key(visitid) references reservation(visit)
---     on update cascade on delete cascade
 );
 
 create table notification (
