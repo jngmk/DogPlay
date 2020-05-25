@@ -2,19 +2,19 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gaenolja.model.dao.HotelroomDAO">
 	<select id="searchall" resultType="hotelroom">
-		select * from hetolroom
+		select * from hotelroom
 	</select>
 	
 	<select id="search" parameterType="int" resultType="hotelroom">
-		select * from hetolroom where id=#{id}
+		select * from hotelroom where id=#{id}
 	</select>
 	
 	<select id="searchbyhotel" parameterType="int" resultType="hotelroom">
-		select * from hetolroom where hotelnumber=#{hotelnumber}
+		select * from hotelroom where hotelnumber=#{hotelnumber}
 	</select>
 	
 	<select id="searchbyhotelandroom" parameterType="hashmap" resultType="hotelroom">
-		select * from hetolroom where roomname=#{roomname} and hotelnumber=#{hotelnumber}
+		select * from hotelroom where roomname=#{roomname} and hotelnumber=#{hotelnumber}
 	</select>
 	
 	<select id="searchbyprice" parameterType="int" resultType="hotelroom">

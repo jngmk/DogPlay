@@ -19,7 +19,7 @@
 
 	<insert id="insert" parameterType="hotel">
 		insert into hotel
-		values(#{hotelnumber}, #{userid}, #{hashid}, #{hotelname}, #{location}, #{contact}, #{info}, #{detail})
+		values(#{hotelnumber}, #{userid}, #{hashid}, #{hotelname}, #{latitude}, #{longitude}, #{address}, #{contact}, #{info}, #{detail})
 	</insert>
 
 	<update id="update" parameterType="hotel">

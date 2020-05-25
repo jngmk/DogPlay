@@ -2,11 +2,14 @@ package com.gaenolja.model.service;
 
 import java.util.List;
 
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.gaenolja.model.dao.HotelDAO;
 import com.gaenolja.model.dto.Hotel;
+import com.google.gson.Gson;
 
 @Service
 public class HotelServiceImpl implements HotelService {
@@ -61,6 +64,11 @@ public class HotelServiceImpl implements HotelService {
 	@Override
 	public boolean insert(Hotel hotel) {
 		try {
+			Object obj = hotel.getDetail();
+			System.out.println(obj.toString());
+			Gson gson = new Gson();
+			String json = gson.toJson(obj);
+			hotel.setDetail(json);
 			dao.insert(hotel);
 			return true;
 		}catch (Exception e) {

@@ -3,7 +3,7 @@ package com.gaenolja.model.dto;
 public class HotelStar {
     private int hotelnumber;
 	private String userid;
-	private int hashid;
+	private String hashid;
 	private String hotelname;
 	private double latitude;
 	private double longitude;
@@ -12,6 +12,8 @@ public class HotelStar {
 	private String info;
 	private Object detail;
 	private double star;
+	private int countstar;
+	private int countreview;
 	public int getHotelnumber() {
 		return hotelnumber;
 	}
@@ -24,10 +26,10 @@ public class HotelStar {
 	public void setUserid(String userid) {
 		this.userid = userid;
 	}
-	public int getHashid() {
+	public String getHashid() {
 		return hashid;
 	}
-	public void setHashid(int hashid) {
+	public void setHashid(String hashid) {
 		this.hashid = hashid;
 	}
 	public String getHotelname() {
@@ -39,13 +41,13 @@ public class HotelStar {
 	public double getLatitude() {
 		return latitude;
 	}
-	public void setLatitude(long latitude) {
+	public void setLatitude(double latitude) {
 		this.latitude = latitude;
 	}
 	public double getLongitude() {
 		return longitude;
 	}
-	public void setLongitude(long longitude) {
+	public void setLongitude(double longitude) {
 		this.longitude = longitude;
 	}
 	public String getAddress() {
@@ -75,7 +77,19 @@ public class HotelStar {
 	public double getStar() {
 		return star;
 	}
-	public void setStar(long star) {
+	public void setStar(double star) {
 		this.star = star;
+	}
+	public int getCountstar() {
+		return countstar;
+	}
+	public void setCountstar(int countstar) {
+		this.countstar = countstar;
+	}
+	public int getCountreview() {
+		return countreview;
+	}
+	public void setCountreview(int countreview) {
+		this.countreview = countreview;
 	}
 }

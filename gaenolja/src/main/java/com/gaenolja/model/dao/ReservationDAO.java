@@ -14,6 +14,7 @@ public interface ReservationDAO {
 	public List<Reservation> searchbyhotel(int hotelnumber);
 	public List<Reservation> searchbyhotelandroom(HashMap<Object, Object> map);
 	public int countbyhotelandroom(HashMap<Object, Object> map);
+	public int countbydate(HashMap<Object, Object> map);
 	public Reservation search(int id);
 	public void insert(Reservation reservation);
 	public void update(Reservation reservation);

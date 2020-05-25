@@ -108,6 +108,12 @@ public class HotelController {
 		return handleSuccess(starservice.searchbyhashtag(hashtag));
 	}
 	
+	@GetMapping("/api/v1/hoteldetail/search/{hotelnumber}")
+	@ApiOperation("hoteldetail")
+	public ResponseEntity<Map<String, Object>> hoteldeatail(@PathVariable int hotelnumber){
+		return handleSuccess(starservice.hoteldetail(hotelnumber));
+	}
+	
 	public ResponseEntity<Map<String, Object>> handleSuccess(Object data){
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		resultMap.put("state", "ok");

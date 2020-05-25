@@ -1,5 +1,6 @@
 package com.gaenolja.model.service;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 
@@ -70,6 +71,22 @@ public class ReservationServiceImpl implements ReservationService{
 			map.put("hotelnumber", hotelnumber);
 			map.put("roomname", roomname);
 			count = dao.countbyhotelandroom(map);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return count;
+	}
+	
+	@Override
+	public int countbydate(int hotelnumber, String roomname, LocalDateTime startdate, LocalDateTime finishdate) {
+		int count = 0;
+		try {
+			HashMap<Object, Object> map = new HashMap<Object, Object>();
+			map.put("hotelnumber", hotelnumber);
+			map.put("roomname", roomname);
+			map.put("startdate", startdate);
+			map.put("finishdate", finishdate);
+			count = dao.countbydate(map);
 		}catch(Exception e) {
 			e.printStackTrace();
 		}

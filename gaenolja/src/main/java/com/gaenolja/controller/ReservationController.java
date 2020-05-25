@@ -1,5 +1,6 @@
 package com.gaenolja.controller;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -64,8 +65,14 @@ public class ReservationController {
 	
 	@GetMapping("/api/v1/reservation/count/hotel/{hotelnumber}/room/{roomname}")
 	@ApiOperation("id로 reservation 나타내기")
-	public ResponseEntity<Map<String, Object>> search(@PathVariable int hotelnumber, @PathVariable String roomname){
+	public ResponseEntity<Map<String, Object>> counhotelroom(@PathVariable int hotelnumber, @PathVariable String roomname){
 		return handleSuccess(service.countbyhotelandroom(hotelnumber, roomname));
+	}
+	
+	@GetMapping("/api/v1/reservation/count/hotel/{hotelnumber}/room/{roomname}/start/{startdate}/finish/{finishdate}")
+	@ApiOperation("date reservation 나타내기")
+	public ResponseEntity<Map<String, Object>> countbydate(@PathVariable int hotelnumber, @PathVariable String roomname, @PathVariable LocalDateTime startdate, @PathVariable LocalDateTime finishdate){
+		return handleSuccess(service.countbydate(hotelnumber, roomname, startdate, finishdate));
 	}
 	
 	@PostMapping("/api/v1/reservation/insert")

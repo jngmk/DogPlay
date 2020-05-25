@@ -8,16 +8,16 @@
 	
 	<select id="search" parameterType="int" resultType="hotelstar">
 		select hotel.*, ifnull(truncate(avg(review.star), 2), 0) as star from hotel left join review on
-		hotel.hotelnumber = review.hotelnumber group by hotelnumberl having hotelnumber=#{hotelnumber}
+		hotel.hotelnumber = review.hotelnumber group by hotelnumber having hotelnumber=#{hotelnumber}
 	</select>
 	
 	<select id="searchbyname" parameterType="string" resultType="hotelstar">
 		select hotel.*, ifnull(truncate(avg(review.star), 2), 0) as star from hotel left join review on
-		hotel.hotelnumber = review.hotelnumber group by hotelnumberl having hotelname like concat('%', #{hotelname), '%')
+		hotel.hotelnumber = review.hotelnumber group by hotelnumber having hotelname like concat('%', #{hotelname), '%')
 	</select>
 	
 	<select id="searchbyhashtag" parameterType="string" resultType="hotelstar">
 		select hotel.*, ifnull(truncate(avg(review.star), 2), 0) as star from hotel left join review on
-		hotel.hotelnumber = review.hotelnumber group by hotelnumberl having hashid like concat('%', #{hashtag}, '%')
+		hotel.hotelnumber = review.hotelnumber group by hotelnumber having hashid like concat('%', #{hashtag}, '%')
 	</select>
 </mapper>
