@@ -56,6 +56,12 @@ public class ReviewController {
 		return handleSuccess(service.searchbyhotelnumber(hotelnumber));
 	}
 	
+	@GetMapping("/api/v1/review/searchbystar/{hotelnumber}/star/{star}")
+	@ApiOperation("호텔별 평점별 review 찾기")
+	public ResponseEntity<Map<String, Object>> searchbystar(@PathVariable int hotelnumber, @PathVariable float star){
+		return handleSuccess(service.searchbystar(hotelnumber, star));
+	}
+	
 	@PostMapping("/api/v1/review/insert")
 	@ApiOperation("insert review")
 	public ResponseEntity<Map<String, Object>> insert(@RequestBody Review review){
@@ -79,6 +85,7 @@ public class ReviewController {
 		if (res) return handleSuccess("success");
 		else return handleFail("fail", HttpStatus.OK);
 	}
+		
 	public ResponseEntity<Map<String, Object>> handleSuccess(Object data){
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		resultMap.put("state", "ok");

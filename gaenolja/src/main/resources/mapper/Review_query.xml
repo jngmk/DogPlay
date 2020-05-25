@@ -37,6 +37,12 @@
    		from review
    		where hotelnumber= #{hotelnumber} and not content is null
     </select>
+        
+    <select id="reviewwithcontent" parameterType="int" resultType="review">
+   		select *
+   		from review
+   		where hotelnumber= #{hotelnumber}  and not content is null
+    </select>
 
 	<select id="searchbyuserid" parameterType="String" resultType="review">
    		select *
@@ -44,10 +50,10 @@
    		where userid = #{userid}
     </select>
     
-   	<select id="searchbystar" parameterType="float" resultType="review">
+   	<select id="searchbystar" parameterType="hashmap" resultType="review">
    		select *
    		from review
-   		where star = #{star}
+   		where hotelnumber = #{hotelnumber} and star <![CDATA[>=]]> #{star}
     </select>
     
    	<select id="search" parameterType="int" resultType="review">

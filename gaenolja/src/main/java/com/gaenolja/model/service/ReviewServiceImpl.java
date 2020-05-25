@@ -1,5 +1,6 @@
 package com.gaenolja.model.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,9 +38,78 @@ public class ReviewServiceImpl implements ReviewService {
 	}
 	
 	@Override
+	public int countbyhotelnumber(int hotelnumber) {
+		try {
+			int reviewnumber = dao.countbyhotelnumber(hotelnumber);
+			return reviewnumber;
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+	
+	@Override
+	public int countreview(int hotelnumber) {
+		try {
+			int reviewnumber = dao.countreview(hotelnumber);
+			return reviewnumber;
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+	
+	@Override
 	public List<Review> searchbyuserid(String userid){
 		try {
 			List<Review> review = dao.searchbyuserid(userid);
+			return review;
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	@Override
+	public List<Review> goodreview(int hotelnumber){
+		try {
+			List<Review> review = dao.goodreview(hotelnumber);
+			return review;
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<Review> badreview(int hotelnumber){
+		try {
+			List<Review> review = dao.badreview(hotelnumber);
+			return review;
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<Review> reviewwithcontent(int hotelnumber){
+		try {
+			List<Review> review = dao.reviewwithcontent(hotelnumber);
+			return review;
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<Review> searchbystar(int hotelnumber, float star){
+		try {
+			HashMap<Object, Object> map = new HashMap<Object, Object>();
+			map.put("hotelnumber", hotelnumber);
+			map.put("star", star);
+			List<Review> review = dao.searchbystar(map);
 			return review;
 		} catch(Exception e) {
 			e.printStackTrace();
