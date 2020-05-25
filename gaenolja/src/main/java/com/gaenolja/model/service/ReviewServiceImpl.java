@@ -59,29 +59,35 @@ public class ReviewServiceImpl implements ReviewService {
 	}
 	
 	@Override
-	public void insert(Review review) {
+	public boolean insert(Review review) {
 		try {
 			dao.insert(review);
+			return true;
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
+		return false;
 	};
 	
 	@Override
-	public void update(Review review) {
+	public boolean update(Review review) {
 		try {
 			dao.update(review);
+			return true;
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
+		return false;
 	};
 	
 	@Override
-	public void delete(int id) {
+	public boolean delete(int id) {
 		try {
 			dao.delete(id);
+			return true;
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
+		return false;
 	};
 }

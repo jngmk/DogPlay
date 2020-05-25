@@ -59,29 +59,35 @@ public class NotificationServiceImpl implements NotificationService {
 	}
 	
 	@Override
-	public void insert(Notification notification) {
+	public boolean insert(Notification notification) {
 		try {
 			dao.insert(notification);
+			return true;
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
+		return false;
 	};
 	
 	@Override
-	public void update(Notification notification) {
+	public boolean update(Notification notification) {
 		try {
 			dao.update(notification);
+			return true;
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
+		return false;
 	};
 	
 	@Override
-	public void delete(int id) {
+	public boolean delete(int id) {
 		try {
 			dao.delete(id);
+			return true;
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
+		return false;
 	};
 }

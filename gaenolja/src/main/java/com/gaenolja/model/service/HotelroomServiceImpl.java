@@ -85,29 +85,35 @@ public class HotelroomServiceImpl implements HotelroomService{
 	}
 	
 	@Override
-	public void insert(Hotelroom room) {
+	public boolean insert(Hotelroom room) {
 		try {
 			dao.insert(room);
-		} catch(Exception e) {
+			return true;
+		}catch (Exception e) {
 			e.printStackTrace();
 		}
+		return false;
 	}
 	
 	@Override
-	public void update(Hotelroom room) {
+	public boolean update(Hotelroom room) {
 		try {
 			dao.update(room);
-		} catch(Exception e) {
+			return true;
+		}catch (Exception e) {
 			e.printStackTrace();
 		}
+		return false;
 	}
 
 	@Override
-	public void delete(int id) {
+	public boolean delete(int id) {
 		try {
 			dao.delete(id);
-		} catch(Exception e) {
+			return true;
+		}catch (Exception e) {
 			e.printStackTrace();
 		}
+		return false;
 	}
 }

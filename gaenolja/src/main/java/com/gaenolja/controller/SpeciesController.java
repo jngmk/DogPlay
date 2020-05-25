@@ -48,22 +48,25 @@ public class SpeciesController {
 	@PostMapping("/api/v1/species/insert")
 	@ApiOperation("insert species")
 	public ResponseEntity<Map<String, Object>> insert(@RequestBody Species species){
-		service.insert(species);
-		return handleSuccess("success");
+		boolean res = service.insert(species);
+		if (res) return handleSuccess("success");
+		else return handleFail("fail", HttpStatus.OK);
 	}
 		
 	@PutMapping("/api/v1/species/update")
 	@ApiOperation("update species")
 	public ResponseEntity<Map<String, Object>> update(@RequestBody Species species){
-		service.update(species);
-		return handleSuccess("success");
+		boolean res = service.update(species);
+		if (res) return handleSuccess("success");
+		else return handleFail("fail", HttpStatus.OK);
 	}	
 
 	@DeleteMapping("/api/v1/species/delete/{id}")
 	@ApiOperation("delete species")
 	public ResponseEntity<Map<String, Object>> delete(@PathVariable int id){
-		service.delete(id);
-		return handleSuccess("success");
+		boolean res = service.delete(id);
+		if (res) return handleSuccess("success");
+		else return handleFail("fail", HttpStatus.OK);
 	}
 	
 	public ResponseEntity<Map<String, Object>> handleSuccess(Object data){

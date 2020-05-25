@@ -53,22 +53,25 @@ public class ResponseController {
 	@PostMapping("/api/v1/response/insert")
 	@ApiOperation("insert response")
 	public ResponseEntity<Map<String, Object>> insert(@RequestBody Response response){
-		service.insert(response);
-		return handleSuccess("success");
+		boolean res = service.insert(response);
+		if (res) return handleSuccess("success");
+		else return handleFail("fail", HttpStatus.OK);
 	}
 		
 	@PutMapping("/api/v1/response/update")
 	@ApiOperation("update response")
 	public ResponseEntity<Map<String, Object>> update(@RequestBody Response response){
-		service.update(response);
-		return handleSuccess("success");
+		boolean res = service.update(response);
+		if (res) return handleSuccess("success");
+		else return handleFail("fail", HttpStatus.OK);
 	}	
 
 	@DeleteMapping("/api/v1/response/delete/{id}")
 	@ApiOperation("delete response")
 	public ResponseEntity<Map<String, Object>> delete(@PathVariable int id){
-		service.delete(id);
-		return handleSuccess("success");
+		boolean res = service.delete(id);
+		if (res) return handleSuccess("success");
+		else return handleFail("fail", HttpStatus.OK);
 	}
 	public ResponseEntity<Map<String, Object>> handleSuccess(Object data){
 		Map<String, Object> resultMap = new HashMap<String, Object>();

@@ -59,22 +59,25 @@ public class HotelpictureController {
 	@PostMapping("/api/v1/hotelpicture/insert")
 	@ApiOperation("insert hashtag")
 	public ResponseEntity<Map<String, Object>> insert(@RequestBody Hotelpicture hotelpicture){
-		service.insert(hotelpicture);
-		return handleSuccess("success");
+		boolean res = service.insert(hotelpicture);
+		if (res) return handleSuccess("success");
+		else return handleFail("fail", HttpStatus.OK);
 	}
 		
 	@PutMapping("/api/v1/hotelpicture/update")
 	@ApiOperation("update hashtag")
 	public ResponseEntity<Map<String, Object>> update(@RequestBody Hotelpicture hotelpicture){
-		service.update(hotelpicture);
-		return handleSuccess("success");
+		boolean res = service.update(hotelpicture);
+		if (res) return handleSuccess("success");
+		else return handleFail("fail", HttpStatus.OK);
 	}	
 
 	@DeleteMapping("/api/v1/hotelpicture/delete/{id}")
 	@ApiOperation("delete hashtag")
 	public ResponseEntity<Map<String, Object>> delete(@PathVariable int id){
-		service.delete(id);
-		return handleSuccess("success");
+		boolean res = service.delete(id);
+		if (res) return handleSuccess("success");
+		else return handleFail("fail", HttpStatus.OK);
 	}
 	
 	public ResponseEntity<Map<String, Object>> handleSuccess(Object data){

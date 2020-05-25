@@ -11,7 +11,7 @@ public interface ReservationService {
 	public List<Reservation> searchbyhotelandroom(int hotelnumber, String roomname);
 	public int countbyhotelandroom(int hotelnumber, String roomname);
 	public Reservation search(int id);
-	public void insert(Reservation reservation);
-	public void update(Reservation reservation);
-	public void delete(int id);
+	public boolean insert(Reservation reservation);
+	public boolean update(Reservation reservation);
+	public boolean delete(int id);
 }

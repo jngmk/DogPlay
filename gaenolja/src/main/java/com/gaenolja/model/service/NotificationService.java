@@ -9,7 +9,7 @@ public interface NotificationService {
 	public List<Notification> searchbyhotelnumber(int hotelnumber);
 	public List<Notification> searchbyuserid(String userid);
 	public List<Notification> searchbytarget(String target);
-	public void insert(Notification notification);
-	public void update(Notification notification);
-	public void delete(int id);
+	public boolean insert(Notification notification);
+	public boolean update(Notification notification);
+	public boolean delete(int id);
 }

@@ -59,22 +59,25 @@ public class ReviewController {
 	@PostMapping("/api/v1/review/insert")
 	@ApiOperation("insert review")
 	public ResponseEntity<Map<String, Object>> insert(@RequestBody Review review){
-		service.insert(review);
-		return handleSuccess("success");
+		boolean res = service.insert(review);
+		if (res) return handleSuccess("success");
+		else return handleFail("fail", HttpStatus.OK);
 	}
 		
 	@PutMapping("/api/v1/review/update")
 	@ApiOperation("update review")
 	public ResponseEntity<Map<String, Object>> update(@RequestBody Review review){
-		service.update(review);
-		return handleSuccess("success");
+		boolean res = service.update(review);
+		if (res) return handleSuccess("success");
+		else return handleFail("fail", HttpStatus.OK);
 	}	
 
 	@DeleteMapping("/api/v1/review/delete/{id}")
 	@ApiOperation("delete review")
 	public ResponseEntity<Map<String, Object>> delete(@PathVariable int id){
-		service.delete(id);
-		return handleSuccess("success");
+		boolean res = service.delete(id);
+		if (res) return handleSuccess("success");
+		else return handleFail("fail", HttpStatus.OK);
 	}
 	public ResponseEntity<Map<String, Object>> handleSuccess(Object data){
 		Map<String, Object> resultMap = new HashMap<String, Object>();

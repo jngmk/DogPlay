@@ -48,8 +48,9 @@ public class UserController {
 	@PostMapping("/api/v1/user/signup")
 	@ApiOperation("회원가입")
 	public ResponseEntity<Map<String, Object>> signup(@RequestBody User user){
-		service.insert(user);
-		return handleSuccess("success");
+		boolean res = service.insert(user);
+		if (res) return handleSuccess("success");
+		else return handleFail("fail", HttpStatus.OK);
 	}
 	
 	@PostMapping("/api/v1/user/googlelogin")
@@ -68,15 +69,17 @@ public class UserController {
 	@PutMapping("/api/v1/user/update")
 	@ApiOperation("update user")
 	public ResponseEntity<Map<String, Object>> update(@RequestBody User user){
-		service.update(user);
-		return handleSuccess("success");
+		boolean res = service.update(user);
+		if (res) return handleSuccess("success");
+		else return handleFail("fail", HttpStatus.OK);
 	}	
 
 	@DeleteMapping("/api/v1/user/delete/{userid}")
 	@ApiOperation("delete user")
 	public ResponseEntity<Map<String, Object>> delete(@PathVariable String userid){
-		service.delete(userid);
-		return handleSuccess("success");
+		boolean res = service.delete(userid);
+		if (res) return handleSuccess("success");
+		else return handleFail("fail", HttpStatus.OK);
 	}
 	
 	public ResponseEntity<Map<String, Object>> handleSuccess(Object data){

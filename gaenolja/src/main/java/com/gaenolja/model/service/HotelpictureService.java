@@ -9,7 +9,7 @@ public interface HotelpictureService {
 	public List<Hotelpicture> searchbyhotel(int hotelnumber);
 	public List<Hotelpicture> searchbyhotelandname(int hotelnumber, String name);
 	public Hotelpicture search(int id);
-	public void insert(Hotelpicture hotelpicture);
-	public void update(Hotelpicture hotelpicture);
-	public void delete(int id);
+	public boolean insert(Hotelpicture hotelpicture);
+	public boolean update(Hotelpicture hotelpicture);
+	public boolean delete(int id);
 }

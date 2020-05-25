@@ -88,29 +88,35 @@ public class ReservationServiceImpl implements ReservationService{
 	}
 	
 	@Override
-	public void insert(Reservation reservation) {
+	public boolean insert(Reservation reservation) {
 		try {
 			dao.insert(reservation);
-		}catch(Exception e) {
+			return true;
+		}catch (Exception e) {
 			e.printStackTrace();
 		}
+		return false;
 	}
 	
 	@Override
-	public void update(Reservation reservation) {
+	public boolean update(Reservation reservation) {
 		try {
 			dao.update(reservation);
-		}catch(Exception e) {
+			return true;
+		}catch (Exception e) {
 			e.printStackTrace();
 		}
+		return false;
 	}
 	
 	@Override
-	public void delete(int id) {
+	public boolean delete(int id) {
 		try {
 			dao.delete(id);
-		}catch(Exception e) {
+			return true;
+		}catch (Exception e) {
 			e.printStackTrace();
 		}
+		return false;
 	}
 }

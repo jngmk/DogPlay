@@ -64,15 +64,17 @@ public class ChatController {
 	@PostMapping("/api/v1/chat/insert")
 	@ApiOperation("insert chat")
 	public ResponseEntity<Map<String, Object>> insert(@RequestBody Chat chat){
-		service.insert(chat);
-		return handleSuccess("success");
+		boolean res = service.insert(chat);
+		if (res) return handleSuccess("success");
+		else return handleFail("fail", HttpStatus.OK);
 	}
 		
 	@DeleteMapping("/api/v1/chat/delete/{id}")
 	@ApiOperation("delete chat")
 	public ResponseEntity<Map<String, Object>> delete(@PathVariable int id){
-		service.delete(id);
-		return handleSuccess("success");
+		boolean res = service.delete(id);
+		if (res) return handleSuccess("success");
+		else return handleFail("fail", HttpStatus.OK);
 	}
 	public ResponseEntity<Map<String, Object>> handleSuccess(Object data){
 		Map<String, Object> resultMap = new HashMap<String, Object>();

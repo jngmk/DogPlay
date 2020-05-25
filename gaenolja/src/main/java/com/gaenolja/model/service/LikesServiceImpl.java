@@ -48,20 +48,24 @@ public class LikesServiceImpl implements LikesService {
 	}
 		
 	@Override
-	public void insert(Likes likes) {
+	public boolean insert(Likes likes) {
 		try {
 			dao.insert(likes);
+			return true;
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
+		return false;
 	};
 	
 	@Override
-	public void delete(Likes likes) {
+	public boolean delete(Likes likes) {
 		try {
 			dao.delete(likes);
+			return true;
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
+		return false;
 	};
 }

@@ -48,22 +48,25 @@ public class HashtagController {
 	@PostMapping("/api/v1/hashtag/insert")
 	@ApiOperation("insert hashtag")
 	public ResponseEntity<Map<String, Object>> insert(@RequestBody Hashtag hashtag){
-		service.insert(hashtag);
-		return handleSuccess("success");
+		boolean res = service.insert(hashtag);
+		if (res) return handleSuccess("success");
+		else return handleFail("fail", HttpStatus.OK);
 	}
 		
 	@PutMapping("/api/v1/hashtag/update")
 	@ApiOperation("update hashtag")
 	public ResponseEntity<Map<String, Object>> update(@RequestBody Hashtag hashtag){
-		service.update(hashtag);
-		return handleSuccess("success");
+		boolean res = service.update(hashtag);
+		if (res) return handleSuccess("success");
+		else return handleFail("fail", HttpStatus.OK);
 	}	
 
 	@DeleteMapping("/api/v1/hashtag/delete/{id}")
 	@ApiOperation("delete hashtag")
 	public ResponseEntity<Map<String, Object>> delete(@PathVariable String id){
-		service.delete(id);
-		return handleSuccess("success");
+		boolean res = service.delete(id);
+		if (res) return handleSuccess("success");
+		else return handleFail("fail", HttpStatus.OK);
 	}
 
 	public ResponseEntity<Map<String, Object>> handleSuccess(Object data){

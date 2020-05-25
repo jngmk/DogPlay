@@ -59,29 +59,35 @@ public class HotelServiceImpl implements HotelService {
 	}
 	
 	@Override
-	public void insert(Hotel hotel) {
+	public boolean insert(Hotel hotel) {
 		try {
 			dao.insert(hotel);
+			return true;
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
+		return false;
 	};
 	
 	@Override
-	public void update(Hotel hotel) {
+	public boolean update(Hotel hotel) {
 		try {
 			dao.update(hotel);
+			return true;
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
+		return false;
 	};
 	
 	@Override
-	public void delete(int hotelnumber) {
+	public boolean delete(int hotelnumber) {
 		try {
 			dao.delete(hotelnumber);
+			return true;
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
+		return false;
 	};
 }

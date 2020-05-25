@@ -48,29 +48,35 @@ public class DoginfoServiceImpl implements DoginfoService {
 	}
 		
 	@Override
-	public void insert(Doginfo doginfo) {
+	public boolean insert(Doginfo doginfo) {
 		try {
 			dao.insert(doginfo);
+			return true;
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
+		return false;
 	};
 	
 	@Override
-	public void update(Doginfo doginfo) {
+	public boolean update(Doginfo doginfo) {
 		try {
 			dao.insert(doginfo);
+			return true;
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
+		return false;
 	};
 	
 	@Override
-	public void delete(int id) {
+	public boolean delete(int id) {
 		try {
 			dao.delete(id);
+			return true;
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
+		return false;
 	};
 }

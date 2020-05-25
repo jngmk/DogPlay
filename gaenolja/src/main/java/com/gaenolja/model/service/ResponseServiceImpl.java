@@ -48,29 +48,35 @@ public class ResponseServiceImpl implements ResponseService {
 	}
 	
 	@Override
-	public void insert(Response response) {
+	public boolean insert(Response response) {
 		try {
 			dao.insert(response);
+			return true;
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
+		return false;
 	};
 	
 	@Override
-	public void update(Response response) {
+	public boolean update(Response response) {
 		try {
 			dao.update(response);
+			return true;
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
+		return false;
 	};
 	
 	@Override
-	public void delete(int id) {
+	public boolean delete(int id) {
 		try {
 			dao.delete(id);
+			return true;
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
+		return false;
 	};
 }

@@ -59,22 +59,25 @@ public class NotificationController {
 	@PostMapping("/api/v1/notification/insert")
 	@ApiOperation("insert notification")
 	public ResponseEntity<Map<String, Object>> insert(@RequestBody Notification notification){
-		service.insert(notification);
-		return handleSuccess("success");
+		boolean res = service.insert(notification);
+		if (res) return handleSuccess("success");
+		else return handleFail("fail", HttpStatus.OK);
 	}
 		
 	@PutMapping("/api/v1/notification/update")
 	@ApiOperation("update notification")
 	public ResponseEntity<Map<String, Object>> update(@RequestBody Notification notification){
-		service.update(notification);
-		return handleSuccess("success");
+		boolean res = service.update(notification);
+		if (res) return handleSuccess("success");
+		else return handleFail("fail", HttpStatus.OK);
 	}	
 
 	@DeleteMapping("/api/v1/notification/delete/{id}")
 	@ApiOperation("delete notification")
 	public ResponseEntity<Map<String, Object>> delete(@PathVariable int id){
-		service.delete(id);
-		return handleSuccess("success");
+		boolean res = service.delete(id);
+		if (res) return handleSuccess("success");
+		else return handleFail("fail", HttpStatus.OK);
 	}
 	public ResponseEntity<Map<String, Object>> handleSuccess(Object data){
 		Map<String, Object> resultMap = new HashMap<String, Object>();

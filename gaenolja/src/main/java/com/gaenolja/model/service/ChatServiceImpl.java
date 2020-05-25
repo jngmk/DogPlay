@@ -74,20 +74,24 @@ public class ChatServiceImpl implements ChatService {
 	}
 	
 	@Override
-	public void insert(Chat chat) {
+	public boolean insert(Chat chat) {
 		try {
 			dao.insert(chat);
+			return true;
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
+		return false;
 	};
 	
 	@Override
-	public void delete(int id) {
+	public boolean delete(int id) {
 		try {
 			dao.delete(id);
+			return true;
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
+		return false;
 	};
 }

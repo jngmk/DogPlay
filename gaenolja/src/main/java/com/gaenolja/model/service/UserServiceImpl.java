@@ -49,30 +49,36 @@ public class UserServiceImpl implements UserService{
 	}
 	
 	@Override
-	public void insert(User user) {
+	public boolean insert(User user) {
 		try {
 			dao.insert(user);
-		} catch(Exception e) {
+			return true;
+		}catch (Exception e) {
 			e.printStackTrace();
 		}
+		return false;
 	}
 	
 	@Override
-	public void update(User user) {
+	public boolean update(User user) {
 		try {
 			dao.update(user);
-		} catch(Exception e) {
+			return true;
+		}catch (Exception e) {
 			e.printStackTrace();
 		}
+		return false;
 	}
 	
 	@Override
-	public void delete(String userid) {
+	public boolean delete(String userid) {
 		try {
 			dao.delete(userid);
-		}catch(Exception e) {
+			return true;
+		}catch (Exception e) {
 			e.printStackTrace();
 		}
+		return false;
 	}
 	
 	@Override

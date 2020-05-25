@@ -63,29 +63,35 @@ public class HotelpictureServiceImpl implements HotelpictureService{
 	}
 	
 	@Override
-	public void insert(Hotelpicture hotelpicture) {
+	public boolean insert(Hotelpicture hotelpicture) {
 		try {
 			dao.insert(hotelpicture);
-		} catch(Exception e) {
+			return true;
+		}catch (Exception e) {
 			e.printStackTrace();
 		}
+		return false;
 	}
 	
 	@Override
-	public void update(Hotelpicture hotelpicture) {
+	public boolean update(Hotelpicture hotelpicture) {
 		try {
 			dao.update(hotelpicture);
-		} catch(Exception e) {
+			return true;
+		}catch (Exception e) {
 			e.printStackTrace();
 		}
+		return false;
 	}
 	
 	@Override
-	public void delete(int id) {
+	public boolean delete(int id) {
 		try {
 			dao.delete(id);
-		} catch(Exception e) {
+			return true;
+		}catch (Exception e) {
 			e.printStackTrace();
 		}
+		return false;
 	}
 }

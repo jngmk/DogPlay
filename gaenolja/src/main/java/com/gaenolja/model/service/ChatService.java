@@ -10,6 +10,6 @@ public interface ChatService {
 	public List<Chat> searchbysend(String send);
 	public List<Chat> searchbytwo(String receive, String send);
 	public Chat search(int id);
-	public void insert(Chat chat);
-	public void delete(int id);
+	public boolean insert(Chat chat);
+	public boolean delete(int id);
 }

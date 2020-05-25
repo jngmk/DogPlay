@@ -52,15 +52,17 @@ public class LikesController {
 	@PostMapping("/api/v1/likes/insert")
 	@ApiOperation("insert likes")
 	public ResponseEntity<Map<String, Object>> insert(@RequestBody Likes likes){
-		service.insert(likes);
-		return handleSuccess("success");
+		boolean res = service.insert(likes);
+		if (res) return handleSuccess("success");
+		else return handleFail("fail", HttpStatus.OK);
 	}
 		
 	@DeleteMapping("/api/v1/likes/delete/")
 	@ApiOperation("delete likes")
 	public ResponseEntity<Map<String, Object>> delete(@PathVariable Likes likes){
-		service.delete(likes);
-		return handleSuccess("success");
+		boolean res = service.delete(likes);
+		if (res) return handleSuccess("success");
+		else return handleFail("fail", HttpStatus.OK);
 	}
 	public ResponseEntity<Map<String, Object>> handleSuccess(Object data){
 		Map<String, Object> resultMap = new HashMap<String, Object>();

@@ -9,7 +9,7 @@ public interface ReviewService {
 	public List<Review> searchbyhotelnumber(int hotelnumber);
 	public List<Review> searchbyuserid(String userid);
 	public Review search(int id);
-	public void insert(Review review);
-	public void update(Review review);
-	public void delete(int id);
+	public boolean insert(Review review);
+	public boolean update(Review review);
+	public boolean delete(int id);
 }

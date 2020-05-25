@@ -37,30 +37,36 @@ public class HashtagServiceImpl implements HashtagService{
 	}
 	
 	@Override
-	public void insert(Hashtag hashtag) {
+	public boolean insert(Hashtag hashtag) {
 		try {
 			dao.insert(hashtag);
-		} catch(Exception e) {
+			return true;
+		}catch (Exception e) {
 			e.printStackTrace();
 		}
+		return false;
 	}
 	
 	@Override
-	public void update(Hashtag hashtag) {
+	public boolean update(Hashtag hashtag) {
 		try {
 			dao.update(hashtag);
-		} catch(Exception e) {
+			return true;
+		}catch (Exception e) {
 			e.printStackTrace();
 		}
+		return false;
 	}
 	
 	@Override
-	public void delete(String id) {
+	public boolean delete(String id) {
 		try {
 			dao.delete(id);
-		}catch(Exception e) {
+			return true;
+		}catch (Exception e) {
 			e.printStackTrace();
 		}
+		return false;
 	}
 
 }

@@ -37,29 +37,35 @@ public class SpeciesServiceImpl implements SpeciesService{
 	}
 	
 	@Override
-	public void insert(Species species) {
+	public boolean insert(Species species) {
 		try {
 			dao.insert(species);
-		} catch(Exception e) {
+			return true;
+		}catch (Exception e) {
 			e.printStackTrace();
 		}
+		return false;
 	}
 	
 	@Override
-	public void update(Species species) {
+	public boolean update(Species species) {
 		try {
 			dao.update(species);
-		} catch(Exception e) {
+			return true;
+		}catch (Exception e) {
 			e.printStackTrace();
 		}
+		return false;
 	}
 	
 	@Override
-	public void delete(int id) {
+	public boolean delete(int id) {
 		try {
 			dao.delete(id);
-		} catch(Exception e) {
+			return true;
+		}catch (Exception e) {
 			e.printStackTrace();
 		}
+		return false;
 	}
 }

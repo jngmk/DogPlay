@@ -11,7 +11,7 @@ public interface HotelroomService {
 	public Hotelroom searchbyhotelandroom(String roomname, int hotelnumber);
 	public List<Hotelroom> searchbyprice(int price);
 	public List<Hotelroom> searchbysize(int size);
-	public void insert(Hotelroom room);
-	public void update(Hotelroom room);
-	public void delete(int id);
+	public boolean insert(Hotelroom room);
+	public boolean update(Hotelroom room);
+	public boolean delete(int id);
 }
