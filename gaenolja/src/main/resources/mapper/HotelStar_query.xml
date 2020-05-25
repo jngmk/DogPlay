@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gaenolja.model.dao.HotelStarDAO">
+	<select id="searchall" resultType="hotelstar">
+		select hotel.*, ifnull(truncate(avg(review.star), 2), 0) as star from hotel left join review on
+		hotel.hotelnumber = review.hotelnumber group by hotelnumber
+	</select>
+	
+	<select id="search" parameterType="int" resultType="hotelstar">
+		select hotel.*, ifnull(truncate(avg(review.star), 2), 0) as star from hotel left join review on
+		hotel.hotelnumber = review.hotelnumber group by hotelnumberl having hotelnumber=#{hotelnumber}
+	</select>
+	
+	<select id="searchbyname" parameterType="string" resultType="hotelstar">
+		select hotel.*, ifnull(truncate(avg(review.star), 2), 0) as star from hotel left join review on
+		hotel.hotelnumber = review.hotelnumber group by hotelnumberl having hotelname like concat('%', #{hotelname), '%')
+	</select>
+	
+	<select id="searchbyhashtag" parameterType="string" resultType="hotelstar">
+		select hotel.*, ifnull(truncate(avg(review.star), 2), 0) as star from hotel left join review on
+		hotel.hotelnumber = review.hotelnumber group by hotelnumberl having hashid like concat('%', #{hashtag}, '%')
+	</select>
+</mapper>

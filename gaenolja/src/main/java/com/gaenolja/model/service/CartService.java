@@ -8,7 +8,7 @@ public interface CartService {
 	public List<Cart> searchall();
 	public Cart search(int id);
 	public Cart searchbyuser(String userid);
-	public void insert(Cart cart);
-	public void update(Cart cart);
-	public void delete(int id);
+	public boolean insert(Cart cart);
+	public boolean update(Cart cart);
+	public boolean delete(int id);
 }

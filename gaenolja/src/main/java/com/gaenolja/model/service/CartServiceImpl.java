@@ -48,29 +48,35 @@ public class CartServiceImpl implements CartService{
 	}
 	
 	@Override
-	public void insert(Cart cart) {
+	public boolean insert(Cart cart) {
 		try {
 			dao.insert(cart);
+			return true;
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
+		return false;
 	}
 	
 	@Override
-	public void update(Cart cart) {
+	public boolean update(Cart cart) {
 		try {
 			dao.update(cart);
+			return true;
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
+		return false;
 	}
 	
 	@Override
-	public void delete(int id) {
+	public boolean delete(int id) {
 		try {
 			dao.delete(id);
+			return true;
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
+		return false;
 	}
 }

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.gaenolja.model.dto.Hotel;
 import com.gaenolja.model.service.HotelService;
+import com.gaenolja.model.service.HotelStarService;
 
 import io.swagger.annotations.ApiOperation;
 
@@ -26,6 +27,9 @@ import io.swagger.annotations.ApiOperation;
 public class HotelController {
 	@Autowired
 	private HotelService service;
+	
+	@Autowired
+	private HotelStarService starservice;
 	
 	@ExceptionHandler 
 	public ResponseEntity<Map<String, Object>> handler(Exception e){
@@ -75,6 +79,30 @@ public class HotelController {
 	public ResponseEntity<Map<String, Object>> delete(@PathVariable int hotelnumber){
 		service.delete(hotelnumber);
 		return handleSuccess("success");
+	}
+	
+	@GetMapping("/api/v1/hotelstar/searchall")
+	@ApiOperation("hotel + star")
+	public ResponseEntity<Map<String, Object>> searchhotelstarall(){
+		return handleSuccess(starservice.searchall());
+	}
+	
+	@GetMapping("/api/v1/hotelstar/search/{hotelnumber}")
+	@ApiOperation("id로 hotel+star 나타내기")
+	public ResponseEntity<Map<String, Object>> searchhotelstar(@PathVariable int hotelnumber){
+		return handleSuccess(starservice.search(hotelnumber));
+	}
+	
+	@GetMapping("/api/v1/hotelstar/search/{hotelname}")
+	@ApiOperation("name으로 hotel+star 찾기")
+	public ResponseEntity<Map<String, Object>> searchhotelstarbyname(@PathVariable String hotelname){
+		return handleSuccess(starservice.searchbyname(hotelname));
+	}
+	
+	@GetMapping("/api/v1/hotelstar/search/{hashtag}")
+	@ApiOperation("hashtag로 hotel+star 찾기")
+	public ResponseEntity<Map<String, Object>> searchhotelstarbyhashtag(@PathVariable String hashtag){
+		return handleSuccess(starservice.searchbyhashtag(hashtag));
 	}
 	
 	public ResponseEntity<Map<String, Object>> handleSuccess(Object data){

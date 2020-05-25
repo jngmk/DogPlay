@@ -53,22 +53,25 @@ public class CartController {
 	@PostMapping("/api/v1/cart/insert")
 	@ApiOperation("insert cart")
 	public ResponseEntity<Map<String, Object>> insert(@RequestBody Cart cart){
-		service.insert(cart);
-		return handleSuccess("success");
+		boolean res = service.insert(cart);
+		if (res) return handleSuccess("success");
+		else return handleFail("fail", HttpStatus.OK);
 	}
 		
 	@PutMapping("/api/v1/cart/update")
 	@ApiOperation("update cart")
 	public ResponseEntity<Map<String, Object>> update(@RequestBody Cart cart){
-		service.update(cart);
-		return handleSuccess("success");
+		boolean res = service.update(cart);
+		if (res) return handleSuccess("success");
+		else return handleFail("fail", HttpStatus.OK);
 	}	
 
 	@DeleteMapping("/api/v1/cart/delete/{id}")
 	@ApiOperation("delete cart")
 	public ResponseEntity<Map<String, Object>> delete(@PathVariable int id){
-		service.delete(id);
-		return handleSuccess("success");
+		boolean res = service.delete(id);
+		if (res) return handleSuccess("success");
+		else return handleFail("fail", HttpStatus.OK);
 	}
 	
 	public ResponseEntity<Map<String, Object>> handleSuccess(Object data){
