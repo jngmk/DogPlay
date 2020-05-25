@@ -11,6 +11,32 @@
    		from review
    		where hotelnumber= #{hotelnumber}
     </select>
+    
+   	<select id="countbyhotelnumber" parameterType="int" resultType="int">
+   		select count(*)
+   		from review
+   		where hotelnumber= #{hotelnumber}
+    </select>
+    
+    <select id="goodreview" parameterType="int" resultType="review">
+   		select *
+   		from review
+   		where hotelnumber= #{hotelnumber}
+   		order by star desc limit 2
+    </select>
+    
+    <select id="badreview" parameterType="int" resultType="review">
+   		select *
+   		from review
+   		where hotelnumber= #{hotelnumber}
+   		order by star asc limit 2
+    </select>
+    
+    <select id="countreview" parameterType="int" resultType="int">
+   		select count(*)
+   		from review
+   		where hotelnumber= #{hotelnumber} and not content is null
+    </select>
 
 	<select id="searchbyuserid" parameterType="String" resultType="review">
    		select *
