@@ -60,22 +60,4 @@ class MainActivity : AppCompatActivity(){
             startActivity(intent)
         }
     }
-    fun keyboardListener(activity: MainActivity,listener: (visible:Boolean, contentHeight:Int)->Unit){
-        val activityRootView = (activity.findViewById(android.R.id.content) as ViewGroup).getChildAt(0)
-        val viewTreeObserver = activityRootView.viewTreeObserver
-        viewTreeObserver.addOnGlobalLayoutListener(object:ViewTreeObserver.OnGlobalLayoutListener{
-            private val MINIMUM_KEYBOARD_SIZE_DP = 100
-            private val r = Rect()
-
-            override fun onGlobalLayout() {
-                val minimumKeyboardHeight = MINIMUM_KEYBOARD_SIZE_DP
-                activityRootView.getWindowVisibleDisplayFrame(r)
-                val contentHeight = r.bottom - r.top
-                val heightDiff = activityRootView.rootView.height - contentHeight
-                val isVisible = heightDiff >= minimumKeyboardHeight
-                listener(isVisible,contentHeight)
-            }
-        })
-    }
-
 }
