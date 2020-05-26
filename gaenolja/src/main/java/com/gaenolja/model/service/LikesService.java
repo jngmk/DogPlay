@@ -9,5 +9,5 @@ public interface LikesService {
 	public List<Likes> searchbyuserid(String userid);
 	public List<Likes> searchbyhotelnumber(int hotelnumber);
 	public boolean insert(Likes likes);
-	public boolean delete(Likes likes);
+	public boolean delete(String userid, int hotelnumber);
 }

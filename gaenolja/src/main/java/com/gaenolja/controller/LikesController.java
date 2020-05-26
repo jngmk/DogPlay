@@ -57,10 +57,10 @@ public class LikesController {
 		else return handleFail("fail", HttpStatus.OK);
 	}
 		
-	@DeleteMapping("/api/v1/likes/delete/")
+	@DeleteMapping("/api/v1/likes/delete/{userid}/hotel/{hotelnumber}")
 	@ApiOperation("delete likes")
-	public ResponseEntity<Map<String, Object>> delete(@PathVariable Likes likes){
-		boolean res = service.delete(likes);
+	public ResponseEntity<Map<String, Object>> delete(@PathVariable String userid, @PathVariable int hotelnumber){
+		boolean res = service.delete(userid, hotelnumber);
 		if (res) return handleSuccess("success");
 		else return handleFail("fail", HttpStatus.OK);
 	}

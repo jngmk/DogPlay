@@ -18,14 +18,20 @@
    		where id = #{id}
     </select>
     
+   	<select id="searchbyreview" parameterType="int" resultType="response">
+   		select *
+   		from response
+   		where reviewid = #{reviewid}
+    </select>
+    
 	<insert id="insert" parameterType="response">
-		insert into response(hotelnumber, userid, heart, content)
-		values(#{hotelnumber}, #{userid}, #{heart}, #{content})
+		insert into response(reviewid, userid, heart, content)
+		values(#{reviewid}, #{userid}, #{heart}, #{content})
 	</insert>
 	
 	<update id="update" parameterType="response">
 		update response set
-		hotelnumber = #{hotelnumber},
+		reviewid = #{reviewid},
 		userid = #{userid},
 		heart = #{heart},
 		content = #{content}

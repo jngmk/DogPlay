@@ -37,9 +37,20 @@ public class ResponseServiceImpl implements ResponseService {
 	}
 	
 	@Override
-	public Response search(int reviewid){
+	public Response search(int id){
 		try {
-			Response response = dao.search(reviewid);
+			Response response = dao.search(id);
+			return response;
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	@Override
+	public Response searchbyreview(int reviewid) {
+		try {
+			Response response = dao.searchbyreview(reviewid);
 			return response;
 		}catch(Exception e) {
 			e.printStackTrace();

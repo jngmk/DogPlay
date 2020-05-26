@@ -38,10 +38,16 @@ public class ResponseController {
 		return handleSuccess(service.searchall());
 	}
 	
-	@GetMapping("/api/v1/response/search/{reviewid}")
+	@GetMapping("/api/v1/response/search/{id}")
+	@ApiOperation("id로 response 나타내기")
+	public ResponseEntity<Map<String, Object>> search(@PathVariable int id){
+		return handleSuccess(service.search(id));
+	}
+	
+	@GetMapping("/api/v1/response/search/review/{reviewid}")
 	@ApiOperation("reviewid로 response 나타내기")
-	public ResponseEntity<Map<String, Object>> search(@PathVariable int reviewid){
-		return handleSuccess(service.search(reviewid));
+	public ResponseEntity<Map<String, Object>> searchbyreview(@PathVariable int reviewid){
+		return handleSuccess(service.searchbyreview(reviewid));
 	}
 	
 	@GetMapping("/api/v1/response/searchbyuserid/{userid}/userid")

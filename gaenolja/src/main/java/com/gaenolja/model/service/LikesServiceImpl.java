@@ -59,8 +59,11 @@ public class LikesServiceImpl implements LikesService {
 	};
 	
 	@Override
-	public boolean delete(Likes likes) {
+	public boolean delete(String userid, int hotelnumber) {
 		try {
+			Likes likes = new Likes();
+			likes.setUserid(userid);
+			likes.setHotelnumber(hotelnumber);
 			dao.delete(likes);
 			return true;
 		}catch (Exception e) {
