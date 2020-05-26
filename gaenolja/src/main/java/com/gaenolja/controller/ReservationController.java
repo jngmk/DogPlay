@@ -51,6 +51,12 @@ public class ReservationController {
 		return handleSuccess(service.searchbyuserid(userid));
 	}
 	
+	@GetMapping("/api/v1/reservation/searchbypaidid/{paidid}/paidid")
+	@ApiOperation("paidid로 reservation 찾기")
+	public ResponseEntity<Map<String, Object>> searchbypaidid(@PathVariable int paidid){
+		return handleSuccess(service.searchbypaidid(paidid));
+	}
+	
 	@GetMapping("/api/v1/reservation/searchbyhotel/{hotelnumber}")
 	@ApiOperation("호텔별 reservation 찾기")
 	public ResponseEntity<Map<String, Object>> searchbyhotel(@PathVariable int hotelnumber){

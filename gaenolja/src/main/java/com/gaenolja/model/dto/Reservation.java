@@ -4,19 +4,26 @@ import java.time.LocalDateTime;
 
 public class Reservation {
     private int id;
+	private int paidid;
 	private int hotelnumber;
 	private String userid;
-	private Object dog;
-	private Object roomname;
+	private String dog;
+	private String roomname;
 	private LocalDateTime startdate;
 	private LocalDateTime finishdate;
-	private Object paid;
+	private int count;
 	private int visit;
 	public int getId() {
 		return id;
 	}
 	public void setId(int id) {
 		this.id = id;
+	}
+	public int getPaidid() {
+		return paidid;
+	}
+	public void setPaidid(int paidid) {
+		this.paidid = paidid;
 	}
 	public int getHotelnumber() {
 		return hotelnumber;
@@ -30,16 +37,16 @@ public class Reservation {
 	public void setUserid(String userid) {
 		this.userid = userid;
 	}
-	public Object getDog() {
+	public String getDog() {
 		return dog;
 	}
-	public void setDog(Object dog) {
+	public void setDog(String dog) {
 		this.dog = dog;
 	}
-	public Object getRoomname() {
+	public String getRoomname() {
 		return roomname;
 	}
-	public void setRoomname(Object roomname) {
+	public void setRoomname(String roomname) {
 		this.roomname = roomname;
 	}
 	public LocalDateTime getStartdate() {
@@ -54,17 +61,16 @@ public class Reservation {
 	public void setFinishdate(LocalDateTime finishdate) {
 		this.finishdate = finishdate;
 	}
-	public Object getPaid() {
-		return paid;
+	public int getCount() {
+		return count;
 	}
-	public void setPaid(Object paid) {
-		this.paid = paid;
+	public void setCount(int count) {
+		this.count = count;
 	}
 	public int getVisit() {
 		return visit;
 	}
 	public void setVisit(int visit) {
 		this.visit = visit;
-	}
-	
+	}	
 }

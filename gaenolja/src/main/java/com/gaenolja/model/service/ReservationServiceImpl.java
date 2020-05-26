@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import com.gaenolja.model.dao.ReservationDAO;
 import com.gaenolja.model.dto.Reservation;
-import com.google.gson.Gson;
 
 @Service
 public class ReservationServiceImpl implements ReservationService{
@@ -71,7 +70,10 @@ public class ReservationServiceImpl implements ReservationService{
 			HashMap<Object, Object> map = new HashMap<Object, Object>();
 			map.put("hotelnumber", hotelnumber);
 			map.put("roomname", roomname);
-			count = dao.countbyhotelandroom(map);
+			List<Integer> list = dao.countbyhotelandroom(map);
+			for (int i:list) {
+				count += i;
+			}
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -87,7 +89,10 @@ public class ReservationServiceImpl implements ReservationService{
 			map.put("roomname", roomname);
 			map.put("startdate", startdate);
 			map.put("finishdate", finishdate);
-			count = dao.countbydate(map);
+			List<Integer> list = dao.countbyhotelandroom(map);
+			for (int i:list) {
+				count += i;
+			}
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -106,18 +111,19 @@ public class ReservationServiceImpl implements ReservationService{
 	}
 	
 	@Override
+	public List<Reservation> searchbypaidid(int paidid) {
+		try {
+			List<Reservation> reservation = dao.searchbypaidid(paidid);
+			return reservation;
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	@Override
 	public boolean insert(Reservation reservation) {
 		try {
-			Object obj1 = reservation.getDog();
-			Object obj2 = reservation.getPaid();
-			Object obj3 = reservation.getRoomname();
-			Gson gson = new Gson();
-			String dog = gson.toJson(obj1);
-			String paid = gson.toJson(obj2);
-			String roomname = gson.toJson(obj3);
-			reservation.setDog(dog);
-			reservation.setPaid(paid);
-			reservation.setRoomname(roomname);
 			dao.insert(reservation);
 			return true;
 		}catch (Exception e) {
@@ -129,16 +135,6 @@ public class ReservationServiceImpl implements ReservationService{
 	@Override
 	public boolean update(Reservation reservation) {
 		try {
-			Object obj1 = reservation.getDog();
-			Object obj2 = reservation.getPaid();
-			Object obj3 = reservation.getRoomname();
-			Gson gson = new Gson();
-			String dog = gson.toJson(obj1);
-			String paid = gson.toJson(obj2);
-			String roomname = gson.toJson(obj3);
-			reservation.setDog(dog);
-			reservation.setPaid(paid);
-			reservation.setRoomname(roomname);
 			dao.update(reservation);
 			return true;
 		}catch (Exception e) {

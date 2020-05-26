@@ -61,7 +61,7 @@ public class HotelController {
 	}
 	
 	@GetMapping("/api/v1/hotel/searchbydistance/{latitude}/latitude/{longitude}/longitude/{distance}")
-	@ApiOperation("hotel + room 으로 reservation 찾기")
+	@ApiOperation("위도 + 경도로 hotel 찾기")
 	public ResponseEntity<Map<String, Object>> searchbydistance(@PathVariable double latitude, @PathVariable double longitude, @PathVariable int distance){
 		return handleSuccess(service.searchbydistance(latitude, longitude, distance));
 	}

@@ -13,6 +13,7 @@ public interface ReservationService {
 	public int countbyhotelandroom(int hotelnumber, String roomname);
 	public int countbydate(int hotelnumber, String roomname, LocalDateTime startdate, LocalDateTime finishdate);
 	public Reservation search(int id);
+	public List<Reservation> searchbypaidid(int paidid);
 	public boolean insert(Reservation reservation);
 	public boolean update(Reservation reservation);
 	public boolean delete(int id);

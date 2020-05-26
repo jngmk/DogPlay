@@ -18,16 +18,20 @@
 	</select>
 	
 	<select id="countbyhotelandroom" parameterType="hashmap" resultType="int">
-		select count(*) from reservation where hotelnumber=#{hotelnumber} and roomname=#{roomname}
+		select count from reservation where hotelnumber=#{hotelnumber} and roomname=#{roomname}
 	</select>
 	
 	<select id="countbydate" parameterType="hashmap" resultType="int">
-		select count(*) from reservation where hotelnumber=#{hotelnumber} and roomname=#{roomname} and
+		select count from reservation where hotelnumber=#{hotelnumber} and roomname=#{roomname} and
 		not (finishdate <![CDATA[<]]>#{startdate} or startdate <![CDATA[>]]>#{finishdate})
 	</select>
 	
 	<select id="search" parameterType="int" resultType="reservation">
 		select * from reservation where id=#{id}
+	</select>
+	
+	<select id="searchbypaidid" parameterType="int" resultType="reservation">
+		select * from reservation where paidid=#{paidid}
 	</select>
 
    	<insert id="insert" parameterType="reservation">

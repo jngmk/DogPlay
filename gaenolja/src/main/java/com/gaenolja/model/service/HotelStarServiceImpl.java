@@ -1,5 +1,6 @@
 package com.gaenolja.model.service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,8 +13,8 @@ import com.gaenolja.model.dao.HotelStarDAO;
 import com.gaenolja.model.dao.HotelpictureDAO;
 import com.gaenolja.model.dao.HotelroomDAO;
 import com.gaenolja.model.dao.ReviewDAO;
-import com.gaenolja.model.dto.Hashtag;
 import com.gaenolja.model.dto.HotelStar;
+import com.gaenolja.model.dto.Hotelroom;
 
 @Service
 public class HotelStarServiceImpl implements HotelStarService{
@@ -32,6 +33,9 @@ public class HotelStarServiceImpl implements HotelStarService{
 	
 	@Autowired
 	private HashtagDAO hashtagdao;
+	
+	@Autowired
+	private ReservationService reservation;
 	
 	@Override
 	public List<HotelStar> searchall(){
@@ -167,6 +171,35 @@ public class HotelStarServiceImpl implements HotelStarService{
 				list.add(hashtagdao.search(Character.toString(hashid.charAt(idx))).getName());
 			}
 			hotelstar.setHashtag(list);
+			map.put("HotelStar", hotelstar);
+			map.put("HotelPicture", picturedao.searchbyhotel(hotelnumber));
+			map.put("HotelRoom", roomdao.searchbyhotel(hotelnumber));
+			map.put("Good", reviewdao.goodreview(hotelnumber));
+			map.put("Bad", reviewdao.badreview(hotelnumber));
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return map;
+	}
+	
+	@Override
+	public HashMap<Object, Object> hoteldetailbydate(int hotelnumber, String roomname, LocalDateTime startdate, LocalDateTime finishdate){
+		HashMap<Object, Object> map = new HashMap<Object, Object>();
+		try {
+			HotelStar hotelstar = dao.search(hotelnumber);
+			hotelstar.setCountreview(reviewdao.countreview(hotelnumber));
+			hotelstar.setCountstar(reviewdao.countbyhotelnumber(hotelnumber));
+			String hashid = hotelstar.getHashid();
+			List<String> list = new ArrayList<String>();
+			for (int idx=0;idx<hashid.length();idx++) {
+				list.add(hashtagdao.search(Character.toString(hashid.charAt(idx))).getName());
+			}
+			hotelstar.setHashtag(list);
+			List<Hotelroom> hotelroom = roomdao.searchbyhotel(hotelnumber);
+			for(Hotelroom room:hotelroom) {
+				int cnt = room.getCount() - reservation.countbydate(hotelnumber, roomname, startdate, finishdate);
+				room.setCount(cnt);
+			}
 			map.put("HotelStar", hotelstar);
 			map.put("HotelPicture", picturedao.searchbyhotel(hotelnumber));
 			map.put("HotelRoom", roomdao.searchbyhotel(hotelnumber));
