@@ -80,22 +80,31 @@ create table cart (
     constraint FK_user_cart foreign key(userid) references user(userid)
     on update cascade on delete cascade
 );
-
+drop table reservation;
 create table reservation (
 	id integer primary key auto_increment,
+    paidid integer,
     hotelnumber integer not null,
     userid varchar(200) not null,
-    dog json,
-    roomname json not null,
+    dog varchar(100),
+    roomname varchar(30) not null,
     startdate datetime not null,
     finishdate datetime not null,
-    paid json not null,
+    count integer not null,
     visit integer not null,
     constraint FK_hotel_reservation foreign key(hotelnumber) references hotel(hotelnumber)
     on update cascade on delete cascade,
     constraint FK_user_reservation foreign key(userid) references user(userid)
-    on update cascade on delete cascade
+    on update cascade on delete cascade,
+	constraint FK_paid_reservation foreign key(paidid) references paid(id)
+    on delete cascade
 );
+
+create table paid (
+	id integer primary key auto_increment,
+    info varchar(1000) not null
+);
+
 
 create table hotelpicture (
 	id integer primary key auto_increment,
