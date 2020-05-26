@@ -16,6 +16,12 @@
 	<select id="searchall" resultType="hotel">
 		select * from hotel
 	</select>
+	
+	<select id="searchbydistance" parameterType="hashmap" resultType="hotel">
+		<![CDATA[select *, (6371*acos(cos(radians(#{latitude}))*cos(radians(latitude))*cos(radians(longitude) 
+		-radians(#{longitude}))+sin(radians(#{latitude}))*sin(radians(latitude)))) AS distance from hotel
+		having distance <= #{distance} order by distance]]>
+	</select>
 
 	<insert id="insert" parameterType="hotel">
 		insert into hotel

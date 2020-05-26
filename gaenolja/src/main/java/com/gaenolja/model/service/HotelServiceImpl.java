@@ -1,5 +1,6 @@
 package com.gaenolja.model.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,6 +53,20 @@ public class HotelServiceImpl implements HotelService {
 	public List<Hotel> searchbyhashtag(String hashtag){
 		try {
 			List<Hotel> hotel = dao.searchbyhashtag(hashtag);
+			return hotel;
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	@Override
+	public List<Hotel> searchbydistance(double latitude, double longitude){
+		try {
+			HashMap<Object, Object> map = new HashMap<Object, Object>();
+			map.put("latitude", latitude);
+			map.put("longitude", longitude);
+			List<Hotel> hotel = dao.searchbydistance(map);
 			return hotel;
 		}catch(Exception e) {
 			e.printStackTrace();
