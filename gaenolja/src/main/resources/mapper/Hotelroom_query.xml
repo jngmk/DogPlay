@@ -18,7 +18,7 @@
 	</select>
 	
 	<select id="searchbyprice" parameterType="int" resultType="hotelroom">
-		select * from hotelroom where between #{price} - 10000 and #{price} + 10000
+		select * from hotelroom where price between #{price} - 10000 and #{price} + 10000
 	</select>
 	
 	<select id="searchbysize" parameterType="int" resultType="hotelroom">

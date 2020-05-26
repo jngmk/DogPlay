@@ -13,10 +13,10 @@
    </select>
    
 	<insert id="insert" parameterType="paid">
-		insert into paid
+		insert into paid(info)
 		values(#{info})
 	</insert>
-
+	
 	<update id="update" parameterType="paid">
 		update paid set
 		info = #{info}

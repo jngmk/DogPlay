@@ -23,6 +23,7 @@
 		<typeAlias type="com.gaenolja.model.dto.Likes"				alias="likes"/>
 		<typeAlias type="com.gaenolja.model.dto.HotelStar"			alias="hotelstar"/>
 		<typeAlias type="com.gaenolja.model.dto.Paid"				alias="paid"/>
+		<typeAlias type="com.gaenolja.model.dto.HotelLikes"			alias="hotellike"/>
 	</typeAliases>
 	<mappers>
 		 <mapper resource="mapper/Hotel_query.xml"/>

@@ -39,7 +39,7 @@ public class HotelroomController {
 		return handleSuccess(service.searchall());
 	}
 	
-	@GetMapping("/api/v1/hotelroom/searcha/{id}")
+	@GetMapping("/api/v1/hotelroom/search/{id}")
 	@ApiOperation("id로 방 나타내기")
 	public ResponseEntity<Map<String, Object>> search(@PathVariable int id){
 		return handleSuccess(service.search(id));

@@ -35,19 +35,20 @@
 	</select>
 
    	<insert id="insert" parameterType="reservation">
-		insert into reservation(hotelnumber, userid, dog, roomname, startdate, finishdate, paid, visit)
-		values(#{hotelnumber}, #{userid}, #{dog}, #{roomname}, #{startdate}, #{finishdate}, #{paid}, #{visit})
+		insert into reservation(paidid, hotelnumber, userid, dog, roomname, startdate, finishdate, count, visit)
+		values(#{paidid}, #{hotelnumber}, #{userid}, #{dog}, #{roomname}, #{startdate}, #{finishdate}, #{count}, #{visit})
 	</insert>
-
+	
 	<update id="update" parameterType="reservation">
 		update reservation set
+		paidid = #{paidid},
 		hotelnumber = #{hotelnumber},
 		userid = #{userid},
 		dog = #{dog},
 		roomname = #{roomname},
 		startdate = #{startdate},
 		finishdate = #{finishdate},
-		paid = #{paid},
+		count = #{count},
 		visit = #{visit}
 		where id = #{id}
 	</update>

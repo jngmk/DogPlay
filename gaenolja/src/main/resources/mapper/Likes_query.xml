@@ -12,6 +12,12 @@
    		where userid = #{userid}
     </select>
     
+   	<select id="searchhotelbyuserid" parameterType="String" resultType="hotellike">
+   		select hotel.*, likes.userid
+   		from likes left join hotel on hotel.hotelnumber = likes.hotelnumber
+   		where likes.userid = #{visitor};
+    </select>
+    
 	<select id="searchbyhotelnumber" parameterType="int" resultType="likes">
    		select *
    		from likes

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.gaenolja.model.dao.LikesDAO;
+import com.gaenolja.model.dto.HotelLikes;
 import com.gaenolja.model.dto.Likes;
 
 @Service
@@ -41,6 +42,17 @@ public class LikesServiceImpl implements LikesService {
 		try {
 			List<Likes> likes = dao.searchbyuserid(userid);
 			return likes;
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	@Override
+	public List<HotelLikes> searchhotelbyuserid(String visitor){
+		try {
+			List<HotelLikes> hotel = dao.searchhotelbyuserid(visitor);
+			return hotel;
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

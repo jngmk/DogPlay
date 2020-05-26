@@ -51,9 +51,9 @@ public class NotificationController {
 	}
 	
 	@GetMapping("/api/v1/notification/searchbytarget/{target}/target")
-	@ApiOperation("user로 notification 찾기")
+	@ApiOperation("target으로 notification 찾기")
 	public ResponseEntity<Map<String, Object>> searchbytarget(@PathVariable String target){
-		return handleSuccess(service.searchbyuserid(target));
+		return handleSuccess(service.searchbytarget(target));
 	}
 
 	@PostMapping("/api/v1/notification/insert")

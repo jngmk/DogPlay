@@ -49,6 +49,12 @@ public class LikesController {
 		return handleSuccess(service.searchbyhotelnumber(hotelnumber));
 	}
 	
+	@GetMapping("/api/v1/likes/searchbyhotel/{visitor}/visitor")
+	@ApiOperation("방문객별 likes + hotel 찾기")
+	public ResponseEntity<Map<String, Object>> searchhotelbyuser(@PathVariable String visitor){
+		return handleSuccess(service.searchhotelbyuserid(visitor));
+	}
+	
 	@PostMapping("/api/v1/likes/insert")
 	@ApiOperation("insert likes")
 	public ResponseEntity<Map<String, Object>> insert(@RequestBody Likes likes){

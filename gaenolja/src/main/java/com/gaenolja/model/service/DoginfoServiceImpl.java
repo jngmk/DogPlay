@@ -77,7 +77,7 @@ public class DoginfoServiceImpl implements DoginfoService {
 		}
 		return false;
 	};
-	
+
 	@Override
 	public boolean delete(int id) {
 		try {
