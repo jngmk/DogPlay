@@ -45,8 +45,8 @@ create table hotel (
     userid varchar(200) not null,
     hashid integer ,
     hotelname varchar(50) not null,
-    latitude float not null,
-    longitude float not null,
+    latitude decimal(10, 6) not null,
+    longitude decimal(10, 6) not null,
     address varchar(200) not null,
     contact varchar(50) not null,
     info text not null,
@@ -113,7 +113,7 @@ create table review (
 	hotelnumber integer,
     userid varchar(200),
     visitid integer,
-    star float not null,
+    star decimal(2, 1) not null,
     content varchar(300),
     created datetime not null default now(),
 	constraint FK_hotel_review foreign key(hotelnumber) references hotel(hotelnumber)
@@ -121,8 +121,7 @@ create table review (
     constraint FK_user_review foreign key(userid) references user(userid)
     on update cascade on delete cascade
 );
-drop table review;
-
+drop table response;
 create table response (
 	id integer primary key auto_increment,
 	reviewid integer,

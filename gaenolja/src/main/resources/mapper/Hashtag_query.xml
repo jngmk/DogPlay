@@ -10,8 +10,8 @@
 	</select>
 
 	<insert id="insert" parameterType="hashtag">
-		insert into hashtag(name)
-		values(#{name})
+		insert into hashtag(id, name)
+		values(#{id}, #{name})
 	</insert>
 
 	<update id="update" parameterType="hashtag">

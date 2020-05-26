@@ -1,5 +1,7 @@
 package com.gaenolja.model.dto;
 
+import java.util.List;
+
 public class HotelStar {
     private int hotelnumber;
 	private String userid;
@@ -14,6 +16,7 @@ public class HotelStar {
 	private double star;
 	private int countstar;
 	private int countreview;
+	private List<Hashtag> hashtag;
 	public int getHotelnumber() {
 		return hotelnumber;
 	}
@@ -91,5 +94,11 @@ public class HotelStar {
 	}
 	public void setCountreview(int countreview) {
 		this.countreview = countreview;
+	}
+	public List<Hashtag> getHashtag() {
+		return hashtag;
+	}
+	public void setHashtag(List<Hashtag> hashtag) {
+		this.hashtag = hashtag;
 	}
 }

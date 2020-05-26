@@ -8,7 +8,7 @@
 
 	<select id="search" parameterType="string" resultType="user">
    		select *
-   		from USER
+   		from user
    		where userId=#{userId}
    </select>
    
