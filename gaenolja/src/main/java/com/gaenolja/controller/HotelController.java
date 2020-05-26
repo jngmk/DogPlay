@@ -60,6 +60,12 @@ public class HotelController {
 		return handleSuccess(service.searchbyhashtag(hashtag));
 	}
 	
+	@GetMapping("/api/v1/hotel/searchbydistance/{latitude}/latitude/{longitude}/longitude/{distance}")
+	@ApiOperation("hotel + room 으로 reservation 찾기")
+	public ResponseEntity<Map<String, Object>> searchbydistance(@PathVariable double latitude, @PathVariable double longitude, @PathVariable int distance){
+		return handleSuccess(service.searchbydistance(latitude, longitude, distance));
+	}
+	
 	@PostMapping("/api/v1/hotel/insert")
 	@ApiOperation("insert hotel")
 	public ResponseEntity<Map<String, Object>> insert(@RequestBody Hotel hotel){
@@ -90,22 +96,28 @@ public class HotelController {
 		return handleSuccess(starservice.searchall());
 	}
 	
+	@GetMapping("/api/v1/hotelstar/searchbydistance/{latitude}/latitude/{longitude}/longitude/{distance}")
+	@ApiOperation("distance별로 hotel 찾기")
+	public ResponseEntity<Map<String, Object>> searchbydistancehotelstar(@PathVariable double latitude, @PathVariable double longitude, @PathVariable int distance){
+		return handleSuccess(starservice.searchbydistance(latitude, longitude, distance));
+	}
+	
 	@GetMapping("/api/v1/hotelstar/search/{hotelnumber}")
 	@ApiOperation("id로 hotel+star 나타내기")
 	public ResponseEntity<Map<String, Object>> searchhotelstar(@PathVariable int hotelnumber){
 		return handleSuccess(starservice.search(hotelnumber));
 	}
 	
-	@GetMapping("/api/v1/hotelstar/search/{hotelname}")
+	@GetMapping("/api/v1/hotelstar/search/hotelname/{hotelname}/latitude/{latitude}/longitude/{longitude}/distance/{distance}")
 	@ApiOperation("name으로 hotel+star 찾기")
-	public ResponseEntity<Map<String, Object>> searchhotelstarbyname(@PathVariable String hotelname){
-		return handleSuccess(starservice.searchbyname(hotelname));
+	public ResponseEntity<Map<String, Object>> searchhotelstarbyname(@PathVariable String hotelname, @PathVariable double latitude, @PathVariable double longitude, @PathVariable int distance){
+		return handleSuccess(starservice.searchbyname(hotelname, latitude, longitude, distance));
 	}
 	
-	@GetMapping("/api/v1/hotelstar/search/{hashtag}")
+	@GetMapping("/api/v1/hotelstar/search/hashtag/{hashtag}/latitude/{latitude}/longitude/{longitude}/distance/{distance}")
 	@ApiOperation("hashtag로 hotel+star 찾기")
-	public ResponseEntity<Map<String, Object>> searchhotelstarbyhashtag(@PathVariable String hashtag){
-		return handleSuccess(starservice.searchbyhashtag(hashtag));
+	public ResponseEntity<Map<String, Object>> searchhotelstarbyhashtag(@PathVariable String hashtag, @PathVariable double latitude, @PathVariable double longitude, @PathVariable int distance){
+		return handleSuccess(starservice.searchbyhashtag(hashtag, latitude, longitude, distance));
 	}
 	
 	@GetMapping("/api/v1/hoteldetail/search/{hotelnumber}")

@@ -61,11 +61,12 @@ public class HotelServiceImpl implements HotelService {
 	}
 	
 	@Override
-	public List<Hotel> searchbydistance(double latitude, double longitude){
+	public List<Hotel> searchbydistance(double latitude, double longitude, int distance){
 		try {
 			HashMap<Object, Object> map = new HashMap<Object, Object>();
 			map.put("latitude", latitude);
 			map.put("longitude", longitude);
+			map.put("distance", distance);
 			List<Hotel> hotel = dao.searchbydistance(map);
 			return hotel;
 		}catch(Exception e) {

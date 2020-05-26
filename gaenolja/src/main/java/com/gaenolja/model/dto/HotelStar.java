@@ -16,7 +16,14 @@ public class HotelStar {
 	private double star;
 	private int countstar;
 	private int countreview;
-	private List<Hashtag> hashtag;
+	private List<String> hashtag;
+	private double distance;
+	public double getDistance() {
+		return distance;
+	}
+	public void setDistance(double distance) {
+		this.distance = distance;
+	}
 	public int getHotelnumber() {
 		return hotelnumber;
 	}
@@ -95,10 +102,10 @@ public class HotelStar {
 	public void setCountreview(int countreview) {
 		this.countreview = countreview;
 	}
-	public List<Hashtag> getHashtag() {
+	public List<String> getHashtag() {
 		return hashtag;
 	}
-	public void setHashtag(List<Hashtag> hashtag) {
+	public void setHashtag(List<String> hashtag) {
 		this.hashtag = hashtag;
 	}
 }

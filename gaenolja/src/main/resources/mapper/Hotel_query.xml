@@ -33,11 +33,13 @@
 		userid = #{userid},
 		hashid = #{hashid},
 		hotelname = #{hotelname},
-		location = #{location},
+		latitude = #{latitude},
+		longitude = #{longitude},
+		address = #{address}, 
 		contact = #{contact},
 		info = #{info},
 		detail = #{detail}
-		where hotelnumber = #{hotelnumer}
+		where hotelnumber = #{hotelnumber}
 	</update>
 
 	<delete id="delete" parameterType="int">

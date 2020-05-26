@@ -42,13 +42,39 @@ public class HotelStarServiceImpl implements HotelStarService{
 				star.setCountreview(reviewdao.countreview(hotelnumber));
 				star.setCountstar(reviewdao.countbyhotelnumber(hotelnumber));
 				String hashid = star.getHashid();
-				List<Hashtag> list = new ArrayList<Hashtag>();
+				List<String> list = new ArrayList<String>();
 				for (int idx=0;idx<hashid.length();idx++) {
-					list.add(hashtagdao.search(Character.toString(hashid.charAt(idx))));
+					list.add(hashtagdao.search(Character.toString(hashid.charAt(idx))).getName());
 				}
 				star.setHashtag(list);
 			}
 			return hotelstar;
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	@Override
+	public List<HotelStar> searchbydistance(double latitude, double longitude, int distance){
+		try {
+			HashMap<Object, Object> map = new HashMap<Object, Object>();
+			map.put("latitude", latitude);
+			map.put("longitude", longitude);
+			map.put("distance", distance);
+			List<HotelStar> hotel = dao.searchbydistance(map);
+			for (HotelStar star:hotel) {
+				int hotelnumber = star.getHotelnumber();
+				star.setCountreview(reviewdao.countreview(hotelnumber));
+				star.setCountstar(reviewdao.countbyhotelnumber(hotelnumber));
+				String hashid = star.getHashid();
+				List<String> list = new ArrayList<String>();
+				for (int idx=0;idx<hashid.length();idx++) {
+					list.add(hashtagdao.search(Character.toString(hashid.charAt(idx))).getName());
+				}
+				star.setHashtag(list);
+			}
+			return hotel;
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -62,9 +88,9 @@ public class HotelStarServiceImpl implements HotelStarService{
 			hotelstar.setCountreview(reviewdao.countreview(hotelnumber));
 			hotelstar.setCountstar(reviewdao.countbyhotelnumber(hotelnumber));
 			String hashid = hotelstar.getHashid();
-			List<Hashtag> list = new ArrayList<Hashtag>();
+			List<String> list = new ArrayList<String>();
 			for (int idx=0;idx<hashid.length();idx++) {
-				list.add(hashtagdao.search(Character.toString(hashid.charAt(idx))));
+				list.add(hashtagdao.search(Character.toString(hashid.charAt(idx))).getName());
 			}
 			hotelstar.setHashtag(list);
 			return hotelstar;
@@ -75,17 +101,22 @@ public class HotelStarServiceImpl implements HotelStarService{
 	}
 	
 	@Override
-	public List<HotelStar> searchbyname(String hotelname){
+	public List<HotelStar> searchbyname(String hotelname, double latitude, double longitude, int distance){
 		try {
-			List<HotelStar> hotelstar = dao.searchbyname(hotelname);
+			HashMap<Object, Object> map = new HashMap<Object, Object>();
+			map.put("hotelname", hotelname);
+			map.put("latitude", latitude);
+			map.put("longitude", longitude);
+			map.put("distance", distance);
+			List<HotelStar> hotelstar = dao.searchbyname(map);
 			for (HotelStar star:hotelstar) {
 				int hotelnumber = star.getHotelnumber();
 				star.setCountreview(reviewdao.countreview(hotelnumber));
 				star.setCountstar(reviewdao.countbyhotelnumber(hotelnumber));
 				String hashid = star.getHashid();
-				List<Hashtag> list = new ArrayList<Hashtag>();
+				List<String> list = new ArrayList<String>();
 				for (int idx=0;idx<hashid.length();idx++) {
-					list.add(hashtagdao.search(Character.toString(hashid.charAt(idx))));
+					list.add(hashtagdao.search(Character.toString(hashid.charAt(idx))).getName());
 				}
 				star.setHashtag(list);
 			}
@@ -97,17 +128,22 @@ public class HotelStarServiceImpl implements HotelStarService{
 	}
 	
 	@Override
-	public List<HotelStar> searchbyhashtag(String hashtag){
+	public List<HotelStar> searchbyhashtag(String hashtag, double latitude, double longitude, int distance){
 		try {
-			List<HotelStar> hotelstar = dao.searchbyhashtag(hashtag);
+			HashMap<Object, Object> map = new HashMap<Object, Object>();
+			map.put("hashtag", hashtag);
+			map.put("latitude", latitude);
+			map.put("longitude", longitude);
+			map.put("distance", distance);
+			List<HotelStar> hotelstar = dao.searchbyhashtag(map);
 			for (HotelStar star:hotelstar) {
 				int hotelnumber = star.getHotelnumber();
 				star.setCountreview(reviewdao.countreview(hotelnumber));
 				star.setCountstar(reviewdao.countbyhotelnumber(hotelnumber));
 				String hashid = star.getHashid();
-				List<Hashtag> list = new ArrayList<Hashtag>();
+				List<String> list = new ArrayList<String>();
 				for (int idx=0;idx<hashid.length();idx++) {
-					list.add(hashtagdao.search(Character.toString(hashid.charAt(idx))));
+					list.add(hashtagdao.search(Character.toString(hashid.charAt(idx))).getName());
 				}
 				star.setHashtag(list);
 			}
@@ -126,9 +162,9 @@ public class HotelStarServiceImpl implements HotelStarService{
 			hotelstar.setCountreview(reviewdao.countreview(hotelnumber));
 			hotelstar.setCountstar(reviewdao.countbyhotelnumber(hotelnumber));
 			String hashid = hotelstar.getHashid();
-			List<Hashtag> list = new ArrayList<Hashtag>();
+			List<String> list = new ArrayList<String>();
 			for (int idx=0;idx<hashid.length();idx++) {
-				list.add(hashtagdao.search(Character.toString(hashid.charAt(idx))));
+				list.add(hashtagdao.search(Character.toString(hashid.charAt(idx))).getName());
 			}
 			hotelstar.setHashtag(list);
 			map.put("HotelStar", hotelstar);
