@@ -2,8 +2,6 @@ package com.gaenolja.model.service;
 
 import java.util.List;
 
-import org.json.simple.JSONObject;
-import org.json.simple.JSONValue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -65,7 +63,6 @@ public class HotelServiceImpl implements HotelService {
 	public boolean insert(Hotel hotel) {
 		try {
 			Object obj = hotel.getDetail();
-			System.out.println(obj.toString());
 			Gson gson = new Gson();
 			String json = gson.toJson(obj);
 			hotel.setDetail(json);
@@ -80,6 +77,10 @@ public class HotelServiceImpl implements HotelService {
 	@Override
 	public boolean update(Hotel hotel) {
 		try {
+			Object obj = hotel.getDetail();
+			Gson gson = new Gson();
+			String json = gson.toJson(obj);
+			hotel.setDetail(json);
 			dao.update(hotel);
 			return true;
 		}catch (Exception e) {

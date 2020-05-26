@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.gaenolja.model.dao.ReservationDAO;
 import com.gaenolja.model.dto.Reservation;
+import com.google.gson.Gson;
 
 @Service
 public class ReservationServiceImpl implements ReservationService{
@@ -107,6 +108,16 @@ public class ReservationServiceImpl implements ReservationService{
 	@Override
 	public boolean insert(Reservation reservation) {
 		try {
+			Object obj1 = reservation.getDog();
+			Object obj2 = reservation.getPaid();
+			Object obj3 = reservation.getRoomname();
+			Gson gson = new Gson();
+			String dog = gson.toJson(obj1);
+			String paid = gson.toJson(obj2);
+			String roomname = gson.toJson(obj3);
+			reservation.setDog(dog);
+			reservation.setPaid(paid);
+			reservation.setRoomname(roomname);
 			dao.insert(reservation);
 			return true;
 		}catch (Exception e) {
@@ -118,6 +129,16 @@ public class ReservationServiceImpl implements ReservationService{
 	@Override
 	public boolean update(Reservation reservation) {
 		try {
+			Object obj1 = reservation.getDog();
+			Object obj2 = reservation.getPaid();
+			Object obj3 = reservation.getRoomname();
+			Gson gson = new Gson();
+			String dog = gson.toJson(obj1);
+			String paid = gson.toJson(obj2);
+			String roomname = gson.toJson(obj3);
+			reservation.setDog(dog);
+			reservation.setPaid(paid);
+			reservation.setRoomname(roomname);
 			dao.update(reservation);
 			return true;
 		}catch (Exception e) {

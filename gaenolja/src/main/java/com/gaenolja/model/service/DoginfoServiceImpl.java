@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.gaenolja.model.dao.DoginfoDAO;
 import com.gaenolja.model.dto.Doginfo;
+import com.google.gson.Gson;
 
 @Service
 public class DoginfoServiceImpl implements DoginfoService {
@@ -50,6 +51,10 @@ public class DoginfoServiceImpl implements DoginfoService {
 	@Override
 	public boolean insert(Doginfo doginfo) {
 		try {
+			Object obj = doginfo.getDetail();
+			Gson gson = new Gson();
+			String json = gson.toJson(obj);
+			doginfo.setDetail(json);
 			dao.insert(doginfo);
 			return true;
 		}catch (Exception e) {
@@ -61,6 +66,10 @@ public class DoginfoServiceImpl implements DoginfoService {
 	@Override
 	public boolean update(Doginfo doginfo) {
 		try {
+			Object obj = doginfo.getDetail();
+			Gson gson = new Gson();
+			String json = gson.toJson(obj);
+			doginfo.setDetail(json);
 			dao.insert(doginfo);
 			return true;
 		}catch (Exception e) {
