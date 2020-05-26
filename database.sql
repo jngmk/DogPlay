@@ -130,9 +130,9 @@ create table response (
     heart integer not null,
     content varchar(300),
     created datetime not null default now(),
-	constraint FK_hotel_response foreign key(hotelnumber) references hotel(hotelnumber)
-    on update cascade on delete cascade,
     constraint FK_user_response foreign key(userid) references user(userid)
+    on update cascade on delete cascade,
+    constraint FK_review_response foreign key(reviewid) references review(id)
     on update cascade on delete cascade
 );
 

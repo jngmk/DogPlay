@@ -1,5 +1,6 @@
 package com.gaenolja.model.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.gaenolja.model.dto.Review;
@@ -18,4 +19,5 @@ public interface ReviewService {
 	public List<Review> goodreview(int hotelnumber);
 	public List<Review> badreview(int hotelnumber);
 	public List<Review> searchbystar(int hotelnumber, float star);
+	public List<HashMap<Object, Object>> reviewwithresponse(int hotelnumber);
 }

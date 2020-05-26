@@ -1,11 +1,13 @@
 package com.gaenolja.model.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.gaenolja.model.dao.ResponseDAO;
 import com.gaenolja.model.dao.ReviewDAO;
 import com.gaenolja.model.dto.Review;
 
@@ -14,6 +16,9 @@ public class ReviewServiceImpl implements ReviewService {
 	
 	@Autowired
 	ReviewDAO dao;
+	
+	@Autowired
+	ResponseDAO responsedao;
 	
 	@Override
 	public List<Review> searchall(){
@@ -101,6 +106,24 @@ public class ReviewServiceImpl implements ReviewService {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	@Override
+	public List<HashMap<Object, Object>> reviewwithresponse(int hotelnumber){
+		List<HashMap<Object, Object>> list = new ArrayList<HashMap<Object, Object>>();
+		try {
+			List<Review> reviews = dao.reviewwithcontent(hotelnumber);
+			for (Review review:reviews) {
+				int reviewid = review.getId();
+				HashMap<Object, Object> map = new HashMap<Object, Object>();
+				map.put("review", review);
+				map.put("response", responsedao.search(reviewid));
+				list.add(map);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return list;
 	}
 
 	@Override

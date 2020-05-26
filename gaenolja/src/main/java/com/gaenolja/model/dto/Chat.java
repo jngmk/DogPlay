@@ -39,5 +39,10 @@ public class Chat {
 	public void setMessage(String message) {
 		this.message = message;
 	}
-	
+	public LocalDateTime getCreated() {
+		return created;
+	}
+	public void setCreated(LocalDateTime created) {
+		this.created = created;
+	}
 }

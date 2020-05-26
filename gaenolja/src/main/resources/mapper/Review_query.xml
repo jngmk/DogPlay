@@ -42,6 +42,7 @@
    		select *
    		from review
    		where hotelnumber= #{hotelnumber}  and not content is null
+ 		order by reviewid desc
     </select>
 
 	<select id="searchbyuserid" parameterType="String" resultType="review">
