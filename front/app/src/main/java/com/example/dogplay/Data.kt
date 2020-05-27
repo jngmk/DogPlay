@@ -1,10 +1,12 @@
 package com.example.dogplay
 
 data class Hotel(var title: String, var img:String, var eval:String, var review:String, var address:String, var price:String)
+//data class Hotel(var address: String, var contact:String, var detail:String, var hashid:String, var hotelname:String, var hotelnumber:Long, var info:String, var latitude:Double, var longitude:Double, var userid:String)
 data class Dog(var img:String)
 data class Room(var title:String)
 data class Info(var title:String, var sub:String)
-
+data class Chatting(var id:String, var chats:Array<String>)
+//
 object Supplier{
 
     var hotels = listOf<Hotel>(
@@ -30,6 +32,19 @@ object Supplier{
         Info("몰라몰라 점!", "잘 사용해주시고 \n또 잘 사용해주세요!"),
         Info("장기숙박 점!", "잘 사용해주시고 \n또 잘 사용해주세요! \n서비스 숙박 35일"),
         Info("주의해야할 점!", "잘 사용해주시고 \n또 잘 사용해주세요! \n안가르쳐줘")
+    )
+
+    var chattings = listOf<Chatting>(
+        Chatting("박권응", arrayOf("안녕하세요","좋은아침입니다","안녕히가세요")),
+        Chatting("양희철", arrayOf("왜요", "뭐요", "싫어요")),
+        Chatting("김현화", arrayOf("글쎼요", "모르겠는데요", "귀찮아요")),
+        Chatting("김정", arrayOf("바빠요", "잠만요", "몰라요")),
+        Chatting("양희철", arrayOf("왜요", "뭐요", "싫어요")),
+        Chatting("김현화", arrayOf("글쎼요", "모르겠는데요", "귀찮아요")),
+        Chatting("김정", arrayOf("바빠요", "잠만요", "몰라요")),
+        Chatting("양희철", arrayOf("왜요", "뭐요", "싫어요")),
+        Chatting("김현화", arrayOf("글쎼요", "모르겠는데요", "귀찮아요")),
+        Chatting("김정", arrayOf("바빠요", "잠만요", "몰라요"))
     )
 }
 

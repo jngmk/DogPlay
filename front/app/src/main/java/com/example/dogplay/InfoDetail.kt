@@ -21,7 +21,6 @@ import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.hotel_detail.*
 import kotlinx.android.synthetic.main.info_detail.*
 
