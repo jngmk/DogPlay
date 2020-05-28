@@ -13,8 +13,9 @@ import kotlinx.android.synthetic.main.home_list.view.address
 import kotlinx.android.synthetic.main.home_list.view.eval
 import kotlinx.android.synthetic.main.home_list.view.hotelName
 import kotlinx.android.synthetic.main.hotel_detail.view.*
+import kotlinx.android.synthetic.main.room_list.view.*
 
-class RoomAdapter(var context:Context, var rooms:List<Room>) :
+class RoomAdapter(var context:Context, var rooms:Array<HashMap<String,Any>>) :
     RecyclerView.Adapter<RoomAdapter.ViewHolder>(){
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
@@ -36,9 +37,12 @@ class RoomAdapter(var context:Context, var rooms:List<Room>) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val hotel = rooms[position]
+        val room = rooms[position]
+        holder.itemView.roomName.text = room["roomname"].toString()
+        holder.itemView.price.text = room["price"].toString()
+        holder.itemView.size.text = "${room["minsize"].toString()} ~ ${room["maxsize"].toString()}"
+        holder.itemView.cnt.text = room["count"].toString()
         holder.itemView.setOnClickListener{
-            Toast.makeText(context,"hi i'm" + rooms[position].title!!, Toast.LENGTH_LONG).show()
         }
     }
 }

@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
     <androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         >
@@ -44,22 +43,22 @@
                 android:text="사이즈 들어감"
                 android:textSize="10dp" />
 
-            <TextView
-                android:id="@+id/time"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                app:layout_constraintLeft_toLeftOf="@+id/size"
-                app:layout_constraintTop_toBottomOf="@+id/size"
-                android:layout_marginTop="40dp"
-                android:text="시간이 들어감"
-                android:textSize="10dp" />
+        <TextView
+            android:id="@+id/cnt"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginTop="40dp"
+            android:text="자릿수"
+            android:textSize="10dp"
+            app:layout_constraintLeft_toLeftOf="@+id/size"
+            app:layout_constraintTop_toBottomOf="@+id/size" />
 
             <TextView
                 android:id="@+id/roomPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="@id/time"
+                app:layout_constraintTop_toTopOf="@id/cnt"
                 android:text="가격정보가 들어갈 자리"
                 android:layout_marginRight="15dp"
                 android:textSize="15dp" />

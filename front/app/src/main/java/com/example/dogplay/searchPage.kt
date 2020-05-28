@@ -8,19 +8,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.dogplay.API.Companion.server
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.internal.disposables.ArrayCompositeDisposable
 import kotlinx.android.synthetic.main.activity_main.*
-import okhttp3.OkHttpClient
-import okhttp3.Response
-import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
-import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
-import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.GET
-import retrofit2.http.POST
-import kotlin.Array as Array
+import retrofit2.Callback
 
 
 class searchPage : Fragment() {
@@ -38,9 +30,34 @@ class searchPage : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        val layoutManager = LinearLayoutManager(this.context)
-        layoutManager.orientation = LinearLayoutManager.VERTICAL
-        hotelList.layoutManager = layoutManager
+        Log.d("start", "메인화면 출력")
+//        val retrofit = Retrofit.Builder()
+//            .baseUrl("http://k02a4021.p.ssafy.io:8080")
+//            .addConverterFactory(GsonConverterFactory.create())
+//            .build()
+//        var server = retrofit.create(Service::class.java)
+        // retrofit server -> server() 로 대체
+        val server = server()
+        server!!.getRequest().enqueue(object : Callback<HotelSerchDTO> {
+            override fun onFailure(call: Call<HotelSerchDTO>, t: Throwable) {
+                Log.d("faile",t.toString())
+            }
+
+            override fun onResponse(call: Call<HotelSerchDTO>, response: retrofit2.Response<HotelSerchDTO>) {
+                Log.d("success",response?.body().toString())
+                var data: HotelSerchDTO? = response.body()
+                val layoutManager = LinearLayoutManager(context)
+                layoutManager.orientation = LinearLayoutManager.VERTICAL
+                hotelList.layoutManager = layoutManager
+                val adapter = HotelAdapter(context!!,data!!.data )
+                hotelList.adapter = adapter
+
+                for (i in data!!.data){
+                    Log.i("data", i.toString())
+                }
+            }
+        })
+
 
         val layoutManager2 = LinearLayoutManager(this.context)
         layoutManager2.orientation = LinearLayoutManager.HORIZONTAL
@@ -49,12 +66,7 @@ class searchPage : Fragment() {
 //        keyboardListener(MainActivity(), )
 
 
-        toolbar.setOnClickListener{
-            searchBar.clearFocus()
-        }
-
-        val adapter = HotelAdapter(this.requireContext(), Supplier.hotels)
-        hotelList.adapter = adapter
+        searchBar.clearFocus()
 
         val adapter2 = DogAdapter(this.requireContext(), Supplier.dogs)
         dogList.adapter = adapter2

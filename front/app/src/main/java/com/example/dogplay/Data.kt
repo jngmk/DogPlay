@@ -3,7 +3,7 @@ package com.example.dogplay
 data class Hotel(var title: String, var img:String, var eval:String, var review:String, var address:String, var price:String)
 //data class Hotel(var address: String, var contact:String, var detail:String, var hashid:String, var hotelname:String, var hotelnumber:Long, var info:String, var latitude:Double, var longitude:Double, var userid:String)
 data class Dog(var img:String)
-data class Room(var title:String)
+data class Room(var id:String)
 data class Info(var title:String, var sub:String)
 data class Chatting(var id:String, var chats:Array<String>)
 //
