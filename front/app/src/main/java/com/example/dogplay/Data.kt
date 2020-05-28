@@ -6,7 +6,7 @@ data class Dog(var img:String)
 data class Room(var id:String)
 data class Info(var title:String, var sub:String)
 data class Chatting(var id:String, var chats:Array<String>)
-//
+
 object Supplier{
 
     var hotels = listOf<Hotel>(

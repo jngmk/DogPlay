@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <TextView
+        android:id="@+id/selText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_margin="20dp"
+        android:textSize="50dp"
+        android:text="반려견 선택"
+        />
+    <GridLayout
+        android:id="@+id/SelectDog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:columnCount="4"
+        app:layout_constraintTop_toBottomOf="@id/selText"
+        android:layout_margin="15dp"
+        >
+
+
+    </GridLayout>
+    
+    <TextView
+        android:id="@+id/mydog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="@id/selText"
+        app:layout_constraintTop_toBottomOf="@id/SelectDog"
+        android:text="내 반려견"
+        android:textSize="30dp"
+        />
+
+    <GridLayout
+        android:id="@+id/MyDogList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/mydog"
+        android:layout_margin="15dp"
+        >
+        <TextView
+            android:id="@+id/PlusDog"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:padding="3dp"
+            android:background="@drawable/rounded3"
+            android:text="+"
+            android:textAlignment="center"
+            android:layout_gravity="center_vertical"
+            android:textSize="50dp"
+            />
+
+    </GridLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -18,6 +18,11 @@ data class HotelDetailDTO(
     var data:HashMap<String,Any>
 )
 
+data class HotelRoomDTO(
+    @SerializedName("data")
+    var data:Array<HashMap<String,Any>>
+)
+
 
 interface Service {
     @GET("/api/v1/hotelstar/searchall")

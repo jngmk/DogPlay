@@ -30,7 +30,7 @@ class searchPage : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        Log.d("start", "메인화면 출력")
+
 //        val retrofit = Retrofit.Builder()
 //            .baseUrl("http://k02a4021.p.ssafy.io:8080")
 //            .addConverterFactory(GsonConverterFactory.create())
@@ -73,6 +73,11 @@ class searchPage : Fragment() {
 
         curdate.setOnClickListener{
             val intent = Intent(this.context, CalendarView::class.java)
+            startActivity(intent)
+        }
+
+        dogList.setOnClickListener{
+            val intent = Intent(this.context,MyDogPage::class.java)
             startActivity(intent)
         }
     }

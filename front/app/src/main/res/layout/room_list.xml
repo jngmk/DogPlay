@@ -34,34 +34,34 @@
                 />
 
 
-            <TextView
-                android:id="@+id/size"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                app:layout_constraintLeft_toLeftOf="@+id/roomName"
-                app:layout_constraintTop_toBottomOf="@+id/roomName"
-                android:text="사이즈 들어감"
-                android:textSize="10dp" />
+        <TextView
+            android:id="@+id/size"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:text="사이즈 들어감"
+            android:textSize="15dp"
+            app:layout_constraintLeft_toLeftOf="@+id/roomName"
+            app:layout_constraintTop_toBottomOf="@+id/roomName" />
 
         <TextView
             android:id="@+id/cnt"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="30dp"
             android:text="자릿수"
-            android:textSize="10dp"
+            android:textSize="15dp"
             app:layout_constraintLeft_toLeftOf="@+id/size"
             app:layout_constraintTop_toBottomOf="@+id/size" />
 
-            <TextView
-                android:id="@+id/roomPrice"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="@id/cnt"
-                android:text="가격정보가 들어갈 자리"
-                android:layout_marginRight="15dp"
-                android:textSize="15dp" />
+        <TextView
+            android:id="@+id/roomPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginRight="30dp"
+            android:text="가격정보가 들어갈 자리"
+            android:textSize="22dp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/cnt" />
 
         <View
             android:layout_width="match_parent"

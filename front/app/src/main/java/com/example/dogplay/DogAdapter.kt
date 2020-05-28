@@ -20,9 +20,6 @@ class DogAdapter(var context:Context, var dogs:List<Dog>) :
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
 
         init {
-            itemView.setOnClickListener{
-                Toast.makeText(context,"bow", Toast.LENGTH_LONG).show()
-            }
         }
     }
 
@@ -38,7 +35,8 @@ class DogAdapter(var context:Context, var dogs:List<Dog>) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val hotel = dogs[position]
         holder.itemView.setOnClickListener{
-            Toast.makeText(context, dogs[position].img!!, Toast.LENGTH_LONG).show()
+            val intent = Intent(this.context, MyDogPage::class.java)
+            context.startActivity(intent)
         }
     }
 }
