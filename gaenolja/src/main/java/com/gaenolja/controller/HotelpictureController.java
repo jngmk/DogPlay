@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gaenolja.model.dto.Hotelpicture;
@@ -38,21 +38,21 @@ public class HotelpictureController {
 		return handleSuccess(service.searchall());
 	}
 	
-	@GetMapping("/api/v1/hotelpicture/search/{id}")
+	@GetMapping("/api/v1/hotelpicture/search")
 	@ApiOperation("id로 hotelpicture 나타내기")
-	public ResponseEntity<Map<String, Object>> search(@PathVariable int id){
+	public ResponseEntity<Map<String, Object>> search(@RequestParam int id){
 		return handleSuccess(service.search(id));
 	}
 	
-	@GetMapping("/api/v1/hotelpicture/searchbyhotel/{hotelnumber}")
+	@GetMapping("/api/v1/hotelpicture/searchbyhotel")
 	@ApiOperation("호텔별 사진 나타내기")
-	public ResponseEntity<Map<String, Object>> searchbythotel(@PathVariable int hotelnumber){
+	public ResponseEntity<Map<String, Object>> searchbythotel(@RequestParam int hotelnumber){
 		return handleSuccess(service.searchbyhotel(hotelnumber));
 	}
 	
-	@GetMapping("/api/v1/hotelpicture/searchbyhotel/{hotelnumber}/name/{name}")
+	@GetMapping("/api/v1/hotelpicture/searchbyhotel/name")
 	@ApiOperation("호텔 및 이름으로 사진 찾기")
-	public ResponseEntity<Map<String, Object>> search(@PathVariable int hotelnumber,@PathVariable String name){
+	public ResponseEntity<Map<String, Object>> search(@RequestParam int hotelnumber,@RequestParam String name){
 		return handleSuccess(service.searchbyhotelandname(hotelnumber, name));
 	}
 		
@@ -72,9 +72,9 @@ public class HotelpictureController {
 		else return handleFail("fail", HttpStatus.OK);
 	}	
 
-	@DeleteMapping("/api/v1/hotelpicture/delete/{id}")
+	@DeleteMapping("/api/v1/hotelpicture/delete")
 	@ApiOperation("delete hashtag")
-	public ResponseEntity<Map<String, Object>> delete(@PathVariable int id){
+	public ResponseEntity<Map<String, Object>> delete(@RequestParam int id){
 		boolean res = service.delete(id);
 		if (res) return handleSuccess("success");
 		else return handleFail("fail", HttpStatus.OK);

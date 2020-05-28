@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gaenolja.model.dto.User;
@@ -39,9 +39,9 @@ public class UserController {
 		return handleSuccess(service.searchall());
 	}
 
-	@GetMapping("/api/v1/user/searchbyuserid/{userid}/userid")
+	@GetMapping("/api/v1/user/searchbyuserid")
 	@ApiOperation("userid로 user 찾기")
-	public ResponseEntity<Map<String, Object>> searchbyuserid(@PathVariable String userid){
+	public ResponseEntity<Map<String, Object>> searchbyuserid(@RequestParam String userid){
 		return handleSuccess(service.search(userid));
 	}
 	
@@ -74,9 +74,9 @@ public class UserController {
 		else return handleFail("fail", HttpStatus.OK);
 	}	
 
-	@DeleteMapping("/api/v1/user/delete/{userid}")
+	@DeleteMapping("/api/v1/user/delete")
 	@ApiOperation("delete user")
-	public ResponseEntity<Map<String, Object>> delete(@PathVariable String userid){
+	public ResponseEntity<Map<String, Object>> delete(@RequestParam String userid){
 		boolean res = service.delete(userid);
 		if (res) return handleSuccess("success");
 		else return handleFail("fail", HttpStatus.OK);

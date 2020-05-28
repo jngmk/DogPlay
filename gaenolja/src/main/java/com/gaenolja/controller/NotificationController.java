@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gaenolja.model.dto.Notification;
@@ -38,21 +38,21 @@ public class NotificationController {
 		return handleSuccess(service.searchall());
 	}
 
-	@GetMapping("/api/v1/notification/searchbyuserid/{userid}/userid")
+	@GetMapping("/api/v1/notification/search/userid")
 	@ApiOperation("user로 notification 찾기")
-	public ResponseEntity<Map<String, Object>> searchbyuserid(@PathVariable String userid){
+	public ResponseEntity<Map<String, Object>> searchbyuserid(@RequestParam String userid){
 		return handleSuccess(service.searchbyuserid(userid));
 	}
 	
-	@GetMapping("/api/v1/notification/searchbyhotel/{hotelnumber}")
+	@GetMapping("/api/v1/notification/searchbyhotel")
 	@ApiOperation("호텔별 notification 찾기")
-	public ResponseEntity<Map<String, Object>> searchbyhotel(@PathVariable int hotelnumber){
+	public ResponseEntity<Map<String, Object>> searchbyhotel(@RequestParam int hotelnumber){
 		return handleSuccess(service.searchbyhotelnumber(hotelnumber));
 	}
 	
-	@GetMapping("/api/v1/notification/searchbytarget/{target}/target")
+	@GetMapping("/api/v1/notification/searchbytarget")
 	@ApiOperation("target으로 notification 찾기")
-	public ResponseEntity<Map<String, Object>> searchbytarget(@PathVariable String target){
+	public ResponseEntity<Map<String, Object>> searchbytarget(@RequestParam String target){
 		return handleSuccess(service.searchbytarget(target));
 	}
 
@@ -72,9 +72,9 @@ public class NotificationController {
 		else return handleFail("fail", HttpStatus.OK);
 	}	
 
-	@DeleteMapping("/api/v1/notification/delete/{id}")
+	@DeleteMapping("/api/v1/notification/delete")
 	@ApiOperation("delete notification")
-	public ResponseEntity<Map<String, Object>> delete(@PathVariable int id){
+	public ResponseEntity<Map<String, Object>> delete(@RequestParam int id){
 		boolean res = service.delete(id);
 		if (res) return handleSuccess("success");
 		else return handleFail("fail", HttpStatus.OK);

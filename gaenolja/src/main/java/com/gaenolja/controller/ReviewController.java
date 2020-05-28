@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gaenolja.model.dto.Review;
@@ -38,27 +38,27 @@ public class ReviewController {
 		return handleSuccess(service.searchall());
 	}
 	
-	@GetMapping("/api/v1/review/search/{id}")
+	@GetMapping("/api/v1/review/search")
 	@ApiOperation("id로 review 나타내기")
-	public ResponseEntity<Map<String, Object>> search(@PathVariable int id){
+	public ResponseEntity<Map<String, Object>> search(@RequestParam int id){
 		return handleSuccess(service.search(id));
 	}
 	
-	@GetMapping("/api/v1/review/searchbyuserid/{userid}/userid")
+	@GetMapping("/api/v1/review/searchbyuserid")
 	@ApiOperation("user로 review 찾기")
-	public ResponseEntity<Map<String, Object>> searchbyuserid(@PathVariable String userid){
+	public ResponseEntity<Map<String, Object>> searchbyuserid(@RequestParam String userid){
 		return handleSuccess(service.searchbyuserid(userid));
 	}
 	
-	@GetMapping("/api/v1/review/searchbyhotel/{hotelnumber}")
+	@GetMapping("/api/v1/review/searchbyhotel")
 	@ApiOperation("호텔별 review 찾기")
-	public ResponseEntity<Map<String, Object>> searchbyhotel(@PathVariable int hotelnumber){
+	public ResponseEntity<Map<String, Object>> searchbyhotel(@RequestParam int hotelnumber){
 		return handleSuccess(service.searchbyhotelnumber(hotelnumber));
 	}
 	
-	@GetMapping("/api/v1/review/searchbystar/{hotelnumber}/star/{star}")
+	@GetMapping("/api/v1/review/searchbystar/star")
 	@ApiOperation("호텔별 평점별 review 찾기")
-	public ResponseEntity<Map<String, Object>> searchbystar(@PathVariable int hotelnumber, @PathVariable float star){
+	public ResponseEntity<Map<String, Object>> searchbystar(@RequestParam int hotelnumber, @RequestParam float star){
 		return handleSuccess(service.searchbystar(hotelnumber, star));
 	}
 	
@@ -78,9 +78,9 @@ public class ReviewController {
 		else return handleFail("fail", HttpStatus.OK);
 	}	
 
-	@DeleteMapping("/api/v1/review/delete/{id}")
+	@DeleteMapping("/api/v1/review/delete")
 	@ApiOperation("delete review")
-	public ResponseEntity<Map<String, Object>> delete(@PathVariable int id){
+	public ResponseEntity<Map<String, Object>> delete(@RequestParam int id){
 		boolean res = service.delete(id);
 		if (res) return handleSuccess("success");
 		else return handleFail("fail", HttpStatus.OK);

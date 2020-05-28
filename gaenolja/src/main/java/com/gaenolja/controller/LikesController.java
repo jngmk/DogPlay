@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gaenolja.model.dto.Likes;
@@ -37,21 +37,21 @@ public class LikesController {
 		return handleSuccess(service.searchall());
 	}
 	
-	@GetMapping("/api/v1/likes/searchbyuserid/{userid}/userid")
+	@GetMapping("/api/v1/likes/search/userid")
 	@ApiOperation("user로 likes 찾기")
-	public ResponseEntity<Map<String, Object>> searchbyuserid(@PathVariable String userid){
+	public ResponseEntity<Map<String, Object>> searchbyuserid(@RequestParam String userid){
 		return handleSuccess(service.searchbyuserid(userid));
 	}
 	
-	@GetMapping("/api/v1/likes/searchbyhotel/{hotelnumber}")
+	@GetMapping("/api/v1/likes/searchbyhotel")
 	@ApiOperation("호텔별 likes 찾기")
-	public ResponseEntity<Map<String, Object>> searchbyhotel(@PathVariable int hotelnumber){
+	public ResponseEntity<Map<String, Object>> searchbyhotel(@RequestParam int hotelnumber){
 		return handleSuccess(service.searchbyhotelnumber(hotelnumber));
 	}
 	
-	@GetMapping("/api/v1/likes/searchbyhotel/{visitor}/visitor")
+	@GetMapping("/api/v1/likes/search/visitor")
 	@ApiOperation("방문객별 likes + hotel 찾기")
-	public ResponseEntity<Map<String, Object>> searchhotelbyuser(@PathVariable String visitor){
+	public ResponseEntity<Map<String, Object>> searchhotelbyuser(@RequestParam String visitor){
 		return handleSuccess(service.searchhotelbyuserid(visitor));
 	}
 	
@@ -63,9 +63,9 @@ public class LikesController {
 		else return handleFail("fail", HttpStatus.OK);
 	}
 		
-	@DeleteMapping("/api/v1/likes/delete/{userid}/hotel/{hotelnumber}")
+	@DeleteMapping("/api/v1/likes/delete/hotel")
 	@ApiOperation("delete likes")
-	public ResponseEntity<Map<String, Object>> delete(@PathVariable String userid, @PathVariable int hotelnumber){
+	public ResponseEntity<Map<String, Object>> delete(@RequestParam String userid, @RequestParam int hotelnumber){
 		boolean res = service.delete(userid, hotelnumber);
 		if (res) return handleSuccess("success");
 		else return handleFail("fail", HttpStatus.OK);

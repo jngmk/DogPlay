@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gaenolja.model.dto.Paid;
@@ -37,9 +37,9 @@ public class PaidController {
 		return handleSuccess(service.searchall());
 	}
 	
-	@GetMapping("/api/v1/paid/{id}")
+	@GetMapping("/api/v1/paid/search")
 	@ApiOperation("id로 지불 정보 찾기")
-	public ResponseEntity<Map<String, Object>> search(@PathVariable int id){
+	public ResponseEntity<Map<String, Object>> search(@RequestParam int id){
 		return handleSuccess(service.search(id));
 	}
 
@@ -59,9 +59,9 @@ public class PaidController {
 		else return handleFail("fail", HttpStatus.OK);
 	}	
 
-	@DeleteMapping("/api/v1/paid/delete/{id}")
+	@DeleteMapping("/api/v1/paid/delete")
 	@ApiOperation("delete paid")
-	public ResponseEntity<Map<String, Object>> delete(@PathVariable int id){
+	public ResponseEntity<Map<String, Object>> delete(@RequestParam int id){
 		boolean res = service.delete(id);
 		if (res) return handleSuccess("success");
 		else return handleFail("fail", HttpStatus.OK);

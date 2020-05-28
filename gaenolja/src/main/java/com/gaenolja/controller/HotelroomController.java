@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gaenolja.model.dto.Hotelroom;
@@ -39,33 +39,33 @@ public class HotelroomController {
 		return handleSuccess(service.searchall());
 	}
 	
-	@GetMapping("/api/v1/hotelroom/search/{id}")
+	@GetMapping("/api/v1/hotelroom/search")
 	@ApiOperation("id로 방 나타내기")
-	public ResponseEntity<Map<String, Object>> search(@PathVariable int id){
+	public ResponseEntity<Map<String, Object>> search(@RequestParam int id){
 		return handleSuccess(service.search(id));
 	}
 	
-	@GetMapping("/api/v1/hotelroom/searchbyhotel/{hotelnumber}")
+	@GetMapping("/api/v1/hotelroom/searchbyhotel")
 	@ApiOperation("hotel 방 나타내기")
-	public ResponseEntity<Map<String, Object>> searchbyhotel(@PathVariable int hotelnumber){
+	public ResponseEntity<Map<String, Object>> searchbyhotel(@RequestParam int hotelnumber){
 		return handleSuccess(service.searchbyhotel(hotelnumber));
 	}
 	
-	@GetMapping("/api/v1/hotelroom/searchbyroom/{roomname}/hotelnumber/{hotelnumber}")
+	@GetMapping("/api/v1/hotelroom/searchbyroom/hotelnumber")
 	@ApiOperation("hotel에서 방 이름으로 방 찾기")
-	public ResponseEntity<Map<String, Object>> searchbyhotelandroom(@PathVariable String roomname, @PathVariable int hotelnumber){
+	public ResponseEntity<Map<String, Object>> searchbyhotelandroom(@RequestParam String roomname, @RequestParam int hotelnumber){
 		return handleSuccess(service.searchbyhotelandroom(roomname, hotelnumber));
 	}
 	
-	@GetMapping("/api/v1/hotelroom/searchbyprice/{price}")
+	@GetMapping("/api/v1/hotelroom/searchbyprice")
 	@ApiOperation("가격별 방 찾기")
-	public ResponseEntity<Map<String, Object>> searchbyprice(@PathVariable int price){
+	public ResponseEntity<Map<String, Object>> searchbyprice(@RequestParam int price){
 		return handleSuccess(service.searchbyprice(price));
 	}
 	
-	@GetMapping("/api/v1/hotelroom/searchbysize/{size}")
+	@GetMapping("/api/v1/hotelroom/searchbysize")
 	@ApiOperation("애견 size 별 방 찾기")
-	public ResponseEntity<Map<String, Object>> searchbysize(@PathVariable int size){
+	public ResponseEntity<Map<String, Object>> searchbysize(@RequestParam int size){
 		return handleSuccess(service.searchbysize(size));
 	}
 	
@@ -85,9 +85,9 @@ public class HotelroomController {
 		else return handleFail("fail", HttpStatus.OK);
 	}	
 
-	@DeleteMapping("/api/v1/hotelroom/delete/{id}")
+	@DeleteMapping("/api/v1/hotelroom/delete")
 	@ApiOperation("delete hotelroom")
-	public ResponseEntity<Map<String, Object>> delete(@PathVariable int id){
+	public ResponseEntity<Map<String, Object>> delete(@RequestParam int id){
 		boolean res = service.delete(id);
 		if (res) return handleSuccess("success");
 		else return handleFail("fail", HttpStatus.OK);

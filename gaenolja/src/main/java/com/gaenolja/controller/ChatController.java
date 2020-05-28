@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gaenolja.model.dto.Chat;
@@ -37,27 +37,27 @@ public class ChatController {
 		return handleSuccess(service.searchall());
 	}
 	
-	@GetMapping("/api/v1/chat/search/{id}")
+	@GetMapping("/api/v1/chat/search")
 	@ApiOperation("id로 chat 나타내기")
-	public ResponseEntity<Map<String, Object>> search(@PathVariable int id){
+	public ResponseEntity<Map<String, Object>> search(@RequestParam int id){
 		return handleSuccess(service.search(id));
 	}
 	
-	@GetMapping("/api/v1/chat/searchbyreceive/{receive}/receive")
+	@GetMapping("/api/v1/chat/search/receive")
 	@ApiOperation("받은 사람으로 chat 찾기")
-	public ResponseEntity<Map<String, Object>> searchbyuserid(@PathVariable String receive){
+	public ResponseEntity<Map<String, Object>> searchbyuserid(@RequestParam String receive){
 		return handleSuccess(service.searchbyreceive(receive));
 	}
 	
-	@GetMapping("/api/v1/chat/searchbysend/{send}/send")
+	@GetMapping("/api/v1/chat/search/send")
 	@ApiOperation("보낸 사람으로 chat 찾기")
-	public ResponseEntity<Map<String, Object>> searchbysend(@PathVariable String send){
+	public ResponseEntity<Map<String, Object>> searchbysend(@RequestParam String send){
 		return handleSuccess(service.searchbysend(send));
 	}
 		
-	@GetMapping("/api/v1/chat/searchbytwo/{receive}/receive/{send}/send")
+	@GetMapping("/api/v1/chat/search/receive/send")
 	@ApiOperation("두 사람으로  chat 찾기")
-	public ResponseEntity<Map<String, Object>> searchbytwo(@PathVariable String receive, @PathVariable String send){
+	public ResponseEntity<Map<String, Object>> searchbytwo(@RequestParam String receive, @RequestParam String send){
 		return handleSuccess(service.searchbytwo(receive, send));
 	}
 		
@@ -69,9 +69,9 @@ public class ChatController {
 		else return handleFail("fail", HttpStatus.OK);
 	}
 		
-	@DeleteMapping("/api/v1/chat/delete/{id}")
+	@DeleteMapping("/api/v1/chat/delete")
 	@ApiOperation("delete chat")
-	public ResponseEntity<Map<String, Object>> delete(@PathVariable int id){
+	public ResponseEntity<Map<String, Object>> delete(@RequestParam int id){
 		boolean res = service.delete(id);
 		if (res) return handleSuccess("success");
 		else return handleFail("fail", HttpStatus.OK);

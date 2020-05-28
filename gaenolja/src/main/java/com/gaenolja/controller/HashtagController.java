@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gaenolja.model.dto.Hashtag;
@@ -39,9 +39,9 @@ public class HashtagController {
 		return handleSuccess(service.searchall());
 	}
 	
-	@GetMapping("/api/v1/hashtag/search/{id}")
+	@GetMapping("/api/v1/hashtag/search}")
 	@ApiOperation("id로 hashtag 나타내기")
-	public ResponseEntity<Map<String, Object>> search(@PathVariable String id){
+	public ResponseEntity<Map<String, Object>> search(@RequestParam String id){
 		return handleSuccess(service.search(id));
 	}
 	
@@ -61,9 +61,9 @@ public class HashtagController {
 		else return handleFail("fail", HttpStatus.OK);
 	}	
 
-	@DeleteMapping("/api/v1/hashtag/delete/{id}")
+	@DeleteMapping("/api/v1/hashtag/delete")
 	@ApiOperation("delete hashtag")
-	public ResponseEntity<Map<String, Object>> delete(@PathVariable String id){
+	public ResponseEntity<Map<String, Object>> delete(@RequestParam String id){
 		boolean res = service.delete(id);
 		if (res) return handleSuccess("success");
 		else return handleFail("fail", HttpStatus.OK);
