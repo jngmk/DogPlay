@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.dogplay">
 
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
     <application
         android:usesCleartextTraffic="true"
         android:allowBackup="true"
@@ -22,8 +25,8 @@
         <activity android:name=".CalendarView"/>
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyDhLtneTTtKswg9a8vTqbkoCzBrKlJd7Y4"
+            android:value="AIzaSyBoj6Nwjapgdvd4YSmJyU5vkF6DAfh_1ik"
             />
     </application>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+
 </manifest>

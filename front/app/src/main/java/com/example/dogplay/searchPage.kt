@@ -49,7 +49,7 @@ class searchPage : Fragment() {
                 val layoutManager = LinearLayoutManager(context)
                 layoutManager.orientation = LinearLayoutManager.VERTICAL
                 hotelList.layoutManager = layoutManager
-                val adapter = HotelAdapter(context!!,data!!.data )
+                val adapter = HotelAdapter(context!!, data!!.data )
                 hotelList.adapter = adapter
 
                 for (i in data!!.data){
