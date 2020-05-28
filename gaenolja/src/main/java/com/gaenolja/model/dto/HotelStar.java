@@ -18,6 +18,13 @@ public class HotelStar {
 	private int countreview;
 	private List<String> hashtag;
 	private double distance;
+	private int minprice;
+	public int getMinprice() {
+		return minprice;
+	}
+	public void setMinprice(int minprice) {
+		this.minprice = minprice;
+	}
 	public double getDistance() {
 		return distance;
 	}

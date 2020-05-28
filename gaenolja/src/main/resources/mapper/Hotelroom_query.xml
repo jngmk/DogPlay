@@ -21,6 +21,10 @@
 		select * from hotelroom where price between #{price} - 10000 and #{price} + 10000
 	</select>
 	
+	<select id="minprice" parameterType="int" resultType="int">
+		select ifnull(min(price), 0) from hotelroom where hotelnumber=#{hotelnumber}
+	</select>
+	
 	<select id="searchbysize" parameterType="int" resultType="hotelroom">
 		select * from hotelroom where minsize <![CDATA[<=]]> #{size} and #{size} <![CDATA[<=]]> maxsize
 	</select>

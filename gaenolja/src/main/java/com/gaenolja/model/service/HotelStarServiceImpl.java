@@ -50,6 +50,7 @@ public class HotelStarServiceImpl implements HotelStarService{
 				for (int idx=0;idx<hashid.length();idx++) {
 					list.add(hashtagdao.search(Character.toString(hashid.charAt(idx))).getName());
 				}
+				star.setMinprice(roomdao.minprice(hotelnumber));					
 				star.setHashtag(list);
 			}
 			return hotelstar;
@@ -77,6 +78,7 @@ public class HotelStarServiceImpl implements HotelStarService{
 					list.add(hashtagdao.search(Character.toString(hashid.charAt(idx))).getName());
 				}
 				star.setHashtag(list);
+				star.setMinprice(roomdao.minprice(hotelnumber));				
 			}
 			return hotel;
 		}catch(Exception e) {
@@ -97,6 +99,7 @@ public class HotelStarServiceImpl implements HotelStarService{
 				list.add(hashtagdao.search(Character.toString(hashid.charAt(idx))).getName());
 			}
 			hotelstar.setHashtag(list);
+			hotelstar.setMinprice(roomdao.minprice(hotelnumber));
 			return hotelstar;
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -122,6 +125,7 @@ public class HotelStarServiceImpl implements HotelStarService{
 				for (int idx=0;idx<hashid.length();idx++) {
 					list.add(hashtagdao.search(Character.toString(hashid.charAt(idx))).getName());
 				}
+				star.setMinprice(roomdao.minprice(hotelnumber));
 				star.setHashtag(list);
 			}
 			return hotelstar;
@@ -149,6 +153,7 @@ public class HotelStarServiceImpl implements HotelStarService{
 				for (int idx=0;idx<hashid.length();idx++) {
 					list.add(hashtagdao.search(Character.toString(hashid.charAt(idx))).getName());
 				}
+				star.setMinprice(roomdao.minprice(hotelnumber));
 				star.setHashtag(list);
 			}
 			return hotelstar;
@@ -170,6 +175,7 @@ public class HotelStarServiceImpl implements HotelStarService{
 			for (int idx=0;idx<hashid.length();idx++) {
 				list.add(hashtagdao.search(Character.toString(hashid.charAt(idx))).getName());
 			}
+			hotelstar.setMinprice(roomdao.minprice(hotelnumber));
 			hotelstar.setHashtag(list);
 			map.put("HotelStar", hotelstar);
 			map.put("HotelPicture", picturedao.searchbyhotel(hotelnumber));
@@ -194,6 +200,7 @@ public class HotelStarServiceImpl implements HotelStarService{
 			for (int idx=0;idx<hashid.length();idx++) {
 				list.add(hashtagdao.search(Character.toString(hashid.charAt(idx))).getName());
 			}
+			hotelstar.setMinprice(roomdao.minprice(hotelnumber));
 			hotelstar.setHashtag(list);
 			List<Hotelroom> hotelroom = roomdao.searchbyhotel(hotelnumber);
 			for(Hotelroom room:hotelroom) {

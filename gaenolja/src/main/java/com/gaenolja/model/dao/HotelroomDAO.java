@@ -18,4 +18,5 @@ public interface HotelroomDAO {
 	public void insert(Hotelroom room);
 	public void update(Hotelroom room);
 	public void delete(int id);
+	public int minprice(int hotelnumber);
 }

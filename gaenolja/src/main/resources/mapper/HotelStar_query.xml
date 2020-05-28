@@ -8,7 +8,8 @@
 	
 	<select id="searchbydistance" parameterType="hashmap" resultType="hotelstar">
 		<![CDATA[select hotel.*, ifnull(truncate(avg(review.star), 2), 0) as star,
-		truncate((6371*acos(cos(radians(37.500919))*cos(radians(hotel.latitude))*cos(radians(hotel.longitude) -radians(127.036578))+sin(radians(37.500919))*sin(radians(hotel.latitude)))), 2) as distance
+		truncate((6371*acos(cos(radians(#{latitude}))*cos(radians(latitude))*cos(radians(longitude) 
+		-radians(#{longitude}))+sin(radians(#{latitude}))*sin(radians(latitude)))), 2) as distance
 		from hotel left join review on
 		hotel.hotelnumber = review.hotelnumber group by hotelnumber having distance <= 5;]]>
 	</select>
@@ -20,14 +21,16 @@
 	
 	<select id="searchbyname" parameterType="hashmap" resultType="hotelstar">
 		<![CDATA[select hotel.*, ifnull(truncate(avg(review.star), 2), 0) as star,
-		truncate((6371*acos(cos(radians(37.500919))*cos(radians(hotel.latitude))*cos(radians(hotel.longitude) -radians(127.036578))+sin(radians(37.500919))*sin(radians(hotel.latitude)))), 2) as distance
+		truncate((6371*acos(cos(radians(#{latitude}))*cos(radians(latitude))*cos(radians(longitude) 
+		-radians(#{longitude}))+sin(radians(#{latitude}))*sin(radians(latitude)))), 2) as distance
 		from hotel left join review on
 		hotel.hotelnumber = review.hotelnumber group by hotelnumber having hotelname like concat('%', #{hotelname}, '%') and distance <= 5;]]>
 	</select>
 	
 	<select id="searchbyhashtag" parameterType="hashmap" resultType="hotelstar">
 		<![CDATA[select hotel.*, ifnull(truncate(avg(review.star), 2), 0) as star,
-		truncate((6371*acos(cos(radians(37.500919))*cos(radians(hotel.latitude))*cos(radians(hotel.longitude) -radians(127.036578))+sin(radians(37.500919))*sin(radians(hotel.latitude))))) as distance
+		truncate((6371*acos(cos(radians(#{latitude}))*cos(radians(latitude))*cos(radians(longitude) 
+		-radians(#{longitude}))+sin(radians(#{latitude}))*sin(radians(latitude)))), 2) as distance
 		from hotel left join review on
 		hotel.hotelnumber = review.hotelnumber group by hotelnumber having hashid like concat('%', #{hashtag}, '%') and distance <= 5;]]>
 	</select>
