@@ -37,9 +37,9 @@ public class CartServiceImpl implements CartService{
 	}
 	
 	@Override
-	public Cart searchbyuser(String userid) {
+	public List<Cart> searchbyuser(String userid) {
 		try {
-			Cart cart = dao.searchbyuser(userid);
+			List<Cart> cart = dao.searchbyuser(userid);
 			return cart;
 		}catch(Exception e) {
 			e.printStackTrace();
