@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gaenolja.model.dao.ChatroomDAO">
+
+	<select id="search" parameterType="int" resultType="chatroom">
+		select * from chatroom where id=#{id}
+	</select>
+   
+	<insert id="insert" parameterType="chatroom">
+		insert into chatroom
+		values()
+	</insert>
+
+	<delete id="delete" parameterType="int">
+		delete
+		from chatroom
+		where id = #{id}
+	</delete>
+	
+</mapper>

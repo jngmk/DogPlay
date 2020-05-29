@@ -12,8 +12,12 @@ public interface ChatDAO {
 	public List<Chat> searchall();
 	public List<Chat> searchbyreceive(String receive);
 	public List<Chat> searchbysend(String send);
+	public List<Chat> searchbyuserid(String userid);
 	public List<Chat> searchbytwo(HashMap<Object, Object> map);
+	public int countbytwo(HashMap<Object, Object> map);
+	public List<Chat> searchbychatid(int chatid);
 	public Chat search(int id);
 	public void insert(Chat chat);
+	public void update(Chat chat);
 	public void delete(int id);
 }

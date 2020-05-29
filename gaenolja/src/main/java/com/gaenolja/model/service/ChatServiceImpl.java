@@ -1,5 +1,6 @@
 package com.gaenolja.model.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.gaenolja.model.dao.ChatDAO;
 import com.gaenolja.model.dto.Chat;
+import com.gaenolja.model.dto.NewChat;
 
 @Service
 public class ChatServiceImpl implements ChatService {
@@ -40,8 +42,43 @@ public class ChatServiceImpl implements ChatService {
 	@Override
 	public List<Chat> searchbysend(String send){
 		try {
-			List<Chat> review = dao.searchbysend(send);
-			return review;
+			List<Chat> chat = dao.searchbysend(send);
+			return chat;
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	@Override
+	public List<NewChat> searchbyuserid(String userid){
+		List<NewChat> newchat = new ArrayList<NewChat>();
+		try {
+			List<Chat> chat = dao.searchbyuserid(userid);
+			for (Chat c:chat) {
+				String receive = c.getReceive();
+				String send = c.getSend();
+				NewChat chatnew = new NewChat();
+				chatnew.setChat(c);
+				if (receive.equals(userid)) {
+					HashMap<Object, Object> map2 = new HashMap<Object, Object>();
+					map2.put("receive", receive);
+					map2.put("send", send);
+					int count = dao.countbytwo(map2);
+					chatnew.setCount(count);
+				}
+				newchat.add(chatnew);
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return newchat;
+	}
+	
+	public List<Chat> searchbychatid(int chatid){
+		try {
+			List<Chat> chat = dao.searchbychatid(chatid);
+			return chat;
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -77,6 +114,17 @@ public class ChatServiceImpl implements ChatService {
 	public boolean insert(Chat chat) {
 		try {
 			dao.insert(chat);
+			return true;
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	};
+	
+	@Override
+	public boolean update(Chat chat) {
+		try {
+			dao.update(chat);
 			return true;
 		}catch (Exception e) {
 			e.printStackTrace();

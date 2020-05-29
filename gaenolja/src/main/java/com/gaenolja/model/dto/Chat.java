@@ -4,11 +4,13 @@ import java.time.LocalDateTime;
 
 public class Chat {
 	private int id;
+	private int chatid;
 	private String receive;
 	private String send;
 	private String picture;
 	private String message;
 	private LocalDateTime created;
+	private int readmessage;
 	public int getId() {
 		return id;
 	}
@@ -45,4 +47,17 @@ public class Chat {
 	public void setCreated(LocalDateTime created) {
 		this.created = created;
 	}
+	public int getChatid() {
+		return chatid;
+	}
+	public void setChatid(int chatid) {
+		this.chatid = chatid;
+	}
+	public int getReadmessage() {
+		return readmessage;
+	}
+	public void setReadmessage(int readmessage) {
+		this.readmessage = readmessage;
+	}
+	
 }

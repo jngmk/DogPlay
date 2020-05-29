@@ -18,10 +18,33 @@
    		where send = #{send}
     </select>
     
+    <select id="searchbyuserid" parameterType="String" resultType="chat">
+		SELECT *
+		FROM (
+		   SELECT c.*, 
+		           (CASE @chatnum WHEN c.chatid THEN @rownum:=@rownum+1 ELSE @rownum:=1 END) rnum,
+		           (@chatnum:=chatid) chatnum
+		   FROM chat c, (SELECT @chatnum:=0, @rownum:=0 FROM DUAL) val where receive=#{userid} or send=#{userid}
+		   ORDER BY c.created desc
+		) a where rnum = 1;
+    </select>
+    
    	<select id="searchbytwo" parameterType="hashmap" resultType="chat">
    		select *
    		from chat
    		where receive = #{receive} AND send = #{send}
+    </select>
+    
+    <select id="countbytwo" parameterType="hashmap" resultType="int">
+   		select count(*)
+   		from chat
+   		where receive = #{receive} AND send = #{send} and readmessage=0
+    </select>
+    
+    <select id="searchbychatid" parameterType="int" resultType="chat">
+   		select *
+   		from chat
+   		where chatid=#{chatid}
     </select>
     
    	<select id="search" parameterType="int" resultType="chat">
@@ -31,9 +54,20 @@
     </select>
    
 	<insert id="insert" parameterType="chat">
-		insert into chat(receive, send, picture, message)
-		values(#{receive}, #{send}, #{picture}, #{message})
+		insert into chat(chatid, receive, send, picture, message, readmessage)
+		values(#{chatid}, #{receive}, #{send}, #{picture}, #{message}, #{readmessage})
 	</insert>
+	
+	<update id="update" parameterType="chat">
+		update chat set
+		chatid = #{chatid},
+		receive = #{receive},
+		send = #{send},
+		picture = #{picture},
+		message = #{message},
+		readmessage = #{readmessage}
+		where id = #{id}
+	</update>
 
 	<delete id="delete" parameterType="int">
 		delete
