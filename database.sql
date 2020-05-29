@@ -159,15 +159,24 @@ create table notification (
     on update cascade on delete cascade
 );
 
+create table chatroom(
+	id integer primary key auto_increment
+);
+
 create table chat (
 	id integer primary key auto_increment,
+    chatid integer not null,
     receive varchar(200) not null,
     send varchar(200) not null,
     picture varchar(500) null,
     message varchar(500) not null,
+    created datetime not null default now(),
+    readmessage integer not null,
 	constraint FK_user_chat_receive foreign key(receive) references user(userid)
     on update cascade on delete cascade,
 	constraint FK_user_chat_send foreign key(send) references user(userid)
+    on update cascade on delete cascade,
+	constraint FK_chat_room foreign key(chatid) references chat(id)
     on update cascade on delete cascade
 );
 
