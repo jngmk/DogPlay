@@ -15,6 +15,7 @@ import com.gaenolja.model.dao.HotelroomDAO;
 import com.gaenolja.model.dao.ReviewDAO;
 import com.gaenolja.model.dto.HotelStar;
 import com.gaenolja.model.dto.Hotelroom;
+import com.google.gson.Gson;
 
 @Service
 public class HotelStarServiceImpl implements HotelStarService{
@@ -52,6 +53,10 @@ public class HotelStarServiceImpl implements HotelStarService{
 				}
 				star.setMinprice(roomdao.minprice(hotelnumber));					
 				star.setHashtag(list);
+				Gson gson = new Gson();
+				HashMap<Object, Object> jsonObject = gson.fromJson(star.getDetail().toString(), HashMap.class);
+				star.setDetail(jsonObject);
+				
 			}
 			return hotelstar;
 		}catch(Exception e) {
@@ -78,7 +83,10 @@ public class HotelStarServiceImpl implements HotelStarService{
 					list.add(hashtagdao.search(Character.toString(hashid.charAt(idx))).getName());
 				}
 				star.setHashtag(list);
-				star.setMinprice(roomdao.minprice(hotelnumber));				
+				star.setMinprice(roomdao.minprice(hotelnumber));	
+				Gson gson = new Gson();
+				HashMap<Object, Object> jsonObject = gson.fromJson(star.getDetail().toString(), HashMap.class);
+				star.setDetail(jsonObject);
 			}
 			return hotel;
 		}catch(Exception e) {
@@ -100,6 +108,9 @@ public class HotelStarServiceImpl implements HotelStarService{
 			}
 			hotelstar.setHashtag(list);
 			hotelstar.setMinprice(roomdao.minprice(hotelnumber));
+			Gson gson = new Gson();
+			HashMap<Object, Object> jsonObject = gson.fromJson(hotelstar.getDetail().toString(), HashMap.class);
+			hotelstar.setDetail(jsonObject);
 			return hotelstar;
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -127,6 +138,9 @@ public class HotelStarServiceImpl implements HotelStarService{
 				}
 				star.setMinprice(roomdao.minprice(hotelnumber));
 				star.setHashtag(list);
+				Gson gson = new Gson();
+				HashMap<Object, Object> jsonObject = gson.fromJson(star.getDetail().toString(), HashMap.class);
+				star.setDetail(jsonObject);
 			}
 			return hotelstar;
 		}catch(Exception e) {
@@ -155,6 +169,9 @@ public class HotelStarServiceImpl implements HotelStarService{
 				}
 				star.setMinprice(roomdao.minprice(hotelnumber));
 				star.setHashtag(list);
+				Gson gson = new Gson();
+				HashMap<Object, Object> jsonObject = gson.fromJson(star.getDetail().toString(), HashMap.class);
+				star.setDetail(jsonObject);
 			}
 			return hotelstar;
 		}catch(Exception e) {
@@ -177,6 +194,9 @@ public class HotelStarServiceImpl implements HotelStarService{
 			}
 			hotelstar.setMinprice(roomdao.minprice(hotelnumber));
 			hotelstar.setHashtag(list);
+			Gson gson = new Gson();
+			HashMap<Object, Object> jsonObject = gson.fromJson(hotelstar.getDetail().toString(), HashMap.class);
+			hotelstar.setDetail(jsonObject);
 			map.put("HotelStar", hotelstar);
 			map.put("HotelPicture", picturedao.searchbyhotel(hotelnumber));
 			map.put("HotelRoom", roomdao.searchbyhotel(hotelnumber));
@@ -201,6 +221,9 @@ public class HotelStarServiceImpl implements HotelStarService{
 			}
 			hotelstar.setMinprice(roomdao.minprice(hotelnumber));
 			hotelstar.setHashtag(list);
+			Gson gson = new Gson();
+			HashMap<Object, Object> jsonObject = gson.fromJson(hotelstar.getDetail().toString(), HashMap.class);
+			hotelstar.setDetail(jsonObject);
 			List<Hotelroom> hotelroom = roomdao.searchbyhotel(hotelnumber);
 			for(Hotelroom room:hotelroom) {
 				int cnt = room.getCount() - reservation.countbydate(hotelnumber, roomname, startdate, finishdate);

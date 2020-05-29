@@ -1,5 +1,6 @@
 package com.gaenolja.model.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -20,6 +21,11 @@ public class HotelServiceImpl implements HotelService {
 	public List<Hotel> searchall(){
 		try {
 			List<Hotel> hotel = dao.searchall();
+			for (Hotel h:hotel) {
+				Gson gson = new Gson();
+				HashMap<Object, Object> jsonObject = gson.fromJson(h.getDetail().toString(), HashMap.class);
+				h.setDetail(jsonObject);
+			}
 			return hotel;
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -31,6 +37,9 @@ public class HotelServiceImpl implements HotelService {
 	public Hotel search(int hotelnumber) {
 		try {
 			Hotel hotel = dao.search(hotelnumber);
+			Gson gson = new Gson();
+			HashMap<Object, Object> jsonObject = gson.fromJson(hotel.getDetail().toString(), HashMap.class);
+			hotel.setDetail(jsonObject);
 			return hotel;
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -42,6 +51,11 @@ public class HotelServiceImpl implements HotelService {
 	public List<Hotel> searchbyname(String hotelname){
 		try {
 			List<Hotel> hotel = dao.searchbyname(hotelname);
+			for (Hotel h:hotel) {
+				Gson gson = new Gson();
+				HashMap<Object, Object> jsonObject = gson.fromJson(h.getDetail().toString(), HashMap.class);
+				h.setDetail(jsonObject);
+			}
 			return hotel;
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -53,6 +67,11 @@ public class HotelServiceImpl implements HotelService {
 	public List<Hotel> searchbyhashtag(String hashtag){
 		try {
 			List<Hotel> hotel = dao.searchbyhashtag(hashtag);
+			for (Hotel h:hotel) {
+				Gson gson = new Gson();
+				HashMap<Object, Object> jsonObject = gson.fromJson(h.getDetail().toString(), HashMap.class);
+				h.setDetail(jsonObject);
+			}
 			return hotel;
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -68,6 +87,11 @@ public class HotelServiceImpl implements HotelService {
 			map.put("longitude", longitude);
 			map.put("distance", distance);
 			List<Hotel> hotel = dao.searchbydistance(map);
+			for (Hotel h:hotel) {
+				Gson gson = new Gson();
+				HashMap<Object, Object> jsonObject = gson.fromJson(h.getDetail().toString(), HashMap.class);
+				h.setDetail(jsonObject);
+			}
 			return hotel;
 		}catch(Exception e) {
 			e.printStackTrace();
