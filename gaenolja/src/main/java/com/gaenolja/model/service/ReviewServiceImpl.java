@@ -76,20 +76,15 @@ public class ReviewServiceImpl implements ReviewService {
 	}
 	
 	@Override
-	public List<Review> goodreview(int hotelnumber){
+	public List<Review> goodreviewbadreview(int hotelnumber){
 		try {
-			List<Review> review = dao.goodreview(hotelnumber);
-			return review;
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-
-	@Override
-	public List<Review> badreview(int hotelnumber){
-		try {
-			List<Review> review = dao.badreview(hotelnumber);
+			List<Review> goodreview = dao.goodreview(hotelnumber);
+			List<Review> badreview = dao.badreview(hotelnumber);
+			
+			List<Review> review = new ArrayList<Review>();
+			review.addAll(goodreview);
+			review.addAll(badreview);
+			
 			return review;
 		} catch(Exception e) {
 			e.printStackTrace();

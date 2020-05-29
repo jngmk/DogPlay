@@ -180,8 +180,7 @@ public class HotelStarServiceImpl implements HotelStarService{
 			map.put("HotelStar", hotelstar);
 			map.put("HotelPicture", picturedao.searchbyhotel(hotelnumber));
 			map.put("HotelRoom", roomdao.searchbyhotel(hotelnumber));
-			map.put("Good", reviewdao.goodreview(hotelnumber));
-			map.put("Bad", reviewdao.badreview(hotelnumber));
+			map.put("review", reviewdao.reviewbytime(hotelnumber));
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -210,8 +209,7 @@ public class HotelStarServiceImpl implements HotelStarService{
 			map.put("HotelStar", hotelstar);
 			map.put("HotelPicture", picturedao.searchbyhotel(hotelnumber));
 			map.put("HotelRoom", roomdao.searchbyhotel(hotelnumber));
-			map.put("Good", reviewdao.goodreview(hotelnumber));
-			map.put("Bad", reviewdao.badreview(hotelnumber));
+			map.put("review", reviewdao.reviewbytime(hotelnumber));
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

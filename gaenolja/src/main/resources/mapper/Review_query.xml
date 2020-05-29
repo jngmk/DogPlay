@@ -32,6 +32,13 @@
    		order by star asc limit 2
     </select>
     
+    <select id="reviewbytime" parameterType="int" resultType="review">
+   		select *
+   		from review
+   		where hotelnumber= #{hotelnumber}
+   		order by created desc limit 5
+    </select>
+    
     <select id="countreview" parameterType="int" resultType="int">
    		select count(*)
    		from review

@@ -19,6 +19,7 @@ public interface ReviewDAO {
 	public int countbyhotelnumber(int hotelnumber);
 	public List<Review> goodreview(int hotelnumber);
 	public List<Review> badreview(int hotelnumber);
+	public List<Review> reviewbytime(int hotelnumber);
 	public int countreview(int hotelnumber);
 	public List<Review> reviewwithcontent(int hotelnumber);
 	public List<Review> searchbystar(HashMap<Object, Object> map);
