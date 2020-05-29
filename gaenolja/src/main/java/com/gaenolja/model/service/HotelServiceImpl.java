@@ -23,8 +23,13 @@ public class HotelServiceImpl implements HotelService {
 			List<Hotel> hotel = dao.searchall();
 			for (Hotel h:hotel) {
 				Gson gson = new Gson();
-				HashMap<Object, Object> jsonObject = gson.fromJson(h.getDetail().toString(), HashMap.class);
-				h.setDetail(jsonObject);
+				HashMap<String, String> jsonObject = gson.fromJson(h.getDetail().toString(), HashMap.class);
+				List<List<String>> detailarray = new ArrayList<List<String>>();
+				List<String> key = new ArrayList<>(jsonObject.keySet());
+				List<String> value = new ArrayList<>(jsonObject.values());
+				detailarray.add(key);
+				detailarray.add(value);
+				h.setDetail(detailarray);
 			}
 			return hotel;
 		} catch(Exception e) {
@@ -38,8 +43,13 @@ public class HotelServiceImpl implements HotelService {
 		try {
 			Hotel hotel = dao.search(hotelnumber);
 			Gson gson = new Gson();
-			HashMap<Object, Object> jsonObject = gson.fromJson(hotel.getDetail().toString(), HashMap.class);
-			hotel.setDetail(jsonObject);
+			HashMap<String, String> jsonObject = gson.fromJson(hotel.getDetail().toString(), HashMap.class);
+			List<List<String>> detailarray = new ArrayList<List<String>>();
+			List<String> key = new ArrayList<>(jsonObject.keySet());
+			List<String> value = new ArrayList<>(jsonObject.values());
+			detailarray.add(key);
+			detailarray.add(value);
+			hotel.setDetail(detailarray);
 			return hotel;
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -53,8 +63,13 @@ public class HotelServiceImpl implements HotelService {
 			List<Hotel> hotel = dao.searchbyname(hotelname);
 			for (Hotel h:hotel) {
 				Gson gson = new Gson();
-				HashMap<Object, Object> jsonObject = gson.fromJson(h.getDetail().toString(), HashMap.class);
-				h.setDetail(jsonObject);
+				HashMap<String, String> jsonObject = gson.fromJson(h.getDetail().toString(), HashMap.class);
+				List<List<String>> detailarray = new ArrayList<List<String>>();
+				List<String> key = new ArrayList<>(jsonObject.keySet());
+				List<String> value = new ArrayList<>(jsonObject.values());
+				detailarray.add(key);
+				detailarray.add(value);
+				h.setDetail(detailarray);
 			}
 			return hotel;
 		} catch(Exception e) {
@@ -69,8 +84,13 @@ public class HotelServiceImpl implements HotelService {
 			List<Hotel> hotel = dao.searchbyhashtag(hashtag);
 			for (Hotel h:hotel) {
 				Gson gson = new Gson();
-				HashMap<Object, Object> jsonObject = gson.fromJson(h.getDetail().toString(), HashMap.class);
-				h.setDetail(jsonObject);
+				HashMap<String, String> jsonObject = gson.fromJson(h.getDetail().toString(), HashMap.class);
+				List<List<String>> detailarray = new ArrayList<List<String>>();
+				List<String> key = new ArrayList<>(jsonObject.keySet());
+				List<String> value = new ArrayList<>(jsonObject.values());
+				detailarray.add(key);
+				detailarray.add(value);
+				h.setDetail(detailarray);
 			}
 			return hotel;
 		}catch(Exception e) {
@@ -89,8 +109,13 @@ public class HotelServiceImpl implements HotelService {
 			List<Hotel> hotel = dao.searchbydistance(map);
 			for (Hotel h:hotel) {
 				Gson gson = new Gson();
-				HashMap<Object, Object> jsonObject = gson.fromJson(h.getDetail().toString(), HashMap.class);
-				h.setDetail(jsonObject);
+				HashMap<String, String> jsonObject = gson.fromJson(h.getDetail().toString(), HashMap.class);
+				List<List<String>> detailarray = new ArrayList<List<String>>();
+				List<String> key = new ArrayList<>(jsonObject.keySet());
+				List<String> value = new ArrayList<>(jsonObject.values());
+				detailarray.add(key);
+				detailarray.add(value);
+				h.setDetail(detailarray);
 			}
 			return hotel;
 		}catch(Exception e) {

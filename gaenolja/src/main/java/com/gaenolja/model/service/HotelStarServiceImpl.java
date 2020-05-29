@@ -54,9 +54,13 @@ public class HotelStarServiceImpl implements HotelStarService{
 				star.setMinprice(roomdao.minprice(hotelnumber));					
 				star.setHashtag(list);
 				Gson gson = new Gson();
-				HashMap<Object, Object> jsonObject = gson.fromJson(star.getDetail().toString(), HashMap.class);
-				star.setDetail(jsonObject);
-				
+				HashMap<String, String> jsonObject = gson.fromJson(star.getDetail().toString(), HashMap.class);
+				List<List<String>> detailarray = new ArrayList<List<String>>();
+				List<String> key = new ArrayList<>(jsonObject.keySet());
+				List<String> value = new ArrayList<>(jsonObject.values());
+				detailarray.add(key);
+				detailarray.add(value);
+				star.setDetail(detailarray);
 			}
 			return hotelstar;
 		}catch(Exception e) {
@@ -85,8 +89,13 @@ public class HotelStarServiceImpl implements HotelStarService{
 				star.setHashtag(list);
 				star.setMinprice(roomdao.minprice(hotelnumber));	
 				Gson gson = new Gson();
-				HashMap<Object, Object> jsonObject = gson.fromJson(star.getDetail().toString(), HashMap.class);
-				star.setDetail(jsonObject);
+				HashMap<String, String> jsonObject = gson.fromJson(star.getDetail().toString(), HashMap.class);
+				List<List<String>> detailarray = new ArrayList<List<String>>();
+				List<String> key = new ArrayList<>(jsonObject.keySet());
+				List<String> value = new ArrayList<>(jsonObject.values());
+				detailarray.add(key);
+				detailarray.add(value);
+				star.setDetail(detailarray);
 			}
 			return hotel;
 		}catch(Exception e) {
@@ -109,8 +118,13 @@ public class HotelStarServiceImpl implements HotelStarService{
 			hotelstar.setHashtag(list);
 			hotelstar.setMinprice(roomdao.minprice(hotelnumber));
 			Gson gson = new Gson();
-			HashMap<Object, Object> jsonObject = gson.fromJson(hotelstar.getDetail().toString(), HashMap.class);
-			hotelstar.setDetail(jsonObject);
+			HashMap<String, String> jsonObject = gson.fromJson(hotelstar.getDetail().toString(), HashMap.class);
+			List<List<String>> detailarray = new ArrayList<List<String>>();
+			List<String> key = new ArrayList<>(jsonObject.keySet());
+			List<String> value = new ArrayList<>(jsonObject.values());
+			detailarray.add(key);
+			detailarray.add(value);
+			hotelstar.setDetail(detailarray);
 			return hotelstar;
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -139,8 +153,13 @@ public class HotelStarServiceImpl implements HotelStarService{
 				star.setMinprice(roomdao.minprice(hotelnumber));
 				star.setHashtag(list);
 				Gson gson = new Gson();
-				HashMap<Object, Object> jsonObject = gson.fromJson(star.getDetail().toString(), HashMap.class);
-				star.setDetail(jsonObject);
+				HashMap<String, String> jsonObject = gson.fromJson(star.getDetail().toString(), HashMap.class);
+				List<List<String>> detailarray = new ArrayList<List<String>>();
+				List<String> key = new ArrayList<>(jsonObject.keySet());
+				List<String> value = new ArrayList<>(jsonObject.values());
+				detailarray.add(key);
+				detailarray.add(value);
+				star.setDetail(detailarray);
 			}
 			return hotelstar;
 		}catch(Exception e) {
@@ -170,8 +189,13 @@ public class HotelStarServiceImpl implements HotelStarService{
 				star.setMinprice(roomdao.minprice(hotelnumber));
 				star.setHashtag(list);
 				Gson gson = new Gson();
-				HashMap<Object, Object> jsonObject = gson.fromJson(star.getDetail().toString(), HashMap.class);
-				star.setDetail(jsonObject);
+				HashMap<String, String> jsonObject = gson.fromJson(star.getDetail().toString(), HashMap.class);
+				List<List<String>> detailarray = new ArrayList<List<String>>();
+				List<String> key = new ArrayList<>(jsonObject.keySet());
+				List<String> value = new ArrayList<>(jsonObject.values());
+				detailarray.add(key);
+				detailarray.add(value);
+				star.setDetail(detailarray);
 			}
 			return hotelstar;
 		}catch(Exception e) {
@@ -195,8 +219,13 @@ public class HotelStarServiceImpl implements HotelStarService{
 			hotelstar.setMinprice(roomdao.minprice(hotelnumber));
 			hotelstar.setHashtag(list);
 			Gson gson = new Gson();
-			HashMap<Object, Object> jsonObject = gson.fromJson(hotelstar.getDetail().toString(), HashMap.class);
-			hotelstar.setDetail(jsonObject);
+			HashMap<String, String> jsonObject = gson.fromJson(hotelstar.getDetail().toString(), HashMap.class);
+			List<List<String>> detailarray = new ArrayList<List<String>>();
+			List<String> key = new ArrayList<>(jsonObject.keySet());
+			List<String> value = new ArrayList<>(jsonObject.values());
+			detailarray.add(key);
+			detailarray.add(value);
+			hotelstar.setDetail(detailarray);
 			map.put("HotelStar", hotelstar);
 			map.put("HotelPicture", picturedao.searchbyhotel(hotelnumber));
 			map.put("HotelRoom", roomdao.searchbyhotel(hotelnumber));
@@ -222,8 +251,13 @@ public class HotelStarServiceImpl implements HotelStarService{
 			hotelstar.setMinprice(roomdao.minprice(hotelnumber));
 			hotelstar.setHashtag(list);
 			Gson gson = new Gson();
-			HashMap<Object, Object> jsonObject = gson.fromJson(hotelstar.getDetail().toString(), HashMap.class);
-			hotelstar.setDetail(jsonObject);
+			HashMap<String, String> jsonObject = gson.fromJson(hotelstar.getDetail().toString(), HashMap.class);
+			List<List<String>> detailarray = new ArrayList<List<String>>();
+			List<String> key = new ArrayList<>(jsonObject.keySet());
+			List<String> value = new ArrayList<>(jsonObject.values());
+			detailarray.add(key);
+			detailarray.add(value);
+			hotelstar.setDetail(detailarray);
 			List<Hotelroom> hotelroom = roomdao.searchbyhotel(hotelnumber);
 			for(Hotelroom room:hotelroom) {
 				int cnt = room.getCount() - reservation.countbydate(hotelnumber, roomname, startdate, finishdate);
