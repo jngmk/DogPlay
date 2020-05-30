@@ -23,6 +23,26 @@ data class HotelRoomDTO(
     var data:Array<HashMap<String,Any>>
 )
 
+data class HotelNearByDTO(
+    @SerializedName("data")
+    val data: ArrayList<HotelInfo>,
+    @SerializedName("state")
+    val state: String
+)
+
+data class HotelInfo(
+    val hotelnumber: Int = 0,
+    val userid: String,
+    val hashid: String,
+    val hotelname: String,
+    val latitude: Double,
+    val longitude: Double,
+    val address: String,
+    val contact: String,
+    val info: String,
+    val detail: ArrayList<ArrayList<String>>
+)
+
 
 interface Service {
     @GET("/api/v1/hotelstar/searchall")
@@ -32,6 +52,13 @@ interface Service {
     fun searchHotelDetail(
         @Query("hotelnumber") hotelnumber: Number
     ):Call<HotelDetailDTO>
+
+    @GET("/api/v1/hotel/search/latitude/longitude/distance")
+    fun getHotelNearBy(
+        @Query("distance") distance: Int,
+        @Query("latitude") latitude: Double,
+        @Query("longitude") longitude: Double
+    ): Call<HotelNearByDTO>
 
     @FormUrlEncoded
     @POST("/api/v1/hotel/insert")
