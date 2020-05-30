@@ -18,6 +18,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:cardCornerRadius="15dp"
             android:background="#ffffff"
+            app:cardElevation="5dp"
             >
 
             <ImageView

@@ -60,6 +60,11 @@ class HotelDetail:AppCompatActivity(), OnMapReadyCallback{
                     hotelLocInfo.text = hotelstar["address"].toString()
                     detailEval.text = "${hotelstar["star"].toString()} / 5.0"
 
+                    Log.d("디테일", hotelDetailData["HotelRoom"].toString())
+                    Supplier.HotelDetailReview = hotelDetailData["review"] as ArrayList<LinkedTreeMap<String, Any>>
+                    Supplier.HotelDetailInfo = hotelstar["detail"] as ArrayList<ArrayList<String>>
+                    Supplier.RoomDetail = hotelDetailData["HotelRoom"] as ArrayList<LinkedTreeMap<String,Any>>
+
                     val vp = findViewById(R.id.reviewCarousel) as ViewPager
                     val reviewAdapter = ReviewCarouselAdapter(applicationContext)
                     vp.adapter = reviewAdapter
@@ -72,6 +77,7 @@ class HotelDetail:AppCompatActivity(), OnMapReadyCallback{
                         val intent = Intent(applicationContext,InfoDetail::class.java)
                         startActivity(intent)
                     }
+                    Log.d("내가 찾는거", hotelDetailData["review"].toString())
                 }
             })
 //            이미지 변수화 처리
@@ -81,6 +87,8 @@ class HotelDetail:AppCompatActivity(), OnMapReadyCallback{
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.hotelLoc) as SupportMapFragment
         mapFragment.getMapAsync(this)
+
+
 
 //        val vp = findViewById(R.id.reviewCarousel) as ViewPager
 //        val reviewAdapter = ReviewCarouselAdapter(this)

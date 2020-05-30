@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto"    >
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"    >
     <androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+        android:layout_width="match_parent"
         android:id="@+id/crsc"
         android:layout_height="wrap_content"
         android:background="@drawable/rounded2"
@@ -28,24 +29,26 @@
             android:layout_marginLeft="15dp"
             android:text="아이디"
             />
+
         <TextView
+            android:id="@+id/reviewAt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintLeft_toRightOf="@+id/profilePic"
-            app:layout_constraintTop_toBottomOf="@id/profileText"
-            android:layout_marginTop="5dp"
             android:layout_marginLeft="15dp"
+            android:layout_marginTop="5dp"
             android:text="날짜"
-            />
+            app:layout_constraintLeft_toRightOf="@+id/profilePic"
+            app:layout_constraintTop_toBottomOf="@id/profileText" />
+
         <TextView
+            android:id="@+id/reviewContent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintLeft_toLeftOf="@+id/profilePic"
-            app:layout_constraintTop_toBottomOf="@id/profilePic"
-            android:layout_marginTop="5dp"
             android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
             android:text="아 거 아무말이나 좀 해보시오"
-            />
+            app:layout_constraintLeft_toLeftOf="@+id/profilePic"
+            app:layout_constraintTop_toBottomOf="@id/profilePic" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

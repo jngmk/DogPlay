@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.view.menu.ActionMenuItemView
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.gms.tasks.Task
 import com.google.gson.Gson
 import com.google.gson.internal.LinkedTreeMap
 import com.google.gson.reflect.TypeToken
@@ -51,6 +52,9 @@ class RoomAdapter(var context:Context, var rooms:ArrayList<HashMap<String,Any>>)
         holder.itemView.size.text = "${room["minsize"].toString().toDouble().toInt()}Kg ~ ${room["maxsize"].toString().toDouble().toInt()}Kg"
         holder.itemView.cnt.text = room["count"].toString().toDouble().toInt().toString()
         holder.itemView.setOnClickListener{
+            val intent = Intent(context, RoomDetail::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            context.startActivity(intent)
         }
     }
 }

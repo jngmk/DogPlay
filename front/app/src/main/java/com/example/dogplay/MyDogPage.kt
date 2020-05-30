@@ -33,9 +33,6 @@ class MyDogPage:AppCompatActivity() {
             val layoutInflater = applicationContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 //            val newImage = layoutInflater(R.layout.dog_list,null)
             val img = ImageView(applicationContext)
-            img.layoutParams.width = 50
-            img.layoutParams.height = 50
-            this.addContentView(MyDogList,img)
         }
 
     }

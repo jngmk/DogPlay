@@ -32,7 +32,7 @@ class InfoDetail:AppCompatActivity(){
         val layoutManager = LinearLayoutManager(this)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
         infoList.layoutManager = layoutManager
-        val adapter = InfoAdapter(this, Supplier.infos)
+        val adapter = InfoAdapter(this, Supplier.HotelDetailInfo)
         infoList.adapter = adapter
     }
 }
