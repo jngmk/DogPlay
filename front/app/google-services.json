@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "253744868357",
+    "firebase_url": "https://dogplay-5c07e.firebaseio.com",
+    "project_id": "dogplay",
+    "storage_bucket": "dogplay.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:253744868357:android:74009c3deaa539c1f7006c",
+        "android_client_info": {
+          "package_name": "com.example.dogplay"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "253744868357-ardtak88fp4tvor1volf0260gdrs78oc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.dogplay",
+            "certificate_hash": "bf3d95e967bb9875edcb26f171bfe71e141a912b"
+          }
+        },
+        {
+          "client_id": "253744868357-oa45u65bv9ai5e508ef0p9emsijqoa9p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBoj6Nwjapgdvd4YSmJyU5vkF6DAfh_1ik"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "253744868357-oa45u65bv9ai5e508ef0p9emsijqoa9p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
