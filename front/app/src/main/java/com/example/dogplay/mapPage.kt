@@ -1,5 +1,6 @@
 package com.example.dogplay
 
+import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
@@ -37,7 +38,7 @@ class mapPage : Fragment() {
     private lateinit var mMap: GoogleMap
     private lateinit var mPager: ViewPager2
     private lateinit var mMarkers: ArrayList<Marker>
-    private lateinit var hotels: ArrayList<HotelInfo>
+    private lateinit var hotels: ArrayList<HotelInfoWithStarAndPrice>
     private var mMapCurLatitude: Double? = null
     private var mMapCurLongitude: Double? = null
     private var mCurrentMarker: Marker? = null
@@ -66,9 +67,6 @@ class mapPage : Fragment() {
 
     private fun updateMap() {
         if (mapReady) {
-            val seoul = LatLng(37.4979, 1127.0276)
-//            mMap.addMarker(MarkerOptions().position(seoul).title("서울"))
-//            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(seoul, 17f))
             mMap.setOnMarkerClickListener {
                     marker ->
                 if (marker.tag != null) {
@@ -77,6 +75,11 @@ class mapPage : Fragment() {
                 true
             }
         }
+//        else {
+//            val seoul = LatLng(37.4979, 1127.0276)
+//            mMap.addMarker(MarkerOptions().position(seoul).title("서울"))
+//            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(seoul, 15f))
+//        }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -115,6 +118,7 @@ class mapPage : Fragment() {
 
     private fun getData(latitude: Double = 37.4979, longitude: Double = 1127.0276) {
         val server = API.server()
+        // 근처에 있는 호텔 정보 가져오기
         server!!.getHotelNearBy(DISTANCE, latitude, longitude).enqueue(object : Callback<HotelNearByDTO> {
             override fun onFailure(call: Call<HotelNearByDTO>, t: Throwable) {
                 Log.d("fail",t.toString())
@@ -264,7 +268,7 @@ class mapPage : Fragment() {
         }
     }
 
-    class PagerRecyclerAdapter(private val hotels: ArrayList<HotelInfo>) : RecyclerView.Adapter<PagerViewHolder>() {
+    class PagerRecyclerAdapter(private val hotels: ArrayList<HotelInfoWithStarAndPrice>) : RecyclerView.Adapter<PagerViewHolder>() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PagerViewHolder =
             PagerViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.map_hotel_list, parent, false))
@@ -284,9 +288,13 @@ class mapPage : Fragment() {
         private var mapHotelAddress: TextView = itemView.findViewById(R.id.mapHotelAddress)
         private var mapHotelPrice: TextView = itemView.findViewById(R.id.mapHotelPrice)
 
-        fun updateHotelList(hotel: HotelInfo) {
+        @SuppressLint("SetTextI18n")
+        fun updateHotelList(hotel: HotelInfoWithStarAndPrice) {
+            mapHotelEval.text = hotel.star.toString()
             mapHotelName.text = hotel.hotelname
             mapHotelAddress.text = hotel.address
+            val hotelMinPrice = hotel.minprice.toString()
+            mapHotelPrice.text = "$hotelMinPrice ~"
         }
     }
 }
