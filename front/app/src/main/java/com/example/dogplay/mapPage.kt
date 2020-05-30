@@ -46,7 +46,7 @@ class mapPage : Fragment() {
     private var mapFocus = false
     private var numPage = 0
     private val REQUEST_ACCESS_FINE_LOCATION = 1000
-    private val DISTANCE = 10000
+    private val DISTANCE = 1
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -84,15 +84,15 @@ class mapPage : Fragment() {
         locationInit()
         getData()
         btnSearchHotelNearBy.setOnClickListener {
-            getData()
+            // 지도 중앙 값
+            val centerLatLng:LatLng = mMap.projection.visibleRegion.latLngBounds.center
+            getData(centerLatLng.latitude, centerLatLng.longitude)
         }
-//        mMap.setOnMarkerClickListener {
-//            marker ->
-//            if (marker.tag != null) {
-//                mPager.currentItem = marker.tag as Int
-//            }
-//            true
-//        }
+        btnGoCurPos.setOnClickListener {
+            if (mMapCurLatitude != null && mMapCurLongitude != null) {
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(mMapCurLatitude!!, mMapCurLongitude!!), 15f))
+            }
+        }
     }
 
     private fun locationInit() {
@@ -123,6 +123,7 @@ class mapPage : Fragment() {
             override fun onResponse(call: Call<HotelNearByDTO>, response: retrofit2.Response<HotelNearByDTO>) {
                 Log.d("success",response.body().toString())
                 val hotelList: HotelNearByDTO? = response.body()
+                mMap.clear()
                 numPage = 0
                 mMarkers = ArrayList()
                 hotels = hotelList?.data!!
@@ -142,9 +143,8 @@ class mapPage : Fragment() {
                         .position(LatLng(hotels[0].latitude, hotels[0].longitude))
                         .icon(BitmapDescriptorFactory.fromResource(R.drawable.map_selected_marker))
                         .title(hotels[0].hotelname))
-                    marker.tag = 0
-//                    mMarkers.removeAt(0)
-                    mMarkers[0] = marker
+                    mMarkers[0].remove()
+                    mMarkers.add(0, marker)
                 }
                 mPager.adapter = PagerRecyclerAdapter(hotelList.data)
                 mPager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
@@ -157,30 +157,27 @@ class mapPage : Fragment() {
         override fun onPageSelected(position: Int) {
             // 이전 포커싱 초기화
             if (mPrevPosition != null) {
-//                mMarkers.removeAt(mPrevPosition!!)
+                mMarkers[mPrevPosition!!].remove()
                 val hotel = hotels[mPrevPosition!!]
                 val marker = mMap.addMarker(MarkerOptions()
                     .position(LatLng(hotel.latitude, hotel.longitude))
                     .icon(BitmapDescriptorFactory.fromResource(R.drawable.map_marker))
                     .title(hotel.hotelname))
-                marker.tag = mPrevPosition
-                mMarkers[mPrevPosition!!] = marker
+                mMarkers.add(mPrevPosition!!, marker)
             }
             // 현재 포커싱
-//            mMarkers.removeAt(position)
+            mMarkers[position].remove()
             val hotel = hotels[position]
             val marker = mMap.addMarker(MarkerOptions()
                 .position(LatLng(hotel.latitude, hotel.longitude))
                 .icon(BitmapDescriptorFactory.fromResource(R.drawable.map_selected_marker))
                 .title(hotel.hotelname))
-            marker.tag = position
-            mMarkers[position] = marker
+            mMarkers.add(position, marker)
             mMap.moveCamera(CameraUpdateFactory.newLatLng(LatLng(hotel.latitude, hotel.longitude)))
 
             mPrevPosition = position
         }
     }
-
 
     override fun onResume() {
         super.onResume()
@@ -253,13 +250,12 @@ class mapPage : Fragment() {
                     .icon(BitmapDescriptorFactory.fromResource(R.drawable.map_marker))
                     .title("현재위치"))
                 if (!mapFocus) {
-                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(now, 17f))
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(now, 15f))
                     getData(latitude, longitude)
                     mapFocus = true
-
-                    mMapCurLatitude = latitude
-                    mMapCurLongitude = longitude
                 }
+                mMapCurLatitude = latitude
+                mMapCurLongitude = longitude
 //                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 17f))
 //                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 17f))
 
@@ -274,7 +270,7 @@ class mapPage : Fragment() {
             PagerViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.map_hotel_list, parent, false))
 
         override fun onBindViewHolder(holder: PagerViewHolder, position: Int) {
-            val hotel = hotels.get(position)
+            val hotel = hotels[position]
             holder.updateHotelList(hotel)
         }
 

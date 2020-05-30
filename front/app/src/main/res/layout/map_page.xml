@@ -51,6 +51,26 @@
 
         </androidx.cardview.widget.CardView>
 
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/mapHotelViewPager"
+            app:layout_constraintStart_toStartOf="parent"
+            app:cardCornerRadius="25dp"
+            app:cardUseCompatPadding="true"
+            app:cardElevation="4dp"
+            >
+
+            <ImageView
+                android:id="@+id/btnGoCurPos"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:background="@drawable/no_edge"
+                android:src="@drawable/map_current_pos_foreground" />
+
+        </androidx.cardview.widget.CardView>
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/mapHotelViewPager"
@@ -60,6 +80,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintLeft_toLeftOf="parent" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
