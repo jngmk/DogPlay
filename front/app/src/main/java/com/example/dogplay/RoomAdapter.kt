@@ -54,7 +54,6 @@ class RoomAdapter(var context:Context, var rooms:ArrayList<HashMap<String,Any>>)
         holder.itemView.setOnClickListener{
             val intent = Intent(context, RoomDetail::class.java)
             intent.putExtra("rno", "${room["id"].toString().toDouble().toInt()}")
-
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             context.startActivity(intent)
         }

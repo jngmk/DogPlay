@@ -68,8 +68,9 @@ class searchPage : Fragment() {
 
 
         searchBar.clearFocus()
+        val dogs = "@drwable/dog" // 잠시 강아지 사진 대신
 
-        val adapter2 = DogAdapter(this.requireContext(), Supplier.dogs)
+        val adapter2 = DogAdapter(this.requireContext(), dogs)
         dogList.adapter = adapter2
 
         curdate.setOnClickListener{

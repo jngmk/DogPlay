@@ -25,6 +25,7 @@
         <activity android:name=".CalendarView"/>
         <activity android:name=".MyDogPage"/>
         <activity android:name=".RoomDetail"/>
+        <activity android:name=".DirectMessage"/>
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBoj6Nwjapgdvd4YSmJyU5vkF6DAfh_1ik"

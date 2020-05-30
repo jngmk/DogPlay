@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.home_list.view.eval
 import kotlinx.android.synthetic.main.home_list.view.hotelName
 import kotlinx.android.synthetic.main.hotel_detail.view.*
 
-class DogAdapter(var context:Context, var dogs:List<Dog>) :
+class DogAdapter(var context:Context, var dogs:String) :
     RecyclerView.Adapter<DogAdapter.ViewHolder>(){
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
@@ -29,11 +29,11 @@ class DogAdapter(var context:Context, var dogs:List<Dog>) :
     }
 
     override fun getItemCount(): Int {
-        return dogs.size
+        return 1
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val hotel = dogs[position]
+        val dog = dogs
         holder.itemView.setOnClickListener{
             val intent = Intent(this.context, MyDogPage::class.java)
             context.startActivity(intent)

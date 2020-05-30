@@ -52,6 +52,27 @@ data class RoomDetailDTO(
 
 )
 
+data class ChatMainDTO(
+    @SerializedName("data")
+    var data : ArrayList<ChatMain>
+)
+
+data class ChatIn(
+    val id:Int,
+    val chatid:Int,
+    val receive:String,
+    val send:String,
+    val picture:String,
+    val message:String,
+    val created:ArrayList<Int>,
+    val readmessage:Int
+)
+
+data class ChatMain(
+    val chat:ChatIn,
+    val count: Int
+)
+
 data class RoomDetailData(
     val id:Int,
     val hotelnumber: Int,
@@ -63,6 +84,10 @@ data class RoomDetailData(
     val info:String
 )
 
+data class DMDTO(
+    @SerializedName("data")
+    val data:ArrayList<ChatIn>
+)
 
 
 interface Service {
@@ -101,4 +126,14 @@ interface Service {
         @Query("id") id:Int
     ):Call<RoomDetailDTO>
 
+    @GET("/api/v1/chat/search/userid")
+    fun searchChatWithUserId(
+        @Query("userid") userid: String
+    ):Call<ChatMainDTO>
+
+    @GET("/api/v1/chat/search/receive/send")
+    fun chatTwoPeople(
+        @Query("receive") receive: String,
+        @Query("send") send: String
+    ):Call<DMDTO>
 }
