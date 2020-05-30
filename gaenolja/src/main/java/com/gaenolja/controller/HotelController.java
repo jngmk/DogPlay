@@ -96,6 +96,12 @@ public class HotelController {
 		return handleSuccess(starservice.searchall());
 	}
 	
+	@GetMapping("/api/v1/hotelstar/search/userid")
+	@ApiOperation("hotel + star")
+	public ResponseEntity<Map<String, Object>> searchhotelstarbyuserid(String userid){
+		return handleSuccess(starservice.searchbyuserid(userid));
+	}
+	
 	@GetMapping("/api/v1/hotelstar/search/latitude/longitude/distance")
 	@ApiOperation("distance별로 hotel 찾기")
 	public ResponseEntity<Map<String, Object>> searchbydistancehotelstar(@RequestParam double latitude, @RequestParam double longitude, @RequestParam int distance){

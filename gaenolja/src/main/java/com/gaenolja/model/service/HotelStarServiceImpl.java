@@ -70,6 +70,37 @@ public class HotelStarServiceImpl implements HotelStarService{
 	}
 	
 	@Override
+	public List<HotelStar> searchbyuserid(String userid){
+		try {
+			List<HotelStar> hotelstar = dao.searchbyuserid(userid);
+			for (HotelStar star:hotelstar) {
+				int hotelnumber = star.getHotelnumber();
+				star.setCountreview(reviewdao.countreview(hotelnumber));
+				star.setCountstar(reviewdao.countbyhotelnumber(hotelnumber));
+				String hashid = star.getHashid();
+				List<String> list = new ArrayList<String>();
+				for (int idx=0;idx<hashid.length();idx++) {
+					list.add(hashtagdao.search(Character.toString(hashid.charAt(idx))).getName());
+				}
+				star.setMinprice(roomdao.minprice(hotelnumber));					
+				star.setHashtag(list);
+				Gson gson = new Gson();
+				HashMap<String, String> jsonObject = gson.fromJson(star.getDetail().toString(), HashMap.class);
+				List<List<String>> detailarray = new ArrayList<List<String>>();
+				List<String> key = new ArrayList<>(jsonObject.keySet());
+				List<String> value = new ArrayList<>(jsonObject.values());
+				detailarray.add(key);
+				detailarray.add(value);
+				star.setDetail(detailarray);
+			}
+			return hotelstar;
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	@Override
 	public List<HotelStar> searchbydistance(double latitude, double longitude, int distance){
 		try {
 			HashMap<Object, Object> map = new HashMap<Object, Object>();

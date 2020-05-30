@@ -11,7 +11,7 @@
 	
 	<select id="searchbyhashtag" parameterType="string" resultType="hotel">
 		select * from hotel where hashid like concat('%', #{hashtag}, '%')
-	</select>
+	</select>	
 	
 	<select id="searchall" resultType="hotel">
 		select * from hotel
