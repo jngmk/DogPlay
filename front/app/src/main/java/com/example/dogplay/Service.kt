@@ -22,7 +22,7 @@ data class HotelDetailDTO(
 
 data class HotelNearByDTO(
     @SerializedName("data")
-    val data: ArrayList<HotelInfo>,
+    val data: ArrayList<HotelInfoWithStarAndPrice>,
     @SerializedName("state")
     val state: String
 )
@@ -40,6 +40,24 @@ data class HotelInfo(
     val detail: ArrayList<ArrayList<String>>
 )
 
+data class HotelInfoWithStarAndPrice(
+    val hotelnumber: Int = 0,
+    val userid: String,
+    val hashid: String,
+    val hotelname: String,
+    val latitude: Double,
+    val longitude: Double,
+    val address: String,
+    val contact: String,
+    val info: String,
+    val detail: ArrayList<ArrayList<String>>,
+    val star: Double,
+    val countstar: Int,
+    val countreview: Int,
+    val hashtag: ArrayList<String>,
+    val distance: Double,
+    val minprice: Int
+)
 
 interface Service {
     @GET("/api/v1/hotelstar/searchall")
@@ -50,7 +68,7 @@ interface Service {
         @Query("hotelnumber") hotelnumber: Number
     ):Call<HotelDetailDTO>
 
-    @GET("/api/v1/hotel/search/latitude/longitude/distance")
+    @GET("/api/v1/hotelstar/search/latitude/longitude/distance")
     fun getHotelNearBy(
         @Query("distance") distance: Int,
         @Query("latitude") latitude: Double,
