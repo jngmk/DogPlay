@@ -32,13 +32,13 @@
    	<select id="searchbytwo" parameterType="hashmap" resultType="chat">
    		select *
    		from chat
-   		where receive = #{receive} AND send = #{send}
+   		where (receive = #{receive} and send = #{send}) or (receive = #{send} and send = #{receive}) order by created asc
     </select>
     
     <select id="countbytwo" parameterType="hashmap" resultType="int">
    		select count(*)
    		from chat
-   		where receive = #{receive} AND send = #{send} and readmessage=0
+   		where receive = #{receive} and send = #{send} and readmessage=0
     </select>
     
     <select id="searchbychatid" parameterType="int" resultType="chat">
