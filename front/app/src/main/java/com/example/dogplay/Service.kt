@@ -1,6 +1,8 @@
 package com.example.dogplay
 
 import com.google.gson.annotations.SerializedName
+import com.google.gson.internal.LinkedTreeMap
+import com.google.gson.internal.ObjectConstructor
 import retrofit2.Call
 import retrofit2.http.*
 import retrofit2.http.Header
@@ -44,6 +46,25 @@ data class HotelInfo(
 )
 
 
+data class RoomDetailDTO(
+    @SerializedName("data")
+    var data : RoomDetailData
+
+)
+
+data class RoomDetailData(
+    val id:Int,
+    val hotelnumber: Int,
+    val roomname :String,
+    val price : Int,
+    val minsize:Int,
+    val maxsize:Int,
+    val count:Int,
+    val info:String
+)
+
+
+
 interface Service {
     @GET("/api/v1/hotelstar/searchall")
     fun getRequest():Call<HotelSerchDTO>
@@ -74,4 +95,10 @@ interface Service {
         @Field("longitude") longitude:Double,
         @Field("userid") userid:String
     ):Call<HotelSerchDTO>
+
+    @GET("/api/v1/hotelroom/search")
+    fun searchRoomDetail(
+        @Query("id") id:Int
+    ):Call<RoomDetailDTO>
+
 }

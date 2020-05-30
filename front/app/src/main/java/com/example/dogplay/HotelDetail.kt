@@ -64,6 +64,7 @@ class HotelDetail:AppCompatActivity(), OnMapReadyCallback{
                     Supplier.HotelDetailReview = hotelDetailData["review"] as ArrayList<LinkedTreeMap<String, Any>>
                     Supplier.HotelDetailInfo = hotelstar["detail"] as ArrayList<ArrayList<String>>
                     Supplier.RoomDetail = hotelDetailData["HotelRoom"] as ArrayList<LinkedTreeMap<String,Any>>
+                    Supplier.PickAdress = hotelstar["address"].toString()
 
                     val vp = findViewById(R.id.reviewCarousel) as ViewPager
                     val reviewAdapter = ReviewCarouselAdapter(applicationContext)

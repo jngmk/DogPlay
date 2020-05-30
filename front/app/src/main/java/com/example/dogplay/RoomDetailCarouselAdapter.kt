@@ -41,19 +41,7 @@ class RoomDetailCarouselAdapter(private val context: Context):PagerAdapter(){
 //        val reviewAt = view.findViewById<TextView>(R.id.reviewAt)
 //        val dateAt = review[position]["created"] as ArrayList<Double>
 //        reviewAt.text = "${dateAt[0].toInt()}-${dateAt[1].toInt()}-${dateAt[2].toInt()}-${dateAt[3].toInt()}:${dateAt[4].toInt()}:${dateAt[5].toInt()}"
-//
-//        val roomDetailTitle = view.findViewById<TextView>(R.id.RoomDetailTitle)
-//        val RoomData = Supplier.RoomDetail[position]
-//        Log.d("Roomdata", RoomData["roomname"].toString())
-//        roomDetailTitle.text = RoomData["roomname"].toString()
-//        val minSize = RoomData["minsize"].toString().toDouble().toInt()
-//        val maxSize = RoomData["maxsize"].toString().toDouble().toInt()
-//        val roomDetailSize = view.findViewById<TextView>(R.id.RoomDetailSize)
-//        roomDetailSize.text = "${minSize} ~ ${maxSize}"
-//        val roomDetailAddress = view.findViewById<TextView>(R.id.RoomDetailAddress)
-//        roomDetailAddress.text = "몰라 안오네"
-//        val roomDetailPrice = view.findViewById<TextView>(R.id.RoomDetailPrice)
-//        roomDetailPrice.text = "${RoomData["price"].toString().toDouble().toInt()}"
+
         val cell = view.findViewById<View>(R.id.rdcs)
         cell.clipToOutline = true
         container.addView(view,0)

@@ -50,5 +50,6 @@ object Supplier{
     var HotelDetailReview = arrayListOf<LinkedTreeMap<String,Any>>()
     var HotelDetailInfo = ArrayList<ArrayList<String>>()
     var RoomDetail = ArrayList<LinkedTreeMap<String,Any>>()
+    var PickAdress = String()
 }
 
