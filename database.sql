@@ -65,6 +65,7 @@ create table hotelroom (
     minsize integer not null,
     maxsize integer not null,
     count integer not null,
+    info varchar(1000),
     constraint FK_hotel_room foreign key(hotelnumber) references hotel(hotelnumber)
     on update cascade on delete cascade
 );

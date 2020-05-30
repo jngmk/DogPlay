@@ -30,8 +30,8 @@
 	</select>
 
 	<insert id="insert" parameterType="hotelroom">
-		insert into hotelroom(hotelnumber, roomname, price, minsize, maxsize, count)
-		values(#{hotelnumber}, #{roomname}, #{price}, #{minsize}, #{maxsize}, #{count})
+		insert into hotelroom(hotelnumber, roomname, price, minsize, maxsize, count, info)
+		values(#{hotelnumber}, #{roomname}, #{price}, #{minsize}, #{maxsize}, #{count}, #{info})
 	</insert>
 
 	<update id="update" parameterType="hotelroom">
@@ -41,7 +41,8 @@
 		price = #{price},
 		minsize = #{minsize},
 		maxsize = #{maxsize},
-		count = #{count}
+		count = #{count},
+		info = #{info}
 		where id = #{id}
 	</update>
 
