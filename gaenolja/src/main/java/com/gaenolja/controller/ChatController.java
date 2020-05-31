@@ -85,10 +85,10 @@ public class ChatController {
 		return handleSuccess(service.searchnew(receive, send));
 	}
 	
-	@GetMapping("/api/v1/chat/searchnewbyuserid/")
+	@GetMapping("/api/v1/chat/searchnewbyreceive/")
 	@ApiOperation("전체 chat에서 새로운  chat 찾기")
-	public ResponseEntity<Map<String, Object>> searchnewbyuserid(@RequestParam String userid){
-		return handleSuccess(service.searchnewbyuserid(userid));
+	public ResponseEntity<Map<String, Object>> searchnewbyuserid(@RequestParam String receive){
+		return handleSuccess(service.checkunread(receive));
 	}
 
 	@PostMapping("/api/v1/chat/insert")

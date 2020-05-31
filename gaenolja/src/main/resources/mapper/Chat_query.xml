@@ -11,6 +11,12 @@
    		from chat
    		where receive = #{receive}
     </select>
+    
+    <select id="checkunread" parameterType="String" resultType="int">
+   		select count(*)
+   		from chat
+   		where receive = #{receive} and readmessage=0 limit 1
+    </select>
 
 	<select id="searchbysend" parameterType="String" resultType="chat">
    		select *

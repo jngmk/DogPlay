@@ -15,6 +15,7 @@ public interface ChatDAO {
 	public List<Chat> searchbyuserid(String userid);
 	public List<Chat> searchbytwo(HashMap<Object, Object> map);
 	public int countbytwo(HashMap<Object, Object> map);
+	public int checkunread(String receive);
 	public List<Chat> searchbychatid(int chatid);
 	public Chat search(int id);
 	public void insert(Chat chat);

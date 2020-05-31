@@ -76,24 +76,10 @@ public class ChatServiceImpl implements ChatService {
 	}
 	
 	@Override
-	public boolean searchnewbyuserid(String userid){
+	public boolean checkunread(String receive){
 		try {
-			List<Chat> chat = dao.searchbyuserid(userid);
-			for (Chat c:chat) {
-				String receive = c.getReceive();
-				String send = c.getSend();
-				NewChat chatnew = new NewChat();
-				chatnew.setChat(c);
-				if (receive.equals(userid)) {
-					HashMap<Object, Object> map2 = new HashMap<Object, Object>();
-					map2.put("receive", receive);
-					map2.put("send", send);
-					int count = dao.countbytwo(map2);
-					chatnew.setCount(count);
-					if (count > 0) return true;
-				}
-			}
-			return false;
+			int count = dao.checkunread(receive);
+			if (count > 0) return true;
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
