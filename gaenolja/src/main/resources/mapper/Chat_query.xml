@@ -40,7 +40,7 @@
    		from chat
    		where receive = #{receive} and send = #{send} and readmessage=0
     </select>
-    
+      
     <select id="searchbychatid" parameterType="int" resultType="chat">
    		select *
    		from chat

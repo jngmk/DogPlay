@@ -75,6 +75,47 @@ public class ChatServiceImpl implements ChatService {
 		return newchat;
 	}
 	
+	@Override
+	public boolean searchnewbyuserid(String userid){
+		try {
+			List<Chat> chat = dao.searchbyuserid(userid);
+			for (Chat c:chat) {
+				String receive = c.getReceive();
+				String send = c.getSend();
+				NewChat chatnew = new NewChat();
+				chatnew.setChat(c);
+				if (receive.equals(userid)) {
+					HashMap<Object, Object> map2 = new HashMap<Object, Object>();
+					map2.put("receive", receive);
+					map2.put("send", send);
+					int count = dao.countbytwo(map2);
+					chatnew.setCount(count);
+					if (count > 0) return true;
+				}
+			}
+			return false;
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	
+	@Override
+	public boolean searchnew(String receive, String send){
+		try {
+			HashMap<Object, Object> map = new HashMap<Object, Object>();
+			map.put("receive", receive);
+			map.put("send", send);
+			int cnt = dao.countbytwo(map);
+			if (cnt > 0) return true;
+			else return false;
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
 	public List<Chat> searchbychatid(int chatid){
 		try {
 			List<Chat> chat = dao.searchbychatid(chatid);
@@ -98,7 +139,7 @@ public class ChatServiceImpl implements ChatService {
 		}
 		return null;
 	}
-	
+		
 	@Override
 	public Chat search(int id){
 		try {

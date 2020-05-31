@@ -44,7 +44,7 @@ public class ChatController {
 	}
 	
 	@GetMapping("/api/v1/chat/search")
-	@ApiOperation("id로 chat 나타내기")
+	@ApiOperation("id로 chat 찾기")
 	public ResponseEntity<Map<String, Object>> search(@RequestParam int id){
 		return handleSuccess(service.search(id));
 	}
@@ -78,7 +78,19 @@ public class ChatController {
 	public ResponseEntity<Map<String, Object>> searchbytwo(@RequestParam String receive, @RequestParam String send){
 		return handleSuccess(service.searchbytwo(receive, send));
 	}
-		
+	
+	@GetMapping("/api/v1/chat/searchnew/")
+	@ApiOperation("채팅창안에서 새로운  chat 찾기")
+	public ResponseEntity<Map<String, Object>> searchnew(@RequestParam String receive, @RequestParam String send){
+		return handleSuccess(service.searchnew(receive, send));
+	}
+	
+	@GetMapping("/api/v1/chat/searchnewbyuserid/")
+	@ApiOperation("전체 chat에서 새로운  chat 찾기")
+	public ResponseEntity<Map<String, Object>> searchnewbyuserid(@RequestParam String userid){
+		return handleSuccess(service.searchnewbyuserid(userid));
+	}
+
 	@PostMapping("/api/v1/chat/insert")
 	@ApiOperation("insert chat")
 	public ResponseEntity<Map<String, Object>> insert(@RequestBody Chat chat){

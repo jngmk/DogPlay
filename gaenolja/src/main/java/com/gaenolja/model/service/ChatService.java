@@ -13,6 +13,8 @@ public interface ChatService {
 	public List<Chat> searchbytwo(String receive, String send);
 	public Chat search(int id);
 	public List<Chat> searchbychatid(int chatid);
+	public boolean searchnew(String receive, String send);
+	public boolean searchnewbyuserid(String userid);
 	public boolean insert(Chat chat);
 	public boolean update(Chat chat);
 	public boolean delete(int id);
