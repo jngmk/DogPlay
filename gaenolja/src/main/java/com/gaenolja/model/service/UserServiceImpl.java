@@ -3,6 +3,7 @@ package com.gaenolja.model.service;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.URI;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
@@ -12,7 +13,11 @@ import org.apache.commons.codec.binary.Base64;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import com.gaenolja.model.dao.UserDAO;
 import com.gaenolja.model.dto.User;
@@ -95,11 +100,16 @@ public class UserServiceImpl implements UserService{
 			
 			User findedUser = dao.search(email);
 			
-			if (findedUser != null) {
-				result.put("token", service.makeJwt(findedUser));
-			} else {
-				result.put("email", email);
-			};
+			if (findedUser == null) {
+				User user = new User();
+				user.setUserid(email);
+				user.setSocial(1);
+				int num = (int) (Math.random() * 1000);
+				user.setNickname(email + Integer.toString(num));
+				dao.insert(user);
+				findedUser = dao.search(email);
+			}
+			result.put("token", service.makeJwt(findedUser));
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -135,15 +145,53 @@ public class UserServiceImpl implements UserService{
 			profileobj = profileparser.parse(response.toString());
 			JSONObject profilejsonObj = (JSONObject) profileobj;
 			String email = (String) ((JSONObject) profilejsonObj.get("response")).get("email");
-			
 			User findedUser = dao.search(email);
-			if (findedUser != null) {
-				result.put("token", service.makeJwt(findedUser));
-			} else {
-				result.put("email", email);
-			};
-
+			if (findedUser == null) {
+				User user = new User();
+				user.setUserid(email);
+				user.setSocial(0);
+				int num = (int) (Math.random() * 1000);
+				user.setNickname(email + Integer.toString(num));
+				dao.insert(user);
+				findedUser = dao.search(email);
+			}
+			result.put("token", service.makeJwt(findedUser));
 		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	@Override
+	public Map<String, String> kakaoLogin(String token){
+		Map<String, String> result = new HashMap<>();
+		try {
+			HttpHeaders profileheaders = new HttpHeaders();
+			RestTemplate profileTemplate = new RestTemplate();
+			profileheaders.add("Authorization", "Bearer " + token);
+			HttpEntity<String> profile_request = new HttpEntity<>(profileheaders);
+			URI profileuri = URI.create("https://kapi.kakao.com/v2/user/me");
+			
+			ResponseEntity<Map> profile;
+			profile = profileTemplate.postForEntity(profileuri, profile_request, Map.class);
+			Map profile_body = profile.getBody();
+			Map account = (Map) profile_body.get("kakao_account");
+			String email = (String) account.get("email");
+			User findedUser = dao.search(email);
+			if (findedUser == null) {
+				User user = new User();
+				user.setUserid(email);
+				user.setSocial(2);
+				Map pro = (Map) account.get("profile");
+				String nickname = (String) pro.get("nickname");
+				String picture = (String) pro.get("thumbnail_image_url");
+				user.setNickname(nickname);
+				user.setPicture(picture);
+				dao.insert(user);
+				findedUser = dao.search(email);
+			}
+			result.put("token", service.makeJwt(findedUser));
+		}catch(Exception e) {
 			e.printStackTrace();
 		}
 		return result;

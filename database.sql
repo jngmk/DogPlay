@@ -8,7 +8,7 @@ show tables;
 create table user (
 	userid varchar(200) primary key,
     nickname varchar(50) not null,
-    phone varchar(50) not null,
+    phone varchar(50),
     picture varchar(500),
     social integer not null,
     admin integer not null
@@ -41,9 +41,8 @@ create table hashtag (
 );
 
 create table hotel (
-	hotelnumber integer primary key,
+	hotelnumber varchar(50) primary key,
     userid varchar(200) not null,
-    hashid integer ,
     hotelname varchar(50) not null,
     latitude decimal(10, 6) not null,
     longitude decimal(10, 6) not null,
@@ -52,14 +51,22 @@ create table hotel (
     info text not null,
     detail json not null,
     constraint FK_user_hotel foreign key(userid) references user(userid)
+    on update cascade on delete cascade
+);
+
+create table hotelhash (
+	id integer primary key auto_increment,
+    hashtag int not null,
+    hotelnumber varchar(50) not null,
+	constraint FK_hash_hotel foreign key(hashtag) references hashtag(id)
     on update cascade on delete cascade,
-    constraint FK_hashtag_hotel foreign key(hashid) references hashtag(id)
+	constraint FK_hotel_hash foreign key(hotelnumber) references hotel(hotelnumber)
     on update cascade on delete cascade
 );
 
 create table hotelroom (
 	id integer primary key auto_increment,
-    hotelnumber integer not null,
+    hotelnumber varchar(50) not null,
     roomname varchar(30) not null,
     price integer not null,
     minsize integer not null,
@@ -73,7 +80,7 @@ create table hotelroom (
 create table cart (
 	id integer primary key auto_increment,
     userid varchar(200) not null,
-    hotelnumber integer not null,
+    hotelnumber varchar(50) not null,
     roomname varchar(30) not null,
     price integer not null,
 	constraint FK_hotel_cart foreign key(hotelnumber) references hotel(hotelnumber)
@@ -85,7 +92,7 @@ drop table reservation;
 create table reservation (
 	id integer primary key auto_increment,
     paidid integer,
-    hotelnumber integer not null,
+    hotelnumber varchar(50) not null,
     userid varchar(200) not null,
     dog varchar(100),
     roomname varchar(30) not null,
@@ -109,7 +116,7 @@ create table paid (
 
 create table hotelpicture (
 	id integer primary key auto_increment,
-    hotelnumber integer not null,
+    hotelnumber varchar(50) not null,
     name varchar(30) not null,
     picture varchar(500) not null,
     constraint FK_hotel_picture foreign key(hotelnumber) references hotel(hotelnumber)
@@ -120,9 +127,9 @@ desc hotel;
 
 create table review (
 	id integer primary key auto_increment,
-	hotelnumber integer,
-    userid varchar(200),
-    visitid integer,
+	hotelnumber varchar(50) not null,
+    userid varchar(200) not null,
+    visitid integer not null,
     star decimal(2, 1) not null,
     content varchar(300),
     created datetime not null default now(),
@@ -149,9 +156,10 @@ create table notification (
 	id integer primary key auto_increment,
     userid varchar(200) not null,
     target varchar(200),
-    hotelnumber integer,
+    hotelnumber varchar(50),
     subjects varchar(50) not null,
     content varchar(255) not null,
+    created datetime not null default now(),
     constraint FK_hotel_notification foreign key(hotelnumber) references hotel(hotelnumber)
     on update cascade on delete cascade,
 	constraint FK_user_notification_target foreign key(userid) references user(userid)
@@ -183,7 +191,7 @@ create table chat (
 
 create table likes (
 -- 다중 primary key 직접 지정 
-	hotelnumber integer,
+	hotelnumber varchar(50),
     userid varchar(200),
     constraint FK_user_likes foreign key(userid) references user(userid)
     on update cascade on delete cascade,

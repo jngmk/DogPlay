@@ -66,6 +66,12 @@ public class UserController {
 		return handleSuccess(service.naverLogin(token));
 	}
 	
+	@PostMapping("/api/v1/user/kakaologin")
+	@ApiOperation("kakao 로그인")
+	public ResponseEntity<Map<String, Object>> kakaoLogin(@RequestBody String token) {
+		return handleSuccess(service.kakaoLogin(token));
+	}
+	
 	@PutMapping("/api/v1/user/update")
 	@ApiOperation("update user")
 	public ResponseEntity<Map<String, Object>> update(@RequestBody User user){
