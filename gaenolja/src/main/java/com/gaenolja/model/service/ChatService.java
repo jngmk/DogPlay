@@ -1,5 +1,6 @@
 package com.gaenolja.model.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import com.gaenolja.model.dto.Chat;
@@ -15,7 +16,7 @@ public interface ChatService {
 	public List<Chat> searchbychatid(int chatid);
 	public boolean searchnew(String receive, String send);
 	public boolean checkunread(String receive);
-	public boolean insert(Chat chat);
+	public LocalDateTime insert(Chat chat);
 	public boolean update(Chat chat);
 	public boolean delete(int id);
 }

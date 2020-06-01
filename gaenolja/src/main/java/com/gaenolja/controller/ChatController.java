@@ -94,9 +94,7 @@ public class ChatController {
 	@PostMapping("/api/v1/chat/insert")
 	@ApiOperation("insert chat")
 	public ResponseEntity<Map<String, Object>> insert(@RequestBody Chat chat){
-		boolean res = service.insert(chat);
-		if (res) return handleSuccess("success");
-		else return handleFail("fail", HttpStatus.OK);
+		return handleSuccess(service.insert(chat));
 	}
 	
 	@PutMapping("/api/v1/chat/update")

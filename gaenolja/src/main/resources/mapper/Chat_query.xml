@@ -41,6 +41,12 @@
    		where (receive = #{receive} and send = #{send}) or (receive = #{send} and send = #{receive}) order by created asc
     </select>
     
+    <select id="sendtime" parameterType="hashmap" resultType="chat">
+   		select *
+   		from chat
+   		where (receive = #{receive} and send = #{send}) order by created desc limit 1;
+    </select>
+    
     <select id="countbytwo" parameterType="hashmap" resultType="int">
    		select count(*)
    		from chat

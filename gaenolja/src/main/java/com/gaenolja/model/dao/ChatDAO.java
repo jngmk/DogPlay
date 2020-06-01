@@ -21,4 +21,5 @@ public interface ChatDAO {
 	public void insert(Chat chat);
 	public void update(Chat chat);
 	public void delete(int id);
+	public Chat sendtime(HashMap<Object, Object> map);
 }

@@ -5,7 +5,6 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.gaenolja.model.dto.Hashtag;
-import com.gaenolja.model.dto.HotelHash;
 
 @Mapper
 public interface HashtagDAO {
