@@ -31,8 +31,8 @@
 		           (CASE @chatnum WHEN c.chatid THEN @rownum:=@rownum+1 ELSE @rownum:=1 END) rnum,
 		           (@chatnum:=chatid) chatnum
 		   FROM chat c, (SELECT @chatnum:=0, @rownum:=0 FROM DUAL) val where receive=#{userid} or send=#{userid}
-		   ORDER BY c.created desc
-		) a where rnum = 1;
+		   ORDER BY c.chatid
+		) a where rnum=(select count(*) from chat where chatid=chatnum)
     </select>
     
    	<select id="searchbytwo" parameterType="hashmap" resultType="chat">
