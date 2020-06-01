@@ -9,13 +9,14 @@ public class HotelStar {
 	private double latitude;
 	private double longitude;
 	private String address;
-	private Object contact;
+	private String contact;
 	private String info;
 	private Object detail;
 	private double star;
 	private int countstar;
 	private int countreview;
 	private List<String> hashtag;
+	private List<Integer> hashid;
 	private double distance;
 	private int minprice;
 	public int getMinprice() {
@@ -66,10 +67,10 @@ public class HotelStar {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	public Object getContact() {
+	public String getContact() {
 		return contact;
 	}
-	public void setContact(Object contact) {
+	public void setContact(String contact) {
 		this.contact = contact;
 	}
 	public String getInfo() {
@@ -107,5 +108,11 @@ public class HotelStar {
 	}
 	public void setHashtag(List<String> hashtag) {
 		this.hashtag = hashtag;
+	}
+	public List<Integer> getHashid() {
+		return hashid;
+	}
+	public void setHashid(List<Integer> hashid) {
+		this.hashid = hashid;
 	}
 }

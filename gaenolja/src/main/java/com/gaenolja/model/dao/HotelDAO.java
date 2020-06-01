@@ -12,7 +12,6 @@ public interface HotelDAO {
 	public List<Hotel> searchall();
 	public Hotel search(String hotelnumber);
 	public List<Hotel> searchbyname(String hotelname);
-	public List<Hotel> searchbyhashtag(String hashtag);
 	public List<Hotel> searchbydistance(HashMap<Object, Object> map);
 	public void insert(Hotel hotel);
 	public void update(Hotel hotel);

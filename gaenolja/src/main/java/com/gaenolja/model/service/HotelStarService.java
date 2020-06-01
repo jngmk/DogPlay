@@ -11,6 +11,7 @@ public interface HotelStarService {
 	public List<HotelStar> searchbydistance(double latitude, double longitude, int distance);
 	public List<HotelStar> searchbyuserid(String userid);
 	public HotelStar search(String hotelnumber);
+	public List<HotelStar> searchbyhashtag(int hashtag);
 	public List<HotelStar> searchbyname(String hotelname, double latitude, double longitude, int distance);
 	public HashMap<Object, Object> hoteldetail(String hotelnumber);
 	public HashMap<Object, Object> hoteldetailbydate(String hotelnumber, String roomname, LocalDateTime startdate, LocalDateTime finishdate);

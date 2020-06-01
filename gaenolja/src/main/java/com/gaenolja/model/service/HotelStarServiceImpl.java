@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.gaenolja.model.dao.HashtagDAO;
+import com.gaenolja.model.dao.HotelHashDAO;
 import com.gaenolja.model.dao.HotelStarDAO;
 import com.gaenolja.model.dao.HotelpictureDAO;
 import com.gaenolja.model.dao.HotelroomDAO;
@@ -39,6 +40,9 @@ public class HotelStarServiceImpl implements HotelStarService{
 	@Autowired
 	private ReservationService reservation;
 	
+	@Autowired
+	private HotelHashDAO hotelhash;
+	
 	@Override
 	public List<HotelStar> searchall(){
 		try {
@@ -47,7 +51,16 @@ public class HotelStarServiceImpl implements HotelStarService{
 				String hotelnumber = star.getHotelnumber();
 				star.setCountreview(reviewdao.countreview(hotelnumber));
 				star.setCountstar(reviewdao.countbyhotelnumber(hotelnumber));
-				star.setMinprice(roomdao.minprice(hotelnumber));		
+				star.setMinprice(roomdao.minprice(hotelnumber));
+				
+				List<Integer> hash = hotelhash.searchbyhotel(hotelnumber);
+				star.setHashid(hash);
+				List<String> hashtag = new ArrayList<String>();
+				for (int h:hash) {
+					String tag = hashtagdao.search(h).getName();
+					hashtag.add(tag);
+				}
+				star.setHashtag(hashtag);
 
 				if (!Objects.isNull(star.getDetail())) {
 					Gson gson = new Gson();
@@ -57,7 +70,7 @@ public class HotelStarServiceImpl implements HotelStarService{
 					List<String> value = new ArrayList<>(jsonObject.values());
 					detailarray.add(key);
 					detailarray.add(value);
-					star.setDetail(detailarray);	
+					star.setDetail(detailarray);
 				}
 			}
 			return hotelstar;
@@ -76,20 +89,66 @@ public class HotelStarServiceImpl implements HotelStarService{
 				star.setCountreview(reviewdao.countreview(hotelnumber));
 				star.setCountstar(reviewdao.countbyhotelnumber(hotelnumber));
 				star.setMinprice(roomdao.minprice(hotelnumber));
-				Gson gson = new Gson();
-				HashMap<String, String> jsonObject = gson.fromJson(star.getDetail().toString(), HashMap.class);
-				List<List<String>> detailarray = new ArrayList<List<String>>();
-				List<String> key = new ArrayList<>(jsonObject.keySet());
-				List<String> value = new ArrayList<>(jsonObject.values());
-				detailarray.add(key);
-				detailarray.add(value);
-				star.setDetail(detailarray);
+				List<Integer> hash = hotelhash.searchbyhotel(hotelnumber);
+				star.setHashid(hash);
+				List<String> hashtag = new ArrayList<String>();
+				for (int h:hash) {
+					String tag = hashtagdao.search(h).getName();
+					hashtag.add(tag);
+				}
+				star.setHashtag(hashtag);
+				if (!Objects.isNull(star.getDetail())) {
+					Gson gson = new Gson();
+					HashMap<String, String> jsonObject = gson.fromJson(star.getDetail().toString(), HashMap.class);
+					List<List<String>> detailarray = new ArrayList<List<String>>();
+					List<String> key = new ArrayList<>(jsonObject.keySet());
+					List<String> value = new ArrayList<>(jsonObject.values());
+					detailarray.add(key);
+					detailarray.add(value);
+					star.setDetail(detailarray);
+				}
 			}
 			return hotelstar;
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	@Override
+	public List<HotelStar> searchbyhashtag(int hashtages){
+		List<HotelStar> hotelstar = new ArrayList<HotelStar>();
+		try {
+			List<String> hotel = hotelhash.searchbyhash(hashtages);
+			for (String hotelnumber:hotel) {
+				HotelStar star = dao.search(hotelnumber);
+				star.setCountreview(reviewdao.countreview(hotelnumber));
+				star.setCountstar(reviewdao.countbyhotelnumber(hotelnumber));
+				star.setMinprice(roomdao.minprice(hotelnumber));
+				List<Integer> hash = hotelhash.searchbyhotel(hotelnumber);
+				star.setHashid(hash);
+				List<String> hashtag = new ArrayList<String>();
+				for (int h:hash) {
+					String tag = hashtagdao.search(h).getName();
+					hashtag.add(tag);
+				}
+				star.setHashtag(hashtag);
+				if (!Objects.isNull(star.getDetail())) {
+					Gson gson = new Gson();
+					HashMap<String, String> jsonObject = gson.fromJson(star.getDetail().toString(), HashMap.class);
+					List<List<String>> detailarray = new ArrayList<List<String>>();
+					List<String> key = new ArrayList<>(jsonObject.keySet());
+					List<String> value = new ArrayList<>(jsonObject.values());
+					detailarray.add(key);
+					detailarray.add(value);
+					star.setDetail(detailarray);
+				}
+				hotelstar.add(star);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return hotelstar;
 	}
 	
 	@Override
@@ -104,15 +163,25 @@ public class HotelStarServiceImpl implements HotelStarService{
 				String hotelnumber = star.getHotelnumber();
 				star.setCountreview(reviewdao.countreview(hotelnumber));
 				star.setCountstar(reviewdao.countbyhotelnumber(hotelnumber));
-				star.setMinprice(roomdao.minprice(hotelnumber));	
-				Gson gson = new Gson();
-				HashMap<String, String> jsonObject = gson.fromJson(star.getDetail().toString(), HashMap.class);
-				List<List<String>> detailarray = new ArrayList<List<String>>();
-				List<String> key = new ArrayList<>(jsonObject.keySet());
-				List<String> value = new ArrayList<>(jsonObject.values());
-				detailarray.add(key);
-				detailarray.add(value);
-				star.setDetail(detailarray);
+				star.setMinprice(roomdao.minprice(hotelnumber));
+				List<Integer> hash = hotelhash.searchbyhotel(hotelnumber);
+				star.setHashid(hash);
+				List<String> hashtag = new ArrayList<String>();
+				for (int h:hash) {
+					String tag = hashtagdao.search(h).getName();
+					hashtag.add(tag);
+				}
+				star.setHashtag(hashtag);
+				if (!Objects.isNull(star.getDetail())) {
+					Gson gson = new Gson();
+					HashMap<String, String> jsonObject = gson.fromJson(star.getDetail().toString(), HashMap.class);
+					List<List<String>> detailarray = new ArrayList<List<String>>();
+					List<String> key = new ArrayList<>(jsonObject.keySet());
+					List<String> value = new ArrayList<>(jsonObject.values());
+					detailarray.add(key);
+					detailarray.add(value);
+					star.setDetail(detailarray);
+				}
 			}
 			return hotel;
 		}catch(Exception e) {
@@ -128,14 +197,24 @@ public class HotelStarServiceImpl implements HotelStarService{
 			hotelstar.setCountreview(reviewdao.countreview(hotelnumber));
 			hotelstar.setCountstar(reviewdao.countbyhotelnumber(hotelnumber));
 			hotelstar.setMinprice(roomdao.minprice(hotelnumber));
-			Gson gson = new Gson();
-			HashMap<String, String> jsonObject = gson.fromJson(hotelstar.getDetail().toString(), HashMap.class);
-			List<List<String>> detailarray = new ArrayList<List<String>>();
-			List<String> key = new ArrayList<>(jsonObject.keySet());
-			List<String> value = new ArrayList<>(jsonObject.values());
-			detailarray.add(key);
-			detailarray.add(value);
-			hotelstar.setDetail(detailarray);
+			List<Integer> hash = hotelhash.searchbyhotel(hotelnumber);
+			hotelstar.setHashid(hash);
+			List<String> hashtag = new ArrayList<String>();
+			for (int h:hash) {
+				String tag = hashtagdao.search(h).getName();
+				hashtag.add(tag);
+			}
+			hotelstar.setHashtag(hashtag);
+			if (!Objects.isNull(hotelstar.getDetail())) {
+				Gson gson = new Gson();
+				HashMap<String, String> jsonObject = gson.fromJson(hotelstar.getDetail().toString(), HashMap.class);
+				List<List<String>> detailarray = new ArrayList<List<String>>();
+				List<String> key = new ArrayList<>(jsonObject.keySet());
+				List<String> value = new ArrayList<>(jsonObject.values());
+				detailarray.add(key);
+				detailarray.add(value);
+				hotelstar.setDetail(detailarray);
+			}
 			return hotelstar;
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -157,14 +236,24 @@ public class HotelStarServiceImpl implements HotelStarService{
 				star.setCountreview(reviewdao.countreview(hotelnumber));
 				star.setCountstar(reviewdao.countbyhotelnumber(hotelnumber));
 				star.setMinprice(roomdao.minprice(hotelnumber));
-				Gson gson = new Gson();
-				HashMap<String, String> jsonObject = gson.fromJson(star.getDetail().toString(), HashMap.class);
-				List<List<String>> detailarray = new ArrayList<List<String>>();
-				List<String> key = new ArrayList<>(jsonObject.keySet());
-				List<String> value = new ArrayList<>(jsonObject.values());
-				detailarray.add(key);
-				detailarray.add(value);
-				star.setDetail(detailarray);
+				List<Integer> hash = hotelhash.searchbyhotel(hotelnumber);
+				star.setHashid(hash);
+				List<String> hashtag = new ArrayList<String>();
+				for (int h:hash) {
+					String tag = hashtagdao.search(h).getName();
+					hashtag.add(tag);
+				}
+				star.setHashtag(hashtag);
+				if (!Objects.isNull(star.getDetail())) {
+					Gson gson = new Gson();
+					HashMap<String, String> jsonObject = gson.fromJson(star.getDetail().toString(), HashMap.class);
+					List<List<String>> detailarray = new ArrayList<List<String>>();
+					List<String> key = new ArrayList<>(jsonObject.keySet());
+					List<String> value = new ArrayList<>(jsonObject.values());
+					detailarray.add(key);
+					detailarray.add(value);
+					star.setDetail(detailarray);
+				}
 			}
 			return hotelstar;
 		}catch(Exception e) {
@@ -181,14 +270,24 @@ public class HotelStarServiceImpl implements HotelStarService{
 			hotelstar.setCountreview(reviewdao.countreview(hotelnumber));
 			hotelstar.setCountstar(reviewdao.countbyhotelnumber(hotelnumber));
 			hotelstar.setMinprice(roomdao.minprice(hotelnumber));
-			Gson gson = new Gson();
-			HashMap<String, String> jsonObject = gson.fromJson(hotelstar.getDetail().toString(), HashMap.class);
-			List<List<String>> detailarray = new ArrayList<List<String>>();
-			List<String> key = new ArrayList<>(jsonObject.keySet());
-			List<String> value = new ArrayList<>(jsonObject.values());
-			detailarray.add(key);
-			detailarray.add(value);
-			hotelstar.setDetail(detailarray);
+			List<Integer> hash = hotelhash.searchbyhotel(hotelnumber);
+			hotelstar.setHashid(hash);
+			List<String> hashtag = new ArrayList<String>();
+			for (int h:hash) {
+				String tag = hashtagdao.search(h).getName();
+				hashtag.add(tag);
+			}
+			hotelstar.setHashtag(hashtag);
+			if (!Objects.isNull(hotelstar.getDetail())) {
+				Gson gson = new Gson();
+				HashMap<String, String> jsonObject = gson.fromJson(hotelstar.getDetail().toString(), HashMap.class);
+				List<List<String>> detailarray = new ArrayList<List<String>>();
+				List<String> key = new ArrayList<>(jsonObject.keySet());
+				List<String> value = new ArrayList<>(jsonObject.values());
+				detailarray.add(key);
+				detailarray.add(value);
+				hotelstar.setDetail(detailarray);				
+			}
 			map.put("HotelStar", hotelstar);
 			map.put("HotelPicture", picturedao.searchbyhotel(hotelnumber));
 			map.put("HotelRoom", roomdao.searchbyhotel(hotelnumber));
@@ -207,14 +306,24 @@ public class HotelStarServiceImpl implements HotelStarService{
 			hotelstar.setCountreview(reviewdao.countreview(hotelnumber));
 			hotelstar.setCountstar(reviewdao.countbyhotelnumber(hotelnumber));
 			hotelstar.setMinprice(roomdao.minprice(hotelnumber));
-			Gson gson = new Gson();
-			HashMap<String, String> jsonObject = gson.fromJson(hotelstar.getDetail().toString(), HashMap.class);
-			List<List<String>> detailarray = new ArrayList<List<String>>();
-			List<String> key = new ArrayList<>(jsonObject.keySet());
-			List<String> value = new ArrayList<>(jsonObject.values());
-			detailarray.add(key);
-			detailarray.add(value);
-			hotelstar.setDetail(detailarray);
+			List<Integer> hash = hotelhash.searchbyhotel(hotelnumber);
+			hotelstar.setHashid(hash);
+			List<String> hashtag = new ArrayList<String>();
+			for (int h:hash) {
+				String tag = hashtagdao.search(h).getName();
+				hashtag.add(tag);
+			}
+			hotelstar.setHashtag(hashtag);
+			if (!Objects.isNull(hotelstar.getDetail())) {
+				Gson gson = new Gson();
+				HashMap<String, String> jsonObject = gson.fromJson(hotelstar.getDetail().toString(), HashMap.class);
+				List<List<String>> detailarray = new ArrayList<List<String>>();
+				List<String> key = new ArrayList<>(jsonObject.keySet());
+				List<String> value = new ArrayList<>(jsonObject.values());
+				detailarray.add(key);
+				detailarray.add(value);
+				hotelstar.setDetail(detailarray);	
+			}
 			List<Hotelroom> hotelroom = roomdao.searchbyhotel(hotelnumber);
 			for(Hotelroom room:hotelroom) {
 				int cnt = room.getCount() - reservation.countbydate(hotelnumber, roomname, startdate, finishdate);

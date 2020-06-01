@@ -14,5 +14,4 @@ public interface HotelStarDAO {
 	public HotelStar search(String hotelnumber);
 	public List<HotelStar> searchbyuserid(String userid);
 	public List<HotelStar> searchbyname(HashMap<Object, Object> map);
-	public List<HotelStar> searchbyhashtag(HashMap<Object, Object> map);
 }
