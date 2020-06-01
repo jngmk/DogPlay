@@ -13,4 +13,5 @@ public interface UserService {
 	public boolean delete(String userid);
 	public Map<String, String> googleLogin(String idToken);
 	public Map<String, String> naverLogin(String token);
+	public Map<String, String> kakaoLogin(String token);
 }
