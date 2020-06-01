@@ -1,9 +1,11 @@
 package com.example.dogplay
 
 import com.google.gson.internal.LinkedTreeMap
+import java.net.Inet4Address
 
-data class Hotel(var title: String, var img:String, var eval:String, var review:String, var address:String, var price:String)
-//data class Hotel(var address: String, var contact:String, var detail:String, var hashid:String, var hotelname:String, var hotelnumber:Long, var info:String, var latitude:Double, var longitude:Double, var userid:String)
+data class Hotel(var counstar: Int, var address: String, var star:Double, var distance:Int, var latitude:Double, val userid:String, var hashid:ArrayList<Int>, var hotelnumber:String, var countreview:Int, var minprice:Int, var contact:String, var detail:ArrayList<ArrayList<String>>, var hotelname:String, var longitude:Double, var info:String, var hashtag:ArrayList<String>)
+
+
 data class Dog(var img:String)
 
 data class DMset(
@@ -23,5 +25,6 @@ object Supplier{
     var RoomDetail = ArrayList<LinkedTreeMap<String,Any>>()
     var PickAdress = String()
     var UserId = String()
+    var DMList = ArrayList<DMset>()
 }
 

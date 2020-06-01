@@ -10,7 +10,7 @@ import retrofit2.http.Header
 
 data class HotelSerchDTO(
     @SerializedName("data")
-    var data:Array<HashMap<String,Any>>,
+    var data:ArrayList<Hotel>,
     @SerializedName("state")
     var state:String = ""
 )
@@ -30,6 +30,30 @@ data class HotelNearByDTO(
     val data: ArrayList<HotelInfoWithStarAndPrice>,
     @SerializedName("state")
     val state: String
+)
+data class HotelDetailHash(
+    val HotelStar:HotelStar,
+    val HotelPicture:ArrayList<String>,
+    val review: ArrayList<String>,
+    val HotelRoom: ArrayList<String>
+)
+
+data class HotelStar(
+    val hotelnumber: String,
+    val userid: String,
+    val hotelname: String,
+    val latitude: Double,
+    val longitude: Double,
+    val address: String,
+    val contact: String,
+    val info: String,
+    val detail: ArrayList<ArrayList<String>>,
+    val star:Double,
+    val countreview: Int,
+    val hashid: String,
+    val hashtag: ArrayList<String>,
+    val distance: Int,
+    val minprice: Int
 )
 
 data class HotelInfo(
@@ -86,6 +110,10 @@ data class ChatIn(
     val readmessage:Int
 )
 
+data class ChatInsertForm(
+    val chatid: Int
+)
+
 data class ChatMain(
     val chat:ChatIn,
     val count: Int
@@ -114,7 +142,7 @@ interface Service {
 //
     @GET("/api/v1/hoteldetail/search/")
     fun searchHotelDetail(
-        @Query("hotelnumber") hotelnumber: Number
+        @Query("hotelnumber") hotelnumber: String
     ):Call<HotelDetailDTO>
 
     @GET("/api/v1/hotelstar/search/latitude/longitude/distance")
@@ -154,4 +182,21 @@ interface Service {
         @Query("receive") receive: String,
         @Query("send") send: String
     ):Call<DMDTO>
+
+//    @Headers("content-type:application/json; charset=utf-8")
+    @POST("/api/v1/chat/insert")
+    fun PostChatInsert(
+        @Body params:ChatInsert
+    ):Call<Any>
 }
+
+data class ChatInsert(
+    val chatid: Int,
+    val created: String,
+    val id: Int,
+    val message: String,
+    val picture: String,
+    val readmessage: Int,
+    val receive: String,
+    val send: String
+)

@@ -50,7 +50,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         android:background="#888888"
-        android:layout_marginTop="135dp"
+        android:layout_marginTop="125dp"
         />
 
 

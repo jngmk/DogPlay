@@ -45,16 +45,16 @@ class searchPage : Fragment() {
             }
 
             override fun onResponse(call: Call<HotelSerchDTO>, response: retrofit2.Response<HotelSerchDTO>) {
-                Log.d("success",response?.body().toString())
+                Log.d("호텔스타",response?.body().toString())
                 var data: HotelSerchDTO? = response.body()
-                val layoutManager = LinearLayoutManager(context)
-                layoutManager.orientation = LinearLayoutManager.VERTICAL
-                hotelList.layoutManager = layoutManager
-                val adapter = HotelAdapter(context!!, data!!.data )
-                hotelList.adapter = adapter
-
-                for (i in data!!.data){
-                    Log.i("data", i.toString())
+                if (data!!.data == null){
+                    Log.d("호텔 뜨는거냐?","호옹")
+                } else {
+                    val layoutManager = LinearLayoutManager(context)
+                    layoutManager.orientation = LinearLayoutManager.VERTICAL
+                    hotelList.layoutManager = layoutManager
+                    val adapter = HotelAdapter(context!!, data.data)
+                    hotelList.adapter = adapter
                 }
             }
         })

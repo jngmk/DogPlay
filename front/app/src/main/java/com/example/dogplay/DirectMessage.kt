@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -27,27 +28,58 @@ class DirectMessage: AppCompatActivity() {
         setContentView(R.layout.direct_message)
         val server = server()
         val target = intent.getStringExtra("target")
-        server!!.chatTwoPeople("test",target).enqueue(object : Callback<DMDTO>{
+        sendBtn.setOnClickListener{
+            if (sendMessage.text.isEmpty()){
+                Log.d("비었다","하하")
+            }
+            else {
+                Log.d("뭐라 친건데", sendMessage.text.toString())
+                server!!.PostChatInsert(ChatInsert(1,"", 0,sendMessage.text.toString(),"사진같음",0,"owner1","test1")).enqueue(object :Callback<Any>{
+                    override fun onFailure(call: Call<Any>, t: Throwable) {
+                        Log.d("말썽이네", t.toString())
+                    }
+
+                    override fun onResponse(call: Call<Any>, response: Response<Any>) {
+                        Log.d("될줄 알았어", response.body().toString())
+                        val layoutInflater = getLayoutInflater()
+                        val chatview = layoutInflater.inflate(R.layout.chat_send,null)
+                        Supplier.DMList.add(DMset("test1","owner1",sendMessage.text.toString(),
+                            arrayListOf(2015,3,6,22,13,51),0,"없어 사진",0))
+                        sendMessage.setText("")
+                        chatRecycler.adapter!!.notifyDataSetChanged()
+                        chatRecycler.scrollToPosition(chatRecycler.adapter!!.itemCount-1)
+                    }
+                })
+            }
+        }
+        sendMessage.setOnFocusChangeListener(object :View.OnFocusChangeListener{
+            override fun onFocusChange(v: View?, hasFocus: Boolean) {
+                if (hasFocus){
+                    chatRecycler.scrollToPosition(chatRecycler.adapter!!.itemCount-1)
+                }
+            }
+        })
+        server!!.chatTwoPeople("test1",target).enqueue(object : Callback<DMDTO>{
             override fun onFailure(call: Call<DMDTO>, t: Throwable) {
                 Log.d("또안됐어?", t.toString())
             }
 
             override fun onResponse(call: Call<DMDTO>, response: Response<DMDTO>) {
-                val DMList = ArrayList<DMset>()
-
+                var DMList = ArrayList<DMset>()
+                Log.d("채팅내역", response.body().toString())
                 for(chat in response.body()!!.data){
-                    Log.d("채팅내역", chat.toString())
                     var viewType:Int
-                    if (chat.receive == "test") viewType = 0
-                    else viewType = 1
+                    if (chat.receive == "test1") viewType = 1
+                    else viewType = 0
                     DMList.add(DMset(chat.receive, chat.send, chat.message, chat.created, chat.readmessage, chat.picture,viewType))
                 }
-
+                Supplier.DMList = DMList
                 val layoutManager = LinearLayoutManager(applicationContext)
                 layoutManager.orientation = LinearLayoutManager.VERTICAL
                 chatRecycler.layoutManager = layoutManager
-                val adapter = DMAdapter(applicationContext, DMList)
+                val adapter = DMAdapter(applicationContext, Supplier.DMList)
                 chatRecycler.adapter = adapter
+                chatRecycler.scrollToPosition(adapter.itemCount-1)
             }
         })
     }
@@ -92,7 +124,13 @@ class DMAdapter(var context: Context, var DMs:ArrayList<DMset>) :
         if (DM.created[3] > 12) {half = "오후"; hour = DM.created[3]-12}
         else if (DM.created[3] == 12) {half = "오후"; hour = 12}
         else {half = "오전"; hour = DM.created[3]}
+        var min:String
+        if(DM.created[4] < 10) {
+            min = "0${DM.created[4]}"
+        } else {
+            min = "${DM.created[4]}"
+        }
         holder.itemView.messageAt.text = "${half} ${hour}:${DM.created[4]}"
-        holder.itemView.messageAt.text = "${DM.created[0]}-${DM.created[1]}-${DM.created[2]} ${DM.created[3]}:${DM.created[4]}"
+        holder.itemView.messageAt.text = "${DM.created[0]}-${DM.created[1]}-${DM.created[2]} ${DM.created[3]}:${min}"
     }
 }

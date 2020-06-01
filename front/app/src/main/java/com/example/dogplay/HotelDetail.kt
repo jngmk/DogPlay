@@ -19,17 +19,17 @@ import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
 class HotelDetail:AppCompatActivity(), OnMapReadyCallback{
-    var hotelId:Int = 0
+    var hotelId:String = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.hotel_detail)
         var hotelDetailData:HashMap<String,Any> = hashMapOf()
         if (intent.hasExtra("hotelnumber")){
             var hotelnumber = intent.getStringExtra("hotelnumber")
-            hotelId = hotelnumber.toString().toDouble().toInt()
+            hotelId = hotelnumber.toString()
             Log.d("success", "Get 해결")
             val server = server()
-            server!!.searchHotelDetail(hotelnumber.toDouble().toInt()).enqueue(object : Callback<HotelDetailDTO> {
+            server!!.searchHotelDetail(hotelnumber.toString()).enqueue(object : Callback<HotelDetailDTO> {
                 override fun onFailure(call: Call<HotelDetailDTO>, t: Throwable) {
                     Log.d("faile", "실패")
                 }
