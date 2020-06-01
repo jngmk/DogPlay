@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gaenolja.model.dao.PaidDAO">
+
+	<select id="searchall" resultType="paid">
+		select * from paid
+	</select>
+
+	<select id="search" parameterType="int" resultType="paid">
+   		select *
+   		from paid
+   		where id=#{id}
+   </select>
+   
+	<insert id="insert" parameterType="paid">
+		insert into paid(pid, cid, aid, cancel_amount, cancel_tax_free_amount, userid, pg_token, partner_order_id)
+		values(#{pid}, #{cid}, #{aid}, #{cancel_amount}, #{cancel_tax_free_amount}, #{userid}, #{pg_token}, #{partner_order_id})
+	</insert>
+	
+	<update id="update" parameterType="paid">
+		update paid set
+		pid=#{pid},
+		cid=#{cid},
+		aid=#{aid},
+		cancel_amount=#{cancel_amount},
+		cancel_tax_free_amount=#{cancel_tax_free_amount},
+		userid=#{userid},
+		pg_token=#{pg_token},
+		partner_order_id=#{partner_order_id}
+		where id = #{id}
+	</update>
+
+	<delete id="delete" parameterType="int">
+		delete
+		from paid
+		where id = #{id}
+	</delete>
+</mapper>	

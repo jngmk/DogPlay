@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gaenolja.model.dao.HotelroomDAO">
+	<select id="searchall" resultType="hotelroom">
+		select * from hotelroom
+	</select>
+	
+	<select id="search" parameterType="int" resultType="hotelroom">
+		select * from hotelroom where id=#{id}
+	</select>
+	
+	<select id="searchbyhotel" parameterType="string" resultType="hotelroom">
+		select * from hotelroom where hotelnumber=#{hotelnumber}
+	</select>
+	
+	<select id="searchbyhotelandroom" parameterType="hashmap" resultType="hotelroom">
+		select * from hotelroom where roomname=#{roomname} and hotelnumber=#{hotelnumber}
+	</select>
+	
+	<select id="searchbyprice" parameterType="int" resultType="hotelroom">
+		select * from hotelroom where price between #{price} - 10000 and #{price} + 10000
+	</select>
+	
+	<select id="minprice" parameterType="string" resultType="int">
+		select ifnull(min(price), 0) from hotelroom where hotelnumber=#{hotelnumber}
+	</select>
+	
+	<select id="searchbysize" parameterType="int" resultType="hotelroom">
+		select * from hotelroom where minsize <![CDATA[<=]]> #{size} and #{size} <![CDATA[<=]]> maxsize
+	</select>
+
+	<insert id="insert" parameterType="hotelroom">
+		insert into hotelroom(hotelnumber, roomname, price, minsize, maxsize, count, info)
+		values(#{hotelnumber}, #{roomname}, #{price}, #{minsize}, #{maxsize}, #{count}, #{info})
+	</insert>
+
+	<update id="update" parameterType="hotelroom">
+		update hotelroom set
+		hotelnumber = #{hotelnumber},
+		roomname = #{roomname},
+		price = #{price},
+		minsize = #{minsize},
+		maxsize = #{maxsize},
+		count = #{count},
+		info = #{info}
+		where id = #{id}
+	</update>
+
+	<delete id="delete" parameterType="int">
+		delete
+		from hotelroom
+		where id = #{id}
+	</delete>
+</mapper>	

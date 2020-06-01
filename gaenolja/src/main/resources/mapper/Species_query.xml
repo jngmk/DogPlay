@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gaenolja.model.dao.SpeciesDAO">
+	<select id="searchall" resultType="species">
+		select * from species
+	</select>
+
+	<select id="search" parameterType="int" resultType="species">
+		select * from species where id=#{id}
+	</select>
+
+	<insert id="insert" parameterType="species">
+		insert into species(name)
+		values(#{name})
+	</insert>
+
+	<update id="update" parameterType="species">
+		update species set
+		name = #{name}
+		where id = #{id}
+	</update>
+
+	<delete id="delete" parameterType="int">
+		delete
+		from species
+		where id = #{id}
+	</delete>
+
+</mapper>

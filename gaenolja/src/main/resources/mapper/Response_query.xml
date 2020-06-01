@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gaenolja.model.dao.ResponseDAO">
+
+	<select id="searchall" resultType="response">
+   		select * from response
+    </select>
+
+	<select id="searchbyuserid" parameterType="String" resultType="response">
+   		select *
+   		from response
+   		where userid = #{userid}
+    </select>
+    
+	<select id="search" parameterType="int" resultType="response">
+   		select *
+   		from response
+   		where id = #{id}
+    </select>
+    
+   	<select id="searchbyreview" parameterType="int" resultType="response">
+   		select *
+   		from response
+   		where reviewid = #{reviewid}
+    </select>
+    
+	<insert id="insert" parameterType="response">
+		insert into response(reviewid, userid, heart, content)
+		values(#{reviewid}, #{userid}, #{heart}, #{content})
+	</insert>
+	
+	<update id="update" parameterType="response">
+		update response set
+		reviewid = #{reviewid},
+		userid = #{userid},
+		heart = #{heart},
+		content = #{content}
+		where id = #{id}
+	</update>
+
+	<delete id="delete" parameterType="int">
+		delete
+		from response
+		where id = #{id}
+	</delete>
+	
+</mapper>

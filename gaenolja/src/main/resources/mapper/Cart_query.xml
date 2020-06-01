@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gaenolja.model.dao.CartDAO">
+	<select id="searchall" resultType="cart">
+		select * from cart
+	</select>
+	
+	<select id="search" parameterType="int" resultType="cart">
+		select * from cart where id=#{id}
+	</select>
+	
+	<select id="searchbyuser" parameterType="string" resultType="cart">
+		select * from cart where userid=#{userid}
+	</select>
+	
+	<insert id="insert" parameterType="cart">
+		insert into cart(userid, hotelnumber, roomname, price)
+		values(#{userid}, #{hotelnumber}, #{roomname}, #{price})
+	</insert>
+
+	<update id="update" parameterType="cart">
+		update cart set
+		userid = #{userid},
+		hotelnumber = #{hotelnumber},
+		roomname = #{roomname},
+		price = #{price}
+		where id = #{id}
+	</update>
+
+	<delete id="delete" parameterType="int">
+		delete
+		from cart
+		where id = #{id}
+	</delete>
+
+</mapper>	

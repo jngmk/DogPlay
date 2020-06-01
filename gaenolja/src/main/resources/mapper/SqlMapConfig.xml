@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<typeAliases>
+		<!-- MyBatis Query를 위한 Xml에서 resultType, parametertype 으로  
+		     사용할  VO 클래스에 대한 별칭 설정 
+		  Java AIP에 대한 별칭 설정 정보 : org.apache.ibits.type.TypeAliasRegistry 
+		  -->
+		<typeAlias type="com.gaenolja.model.dto.Hotel"				alias="hotel"/>
+		<typeAlias type="com.gaenolja.model.dto.User"				alias="user"/>
+		<typeAlias type="com.gaenolja.model.dto.Cart"				alias="cart"/>
+		<typeAlias type="com.gaenolja.model.dto.Doginfo"			alias="doginfo"/>
+		<typeAlias type="com.gaenolja.model.dto.Hashtag"			alias="hashtag"/>
+		<typeAlias type="com.gaenolja.model.dto.Hotelroom"			alias="hotelroom"/>
+		<typeAlias type="com.gaenolja.model.dto.Reservation"		alias="reservation"/>
+		<typeAlias type="com.gaenolja.model.dto.Species"			alias="species"/>
+		<typeAlias type="com.gaenolja.model.dto.Hotelpicture"		alias="hotelpicture"/>
+		<typeAlias type="com.gaenolja.model.dto.Review"				alias="review"/>
+		<typeAlias type="com.gaenolja.model.dto.Response"			alias="response"/>
+		<typeAlias type="com.gaenolja.model.dto.Notification"		alias="notification"/>
+		<typeAlias type="com.gaenolja.model.dto.Chat"				alias="chat"/>
+		<typeAlias type="com.gaenolja.model.dto.Likes"				alias="likes"/>
+		<typeAlias type="com.gaenolja.model.dto.HotelStar"			alias="hotelstar"/>
+		<typeAlias type="com.gaenolja.model.dto.Paid"				alias="paid"/>
+		<typeAlias type="com.gaenolja.model.dto.Chatroom"			alias="chatroom"/>
+		<typeAlias type="com.gaenolja.model.dto.HotelLikes"			alias="hotellike"/>
+		<typeAlias type="com.gaenolja.model.dto.HotelHash"			alias="hotelhash"/>
+	</typeAliases>
+	<mappers>
+		 <mapper resource="mapper/Hotel_query.xml"/>
+	 	 <mapper resource="mapper/User_query.xml"/>
+	 	 <mapper resource="mapper/Cart_query.xml"/>
+	 	 <mapper resource="mapper/Doginfo_query.xml"/>
+	 	 <mapper resource="mapper/Hashtag_query.xml"/>
+	 	 <mapper resource="mapper/Hotelroom_query.xml"/>
+	 	 <mapper resource="mapper/Reservation_query.xml"/>
+	 	 <mapper resource="mapper/Species_query.xml"/>
+	  	 <mapper resource="mapper/Hotelpicture_query.xml"/>
+	  	 <mapper resource="mapper/Review_query.xml"/>
+	 	 <mapper resource="mapper/Response_query.xml"/>
+ 	  	 <mapper resource="mapper/Notification_query.xml"/>
+  	  	 <mapper resource="mapper/Chat_query.xml"/>
+  	  	 <mapper resource="mapper/Likes_query.xml"/>
+  	  	 <mapper resource="mapper/HotelStar_query.xml"/>
+  	  	 <mapper resource="mapper/Paid_query.xml"/>
+  	  	 <mapper resource="mapper/Chatroom_query.xml"/>
+   	  	 <mapper resource="mapper/HotelHash_query.xml"/>
+	</mappers>
+</configuration>

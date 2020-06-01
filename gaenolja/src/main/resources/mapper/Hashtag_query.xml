@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gaenolja.model.dao.HashtagDAO">
+	<select id="searchall" resultType="hashtag">
+		select * from hashtag
+	</select>
+
+	<select id="search" parameterType="int" resultType="hashtag">
+		select * from hashtag where id=#{id}
+	</select>
+
+	<insert id="insert" parameterType="hashtag">
+		insert into hashtag(id, name)
+		values(#{id}, #{name})
+	</insert>
+
+	<update id="update" parameterType="hashtag">
+		update hashtag set
+		name = #{name}
+		where id = #{id}
+	</update>
+
+	<delete id="delete" parameterType="int">
+		delete
+		from hashtag
+		where id = #{id}
+	</delete>
+</mapper>

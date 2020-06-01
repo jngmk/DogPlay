@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gaenolja.model.dao.ChatDAO">
+
+	<select id="searchall" resultType="chat">
+		select * from chat
+	</select>
+
+	<select id="searchbyreceive" parameterType="String" resultType="chat">
+   		select *
+   		from chat
+   		where receive = #{receive}
+    </select>
+    
+    <select id="checkunread" parameterType="String" resultType="int">
+   		select count(*)
+   		from chat
+   		where receive = #{receive} and readmessage=0 limit 1
+    </select>
+
+	<select id="searchbysend" parameterType="String" resultType="chat">
+   		select *
+   		from chat
+   		where send = #{send}
+    </select>
+    
+    <select id="searchbyuserid" parameterType="String" resultType="chat">
+		SELECT *
+		FROM (
+		   SELECT c.*, 
+		           (CASE @chatnum WHEN c.chatid THEN @rownum:=@rownum+1 ELSE @rownum:=1 END) rnum,
+		           (@chatnum:=chatid) chatnum
+		   FROM chat c, (SELECT @chatnum:=0, @rownum:=0 FROM DUAL) val where receive=#{userid} or send=#{userid}
+		   ORDER BY c.chatid
+		) a where rnum=(select count(*) from chat where chatid=chatnum)
+    </select>
+    
+   	<select id="searchbytwo" parameterType="hashmap" resultType="chat">
+   		select *
+   		from chat
+   		where (receive = #{receive} and send = #{send}) or (receive = #{send} and send = #{receive}) order by created asc
+    </select>
+    
+    <select id="countbytwo" parameterType="hashmap" resultType="int">
+   		select count(*)
+   		from chat
+   		where receive = #{receive} and send = #{send} and readmessage=0
+    </select>
+      
+    <select id="searchbychatid" parameterType="int" resultType="chat">
+   		select *
+   		from chat
+   		where chatid=#{chatid}
+    </select>
+    
+   	<select id="search" parameterType="int" resultType="chat">
+   		select *
+   		from chat
+   		where id = #{id}
+    </select>
+   
+	<insert id="insert" parameterType="chat">
+		insert into chat(chatid, receive, send, picture, message, readmessage)
+		values(#{chatid}, #{receive}, #{send}, #{picture}, #{message}, #{readmessage})
+	</insert>
+	
+	<update id="update" parameterType="chat">
+		update chat set
+		chatid = #{chatid},
+		receive = #{receive},
+		send = #{send},
+		picture = #{picture},
+		message = #{message},
+		readmessage = #{readmessage}
+		where id = #{id}
+	</update>
+
+	<delete id="delete" parameterType="int">
+		delete
+		from chat
+		where id = #{id}
+	</delete>
+	
+</mapper>

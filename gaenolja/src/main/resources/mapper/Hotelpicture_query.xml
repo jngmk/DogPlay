@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gaenolja.model.dao.HotelpictureDAO">
+	<select id="searchall" resultType="hotelpicture">
+		select * from hotelpicture
+	</select>
+	
+	<select id="searchbyhotel" parameterType="string" resultType="hotelpicture">
+		select * from hotelpicture where hotelnumber=#{hotelnumber}
+	</select>
+	
+	<select id="searchbyhotelandname" parameterType="hashmap" resultType="hotelpicture">
+		select * from hotelpicture where hotelnumber=#{hotelnumber} and name=#{name}
+	</select>
+	
+	<select id="search" parameterType="int" resultType="hotelpicture">
+		select * from hotelpicture where id=#{id}
+	</select>
+
+	<insert id="insert" parameterType="hotelpicture">
+		insert into hotelpicture(hotelnumber, name, picture)
+		values(#{hotelnumber}, #{name}, #{picture})
+	</insert>
+
+	<update id="update" parameterType="hotelpicture">
+		update hotelpicture set
+		hotelnumber = #{hotelnumber},
+		name = #{name},
+		picture = #{picture}
+		where id = #{id}
+	</update>
+
+	<delete id="delete" parameterType="int">
+		delete
+		from hotelpicture
+		where id = #{id}
+	</delete>
+</mapper>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gaenolja.model.dao.HotelHashDAO">
+	<select id="search" parameterType="int" resultType="hotelhash">
+		select * from hotelhash where id=#{id}
+	</select>
+	
+	<select id="searchall" resultType="hotelhash">
+		select * from hotelhash
+	</select>
+	
+	<select id="searchbyhotel" parameterType="string" resultType="int">
+		select hashtag from hotelhash where hotelnumber=#{hotelnumber}
+	</select>
+	
+	<select id="searchbyhash" parameterType="int" resultType="string">
+		select hotelnumber from hotelhash where hashtag=#{hashtag}
+	</select>
+
+	<insert id="insert" parameterType="hotelhash">
+		insert into hotelhash(hashtag, hotelnumber)
+		values(#{hashtag}, #{hotelnumber})
+	</insert>
+
+	<update id="update" parameterType="hotelhash">
+		update hotelhash set
+		hashtag = #{hashtag},
+		hotelnumber = #{hotelnumber}
+		where id = #{id}
+	</update>
+
+	<delete id="delete" parameterType="int">
+		delete
+		from hotelhash
+		where id = #{id}
+	</delete>
+</mapper>	
