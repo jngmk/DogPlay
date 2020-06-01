@@ -10,7 +10,7 @@ import com.gaenolja.model.dto.Hotelpicture;
 @Mapper
 public interface HotelpictureDAO {
 	public List<Hotelpicture> searchall();
-	public List<Hotelpicture> searchbyhotel(int hotelnumber);
+	public List<Hotelpicture> searchbyhotel(String hotelnumber);
 	public List<Hotelpicture> searchbyhotelandname(HashMap<Object, Object> map);
 	public Hotelpicture search(int id);
 	public void insert(Hotelpicture hotelpicture);

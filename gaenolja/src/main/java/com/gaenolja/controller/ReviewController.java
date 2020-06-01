@@ -52,13 +52,13 @@ public class ReviewController {
 	
 	@GetMapping("/api/v1/review/searchbyhotel")
 	@ApiOperation("호텔별 review 찾기")
-	public ResponseEntity<Map<String, Object>> searchbyhotel(@RequestParam int hotelnumber){
+	public ResponseEntity<Map<String, Object>> searchbyhotel(@RequestParam String hotelnumber){
 		return handleSuccess(service.searchbyhotelnumber(hotelnumber));
 	}
 	
 	@GetMapping("/api/v1/review/searchbystar/star")
 	@ApiOperation("호텔별 평점별 review 찾기")
-	public ResponseEntity<Map<String, Object>> searchbystar(@RequestParam int hotelnumber, @RequestParam float star){
+	public ResponseEntity<Map<String, Object>> searchbystar(@RequestParam String hotelnumber, @RequestParam float star){
 		return handleSuccess(service.searchbystar(hotelnumber, star));
 	}
 	

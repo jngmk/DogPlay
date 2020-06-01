@@ -9,7 +9,7 @@ import com.gaenolja.model.dto.Response;
 @Mapper
 public interface ResponseDAO {
 	public List<Response> searchall();
-	public List<Response> searchbyhotelnumber(int hotelnumber);
+	public List<Response> searchbyhotelnumber(String hotelnumber);
 	public List<Response> searchbyuserid(String userid);
 	public Response search(int id);
 	public Response searchbyreview(int reviewid);

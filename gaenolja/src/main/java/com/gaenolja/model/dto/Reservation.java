@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 public class Reservation {
     private int id;
 	private int paidid;
-	private int hotelnumber;
+	private String hotelnumber;
 	private String userid;
 	private String dog;
 	private String roomname;
@@ -25,10 +25,10 @@ public class Reservation {
 	public void setPaidid(int paidid) {
 		this.paidid = paidid;
 	}
-	public int getHotelnumber() {
+	public String getHotelnumber() {
 		return hotelnumber;
 	}
-	public void setHotelnumber(int hotelnumber) {
+	public void setHotelnumber(String hotelnumber) {
 		this.hotelnumber = hotelnumber;
 	}
 	public String getUserid() {

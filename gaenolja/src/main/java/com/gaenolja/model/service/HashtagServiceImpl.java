@@ -26,7 +26,7 @@ public class HashtagServiceImpl implements HashtagService{
 	}
 	
 	@Override
-	public Hashtag search(String id) {
+	public Hashtag search(int id) {
 		try {
 			Hashtag hashtag = dao.search(id);
 			return hashtag;

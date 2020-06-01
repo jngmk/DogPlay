@@ -9,7 +9,7 @@ import com.gaenolja.model.dto.Hashtag;
 @Mapper
 public interface HashtagDAO {
 	public List<Hashtag> searchall();
-	public Hashtag search(String id);
+	public Hashtag search(int id);
 	public void insert(Hashtag hashtag);
 	public void update(Hashtag hashtag);
 	public void delete(String id);

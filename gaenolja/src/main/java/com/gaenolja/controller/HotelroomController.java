@@ -47,13 +47,13 @@ public class HotelroomController {
 	
 	@GetMapping("/api/v1/hotelroom/searchbyhotel")
 	@ApiOperation("hotel 방 나타내기")
-	public ResponseEntity<Map<String, Object>> searchbyhotel(@RequestParam int hotelnumber){
+	public ResponseEntity<Map<String, Object>> searchbyhotel(@RequestParam String hotelnumber){
 		return handleSuccess(service.searchbyhotel(hotelnumber));
 	}
 	
 	@GetMapping("/api/v1/hotelroom/searchbyroom/hotelnumber")
 	@ApiOperation("hotel에서 방 이름으로 방 찾기")
-	public ResponseEntity<Map<String, Object>> searchbyhotelandroom(@RequestParam String roomname, @RequestParam int hotelnumber){
+	public ResponseEntity<Map<String, Object>> searchbyhotelandroom(@RequestParam String roomname, @RequestParam String hotelnumber){
 		return handleSuccess(service.searchbyhotelandroom(roomname, hotelnumber));
 	}
 	

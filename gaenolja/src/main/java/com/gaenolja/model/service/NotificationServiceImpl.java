@@ -26,7 +26,7 @@ public class NotificationServiceImpl implements NotificationService {
 	}
 	
 	@Override
-	public List<Notification> searchbyhotelnumber(int hotelnumber) {
+	public List<Notification> searchbyhotelnumber(String hotelnumber) {
 		try {
 			List<Notification> notification = dao.searchbyhotelnumber(hotelnumber);
 			return notification;

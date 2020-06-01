@@ -11,7 +11,7 @@ import com.gaenolja.model.dto.Reservation;
 public interface ReservationDAO {
 	public List<Reservation> searchall();
 	public List<Reservation> searchbyuserid(String userid);
-	public List<Reservation> searchbyhotel(int hotelnumber);
+	public List<Reservation> searchbyhotel(String hotelnumber);
 	public List<Reservation> searchbyhotelandroom(HashMap<Object, Object> map);
 	public List<Integer> countbyhotelandroom(HashMap<Object, Object> map);
 	public List<Integer> countbydate(HashMap<Object, Object> map);

@@ -2,9 +2,8 @@ package com.gaenolja.model.dto;
 
 
 public class Hotel {
-    private int hotelnumber;
+    private String hotelnumber;
 	private String userid;
-	private String hashid;
 	private String hotelname;
 	private double latitude;
 	private double longitude;
@@ -12,10 +11,10 @@ public class Hotel {
 	private String contact;
 	private String info;
 	private Object detail;
-	public int getHotelnumber() {
+	public String getHotelnumber() {
 		return hotelnumber;
 	}
-	public void setHotelnumber(int hotelnumber) {
+	public void setHotelnumber(String hotelnumber) {
 		this.hotelnumber = hotelnumber;
 	}
 	public String getUserid() {
@@ -23,12 +22,6 @@ public class Hotel {
 	}
 	public void setUserid(String userid) {
 		this.userid = userid;
-	}
-	public String getHashid() {
-		return hashid;
-	}
-	public void setHashid(String hashid) {
-		this.hashid = hashid;
 	}
 	public String getHotelname() {
 		return hotelname;

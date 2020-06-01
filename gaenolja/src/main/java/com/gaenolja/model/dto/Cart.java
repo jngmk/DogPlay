@@ -3,7 +3,7 @@ package com.gaenolja.model.dto;
 public class Cart {
     private int id;
 	private String userid;
-	private int hotelnumber;
+	private String hotelnumber;
 	private String roomname;
 	private int price;
 	public int getId() {
@@ -18,10 +18,10 @@ public class Cart {
 	public void setUserid(String userid) {
 		this.userid = userid;
 	}
-	public int getHotelnumber() {
+	public String getHotelnumber() {
 		return hotelnumber;
 	}
-	public void setHotelnumber(int hotelnumber) {
+	public void setHotelnumber(String hotelnumber) {
 		this.hotelnumber = hotelnumber;
 	}
 	public String getRoomname() {

@@ -6,8 +6,8 @@ import com.gaenolja.model.dto.Hotelpicture;
 
 public interface HotelpictureService {
 	public List<Hotelpicture> searchall();
-	public List<Hotelpicture> searchbyhotel(int hotelnumber);
-	public List<Hotelpicture> searchbyhotelandname(int hotelnumber, String name);
+	public List<Hotelpicture> searchbyhotel(String hotelnumber);
+	public List<Hotelpicture> searchbyhotelandname(String hotelnumber, String name);
 	public Hotelpicture search(int id);
 	public boolean insert(Hotelpicture hotelpicture);
 	public boolean update(Hotelpicture hotelpicture);

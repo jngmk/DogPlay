@@ -38,7 +38,7 @@ public class HotelroomServiceImpl implements HotelroomService{
 	}
 	
 	@Override
-	public List<Hotelroom> searchbyhotel(int hotelnumber){
+	public List<Hotelroom> searchbyhotel(String hotelnumber){
 		try {
 			List<Hotelroom> room = dao.searchbyhotel(hotelnumber);
 			return room;
@@ -49,7 +49,7 @@ public class HotelroomServiceImpl implements HotelroomService{
 	}
 	
 	@Override
-	public Hotelroom searchbyhotelandroom(String roomname, int hotelnumber) {
+	public Hotelroom searchbyhotelandroom(String roomname, String hotelnumber) {
 		try {
 			HashMap<Object, Object> map = new HashMap<Object, Object>();
 			map.put("roomname", roomname);

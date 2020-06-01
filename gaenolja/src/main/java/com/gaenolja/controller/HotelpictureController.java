@@ -46,13 +46,13 @@ public class HotelpictureController {
 	
 	@GetMapping("/api/v1/hotelpicture/searchbyhotel")
 	@ApiOperation("호텔별 사진 나타내기")
-	public ResponseEntity<Map<String, Object>> searchbythotel(@RequestParam int hotelnumber){
+	public ResponseEntity<Map<String, Object>> searchbythotel(@RequestParam String hotelnumber){
 		return handleSuccess(service.searchbyhotel(hotelnumber));
 	}
 	
 	@GetMapping("/api/v1/hotelpicture/searchbyhotel/name")
 	@ApiOperation("호텔 및 이름으로 사진 찾기")
-	public ResponseEntity<Map<String, Object>> search(@RequestParam int hotelnumber,@RequestParam String name){
+	public ResponseEntity<Map<String, Object>> search(@RequestParam String hotelnumber,@RequestParam String name){
 		return handleSuccess(service.searchbyhotelandname(hotelnumber, name));
 	}
 		

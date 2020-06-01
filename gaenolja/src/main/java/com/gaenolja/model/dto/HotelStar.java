@@ -3,9 +3,8 @@ package com.gaenolja.model.dto;
 import java.util.List;
 
 public class HotelStar {
-    private int hotelnumber;
+    private String hotelnumber;
 	private String userid;
-	private String hashid;
 	private String hotelname;
 	private double latitude;
 	private double longitude;
@@ -31,10 +30,10 @@ public class HotelStar {
 	public void setDistance(double distance) {
 		this.distance = distance;
 	}
-	public int getHotelnumber() {
+	public String getHotelnumber() {
 		return hotelnumber;
 	}
-	public void setHotelnumber(int hotelnumber) {
+	public void setHotelnumber(String hotelnumber) {
 		this.hotelnumber = hotelnumber;
 	}
 	public String getUserid() {
@@ -42,12 +41,6 @@ public class HotelStar {
 	}
 	public void setUserid(String userid) {
 		this.userid = userid;
-	}
-	public String getHashid() {
-		return hashid;
-	}
-	public void setHashid(String hashid) {
-		this.hashid = hashid;
 	}
 	public String getHotelname() {
 		return hotelname;

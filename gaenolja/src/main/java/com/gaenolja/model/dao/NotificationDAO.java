@@ -9,7 +9,7 @@ import com.gaenolja.model.dto.Notification;
 @Mapper
 public interface NotificationDAO {
 	public List<Notification> searchall();
-	public List<Notification> searchbyhotelnumber(int hotelnumber);
+	public List<Notification> searchbyhotelnumber(String hotelnumber);
 	public List<Notification> searchbyuserid(String userid);
 	public List<Notification> searchbytarget(String target);
 	public void insert(Notification notification);

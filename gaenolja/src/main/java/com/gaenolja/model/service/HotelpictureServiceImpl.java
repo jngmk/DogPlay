@@ -27,7 +27,7 @@ public class HotelpictureServiceImpl implements HotelpictureService{
 	}
 	
 	@Override
-	public List<Hotelpicture> searchbyhotel(int hotelnumber){
+	public List<Hotelpicture> searchbyhotel(String hotelnumber){
 		try {
 			List<Hotelpicture> picture = dao.searchbyhotel(hotelnumber);
 			return picture;
@@ -38,7 +38,7 @@ public class HotelpictureServiceImpl implements HotelpictureService{
 	}
 	
 	@Override
-	public List<Hotelpicture> searchbyhotelandname(int hotelnumber, String name){
+	public List<Hotelpicture> searchbyhotelandname(String hotelnumber, String name){
 		try {
 			HashMap<Object, Object> map = new HashMap<Object, Object>();
 			map.put("hotelnumber", hotelnumber);

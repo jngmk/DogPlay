@@ -4,7 +4,7 @@ public class Notification {
 	private int id;
 	private String userid;
 	private String target;
-	private int hotelnumber;
+	private String hotelnumber;
 	private String subjects;
 	private String content;
 	public int getId() {
@@ -25,10 +25,10 @@ public class Notification {
 	public void setTarget(String target) {
 		this.target = target;
 	}
-	public int getHotelnumber() {
+	public String getHotelnumber() {
 		return hotelnumber;
 	}
-	public void setHotelnumber(int hotelnumber) {
+	public void setHotelnumber(String hotelnumber) {
 		this.hotelnumber = hotelnumber;
 	}
 	public String getSubjects() {

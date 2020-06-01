@@ -59,25 +59,25 @@ public class ReservationController {
 	
 	@GetMapping("/api/v1/reservation/searchbyhotel")
 	@ApiOperation("호텔별 reservation 찾기")
-	public ResponseEntity<Map<String, Object>> searchbyhotel(@RequestParam int hotelnumber){
+	public ResponseEntity<Map<String, Object>> searchbyhotel(@RequestParam String hotelnumber){
 		return handleSuccess(service.searchbyhotel(hotelnumber));
 	}
 	
 	@GetMapping("/api/v1/reservation/searchbyhotel/room")
 	@ApiOperation("hotel + room 으로 reservation 찾기")
-	public ResponseEntity<Map<String, Object>> searchbyhotelroom(@RequestParam int hotelnumber, @RequestParam String roomname){
+	public ResponseEntity<Map<String, Object>> searchbyhotelroom(@RequestParam String hotelnumber, @RequestParam String roomname){
 		return handleSuccess(service.searchbyhotelandroom(hotelnumber, roomname));
 	}
 	
 	@GetMapping("/api/v1/reservation/count/hotel/room")
 	@ApiOperation("id로 reservation 나타내기")
-	public ResponseEntity<Map<String, Object>> counhotelroom(@RequestParam int hotelnumber, @RequestParam String roomname){
+	public ResponseEntity<Map<String, Object>> counhotelroom(@RequestParam String hotelnumber, @RequestParam String roomname){
 		return handleSuccess(service.countbyhotelandroom(hotelnumber, roomname));
 	}
 	
 	@GetMapping("/api/v1/reservation/count/hotel/room/start/finish/")
 	@ApiOperation("date reservation 나타내기")
-	public ResponseEntity<Map<String, Object>> countbydate(@RequestParam int hotelnumber, @RequestParam String roomname, @RequestParam LocalDateTime startdate, @RequestParam LocalDateTime finishdate){
+	public ResponseEntity<Map<String, Object>> countbydate(@RequestParam String hotelnumber, @RequestParam String roomname, @RequestParam LocalDateTime startdate, @RequestParam LocalDateTime finishdate){
 		return handleSuccess(service.countbydate(hotelnumber, roomname, startdate, finishdate));
 	}
 	

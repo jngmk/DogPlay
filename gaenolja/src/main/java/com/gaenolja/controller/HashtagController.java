@@ -41,7 +41,7 @@ public class HashtagController {
 	
 	@GetMapping("/api/v1/hashtag/search}")
 	@ApiOperation("id로 hashtag 나타내기")
-	public ResponseEntity<Map<String, Object>> search(@RequestParam String id){
+	public ResponseEntity<Map<String, Object>> search(@RequestParam int id){
 		return handleSuccess(service.search(id));
 	}
 	

@@ -11,7 +11,7 @@ import com.gaenolja.model.dto.HotelStar;
 public interface HotelStarDAO {
 	public List<HotelStar> searchall();
 	public List<HotelStar> searchbydistance(HashMap<Object, Object> map);
-	public HotelStar search(int hotelnumber);
+	public HotelStar search(String hotelnumber);
 	public List<HotelStar> searchbyuserid(String userid);
 	public List<HotelStar> searchbyname(HashMap<Object, Object> map);
 	public List<HotelStar> searchbyhashtag(HashMap<Object, Object> map);

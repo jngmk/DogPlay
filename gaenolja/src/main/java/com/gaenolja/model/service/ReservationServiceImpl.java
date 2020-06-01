@@ -39,7 +39,7 @@ public class ReservationServiceImpl implements ReservationService{
 	}
 	
 	@Override
-	public List<Reservation> searchbyhotel(int hotelnumber){
+	public List<Reservation> searchbyhotel(String hotelnumber){
 		try {
 			List<Reservation> reservation = dao.searchbyhotel(hotelnumber);
 			return reservation;
@@ -50,7 +50,7 @@ public class ReservationServiceImpl implements ReservationService{
 	}
 	
 	@Override
-	public List<Reservation> searchbyhotelandroom(int hotelnumber, String roomname){
+	public List<Reservation> searchbyhotelandroom(String hotelnumber, String roomname){
 		try {
 			HashMap<Object, Object> map = new HashMap<Object, Object>();
 			map.put("hotelnumber", hotelnumber);
@@ -64,7 +64,7 @@ public class ReservationServiceImpl implements ReservationService{
 	}
 	
 	@Override
-	public int countbyhotelandroom(int hotelnumber, String roomname) {
+	public int countbyhotelandroom(String hotelnumber, String roomname) {
 		int count = 0;
 		try {
 			HashMap<Object, Object> map = new HashMap<Object, Object>();
@@ -81,7 +81,7 @@ public class ReservationServiceImpl implements ReservationService{
 	}
 	
 	@Override
-	public int countbydate(int hotelnumber, String roomname, LocalDateTime startdate, LocalDateTime finishdate) {
+	public int countbydate(String hotelnumber, String roomname, LocalDateTime startdate, LocalDateTime finishdate) {
 		int count = 0;
 		try {
 			HashMap<Object, Object> map = new HashMap<Object, Object>();

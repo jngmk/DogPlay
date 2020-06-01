@@ -46,7 +46,7 @@ public class NotificationController {
 	
 	@GetMapping("/api/v1/notification/searchbyhotel")
 	@ApiOperation("호텔별 notification 찾기")
-	public ResponseEntity<Map<String, Object>> searchbyhotel(@RequestParam int hotelnumber){
+	public ResponseEntity<Map<String, Object>> searchbyhotel(@RequestParam String hotelnumber){
 		return handleSuccess(service.searchbyhotelnumber(hotelnumber));
 	}
 	

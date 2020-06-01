@@ -39,7 +39,7 @@ public class HotelServiceImpl implements HotelService {
 	}
 	
 	@Override
-	public Hotel search(int hotelnumber) {
+	public Hotel search(String hotelnumber) {
 		try {
 			Hotel hotel = dao.search(hotelnumber);
 			Gson gson = new Gson();
@@ -77,28 +77,7 @@ public class HotelServiceImpl implements HotelService {
 		}
 		return null;
 	}
-	
-	@Override
-	public List<Hotel> searchbyhashtag(String hashtag){
-		try {
-			List<Hotel> hotel = dao.searchbyhashtag(hashtag);
-			for (Hotel h:hotel) {
-				Gson gson = new Gson();
-				HashMap<String, String> jsonObject = gson.fromJson(h.getDetail().toString(), HashMap.class);
-				List<List<String>> detailarray = new ArrayList<List<String>>();
-				List<String> key = new ArrayList<>(jsonObject.keySet());
-				List<String> value = new ArrayList<>(jsonObject.values());
-				detailarray.add(key);
-				detailarray.add(value);
-				h.setDetail(detailarray);
-			}
-			return hotel;
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-	
+		
 	@Override
 	public List<Hotel> searchbydistance(double latitude, double longitude, int distance){
 		try {
@@ -155,7 +134,7 @@ public class HotelServiceImpl implements HotelService {
 	};
 	
 	@Override
-	public boolean delete(int hotelnumber) {
+	public boolean delete(String hotelnumber) {
 		try {
 			dao.delete(hotelnumber);
 			return true;

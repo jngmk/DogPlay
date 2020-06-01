@@ -45,7 +45,7 @@ public class LikesController {
 	
 	@GetMapping("/api/v1/likes/searchbyhotel")
 	@ApiOperation("호텔별 likes 찾기")
-	public ResponseEntity<Map<String, Object>> searchbyhotel(@RequestParam int hotelnumber){
+	public ResponseEntity<Map<String, Object>> searchbyhotel(@RequestParam String hotelnumber){
 		return handleSuccess(service.searchbyhotelnumber(hotelnumber));
 	}
 	
@@ -65,7 +65,7 @@ public class LikesController {
 		
 	@DeleteMapping("/api/v1/likes/delete/hotel")
 	@ApiOperation("delete likes")
-	public ResponseEntity<Map<String, Object>> delete(@RequestParam String userid, @RequestParam int hotelnumber){
+	public ResponseEntity<Map<String, Object>> delete(@RequestParam String userid, @RequestParam String hotelnumber){
 		boolean res = service.delete(userid, hotelnumber);
 		if (res) return handleSuccess("success");
 		else return handleFail("fail", HttpStatus.OK);

@@ -31,12 +31,5 @@
 		from hotel left join review on
 		hotel.hotelnumber = review.hotelnumber group by hotelnumber having hotelname like concat('%', #{hotelname}, '%') and distance <= #{distance};]]>
 	</select>
-	
-	<select id="searchbyhashtag" parameterType="hashmap" resultType="hotelstar">
-		<![CDATA[select hotel.*, ifnull(truncate(avg(review.star), 2), 0) as star,
-		truncate((6371*acos(cos(radians(#{latitude}))*cos(radians(latitude))*cos(radians(longitude) 
-		-radians(#{longitude}))+sin(radians(#{latitude}))*sin(radians(latitude)))), 2) as distance
-		from hotel left join review on
-		hotel.hotelnumber = review.hotelnumber group by hotelnumber having hashid like concat('%', #{hashtag}, '%') and distance <= #{distance};]]>
-	</select>
+
 </mapper>

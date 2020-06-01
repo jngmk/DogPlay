@@ -27,7 +27,7 @@ public class LikesServiceImpl implements LikesService {
 	}
 	
 	@Override
-	public List<Likes> searchbyhotelnumber(int hotelnumber) {
+	public List<Likes> searchbyhotelnumber(String hotelnumber) {
 		try {
 			List<Likes> likes = dao.searchbyhotelnumber(hotelnumber);
 			return likes;
@@ -71,7 +71,7 @@ public class LikesServiceImpl implements LikesService {
 	};
 	
 	@Override
-	public boolean delete(String userid, int hotelnumber) {
+	public boolean delete(String userid, String hotelnumber) {
 		try {
 			Likes likes = new Likes();
 			likes.setUserid(userid);

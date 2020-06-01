@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 
 public class Review {
 	private int id;
-	private int hotelnumber;
+	private String hotelnumber;
 	private String userid;
 	private int visitid;
 	private float star;
@@ -16,10 +16,10 @@ public class Review {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public int getHotelnumber() {
+	public String getHotelnumber() {
 		return hotelnumber;
 	}
-	public void setHotelnumber(int hotelnumber) {
+	public void setHotelnumber(String hotelnumber) {
 		this.hotelnumber = hotelnumber;
 	}
 	public String getUserid() {

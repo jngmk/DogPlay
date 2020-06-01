@@ -32,7 +32,7 @@ public class ReviewServiceImpl implements ReviewService {
 	}
 	
 	@Override
-	public List<Review> searchbyhotelnumber(int hotelnumber) {
+	public List<Review> searchbyhotelnumber(String hotelnumber) {
 		try {
 			List<Review> review = dao.searchbyhotelnumber(hotelnumber);
 			return review;
@@ -43,7 +43,7 @@ public class ReviewServiceImpl implements ReviewService {
 	}
 	
 	@Override
-	public int countbyhotelnumber(int hotelnumber) {
+	public int countbyhotelnumber(String hotelnumber) {
 		try {
 			int reviewnumber = dao.countbyhotelnumber(hotelnumber);
 			return reviewnumber;
@@ -54,7 +54,7 @@ public class ReviewServiceImpl implements ReviewService {
 	}
 	
 	@Override
-	public int countreview(int hotelnumber) {
+	public int countreview(String hotelnumber) {
 		try {
 			int reviewnumber = dao.countreview(hotelnumber);
 			return reviewnumber;
@@ -76,7 +76,7 @@ public class ReviewServiceImpl implements ReviewService {
 	}
 	
 	@Override
-	public List<Review> goodreviewbadreview(int hotelnumber){
+	public List<Review> goodreviewbadreview(String hotelnumber){
 		try {
 			List<Review> goodreview = dao.goodreview(hotelnumber);
 			List<Review> badreview = dao.badreview(hotelnumber);
@@ -93,7 +93,7 @@ public class ReviewServiceImpl implements ReviewService {
 	}
 
 	@Override
-	public List<Review> reviewwithcontent(int hotelnumber){
+	public List<Review> reviewwithcontent(String hotelnumber){
 		try {
 			List<Review> review = dao.reviewwithcontent(hotelnumber);
 			return review;
@@ -104,7 +104,7 @@ public class ReviewServiceImpl implements ReviewService {
 	}
 	
 	@Override
-	public List<HashMap<Object, Object>> reviewwithresponse(int hotelnumber){
+	public List<HashMap<Object, Object>> reviewwithresponse(String hotelnumber){
 		List<HashMap<Object, Object>> list = new ArrayList<HashMap<Object, Object>>();
 		try {
 			List<Review> reviews = dao.reviewwithcontent(hotelnumber);
@@ -122,7 +122,7 @@ public class ReviewServiceImpl implements ReviewService {
 	}
 
 	@Override
-	public List<Review> searchbystar(int hotelnumber, float star){
+	public List<Review> searchbystar(String hotelnumber, float star){
 		try {
 			HashMap<Object, Object> map = new HashMap<Object, Object>();
 			map.put("hotelnumber", hotelnumber);

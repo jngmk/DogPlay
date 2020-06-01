@@ -2,7 +2,7 @@ package com.gaenolja.model.dto;
 
 public class Hotelroom {
     private int id;
-	private int hotelnumber;
+	private String hotelnumber;
 	private String roomname;
 	private int price;
 	private int minsize;
@@ -21,10 +21,10 @@ public class Hotelroom {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public int getHotelnumber() {
+	public String getHotelnumber() {
 		return hotelnumber;
 	}
-	public void setHotelnumber(int hotelnumber) {
+	public void setHotelnumber(String hotelnumber) {
 		this.hotelnumber = hotelnumber;
 	}
 	public String getRoomname() {

@@ -8,10 +8,10 @@ import com.gaenolja.model.dto.Reservation;
 public interface ReservationService {
 	public List<Reservation> searchall();
 	public List<Reservation> searchbyuserid(String userid);
-	public List<Reservation> searchbyhotel(int hotelnumber);
-	public List<Reservation> searchbyhotelandroom(int hotelnumber, String roomname);
-	public int countbyhotelandroom(int hotelnumber, String roomname);
-	public int countbydate(int hotelnumber, String roomname, LocalDateTime startdate, LocalDateTime finishdate);
+	public List<Reservation> searchbyhotel(String hotelnumber);
+	public List<Reservation> searchbyhotelandroom(String hotelnumber, String roomname);
+	public int countbyhotelandroom(String hotelnumber, String roomname);
+	public int countbydate(String hotelnumber, String roomname, LocalDateTime startdate, LocalDateTime finishdate);
 	public Reservation search(int id);
 	public List<Reservation> searchbypaidid(int paidid);
 	public boolean insert(Reservation reservation);
