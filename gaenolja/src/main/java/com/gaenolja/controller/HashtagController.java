@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gaenolja.model.dto.Hashtag;
+import com.gaenolja.model.dto.HotelHash;
 import com.gaenolja.model.service.HashtagService;
 
 import io.swagger.annotations.ApiOperation;
@@ -27,7 +28,7 @@ public class HashtagController {
 	
 	@Autowired
 	private HashtagService service;
-
+	
 	@ExceptionHandler 
 	public ResponseEntity<Map<String, Object>> handler(Exception e){
 		return handleFail(e.getMessage(), HttpStatus.OK);
@@ -39,7 +40,7 @@ public class HashtagController {
 		return handleSuccess(service.searchall());
 	}
 	
-	@GetMapping("/api/v1/hashtag/search}")
+	@GetMapping("/api/v1/hashtag/search")
 	@ApiOperation("id로 hashtag 나타내기")
 	public ResponseEntity<Map<String, Object>> search(@RequestParam int id){
 		return handleSuccess(service.search(id));
@@ -52,7 +53,7 @@ public class HashtagController {
 		if (res) return handleSuccess("success");
 		else return handleFail("fail", HttpStatus.OK);
 	}
-		
+			
 	@PutMapping("/api/v1/hashtag/update")
 	@ApiOperation("update hashtag")
 	public ResponseEntity<Map<String, Object>> update(@RequestBody Hashtag hashtag){
@@ -63,8 +64,56 @@ public class HashtagController {
 
 	@DeleteMapping("/api/v1/hashtag/delete")
 	@ApiOperation("delete hashtag")
-	public ResponseEntity<Map<String, Object>> delete(@RequestParam String id){
+	public ResponseEntity<Map<String, Object>> delete(@RequestParam int id){
 		boolean res = service.delete(id);
+		if (res) return handleSuccess("success");
+		else return handleFail("fail", HttpStatus.OK);
+	}
+	
+	@PostMapping("/api/v1/hotelhash/insert")
+	@ApiOperation("connect hotelhash")
+	public ResponseEntity<Map<String, Object>> inserthotelhash(@RequestBody HotelHash hotelhash){
+		boolean res = service.inserthotelhash(hotelhash);
+		if (res) return handleSuccess("success");
+		else return handleFail("fail", HttpStatus.OK);
+	}
+	
+	@GetMapping("/api/v1/hotelhash/searchall")
+	@ApiOperation("모든 hotelhash 나타내기")
+	public ResponseEntity<Map<String, Object>> searchallhotelhash(){
+		return handleSuccess(service.searchallhotelhash());
+	}
+	
+	@GetMapping("/api/v1/hotelhash/search")
+	@ApiOperation("id로 hotelhash 나타내기")
+	public ResponseEntity<Map<String, Object>> searchhotelhash(@RequestParam int id){
+		return handleSuccess(service.searchhotelhash(id));
+	}
+	
+	@GetMapping("/api/v1/hotelhash/searchbyhotel")
+	@ApiOperation("id로 hotelhash 나타내기")
+	public ResponseEntity<Map<String, Object>> searchhotelhashbyhotel(@RequestParam String hotelnumber){
+		return handleSuccess(service.searchhotelhashbyhotel(hotelnumber));
+	}
+	
+	@GetMapping("/api/v1/hotelhash/searchbyhash")
+	@ApiOperation("id로 hashtag 나타내기")
+	public ResponseEntity<Map<String, Object>> searchhotelhashbyhash(@RequestParam int hashtag){
+		return handleSuccess(service.searchhotelhashbyhash(hashtag));
+	}
+	
+	@PutMapping("/api/v1/hotelhash/update")
+	@ApiOperation("update hotelhash")
+	public ResponseEntity<Map<String, Object>> updatehotelhash(@RequestBody HotelHash hotelhash){
+		boolean res = service.updatehotelhash(hotelhash);
+		if (res) return handleSuccess("success");
+		else return handleFail("fail", HttpStatus.OK);
+	}	
+
+	@DeleteMapping("/api/v1/hotelhash/delete")
+	@ApiOperation("delete hotelhash")
+	public ResponseEntity<Map<String, Object>> deletehotelhash(@RequestParam int id){
+		boolean res = service.deletehotelhash(id);
 		if (res) return handleSuccess("success");
 		else return handleFail("fail", HttpStatus.OK);
 	}

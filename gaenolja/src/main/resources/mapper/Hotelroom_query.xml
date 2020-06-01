@@ -9,7 +9,7 @@
 		select * from hotelroom where id=#{id}
 	</select>
 	
-	<select id="searchbyhotel" parameterType="int" resultType="hotelroom">
+	<select id="searchbyhotel" parameterType="string" resultType="hotelroom">
 		select * from hotelroom where hotelnumber=#{hotelnumber}
 	</select>
 	
@@ -21,7 +21,7 @@
 		select * from hotelroom where price between #{price} - 10000 and #{price} + 10000
 	</select>
 	
-	<select id="minprice" parameterType="int" resultType="int">
+	<select id="minprice" parameterType="string" resultType="int">
 		select ifnull(min(price), 0) from hotelroom where hotelnumber=#{hotelnumber}
 	</select>
 	

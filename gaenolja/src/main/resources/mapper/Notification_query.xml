@@ -6,7 +6,7 @@
    		select * from notification
     </select>
 
-	<select id="searchbyhotelnumber" parameterType="int" resultType="notification">
+	<select id="searchbyhotelnumber" parameterType="string" resultType="notification">
    		select *
    		from notification
    		where hotelnumber = #{hotelnumber}

@@ -6,46 +6,46 @@
    		select * from review
     </select>
 
-	<select id="searchbyhotelnumber" parameterType="int" resultType="review">
+	<select id="searchbyhotelnumber" parameterType="string" resultType="review">
    		select *
    		from review
    		where hotelnumber= #{hotelnumber}
     </select>
     
-   	<select id="countbyhotelnumber" parameterType="int" resultType="int">
+   	<select id="countbyhotelnumber" parameterType="string" resultType="int">
    		select count(*)
    		from review
    		where hotelnumber= #{hotelnumber}
     </select>
     
-    <select id="goodreview" parameterType="int" resultType="review">
+    <select id="goodreview" parameterType="string" resultType="review">
    		select *
    		from review
    		where hotelnumber= #{hotelnumber}
    		order by star desc limit 2
     </select>
     
-    <select id="badreview" parameterType="int" resultType="review">
+    <select id="badreview" parameterType="string" resultType="review">
    		select *
    		from review
    		where hotelnumber= #{hotelnumber}
    		order by star asc limit 2
     </select>
     
-    <select id="reviewbytime" parameterType="int" resultType="review">
+    <select id="reviewbytime" parameterType="string" resultType="review">
    		select *
    		from review
    		where hotelnumber= #{hotelnumber}
    		order by created desc limit 5
     </select>
     
-    <select id="countreview" parameterType="int" resultType="int">
+    <select id="countreview" parameterType="string" resultType="int">
    		select count(*)
    		from review
    		where hotelnumber= #{hotelnumber} and not content is null
     </select>
         
-    <select id="reviewwithcontent" parameterType="int" resultType="review">
+    <select id="reviewwithcontent" parameterType="string" resultType="review">
    		select *
    		from review
    		where hotelnumber= #{hotelnumber}  and not content is null

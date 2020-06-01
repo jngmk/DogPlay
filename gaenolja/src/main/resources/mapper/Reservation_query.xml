@@ -9,7 +9,7 @@
 		select * from reservation where userid=#{userid}
 	</select>
 	
-	<select id="searchbyhotel" parameterType="int" resultType="reservation">
+	<select id="searchbyhotel" parameterType="string" resultType="reservation">
 		select * from reservation where hotelnumber=#{hotelnumber}
 	</select>
 	

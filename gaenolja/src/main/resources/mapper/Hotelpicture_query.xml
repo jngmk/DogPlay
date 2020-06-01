@@ -5,7 +5,7 @@
 		select * from hotelpicture
 	</select>
 	
-	<select id="searchbyhotel" parameterType="int" resultType="hotelpicture">
+	<select id="searchbyhotel" parameterType="string" resultType="hotelpicture">
 		select * from hotelpicture where hotelnumber=#{hotelnumber}
 	</select>
 	

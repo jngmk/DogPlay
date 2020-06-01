@@ -19,7 +19,7 @@
 		hotel.hotelnumber = review.hotelnumber group by hotelnumber having distance <= #{distance};]]>
 	</select>
 	
-	<select id="search" parameterType="int" resultType="hotelstar">
+	<select id="search" parameterType="string" resultType="hotelstar">
 		select hotel.*, ifnull(truncate(avg(review.star), 2), 0) as star from hotel left join review on
 		hotel.hotelnumber = review.hotelnumber group by hotelnumber having hotelnumber=#{hotelnumber}
 	</select>

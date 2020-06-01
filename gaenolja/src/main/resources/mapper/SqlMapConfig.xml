@@ -25,6 +25,7 @@
 		<typeAlias type="com.gaenolja.model.dto.Paid"				alias="paid"/>
 		<typeAlias type="com.gaenolja.model.dto.Chatroom"			alias="chatroom"/>
 		<typeAlias type="com.gaenolja.model.dto.HotelLikes"			alias="hotellike"/>
+		<typeAlias type="com.gaenolja.model.dto.HotelHash"			alias="hotelhash"/>
 	</typeAliases>
 	<mappers>
 		 <mapper resource="mapper/Hotel_query.xml"/>
@@ -44,5 +45,6 @@
   	  	 <mapper resource="mapper/HotelStar_query.xml"/>
   	  	 <mapper resource="mapper/Paid_query.xml"/>
   	  	 <mapper resource="mapper/Chatroom_query.xml"/>
+   	  	 <mapper resource="mapper/HotelHash_query.xml"/>
 	</mappers>
 </configuration>

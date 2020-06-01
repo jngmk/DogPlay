@@ -52,7 +52,6 @@ public class HotelStarServiceImpl implements HotelStarService{
 				star.setCountreview(reviewdao.countreview(hotelnumber));
 				star.setCountstar(reviewdao.countbyhotelnumber(hotelnumber));
 				star.setMinprice(roomdao.minprice(hotelnumber));
-				
 				List<Integer> hash = hotelhash.searchbyhotel(hotelnumber);
 				star.setHashid(hash);
 				List<String> hashtag = new ArrayList<String>();

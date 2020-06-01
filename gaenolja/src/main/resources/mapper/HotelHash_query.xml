@@ -9,11 +9,11 @@
 		select * from hotelhash
 	</select>
 	
-	<select id="searchbyhotel" parameterType="string" resultType="hotelhash">
+	<select id="searchbyhotel" parameterType="string" resultType="int">
 		select hashtag from hotelhash where hotelnumber=#{hotelnumber}
 	</select>
 	
-	<select id="searchbyhash" parameterType="int" resultType="hotelhash">
+	<select id="searchbyhash" parameterType="int" resultType="string">
 		select hotelnumber from hotelhash where hashtag=#{hashtag}
 	</select>
 

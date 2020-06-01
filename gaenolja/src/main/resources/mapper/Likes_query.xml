@@ -18,7 +18,7 @@
    		where likes.userid = #{visitor};
     </select>
     
-	<select id="searchbyhotelnumber" parameterType="int" resultType="likes">
+	<select id="searchbyhotelnumber" parameterType="string" resultType="likes">
    		select *
    		from likes
    		where hotelnumber = #{hotelnumber}

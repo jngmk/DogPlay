@@ -92,7 +92,7 @@ public class HotelController {
 	
 	@GetMapping("/api/v1/hotelstar/search/userid")
 	@ApiOperation("hotel + star")
-	public ResponseEntity<Map<String, Object>> searchhotelstarbyuserid(String userid){
+	public ResponseEntity<Map<String, Object>> searchhotelstarbyuserid(@RequestParam String userid){
 		return handleSuccess(starservice.searchbyuserid(userid));
 	}
 	
