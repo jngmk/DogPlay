@@ -194,7 +194,7 @@ create table chat (
     on update cascade on delete cascade,
 	constraint FK_user_chat_send foreign key(send) references user(userid)
     on update cascade on delete cascade,
-	constraint FK_chat_room foreign key(chatid) references chat(id)
+	constraint FK_chat_room foreign key(chatid) references chatroom(id)
     on update cascade on delete cascade
 );
 
