@@ -41,7 +41,7 @@ class chatPage : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         val server = server()
-        server!!.searchChatWithUserId("test").enqueue(object :Callback<ChatMainDTO>{
+        server!!.searchChatWithUserId("test1").enqueue(object :Callback<ChatMainDTO>{
             override fun onFailure(call: Call<ChatMainDTO>, t: Throwable) {
                 Log.d("왜 안될까잉?", t.toString())
             }
@@ -81,7 +81,7 @@ class ChatAdapter(var context: Context, var chattings:ArrayList<ChatMain>) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val chat = chattings[position].chat
         val target:String
-        if (chat.receive != "test") target = chat.receive
+        if (chat.receive != "test1") target = chat.receive
         else target = chat.send
         holder.itemView.chatNic.text = target
         holder.itemView.chatTop.text = chat.message

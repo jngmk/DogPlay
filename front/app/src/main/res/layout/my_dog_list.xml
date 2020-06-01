@@ -41,17 +41,16 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/mydog"
         android:layout_margin="15dp"
+        android:columnCount="4"
         >
-        <TextView
+        <ImageView
             android:id="@+id/PlusDog"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:padding="3dp"
+            android:layout_margin="10dp"
+            android:src="@drawable/plus"
             android:background="@drawable/rounded3"
-            android:text="+"
-            android:textAlignment="center"
-            android:layout_gravity="center_vertical"
-            android:textSize="50dp"
+            android:scaleType="centerCrop"
             />
 
     </GridLayout>
