@@ -52,7 +52,27 @@ class OwnerEnrollHotel : AppCompatActivity() {
             getImages()
         }
         btnEnrollHotelData.setOnClickListener {
-            postData()
+            if (findViewById<EditText>(R.id.edtEnrollHotelName).text == null && findViewById<EditText>(R.id.edtEnrollHotelName).text.toString() == "") {
+                Toast.makeText(this, "호텔 이름을 입력해주세요.", Toast.LENGTH_LONG).show()
+            }
+            else if (pictures.size == 0) {
+                Toast.makeText(this, "호텔 사진을 등록해주세요.", Toast.LENGTH_LONG).show()
+            }
+            else if (findViewById<EditText>(R.id.edtEnrollHotelAddress).text == null && findViewById<EditText>(R.id.edtEnrollHotelAddress).text.toString() == "") {
+                Toast.makeText(this, "호텔 주소를 입력해주세요.", Toast.LENGTH_LONG).show()
+            }
+            else if (findViewById<EditText>(R.id.edtEnrollHotelContact).text == null && findViewById<EditText>(R.id.edtEnrollHotelContact).text.toString() == "") {
+                Toast.makeText(this, "호텔 연락처를 입력해주세요.", Toast.LENGTH_LONG).show()
+            }
+            else if (findViewById<EditText>(R.id.edtEnrollBN).text == null && findViewById<EditText>(R.id.edtEnrollBN).text.toString() == "") {
+                Toast.makeText(this, "사업자 등록번호를 입력해주세요.", Toast.LENGTH_LONG).show()
+            }
+            else if (findViewById<EditText>(R.id.edtEnrollInfo).text == null && findViewById<EditText>(R.id.edtEnrollInfo).text.toString() == "") {
+                Toast.makeText(this, "호텔 소개를 입력해주세요.", Toast.LENGTH_LONG).show()
+            }
+            else {
+                postData()
+            }
         }
 
     }

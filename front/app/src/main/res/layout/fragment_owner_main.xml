@@ -9,7 +9,7 @@
     >
 
     <TextView
-        android:id="@+id/btnEnrollHotel"
+        android:id="@+id/btnAddHotel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/enrollHotel"
@@ -18,12 +18,12 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/btnEnrollHotelRoom"
+        android:id="@+id/btnAddHotelRoom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/enrollHotelRoom"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnEnrollHotel" />
+        app:layout_constraintTop_toBottomOf="@+id/btnAddHotel" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

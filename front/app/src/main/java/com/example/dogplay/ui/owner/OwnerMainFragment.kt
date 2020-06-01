@@ -28,12 +28,12 @@ class OwnerMainFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        btnEnrollHotel.setOnClickListener {
+        btnAddHotel.setOnClickListener {
             val intent = Intent(this.context, OwnerEnrollHotel::class.java)
             startActivity(intent)
         }
 
-        btnEnrollHotelRoom.setOnClickListener {
+        btnAddHotelRoom.setOnClickListener {
             val intent = Intent(this.context, OwnerEnrollHotelRoom::class.java)
             startActivity(intent)
         }

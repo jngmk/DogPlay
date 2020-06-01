@@ -1,11 +1,16 @@
 package com.example.dogplay
 
+import com.google.gson.JsonObject
 import com.google.gson.annotations.SerializedName
 import com.google.gson.internal.LinkedTreeMap
 import com.google.gson.internal.ObjectConstructor
 import retrofit2.Call
 import retrofit2.http.*
 import retrofit2.http.Header
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
+import kotlin.collections.HashSet
 
 
 data class HotelSerchDTO(
@@ -83,7 +88,7 @@ data class HotelInfoWithStarAndPrice(
 
 data class HotelInfoToPost(
     var hotelnumber: Int = 0,
-    var userid: String = "",
+    var userid: String = "test",
     var hashid: String = "",
     var hotelname: String= "",
     var latitude: Double = 0.0,
@@ -91,7 +96,7 @@ data class HotelInfoToPost(
     var address: String = "",
     var contact: String = "",
     var info: String = "",
-    var detail: HashMap<String,String>
+    var detail: Any = {}
 )
 
 data class HotelPictureToPost(
