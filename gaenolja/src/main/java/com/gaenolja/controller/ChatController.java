@@ -116,17 +116,21 @@ public class ChatController {
 	}
 	
 	@GetMapping("/api/v1/chatroom/search")
-	@ApiOperation("두 사람으로  chat 찾기")
+	@ApiOperation("chatroom 찾기")
 	public ResponseEntity<Map<String, Object>> searchchatroombyid(@RequestParam int id){
 		return handleSuccess(roomservice.search(id));
+	}
+	
+	@GetMapping("/api/v1/chatroom/searchall")
+	@ApiOperation("모든 chatroom 찾기")
+	public ResponseEntity<Map<String, Object>> searchallchatroom(){
+		return handleSuccess(roomservice.searchall());
 	}
 		
 	@PostMapping("/api/v1/chatroom/insert")
 	@ApiOperation("insert chat")
 	public ResponseEntity<Map<String, Object>> insertchatroom(@RequestBody Chatroom chatroom){
-		boolean res = roomservice.insert(chatroom);
-		if (res) return handleSuccess("success");
-		else return handleFail("fail", HttpStatus.OK);
+		return handleSuccess(roomservice.insert(chatroom));
 	}
 		
 	@DeleteMapping("/api/v1/chatroom/delete")

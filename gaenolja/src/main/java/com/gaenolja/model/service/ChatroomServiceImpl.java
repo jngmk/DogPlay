@@ -1,5 +1,7 @@
 package com.gaenolja.model.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,14 +26,26 @@ public class ChatroomServiceImpl implements ChatroomService {
 	}
 	
 	@Override
-	public boolean insert(Chatroom chatroom) {
+	public List<Integer> searchall(){
 		try {
-			dao.insert(chatroom);
-			return true;
+			List<Integer> chatroom = dao.searchall();
+			return chatroom;
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
-		return false;
+		return null;
+	}
+	
+	@Override
+	public int insert(Chatroom chatroom) {
+		try {
+			dao.insert(chatroom);
+			int id = dao.searchlast();
+			return id;
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return -1;
 	}
 	
 	@Override

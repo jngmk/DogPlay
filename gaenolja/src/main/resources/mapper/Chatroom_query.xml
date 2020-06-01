@@ -17,4 +17,12 @@
 		where id = #{id}
 	</delete>
 	
+	<select id="searchlast" resultType="int">
+		select id from chatroom order by id desc limit 1;
+	</select>
+	
+	<select id="searchall" resultType="int">
+		select id from chatroom
+	</select>
+	
 </mapper>
