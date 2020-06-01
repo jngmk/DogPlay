@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -49,18 +50,23 @@ public class HotelStarServiceImpl implements HotelStarService{
 				String hashid = star.getHashid();
 				List<String> list = new ArrayList<String>();
 				for (int idx=0;idx<hashid.length();idx++) {
-					list.add(hashtagdao.search(Character.toString(hashid.charAt(idx))).getName());
+					if (hashtagdao.search(Character.toString(hashid.charAt(idx))) != null) {
+						list.add(hashtagdao.search(Character.toString(hashid.charAt(idx))).getName());						
+					}
 				}
-				star.setMinprice(roomdao.minprice(hotelnumber));					
+				star.setMinprice(roomdao.minprice(hotelnumber));			
 				star.setHashtag(list);
-				Gson gson = new Gson();
-				HashMap<String, String> jsonObject = gson.fromJson(star.getDetail().toString(), HashMap.class);
-				List<List<String>> detailarray = new ArrayList<List<String>>();
-				List<String> key = new ArrayList<>(jsonObject.keySet());
-				List<String> value = new ArrayList<>(jsonObject.values());
-				detailarray.add(key);
-				detailarray.add(value);
-				star.setDetail(detailarray);
+
+				if (!Objects.isNull(star.getDetail())) {
+					Gson gson = new Gson();
+					HashMap<String, String> jsonObject = gson.fromJson(star.getDetail().toString(), HashMap.class);
+					List<List<String>> detailarray = new ArrayList<List<String>>();
+					List<String> key = new ArrayList<>(jsonObject.keySet());
+					List<String> value = new ArrayList<>(jsonObject.values());
+					detailarray.add(key);
+					detailarray.add(value);
+					star.setDetail(detailarray);	
+				}
 			}
 			return hotelstar;
 		}catch(Exception e) {
