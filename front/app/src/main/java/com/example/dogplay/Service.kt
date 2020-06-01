@@ -20,6 +20,11 @@ data class HotelDetailDTO(
     var data:HashMap<String,Any>
 )
 
+data class RoomDetailDTO(
+    @SerializedName("data")
+    var data : RoomDetailData
+)
+
 data class HotelRoomDTO(
     @SerializedName("data")
     var data:Array<HashMap<String,Any>>
@@ -30,6 +35,18 @@ data class HotelNearByDTO(
     val data: ArrayList<HotelInfoWithStarAndPrice>,
     @SerializedName("state")
     val state: String
+)
+
+
+data class RoomDetailData(
+    val id:Int,
+    val hotelnumber: Int,
+    val roomname :String,
+    val price : Int,
+    val minsize:Int,
+    val maxsize:Int,
+    val count:Int,
+    val info:String
 )
 
 data class HotelInfo(
@@ -64,23 +81,24 @@ data class HotelInfoWithStarAndPrice(
     val minprice: Int
 )
 
-data class RoomDetailDTO(
-    @SerializedName("data")
-    var data : RoomDetailData
-
+data class HotelInfoToPost(
+    var hotelnumber: Int = 0,
+    var userid: String = "",
+    var hashid: String = "",
+    var hotelname: String= "",
+    var latitude: Double = 0.0,
+    var longitude: Double = 0.0,
+    var address: String = "",
+    var contact: String = "",
+    var info: String = "",
+    var detail: HashMap<String,String>
 )
 
-data class RoomDetailData(
-    val id:Int,
-    val hotelnumber: Int,
-    val roomname :String,
-    val price : Int,
-    val minsize:Int,
-    val maxsize:Int,
-    val count:Int,
-    val info:String
+data class HotelPictureToPost(
+    var hotelnumber: Int = 0,
+    var name: String = "",
+    var picture: String = ""
 )
-
 
 
 interface Service {
@@ -99,20 +117,17 @@ interface Service {
         @Query("longitude") longitude: Double
     ): Call<HotelNearByDTO>
 
-    @FormUrlEncoded
+//    @Headers("accept: application/json",
+//        "content-type: application/json")
     @POST("/api/v1/hotel/insert")
-    fun postRequest(
-        @Field("address") address:String,
-        @Field("contact") contact:String,
-        @Field("detail") detail:HashMap<String,String>,
-        @Field("hashid") hashid:String,
-        @Field("hotelname") hotelname:String,
-        @Field("hotelnumber") hotelnumber:Number,
-        @Field("info") info:String,
-        @Field("latitude") latitude:Double,
-        @Field("longitude") longitude:Double,
-        @Field("userid") userid:String
-    ):Call<HotelSerchDTO>
+    fun postHotelInfo(
+        @Body params: HotelInfoToPost
+    ):Call<HotelInfoToPost>
+
+    @POST("/api/v1/hotelpicture/insert")
+    fun postHotelPictures(
+        @Body params: HotelPictureToPost
+    ):Call<HotelPictureToPost>
 
     @GET("/api/v1/hotelroom/search")
     fun searchRoomDetail(
