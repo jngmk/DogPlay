@@ -66,6 +66,23 @@ public class PaidController {
 		if (res) return handleSuccess("success");
 		else return handleFail("fail", HttpStatus.OK);
 	}
+	
+	@PostMapping("/api/v1/paid/kakaopay")
+	@ApiOperation("카카오페이 결제")
+	public ResponseEntity<Map<String, Object>> kakaopay(@RequestBody Paid paid){
+		boolean res = service.kakaopay(paid);
+		if (res) return handleSuccess("success");
+		else return handleFail("fail", HttpStatus.OK);
+	}
+	
+	@GetMapping("/api/v1/paid/cancelpay")
+	@ApiOperation("카카오페이 결제 취소")
+	public ResponseEntity<Map<String, Object>> cancelkakaopay(@RequestParam int id){
+		boolean res = service.cancelpay(id);
+		if (res) return handleSuccess("success");
+		else return handleFail("fail", HttpStatus.OK);
+	}
+	
 	public ResponseEntity<Map<String, Object>> handleSuccess(Object data){
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		resultMap.put("state", "ok");

@@ -10,4 +10,6 @@ public interface PaidService {
 	public boolean insert(Paid paid);
 	public boolean update(Paid paid);
 	public boolean delete(int id);
+	public boolean kakaopay(Paid paid);
+	public boolean cancelpay(int id);
 }

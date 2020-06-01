@@ -88,7 +88,7 @@ create table cart (
     constraint FK_user_cart foreign key(userid) references user(userid)
     on update cascade on delete cascade
 );
-drop table reservation;
+
 create table reservation (
 	id integer primary key auto_increment,
     paidid integer,
@@ -110,7 +110,16 @@ create table reservation (
 
 create table paid (
 	id integer primary key auto_increment,
-    info varchar(1000) not null
+    tid varchar(200) not null,
+    cid varchar(200) not null,
+    aid varchar(200) not null,
+    cancel_amount integer not null,
+    cancel_tax_free_amount integer not null,
+    userid varchar(200) not null,
+    pg_token varchar(200) not null,
+    partner_order_id varchar(200) not null,
+	constraint FK_user_paid foreign key(userid) references user(userid)
+    on update cascade on delete cascade
 );
 
 

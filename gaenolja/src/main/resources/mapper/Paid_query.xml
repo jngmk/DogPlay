@@ -13,13 +13,20 @@
    </select>
    
 	<insert id="insert" parameterType="paid">
-		insert into paid(info)
-		values(#{info})
+		insert into paid(pid, cid, aid, cancel_amount, cancel_tax_free_amount, userid, pg_token, partner_order_id)
+		values(#{pid}, #{cid}, #{aid}, #{cancel_amount}, #{cancel_tax_free_amount}, #{userid}, #{pg_token}, #{partner_order_id})
 	</insert>
 	
 	<update id="update" parameterType="paid">
 		update paid set
-		info = #{info}
+		pid=#{pid},
+		cid=#{cid},
+		aid=#{aid},
+		cancel_amount=#{cancel_amount},
+		cancel_tax_free_amount=#{cancel_tax_free_amount},
+		userid=#{userid},
+		pg_token=#{pg_token},
+		partner_order_id=#{partner_order_id}
 		where id = #{id}
 	</update>
 
