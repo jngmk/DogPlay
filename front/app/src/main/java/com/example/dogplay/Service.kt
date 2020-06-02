@@ -42,6 +42,13 @@ data class HotelNearByDTO(
     val state: String
 )
 
+data class HashTagDTO(
+    @SerializedName("data")
+    val data: ArrayList<HashTag>,
+    @SerializedName("state")
+    val state: String
+)
+
 
 data class RoomDetailData(
     val id:Int,
@@ -68,9 +75,9 @@ data class HotelInfo(
 )
 
 data class HotelInfoWithStarAndPrice(
-    val hotelnumber: Int = 0,
+    val hotelnumber: String = "",
     val userid: String,
-    val hashid: String,
+    val hashid: ArrayList<String>,
     val hotelname: String,
     val latitude: Double,
     val longitude: Double,
@@ -87,8 +94,8 @@ data class HotelInfoWithStarAndPrice(
 )
 
 data class HotelInfoToPost(
-    var hotelnumber: Int = 0,
-    var userid: String = "test",
+    var hotelnumber: String = "",
+    var userid: String = "owner1",
     var hashid: String = "",
     var hotelname: String= "",
     var latitude: Double = 0.0,
@@ -96,13 +103,18 @@ data class HotelInfoToPost(
     var address: String = "",
     var contact: String = "",
     var info: String = "",
-    var detail: Any = {}
+    var detail: JsonObject = JsonObject()
 )
 
 data class HotelPictureToPost(
-    var hotelnumber: Int = 0,
+    var hotelnumber: String = "",
     var name: String = "",
     var picture: String = ""
+)
+
+data class HashTag(
+    val id: Int,
+    val name: String
 )
 
 
@@ -138,5 +150,8 @@ interface Service {
     fun searchRoomDetail(
         @Query("id") id:Int
     ):Call<RoomDetailDTO>
+
+    @GET("/api/v1/hashtag/searchall")
+    fun getHashTag():Call<HashTagDTO>
 
 }

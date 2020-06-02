@@ -21,7 +21,8 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/txtEnrollHotelTitle"
@@ -30,9 +31,11 @@
                 android:layout_marginTop="30dp"
                 android:text="@string/enrollHotel"
                 android:textSize="30sp"
+                android:textAlignment="center"
+                android:layout_gravity="center"
+                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintRight_toRightOf="parent"/>
 
             <TextView
                 android:id="@+id/txtEnrollHotelName"
@@ -42,9 +45,9 @@
                 android:text="@string/EnrollHotelNameDescription"
                 android:textSize="12sp"
                 android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@+id/txtEnrollHotelTitle"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtEnrollHotelTitle" />
+                app:layout_constraintRight_toRightOf="parent"/>
 
 
             <EditText
@@ -55,9 +58,9 @@
                 android:hint="@string/EnrollHotelName"
                 android:inputType="textPersonName"
                 android:paddingBottom="32dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtEnrollHotelName" />
+                app:layout_constraintTop_toBottomOf="@+id/txtEnrollHotelName"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
 
             <TextView
                 android:id="@+id/btnEnrollHotelImg"
@@ -67,19 +70,30 @@
                 android:text="@string/EnrollHotelImgDescription"
                 android:textSize="12sp"
                 android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@+id/edtEnrollHotelName"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edtEnrollHotelName" />
+                app:layout_constraintRight_toRightOf="parent"/>
 
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/vpEnrollHotelImg"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btnEnrollHotelImg" >
+                app:layout_constraintTop_toBottomOf="@+id/btnEnrollHotelImg"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent">
 
             </androidx.viewpager2.widget.ViewPager2>
+
+            <ImageView
+                android:id="@+id/btnExitEnrollHotel"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginRight="8dp"
+                android:visibility="gone"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btnEnrollHotelImg"
+                app:srcCompat="@drawable/exit_foreground"
+                tools:ignore="VectorDrawableCompat" />
 
             <TextView
                 android:id="@+id/txtEnrollHotelAddress"
@@ -88,10 +102,9 @@
                 android:layout_marginTop="32dp"
                 android:text="@string/EnrollHotelAddressDescription"
                 android:textSize="12sp"
-                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@+id/vpEnrollHotelImg"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/vpEnrollHotelImg" />
+                app:layout_constraintRight_toRightOf="parent"/>
 
             <EditText
                 android:id="@+id/edtEnrollHotelAddress"
@@ -101,9 +114,9 @@
                 android:hint="@string/EnrollHotelAddress"
                 android:inputType="textPostalAddress"
                 android:paddingBottom="32dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtEnrollHotelAddress" />
+                app:layout_constraintTop_toBottomOf="@+id/txtEnrollHotelAddress"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
 
             <TextView
                 android:id="@+id/txtEnrollHotelContact"
@@ -113,9 +126,9 @@
                 android:text="@string/EnrollHotelContactDescription"
                 android:textSize="12sp"
                 android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@+id/edtEnrollHotelAddress"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edtEnrollHotelAddress" />
+                app:layout_constraintRight_toRightOf="parent"/>
 
             <EditText
                 android:id="@+id/edtEnrollHotelContact"
@@ -125,9 +138,9 @@
                 android:hint="@string/EnrollHotelContact"
                 android:inputType="phone"
                 android:paddingBottom="32dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtEnrollHotelContact" />
+                app:layout_constraintTop_toBottomOf="@+id/txtEnrollHotelContact"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
 
             <TextView
                 android:id="@+id/txtEnrollHotelBN"
@@ -137,9 +150,9 @@
                 android:text="@string/EnrollHotelBNDescription"
                 android:textSize="12sp"
                 android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@+id/edtEnrollHotelContact"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edtEnrollHotelContact" />
+                app:layout_constraintRight_toRightOf="parent"/>
 
             <EditText
                 android:id="@+id/edtEnrollBN"
@@ -149,9 +162,9 @@
                 android:hint="@string/EnrollHotelBN"
                 android:inputType="number"
                 android:paddingBottom="32dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtEnrollHotelBN" />
+                app:layout_constraintTop_toBottomOf="@+id/txtEnrollHotelBN"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
 
             <TextView
                 android:id="@+id/txtEnrollHotelInfo"
@@ -161,9 +174,9 @@
                 android:text="@string/EnrollHotelInfoDescription"
                 android:textSize="12sp"
                 android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@+id/edtEnrollBN"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edtEnrollBN" />
+                app:layout_constraintRight_toRightOf="parent"/>
 
             <EditText
                 android:id="@+id/edtEnrollInfo"
@@ -173,33 +186,9 @@
                 android:hint="@string/EnrollHotelInfo"
                 android:inputType="text"
                 android:paddingBottom="32dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtEnrollHotelInfo" />
-
-            <TextView
-                android:id="@+id/txtEnrollHotelDetail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
-                android:text="@string/EnrollHotelDetailDescription"
-                android:textSize="12sp"
-                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@+id/txtEnrollHotelInfo"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edtEnrollInfo" />
-
-            <EditText
-                android:id="@+id/edtEnrollDetail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="@string/EnrollHotelDetail"
-                android:inputType="text"
-                android:paddingBottom="32dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtEnrollHotelDetail" />
+                app:layout_constraintRight_toRightOf="parent"/>
 
             <TextView
                 android:id="@+id/txtEnrollHotelTag"
@@ -209,18 +198,100 @@
                 android:text="@string/EnrollHotelTagDescription"
                 android:textSize="12sp"
                 android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@+id/edtEnrollInfo"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edtEnrollDetail" />
+                app:layout_constraintRight_toRightOf="parent"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcyEnrollHotelTag"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="16dp"
+                app:layout_constraintTop_toBottomOf="@+id/txtEnrollHotelTag"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
+
+            <TextView
+                android:id="@+id/txtEnrollHotelDetail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:text="@string/EnrollHotelDetailDescription"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@+id/rcyEnrollHotelTag"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
+
+            <LinearLayout
+                android:id="@+id/layoutEnrollHotelDetail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintTop_toBottomOf="@+id/txtEnrollHotelDetail"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent">
+
+                <EditText
+                    android:id="@+id/edtEnrollHotelDetailTitle1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:backgroundTint="@color/transparent"
+                    android:ems="10"
+                    android:inputType="text"
+                    android:text="@string/OperatingTime"
+                    android:textSize="@dimen/EnrollHotelDetailContent"/>
+
+                <EditText
+                    android:id="@+id/edtEnrollHotelDetailContent1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="@string/OperatingTimeContent"
+                    android:inputType="text"
+                    android:paddingBottom="32dp"
+                    android:textSize="@dimen/EnrollHotelDetailTitle" />
+
+                <EditText
+                    android:id="@+id/edtEnrollHotelDetailTitle2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:backgroundTint="@color/transparent"
+                    android:ems="10"
+                    android:inputType="text"
+                    android:text="@string/forbidden"
+                    android:textSize="@dimen/EnrollHotelDetailContent" />
+
+                <EditText
+                    android:id="@+id/edtEnrollHotelDetailContent2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="@string/forbiddenContent"
+                    android:inputType="text"
+                    android:paddingBottom="32dp"
+                    android:textSize="@dimen/EnrollHotelDetailTitle" />
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/btnPlusEnrollHotelDetail"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                app:srcCompat="@drawable/plus_foreground"
+                tools:ignore="VectorDrawableCompat"
+                app:layout_constraintTop_toBottomOf="@+id/layoutEnrollHotelDetail"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtEnrollHotelTag" />
-
+                app:layout_constraintTop_toBottomOf="@+id/btnPlusEnrollHotelDetail"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
