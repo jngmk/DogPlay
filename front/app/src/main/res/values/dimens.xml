@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="EnrollHotelDetailTitle">16sp</dimen>
+    <dimen name="EnrollHotelDetailContent">14sp</dimen>
+</resources>

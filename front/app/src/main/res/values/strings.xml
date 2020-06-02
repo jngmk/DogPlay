@@ -4,4 +4,27 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="searchHotelNearBy">현 지도에서 검색</string>
+    <string name="enrollHotel">호텔 등록하기</string>
+    <string name="enrollHotelRoom">객실 등록하기</string>
+    <string name="EnrollHotelName">호텔 이름을 입력해주세요</string>
+    <string name="enroll">등록하기</string>
+    <string name="EnrollHotelNameDescription">개놀자에 등록할 이름을 골라주세요</string>
+    <string name="EnrollHotelImgDescription">여기를 눌러서 사진을 추가해주세요</string>
+    <string name="plus">+</string>
+    <string name="EnrollHotelAddress">주소를 입력해주세요</string>
+    <string name="EnrollHotelAddressDescription">호텔의 주소를 알려주세요</string>
+    <string name="EnrollHotelContactDescription">대표 연락처를 알려주세요</string>
+    <string name="EnrollHotelContact">\'-\' 를 포함해서 입력해주세요</string>
+    <string name="EnrollHotelBNDescription">호텔 사업자 등록 번호를 알려주세요</string>
+    <string name="EnrollHotelBN">\'-\' 를 빼고 입력해주세요</string>
+    <string name="EnrollHotelInfo">100자 ~ 200자 정도로 적어주시면 좋습니다</string>
+    <string name="EnrollHotelInfoDescription">호텔에 대한 간략한 소개를 해주세요</string>
+    <string name="EnrollHotelTagDescription">호텔을 대표할 태그를 골라주세요</string>
+    <string name="EnrollHotelDetailDescription">호텔 이용에 필요한 공지사항을 알려주세요</string>
+    <string name="OperatingTime">이용시간</string>
+    <string name="OperatingTimeContent">9:00 ~ 18:00</string>
+    <string name="forbidden">이용제한</string>
+    <string name="forbiddenContent">전염성 질병이 있는 아이 등</string>
+    <string name="enterTheTitle">제목을 입력해주세요</string>
+    <string name="enterTheContent">내용을 입력해주세요</string>
 </resources>
