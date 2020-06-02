@@ -88,6 +88,12 @@ data class HotelInfoWithStarAndPrice(
     val minprice: Int
 )
 
+
+data class DMSend(
+    @SerializedName("data")
+    val data: ArrayList<Int>
+)
+
 data class RoomDetailDTO(
     @SerializedName("data")
     var data : RoomDetailData
@@ -133,6 +139,10 @@ data class RoomDetailData(
 data class DMDTO(
     @SerializedName("data")
     val data:ArrayList<ChatIn>
+)
+data class ChatNew(
+    @SerializedName("data")
+    val data:Boolean
 )
 
 
@@ -187,7 +197,18 @@ interface Service {
     @POST("/api/v1/chat/insert")
     fun PostChatInsert(
         @Body params:ChatInsert
+    ):Call<DMSend>
+
+    @PUT("/api/v1/chat/update")
+    fun ChatUpdate(
+        @Body params: ChatIn
     ):Call<Any>
+
+    @GET("/api/v1/chat/searchnew")
+    fun ChatNew(
+        @Query("receive") receive: String,
+        @Query("send") send: String
+    ):Call<ChatNew>
 }
 
 data class ChatInsert(
