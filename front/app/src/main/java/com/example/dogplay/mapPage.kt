@@ -39,6 +39,7 @@ class mapPage : Fragment() {
     private lateinit var mPager: ViewPager2
     private lateinit var mMarkers: ArrayList<Marker>
     private lateinit var hotels: ArrayList<HotelInfoWithStarAndPrice>
+//    private lateinit var pictures: ArrayList<>
     private var mMapCurLatitude: Double? = null
     private var mMapCurLongitude: Double? = null
     private var mCurrentMarker: Marker? = null
@@ -149,6 +150,7 @@ class mapPage : Fragment() {
                         .title(hotels[0].hotelname))
                     mMarkers[0].remove()
                     mMarkers.add(0, marker)
+                    marker.tag = 0
                 }
                 mPager.adapter = PagerRecyclerAdapter(hotelList.data)
                 mPager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
@@ -167,7 +169,9 @@ class mapPage : Fragment() {
                     .position(LatLng(hotel.latitude, hotel.longitude))
                     .icon(BitmapDescriptorFactory.fromResource(R.drawable.map_marker))
                     .title(hotel.hotelname))
+                marker.tag = mPrevPosition!!
                 mMarkers.add(mPrevPosition!!, marker)
+
             }
             // 현재 포커싱
             mMarkers[position].remove()
@@ -176,6 +180,7 @@ class mapPage : Fragment() {
                 .position(LatLng(hotel.latitude, hotel.longitude))
                 .icon(BitmapDescriptorFactory.fromResource(R.drawable.map_selected_marker))
                 .title(hotel.hotelname))
+            marker.tag = position
             mMarkers.add(position, marker)
             mMap.moveCamera(CameraUpdateFactory.newLatLng(LatLng(hotel.latitude, hotel.longitude)))
 

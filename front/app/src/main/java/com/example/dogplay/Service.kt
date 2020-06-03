@@ -121,6 +121,7 @@ data class HotelInfoToPost(
 )
 
 data class HotelPictureToPost(
+    var id: Int = 0,
     var hotelnumber: String = "",
     var name: String = "",
     var picture: String = ""
