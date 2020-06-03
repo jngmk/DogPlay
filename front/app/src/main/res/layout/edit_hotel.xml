@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ScrollView
+        android:id="@+id/scrv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="80dp"
+        android:paddingBottom="15dp"
+        tools:layout_editor_absoluteX="30dp"
+        tools:layout_editor_absoluteY="-66dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <TextView
+                android:id="@+id/tv_edit_hotel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:lineSpacingExtra="0dp"
+                android:padding="0dp"
+                android:text="호텔 수정하기"
+                android:textSize="24sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_hotel_name"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="16dp"
+                android:text="호텔이름"
+                android:textSize="22dp"
+
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_edit_hotel" />
+
+
+            <TextView
+                android:id="@+id/tv_hotel_photo"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:text="호텔사진"
+
+                android:textSize="22dp"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/et_hotel_name" />
+
+
+            <TextView
+                android:id="@+id/tv_hotel_address"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+
+                android:text="호텔주소"
+                android:textSize="22dp"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/iv_hotel_photo" />
+
+            <TextView
+                android:id="@+id/tv_hotel_contact"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+
+                android:layout_marginTop="16dp"
+                android:text="호텔연락처"
+                android:textSize="22dp"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/et_hotel_address" />
+
+            <TextView
+                android:id="@+id/tv_hotel_number"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+
+                android:layout_marginTop="16dp"
+                android:text="사업자번호"
+                android:textSize="22dp"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/et_hotel_contact" />
+
+            <TextView
+                android:id="@+id/tv_hotel_info"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+
+                android:layout_marginTop="16dp"
+                android:text="호텔 소개"
+                android:textSize="22dp"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/et_hotel_number" />
+
+            <TextView
+                android:id="@+id/tv_hotel_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+
+                android:layout_marginTop="16dp"
+                android:text="호텔 안내"
+                android:textSize="22dp"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/et_hotel_info" />
+
+            <TextView
+                android:id="@+id/tv_hotel_hashtag"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+
+                android:layout_marginTop="16dp"
+                android:text="해쉬태그"
+                android:textSize="22dp"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/et_hotel_detail" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginTop="16dp"
+                android:background="#888888"
+                app:layout_constraintTop_toBottomOf="@+id/cb_hotel_hashtag8" />
+
+
+            <EditText
+                android:id="@+id/et_hotel_name"
+                android:layout_width="333dp"
+                android:layout_height="49dp"
+                android:layout_marginTop="8dp"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="호텔이름을 입력하세요."
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_hotel_name" />
+
+            <EditText
+                android:id="@+id/et_hotel_address"
+                android:layout_width="333dp"
+                android:layout_height="49dp"
+                android:layout_marginTop="8dp"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="호텔주소를 입력하세요."
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_hotel_address" />
+
+            <EditText
+                android:id="@+id/et_hotel_contact"
+                android:layout_width="333dp"
+                android:layout_height="49dp"
+                android:layout_marginTop="8dp"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="호텔연락처를 입력하세요."
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_hotel_contact" />
+
+            <EditText
+                android:id="@+id/et_hotel_number"
+                android:layout_width="333dp"
+                android:layout_height="49dp"
+                android:layout_marginTop="8dp"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="사업자번호를 입력하세요."
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_hotel_number" />
+
+            <EditText
+                android:id="@+id/et_hotel_info"
+                android:layout_width="333dp"
+                android:layout_height="49dp"
+                android:layout_marginTop="8dp"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="호텔 소개 문구를 입력하세요."
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_hotel_info" />
+
+            <EditText
+                android:id="@+id/et_hotel_detail"
+                android:layout_width="333dp"
+                android:layout_height="49dp"
+                android:layout_marginTop="8dp"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="호텔 안내 사항을 입력하세요."
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_hotel_detail" />
+
+            <ImageView
+                android:id="@+id/iv_hotel_photo"
+                android:layout_width="292dp"
+                android:layout_height="246dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_hotel_photo"
+                app:srcCompat="@drawable/dog3" />
+
+            <CheckBox
+                android:id="@+id/cb_hotel_hashtag1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="CheckBox"
+                app:layout_constraintStart_toStartOf="@+id/et_hotel_detail"
+                app:layout_constraintTop_toBottomOf="@+id/tv_hotel_hashtag" />
+
+            <CheckBox
+                android:id="@+id/cb_hotel_hashtag4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="CheckBox"
+                app:layout_constraintStart_toStartOf="@+id/cb_hotel_hashtag1"
+                app:layout_constraintTop_toBottomOf="@+id/cb_hotel_hashtag1" />
+
+            <CheckBox
+                android:id="@+id/cb_hotel_hashtag7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="CheckBox"
+                app:layout_constraintStart_toStartOf="@+id/cb_hotel_hashtag1"
+                app:layout_constraintTop_toBottomOf="@+id/cb_hotel_hashtag4" />
+
+            <CheckBox
+                android:id="@+id/cb_hotel_hashtag2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:text="CheckBox"
+                app:layout_constraintStart_toEndOf="@+id/cb_hotel_hashtag1"
+                app:layout_constraintTop_toTopOf="@+id/cb_hotel_hashtag1" />
+
+            <CheckBox
+                android:id="@+id/cb_hotel_hashtag5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:text="CheckBox"
+                app:layout_constraintStart_toEndOf="@+id/cb_hotel_hashtag4"
+                app:layout_constraintTop_toBottomOf="@+id/cb_hotel_hashtag2" />
+
+            <CheckBox
+                android:id="@+id/cb_hotel_hashtag3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:text="CheckBox"
+                app:layout_constraintStart_toEndOf="@+id/cb_hotel_hashtag2"
+                app:layout_constraintTop_toTopOf="@+id/cb_hotel_hashtag2" />
+
+            <CheckBox
+                android:id="@+id/cb_hotel_hashtag6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:text="CheckBox"
+                app:layout_constraintStart_toEndOf="@+id/cb_hotel_hashtag5"
+                app:layout_constraintTop_toBottomOf="@+id/cb_hotel_hashtag3" />
+
+            <CheckBox
+                android:id="@+id/cb_hotel_hashtag8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:text="CheckBox"
+                app:layout_constraintStart_toEndOf="@+id/cb_hotel_hashtag7"
+                app:layout_constraintTop_toBottomOf="@+id/cb_hotel_hashtag5" />
+
+            <CheckBox
+                android:id="@+id/cb_hotel_hashtag9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:text="CheckBox"
+                app:layout_constraintStart_toEndOf="@+id/cb_hotel_hashtag8"
+                app:layout_constraintTop_toBottomOf="@+id/cb_hotel_hashtag6" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+    <View
+        android:id="@+id/btntop"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#888888"
+        app:layout_constraintTop_toBottomOf="@id/scrv"
+        />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_edit_hotel"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/payment"
+        android:gravity="center_horizontal|center_vertical"
+        android:text="호텔 수정하기"
+        android:textColor="#ffffff"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btntop" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

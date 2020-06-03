@@ -1,5 +1,6 @@
 package com.example.dogplay.ui.owner
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,6 +19,9 @@ class HostMainAdapter(val roomList: ArrayList<MainRooms>) : RecyclerView.Adapter
                 val curPos : Int = adapterPosition
                 val room: MainRooms = roomList.get(curPos)
                 Toast.makeText(parent.context, "이름: ${room.name}", Toast.LENGTH_SHORT).show()
+                val intent = Intent(parent.context, CheckAllReservation::class.java)
+                intent.putExtra("roomname", roomList.get(curPos).name)
+                context.startActivity(intent)
             }
         }
     }
@@ -38,6 +42,7 @@ class HostMainAdapter(val roomList: ArrayList<MainRooms>) : RecyclerView.Adapter
         val name = itemView.findViewById<TextView>(R.id.tv_room_name)
         val cnt = itemView.findViewById<TextView>(R.id.tv_room_cnt)
         val reservation_cnt = itemView.findViewById<TextView>(R.id.tv_room_reservation_cnt)
+        var context = itemView.getContext()
     }
 
 
