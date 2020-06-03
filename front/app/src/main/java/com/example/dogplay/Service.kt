@@ -40,6 +40,13 @@ data class HashTagDTO(
     val state: String
 )
 
+data class HotelPicturesDTO(
+    @SerializedName("data")
+    val data: ArrayList<HotelPicture>,
+    @SerializedName("state")
+    val state: String
+)
+
 data class RoomDetailDTO(
     @SerializedName("data")
     var data : RoomDetailData
@@ -109,8 +116,8 @@ data class HotelInfoToPost(
     var hotelnumber: String = "",
     var userid: String = "owner2",
     var hotelname: String= "",
-    var latitude: Double = 37.1234,
-    var longitude: Double = 124.8712,
+    var latitude: Double = 37.0942,
+    var longitude: Double = 127.0772,
     var address: String = "",
     var contact: String = "",
     var info: String = "",
@@ -122,7 +129,7 @@ data class HotelReturnData(
     val state: String
 )
 
-data class HotelPictureToPost(
+data class HotelPicture(
     var id: Int = 0,
     var hotelnumber: String = "",
     var name: String = "",
@@ -204,8 +211,14 @@ interface Service {
         "content-type: application/json")
     @POST("/api/v1/hotelpicture/insert")
     fun postHotelPictures(
-        @Body params: HotelPictureToPost
+        @Body params: HotelPicture
     ):Call<HotelReturnData>
+
+    @GET("/api/v1/hotelpicture/searchbyhotel/name")
+    fun getHotelPictures(
+        @Query("hotelnumber") hotelnumber: String,
+        @Query("name") name: String
+    ): Call<HotelPicturesDTO>
 
     @Headers("accept: application/json",
         "content-type: application/json")
