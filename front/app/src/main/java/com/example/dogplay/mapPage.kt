@@ -162,9 +162,9 @@ class mapPage : Fragment() {
                     mMarkers.add(0, marker)
                     marker.tag = 0
                 }
-//                mPager.adapter = PagerRecyclerAdapter(hotels, pictures)
-//                mPager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
-//                mPager.registerOnPageChangeCallback(hotelPageChangeCallback)
+                mPager.adapter = PagerRecyclerAdapter(hotels, pictures)
+                mPager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
+                mPager.registerOnPageChangeCallback(hotelPageChangeCallback)
             }
         })
     }
@@ -187,8 +187,8 @@ class mapPage : Fragment() {
                     pictures.add(downloadUri)
                 }
                 mPager.adapter = PagerRecyclerAdapter(hotels, pictures)
-                mPager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
-                mPager.registerOnPageChangeCallback(hotelPageChangeCallback)
+//                mPager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
+//                mPager.registerOnPageChangeCallback(hotelPageChangeCallback)
             }
         })
     }

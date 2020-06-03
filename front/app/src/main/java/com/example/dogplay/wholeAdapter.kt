@@ -9,7 +9,7 @@ import com.example.dogplay.ui.owner.OwnerMainFragment
 class wholeAdapter(fm:FragmentManager):FragmentPagerAdapter(fm){
     override fun getItem(position: Int): Fragment {
         return when (position){
-            0-> OwnerMainFragment()
+            0-> searchPage()
 
             1-> mapPage()
 
