@@ -12,6 +12,12 @@
    		where id=#{id}
    </select>
    
+   	<select id="searchbyaid" parameterType="string" resultType="paid">
+   		select *
+   		from paid
+   		where aid=#{aid}
+   </select>
+   
 	<insert id="insert" parameterType="paid">
 		insert into paid(pid, cid, aid, cancel_amount, cancel_tax_free_amount, userid, pg_token, partner_order_id)
 		values(#{pid}, #{cid}, #{aid}, #{cancel_amount}, #{cancel_tax_free_amount}, #{userid}, #{pg_token}, #{partner_order_id})
