@@ -65,10 +65,13 @@ public class HotelStarServiceImpl implements HotelStarService{
 					Gson gson = new Gson();
 					HashMap<String, String> jsonObject = gson.fromJson(star.getDetail().toString(), HashMap.class);
 					List<List<String>> detailarray = new ArrayList<List<String>>();
-					List<String> key = new ArrayList<>(jsonObject.keySet());
-					List<String> value = new ArrayList<>(jsonObject.values());
-					detailarray.add(key);
-					detailarray.add(value);
+					List<String> keys = new ArrayList<>(jsonObject.keySet());
+					for (String key:keys) {
+						List<String> details = new ArrayList<>();
+						details.add(key);
+						details.add(jsonObject.get(key));
+						detailarray.add(details);
+					}
 					star.setDetail(detailarray);
 				}
 			}
@@ -100,10 +103,13 @@ public class HotelStarServiceImpl implements HotelStarService{
 					Gson gson = new Gson();
 					HashMap<String, String> jsonObject = gson.fromJson(star.getDetail().toString(), HashMap.class);
 					List<List<String>> detailarray = new ArrayList<List<String>>();
-					List<String> key = new ArrayList<>(jsonObject.keySet());
-					List<String> value = new ArrayList<>(jsonObject.values());
-					detailarray.add(key);
-					detailarray.add(value);
+					List<String> keys = new ArrayList<>(jsonObject.keySet());
+					for (String key:keys) {
+						List<String> details = new ArrayList<>();
+						details.add(key);
+						details.add(jsonObject.get(key));
+						detailarray.add(details);
+					}
 					star.setDetail(detailarray);
 				}
 			}
@@ -136,10 +142,13 @@ public class HotelStarServiceImpl implements HotelStarService{
 					Gson gson = new Gson();
 					HashMap<String, String> jsonObject = gson.fromJson(star.getDetail().toString(), HashMap.class);
 					List<List<String>> detailarray = new ArrayList<List<String>>();
-					List<String> key = new ArrayList<>(jsonObject.keySet());
-					List<String> value = new ArrayList<>(jsonObject.values());
-					detailarray.add(key);
-					detailarray.add(value);
+					List<String> keys = new ArrayList<>(jsonObject.keySet());
+					for (String key:keys) {
+						List<String> details = new ArrayList<>();
+						details.add(key);
+						details.add(jsonObject.get(key));
+						detailarray.add(details);
+					}
 					star.setDetail(detailarray);
 				}
 				hotelstar.add(star);
@@ -175,10 +184,13 @@ public class HotelStarServiceImpl implements HotelStarService{
 					Gson gson = new Gson();
 					HashMap<String, String> jsonObject = gson.fromJson(star.getDetail().toString(), HashMap.class);
 					List<List<String>> detailarray = new ArrayList<List<String>>();
-					List<String> key = new ArrayList<>(jsonObject.keySet());
-					List<String> value = new ArrayList<>(jsonObject.values());
-					detailarray.add(key);
-					detailarray.add(value);
+					List<String> keys = new ArrayList<>(jsonObject.keySet());
+					for (String key:keys) {
+						List<String> details = new ArrayList<>();
+						details.add(key);
+						details.add(jsonObject.get(key));
+						detailarray.add(details);
+					}
 					star.setDetail(detailarray);
 				}
 			}
@@ -208,10 +220,13 @@ public class HotelStarServiceImpl implements HotelStarService{
 				Gson gson = new Gson();
 				HashMap<String, String> jsonObject = gson.fromJson(hotelstar.getDetail().toString(), HashMap.class);
 				List<List<String>> detailarray = new ArrayList<List<String>>();
-				List<String> key = new ArrayList<>(jsonObject.keySet());
-				List<String> value = new ArrayList<>(jsonObject.values());
-				detailarray.add(key);
-				detailarray.add(value);
+				List<String> keys = new ArrayList<>(jsonObject.keySet());
+				for (String key:keys) {
+					List<String> details = new ArrayList<>();
+					details.add(key);
+					details.add(jsonObject.get(key));
+					detailarray.add(details);
+				}
 				hotelstar.setDetail(detailarray);
 			}
 			return hotelstar;
@@ -247,10 +262,13 @@ public class HotelStarServiceImpl implements HotelStarService{
 					Gson gson = new Gson();
 					HashMap<String, String> jsonObject = gson.fromJson(star.getDetail().toString(), HashMap.class);
 					List<List<String>> detailarray = new ArrayList<List<String>>();
-					List<String> key = new ArrayList<>(jsonObject.keySet());
-					List<String> value = new ArrayList<>(jsonObject.values());
-					detailarray.add(key);
-					detailarray.add(value);
+					List<String> keys = new ArrayList<>(jsonObject.keySet());
+					for (String key:keys) {
+						List<String> details = new ArrayList<>();
+						details.add(key);
+						details.add(jsonObject.get(key));
+						detailarray.add(details);
+					}
 					star.setDetail(detailarray);
 				}
 			}
@@ -281,10 +299,13 @@ public class HotelStarServiceImpl implements HotelStarService{
 				Gson gson = new Gson();
 				HashMap<String, String> jsonObject = gson.fromJson(hotelstar.getDetail().toString(), HashMap.class);
 				List<List<String>> detailarray = new ArrayList<List<String>>();
-				List<String> key = new ArrayList<>(jsonObject.keySet());
-				List<String> value = new ArrayList<>(jsonObject.values());
-				detailarray.add(key);
-				detailarray.add(value);
+				List<String> keys = new ArrayList<>(jsonObject.keySet());
+				for (String key:keys) {
+					List<String> details = new ArrayList<>();
+					details.add(key);
+					details.add(jsonObject.get(key));
+					detailarray.add(details);
+				}
 				hotelstar.setDetail(detailarray);				
 			}
 			map.put("HotelStar", hotelstar);
@@ -317,10 +338,13 @@ public class HotelStarServiceImpl implements HotelStarService{
 				Gson gson = new Gson();
 				HashMap<String, String> jsonObject = gson.fromJson(hotelstar.getDetail().toString(), HashMap.class);
 				List<List<String>> detailarray = new ArrayList<List<String>>();
-				List<String> key = new ArrayList<>(jsonObject.keySet());
-				List<String> value = new ArrayList<>(jsonObject.values());
-				detailarray.add(key);
-				detailarray.add(value);
+				List<String> keys = new ArrayList<>(jsonObject.keySet());
+				for (String key:keys) {
+					List<String> details = new ArrayList<>();
+					details.add(key);
+					details.add(jsonObject.get(key));
+					detailarray.add(details);
+				}
 				hotelstar.setDetail(detailarray);	
 			}
 			List<Hotelroom> hotelroom = roomdao.searchbyhotel(hotelnumber);
