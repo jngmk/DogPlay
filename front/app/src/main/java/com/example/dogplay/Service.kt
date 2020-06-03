@@ -78,7 +78,6 @@ data class HotelStar(
 data class HotelInfo(
     val hotelnumber: String = "",
     val userid: String,
-    val hashid: String,
     val hotelname: String,
     val latitude: Double,
     val longitude: Double,
@@ -91,7 +90,6 @@ data class HotelInfo(
 data class HotelInfoWithStarAndPrice(
     val hotelnumber: String = "",
     val userid: String,
-    val hashid: ArrayList<String>,
     val hotelname: String,
     val latitude: Double,
     val longitude: Double,
@@ -109,21 +107,31 @@ data class HotelInfoWithStarAndPrice(
 
 data class HotelInfoToPost(
     var hotelnumber: String = "",
-    var userid: String = "owner1",
-    var hashid: String = "",
+    var userid: String = "owner2",
     var hotelname: String= "",
-    var latitude: Double = 0.0,
-    var longitude: Double = 0.0,
+    var latitude: Double = 37.1234,
+    var longitude: Double = 124.8712,
     var address: String = "",
     var contact: String = "",
     var info: String = "",
     var detail: JsonObject = JsonObject()
 )
 
+data class HotelReturnData(
+    val data: String,
+    val state: String
+)
+
 data class HotelPictureToPost(
     var hotelnumber: String = "",
     var name: String = "",
     var picture: String = ""
+)
+
+data class HotelHashToPost(
+    var hashtag: Int = 0,
+    var hotelnumber: String = "",
+    var id: Int = 0
 )
 
 data class ChatIn(
@@ -184,16 +192,26 @@ interface Service {
         @Query("longitude") longitude: Double
     ): Call<HotelNearByDTO>
 
-    @FormUrlEncoded
+    @Headers("accept: application/json",
+        "content-type: application/json")
     @POST("/api/v1/hotel/insert")
     fun postHotelInfo(
         @Body params: HotelInfoToPost
-    ):Call<HotelInfoToPost>
+    ):Call<HotelReturnData>
 
+    @Headers("accept: application/json",
+        "content-type: application/json")
     @POST("/api/v1/hotelpicture/insert")
     fun postHotelPictures(
         @Body params: HotelPictureToPost
-    ):Call<HotelPictureToPost>
+    ):Call<HotelReturnData>
+
+    @Headers("accept: application/json",
+        "content-type: application/json")
+    @POST("/api/v1/hotelhash/insert")
+    fun postHotelHash(
+        @Body params: HotelHashToPost
+    ):Call<HotelReturnData>
 
     @GET("/api/v1/hotelroom/search")
     fun searchRoomDetail(
