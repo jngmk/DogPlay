@@ -1,5 +1,6 @@
 package com.example.dogplay
 
+import com.google.gson.JsonObject
 import com.google.gson.annotations.SerializedName
 import com.google.gson.internal.LinkedTreeMap
 import com.google.gson.internal.ObjectConstructor
@@ -31,6 +32,24 @@ data class HotelNearByDTO(
     @SerializedName("state")
     val state: String
 )
+
+data class HashTagDTO(
+    @SerializedName("data")
+    val data: ArrayList<HashTag>,
+    @SerializedName("state")
+    val state: String
+)
+
+data class RoomDetailDTO(
+    @SerializedName("data")
+    var data : RoomDetailData
+)
+
+data class ChatMainDTO(
+    @SerializedName("data")
+    var data : ArrayList<ChatMain>
+)
+
 data class HotelDetailHash(
     val HotelStar:HotelStar,
     val HotelPicture:ArrayList<String>,
@@ -57,7 +76,7 @@ data class HotelStar(
 )
 
 data class HotelInfo(
-    val hotelnumber: Int = 0,
+    val hotelnumber: String = "",
     val userid: String,
     val hashid: String,
     val hotelname: String,
@@ -70,9 +89,9 @@ data class HotelInfo(
 )
 
 data class HotelInfoWithStarAndPrice(
-    val hotelnumber: Int = 0,
+    val hotelnumber: String = "",
     val userid: String,
-    val hashid: String,
+    val hashid: ArrayList<String>,
     val hotelname: String,
     val latitude: Double,
     val longitude: Double,
@@ -88,15 +107,23 @@ data class HotelInfoWithStarAndPrice(
     val minprice: Int
 )
 
-data class RoomDetailDTO(
-    @SerializedName("data")
-    var data : RoomDetailData
-
+data class HotelInfoToPost(
+    var hotelnumber: String = "",
+    var userid: String = "owner1",
+    var hashid: String = "",
+    var hotelname: String= "",
+    var latitude: Double = 0.0,
+    var longitude: Double = 0.0,
+    var address: String = "",
+    var contact: String = "",
+    var info: String = "",
+    var detail: JsonObject = JsonObject()
 )
 
-data class ChatMainDTO(
-    @SerializedName("data")
-    var data : ArrayList<ChatMain>
+data class HotelPictureToPost(
+    var hotelnumber: String = "",
+    var name: String = "",
+    var picture: String = ""
 )
 
 data class ChatIn(
@@ -130,6 +157,11 @@ data class RoomDetailData(
     val info:String
 )
 
+data class HashTag(
+    val id: Int,
+    val name: String
+)
+
 data class DMDTO(
     @SerializedName("data")
     val data:ArrayList<ChatIn>
@@ -154,23 +186,22 @@ interface Service {
 
     @FormUrlEncoded
     @POST("/api/v1/hotel/insert")
-    fun postRequest(
-        @Field("address") address:String,
-        @Field("contact") contact:String,
-        @Field("detail") detail:HashMap<String,String>,
-        @Field("hashid") hashid:String,
-        @Field("hotelname") hotelname:String,
-        @Field("hotelnumber") hotelnumber:Number,
-        @Field("info") info:String,
-        @Field("latitude") latitude:Double,
-        @Field("longitude") longitude:Double,
-        @Field("userid") userid:String
-    ):Call<HotelSerchDTO>
+    fun postHotelInfo(
+        @Body params: HotelInfoToPost
+    ):Call<HotelInfoToPost>
+
+    @POST("/api/v1/hotelpicture/insert")
+    fun postHotelPictures(
+        @Body params: HotelPictureToPost
+    ):Call<HotelPictureToPost>
 
     @GET("/api/v1/hotelroom/search")
     fun searchRoomDetail(
         @Query("id") id:Int
     ):Call<RoomDetailDTO>
+
+    @GET("/api/v1/hashtag/searchall")
+    fun getHashTag():Call<HashTagDTO>
 
     @GET("/api/v1/chat/search/userid")
     fun searchChatWithUserId(
