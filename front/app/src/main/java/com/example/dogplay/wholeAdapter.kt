@@ -4,6 +4,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
+import com.example.dogplay.ui.owner.EditPage
 import com.example.dogplay.ui.owner.HostMain
 import com.example.dogplay.ui.owner.OwnerMainFragment
 
@@ -24,7 +25,7 @@ class wholeAdapter(fm:FragmentManager):FragmentPagerAdapter(fm){
                 0 -> HostMain()
                 1 -> chatPage()
                 2 -> chatPage()
-                else -> searchPage()
+                else -> EditPage()
             }
         }
     }

@@ -18,6 +18,10 @@
         android:theme="@style/AppTheme">
         <activity android:name=".ui.owner.OwnerEnrollHotelRoom" />
         <activity android:name=".ui.owner.OwnerEnrollHotel" />
+        <activity android:name=".ui.owner.EditRoom" />
+        <activity android:name=".ui.owner.EditPage" />
+        <activity android:name=".ui.owner.HostMain" />
+
         <activity
             android:name=".MainActivity"
             android:windowSoftInputMode="adjustResize|stateHidden">
