@@ -274,7 +274,7 @@ class OwnerEnrollHotel : AppCompatActivity() {
 
                     for (i in 0..count) {
                         val uri = uris[i]
-                        val imageRef = storageReferenence.child("hotels/$hotelNumber/$hotelName" + uri.lastPathSegment)
+                        val imageRef = storageReferenence.child("hotels/$hotelNumber/" + uri.lastPathSegment)
                         val uploadTask = imageRef.putFile(uri)
                         uploadTask.addOnSuccessListener {
                             val downloadUrl = imageRef.downloadUrl
