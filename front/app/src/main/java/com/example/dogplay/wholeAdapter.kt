@@ -4,18 +4,28 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
+import com.example.dogplay.ui.owner.HostMain
 import com.example.dogplay.ui.owner.OwnerMainFragment
 
 class wholeAdapter(fm:FragmentManager):FragmentPagerAdapter(fm){
+
+//        로그인 시 owner인지 사용자인지에 따라서 아이콘 변경
+    var host = "892-11-00104"
     override fun getItem(position: Int): Fragment {
-        return when (position){
-            0-> searchPage()
-
-            1-> mapPage()
-
-            2-> chatPage()
-
-            else -> searchPage()
+        return if (host != "892-11-00104") {
+            when (position) {
+                0 -> searchPage()
+                1 -> mapPage()
+                2 -> chatPage()
+                else -> searchPage()
+            }
+        } else {
+            when (position) {
+                0 -> HostMain()
+                1 -> chatPage()
+                2 -> chatPage()
+                else -> searchPage()
+            }
         }
     }
 
