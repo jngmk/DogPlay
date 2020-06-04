@@ -79,7 +79,7 @@ data class ChatMainDTO(
 
 data class HotelDetailHash(
     val HotelStar:HotelStar,
-    val HotelPicture:ArrayList<HotelPicture>,
+    val HotelPicture:ArrayList<HotelPictureP>,
     val review: ArrayList<HotelReview>,
     val HotelRoom: ArrayList<HotelRoom>
 )
@@ -118,12 +118,12 @@ data class HotelReview(
     val hotelnumber: String,
     val userid: String,
     val visitid:Int,
-    val star: Int,
+    val star: Double,
     val created: ArrayList<Int>,
     val content:String
 )
 
-data class HotelPicture(
+data class HotelPictureP(
     val id: Int,
     val hotelnumber: String,
     val name: String,
@@ -340,14 +340,12 @@ interface Service {
         @Query("userid") userid: String
     ):Call<calcTotalPrice>
 
-    @Headers("Authorization: KakaoAK xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
-        "Content-type:application/x-www-form-urlencoded;charset=utf-8")
-    @POST("/v1/payment/ready")
+    @POST("api/v1/paid/kakaopay/ready")
     fun kakaoPay(
         @Body params:PayForm
     ):Call<Any>
 
-//    @Headers("Authorization: KakaoAK xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+//    @Headers("Authorization: KakaoAK a48ad79d9d765c639d119d3d093a1449",
 //        "Content-type:application/x-www-form-urlencoded;charset=utf-8")
 //    @FormUrlEncoded
 //    @POST("/v1/payment/ready")
