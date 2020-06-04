@@ -21,6 +21,7 @@ import kotlinx.coroutines.internal.artificialFrame
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.concurrent.TimeUnit
 
 class DirectMessage: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,17 +35,17 @@ class DirectMessage: AppCompatActivity() {
             }
             else {
                 Log.d("뭐라 친건데", sendMessage.text.toString())
-                server!!.PostChatInsert(ChatInsert(1,"", 0,sendMessage.text.toString(),"사진같음",0,"owner1","test1")).enqueue(object :Callback<Any>{
-                    override fun onFailure(call: Call<Any>, t: Throwable) {
+                server!!.PostChatInsert(ChatInsert(1,"", 0,sendMessage.text.toString(),"사진같음",0,"owner1","test1")).enqueue(object :Callback<DMSend>{
+                    override fun onFailure(call: Call<DMSend>, t: Throwable) {
                         Log.d("말썽이네", t.toString())
                     }
 
-                    override fun onResponse(call: Call<Any>, response: Response<Any>) {
+                    override fun onResponse(call: Call<DMSend>, response: Response<DMSend>) {
                         Log.d("될줄 알았어", response.body().toString())
                         val layoutInflater = getLayoutInflater()
                         val chatview = layoutInflater.inflate(R.layout.chat_send,null)
-                        Supplier.DMList.add(DMset("test1","owner1",sendMessage.text.toString(),
-                            arrayListOf(2015,3,6,22,13,51),0,"없어 사진",0))
+                        Supplier.DMList.add(DMset(Supplier.UserId,target,sendMessage.text.toString(),
+                            response.body()!!.data,0,"없어 사진",0))
                         sendMessage.setText("")
                         chatRecycler.adapter!!.notifyDataSetChanged()
                         chatRecycler.scrollToPosition(chatRecycler.adapter!!.itemCount-1)
@@ -52,14 +53,7 @@ class DirectMessage: AppCompatActivity() {
                 })
             }
         }
-        sendMessage.setOnFocusChangeListener(object :View.OnFocusChangeListener{
-            override fun onFocusChange(v: View?, hasFocus: Boolean) {
-                if (hasFocus){
-                    chatRecycler.scrollToPosition(chatRecycler.adapter!!.itemCount-1)
-                }
-            }
-        })
-        server!!.chatTwoPeople("test1",target).enqueue(object : Callback<DMDTO>{
+        server!!.chatTwoPeople(Supplier.UserId,target).enqueue(object : Callback<DMDTO>{
             override fun onFailure(call: Call<DMDTO>, t: Throwable) {
                 Log.d("또안됐어?", t.toString())
             }
@@ -69,9 +63,15 @@ class DirectMessage: AppCompatActivity() {
                 Log.d("채팅내역", response.body().toString())
                 for(chat in response.body()!!.data){
                     var viewType:Int
-                    if (chat.receive == "test1") viewType = 1
+                    if (chat.receive == Supplier.UserId) viewType = 1
                     else viewType = 0
                     DMList.add(DMset(chat.receive, chat.send, chat.message, chat.created, chat.readmessage, chat.picture,viewType))
+                    server.ChatUpdate(ChatIn(chat.id, chat.chatid,chat.receive,chat.send,chat.picture,chat.message,chat.created,1)).enqueue(object :Callback<Any>{
+                        override fun onFailure(call: Call<Any>, t: Throwable) {
+                        }
+                        override fun onResponse(call: Call<Any>, response: Response<Any>) {
+                        }
+                    })
                 }
                 Supplier.DMList = DMList
                 val layoutManager = LinearLayoutManager(applicationContext)

@@ -23,7 +23,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
-class RoomAdapter(var context:Context, var rooms:ArrayList<HashMap<String,Any>>) :
+class RoomAdapter(var context:Context, var rooms:ArrayList<HotelRoom>) :
     RecyclerView.Adapter<RoomAdapter.ViewHolder>(){
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
@@ -45,15 +45,16 @@ class RoomAdapter(var context:Context, var rooms:ArrayList<HashMap<String,Any>>)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val room:LinkedTreeMap<String, Any> = rooms[position] as LinkedTreeMap<String, Any>
+        val room:HotelRoom = rooms[position]
+        Supplier.SelectHotelRoomPrice[room.roomname] = room.price
         Log.d("room is", room.toString())
-        holder.itemView.roomName.text = room["roomname"].toString()
-        holder.itemView.roomPrice.text = "${room["price"].toString().toDouble().toInt()}원"
-        holder.itemView.size.text = "${room["minsize"].toString().toDouble().toInt()}Kg ~ ${room["maxsize"].toString().toDouble().toInt()}Kg"
-        holder.itemView.cnt.text = room["count"].toString().toDouble().toInt().toString()
+        holder.itemView.roomName.text = room.roomname
+        holder.itemView.roomPrice.text = "${room.price}원"
+        holder.itemView.size.text = "${room.minsize}Kg ~ ${room.maxsize}Kg"
+        holder.itemView.cnt.text = "${room.count}"
         holder.itemView.setOnClickListener{
             val intent = Intent(context, RoomDetail::class.java)
-            intent.putExtra("rno", "${room["id"].toString().toDouble().toInt()}")
+            intent.putExtra("rno", "${room.id}")
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             context.startActivity(intent)
         }

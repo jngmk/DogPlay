@@ -15,15 +15,12 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.PagerAdapter
 class RoomDetailCarouselAdapter(private val context: Context):PagerAdapter(){
-
-    val review = Supplier.HotelDetailReview
-
     override fun isViewFromObject(view: View, `object`: Any): Boolean {
         return view ===`object`
     }
 
     override fun getCount(): Int {
-        return review.size
+        return 0
     }
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
@@ -31,17 +28,6 @@ class RoomDetailCarouselAdapter(private val context: Context):PagerAdapter(){
         val layoutInflater = LayoutInflater.from(context)
         val view = layoutInflater.inflate(R.layout.room_detail_carousel,null)
         // 이미지 찾아서 넣을 부분
-//        val profileImg = view.findViewById<View>(R.id.profilePic) as ImageView
-//        profileImg.setImageResource(R.drawable.dog)
-//        val cell = view.findViewById<View>(R.id.crsc)
-//        val profilText = view.findViewById<View>(R.id.profileText) as TextView
-//        profilText.text = review[position]["userid"].toString()
-//        val reviewContent = view.findViewById<TextView>(R.id.reviewContent)
-//        reviewContent.text = review[position]["content"].toString()
-//        val reviewAt = view.findViewById<TextView>(R.id.reviewAt)
-//        val dateAt = review[position]["created"] as ArrayList<Double>
-//        reviewAt.text = "${dateAt[0].toInt()}-${dateAt[1].toInt()}-${dateAt[2].toInt()}-${dateAt[3].toInt()}:${dateAt[4].toInt()}:${dateAt[5].toInt()}"
-
         val cell = view.findViewById<View>(R.id.rdcs)
         cell.clipToOutline = true
         container.addView(view,0)
