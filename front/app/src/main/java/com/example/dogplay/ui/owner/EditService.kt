@@ -4,6 +4,11 @@ import com.google.gson.annotations.SerializedName
 import retrofit2.Call
 import retrofit2.http.*
 
+data class RereviewDTO(
+    @SerializedName("data")
+    var data:HashMap<String,Any>
+)
+
 data class HotelDTO(
     @SerializedName("data")
     var data:HashMap<String,Any>
@@ -41,6 +46,14 @@ data class AllHotelDTO(
 )
 
 interface EditService {
+    @POST("/api/v1/response/insert")
+    fun reReview(
+        @Field("reviewid") reviewid: Int,
+        @Field("userid") userid:String,
+        @Field("content") content: String,
+        @Field("heart") heart: Int
+    ):Call<RereviewDTO>
+
     @GET("/api/v1/hotelroom/searchbyroom/hotelnumber")
     fun searchHotelRoomDetail(
         @Query("hotelnumber") hotelnumber: String,

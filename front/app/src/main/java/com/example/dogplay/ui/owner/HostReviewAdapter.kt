@@ -1,5 +1,6 @@
 package com.example.dogplay.ui.owner
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,7 +19,15 @@ class HostReviewAdapter(val reviewList: ArrayList<HostReviews>) : RecyclerView.A
             itemView.setOnClickListener {
                 val curPos: Int = adapterPosition
                 val review: HostReviews = reviewList.get(curPos)
-                Toast.makeText(parent.context, "이름: ${review.username}", Toast.LENGTH_SHORT).show()
+//                Toast.makeText(parent.context, "이름: ${review.username}", Toast.LENGTH_SHORT).show()
+                val intent = Intent(parent.context, HostReReview::class.java)
+                intent.putExtra("id", reviewList.get(curPos).id)
+                intent.putExtra("username", reviewList.get(curPos).username)
+                intent.putExtra("star", reviewList.get(curPos).star)
+                intent.putExtra("review", reviewList.get(curPos).review)
+                intent.putExtra("time", reviewList.get(curPos).date)
+
+                context.startActivity(intent)
             }
         }
     }
@@ -32,13 +41,14 @@ class HostReviewAdapter(val reviewList: ArrayList<HostReviews>) : RecyclerView.A
         holder.star.text = reviewList.get(position).star.toString()
         holder.review.text = reviewList.get(position).review.toString()
         holder.date.text = reviewList.get(position).date.toString()
-
     }
+
     class CustomViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val username = itemView.findViewById<TextView>(R.id.host_review_username)
         val star = itemView.findViewById<TextView>(R.id.host_review_rating)
         val review = itemView.findViewById<TextView>(R.id.host_review_review)
         val date =itemView.findViewById<TextView>(R.id.host_review_time)
         val context = itemView.getContext()
+
     }
 }

@@ -23,6 +23,7 @@
         <activity android:name=".ui.owner.HostMain" />
         <activity android:name=".ui.owner.HostReviewPage" />
         <activity android:name=".ui.owner.CheckAllReservation" />
+        <activity android:name=".ui.owner.HostReReview" />
 
         <activity
             android:name=".MainActivity"

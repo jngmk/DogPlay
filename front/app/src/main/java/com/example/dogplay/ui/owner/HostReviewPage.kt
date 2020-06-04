@@ -52,7 +52,8 @@ class HostReviewPage : Fragment() {
                     var minute = created[4].toInt()
                     var second = created[5].toInt()
                     var time = "${year}-${month}-${day} ${hour}:${minute}:${second}"
-                    reservationList.add(HostReviews(username, star, review, time))
+                    var id = reserv["id"].toString().split(".")[0].toInt()
+                    reservationList.add(HostReviews(id, username, star, review, time))
                 }
                 rv_host_review.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
                 rv_host_review.setHasFixedSize(true)
