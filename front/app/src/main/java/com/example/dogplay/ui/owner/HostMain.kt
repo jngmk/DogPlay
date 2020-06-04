@@ -20,7 +20,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class HostMain : Fragment(){
-    var roomList = arrayListOf<MainRooms>()
+
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -59,6 +59,8 @@ class HostMain : Fragment(){
             override fun onResponse(call: Call<RoomDTO>, response: Response<RoomDTO>) {
                 val data:RoomDTO = response.body()!!
                 roomDetailData = data!!.data
+
+                var roomList = arrayListOf<MainRooms>()
                 for (room in roomDetailData) {
                     Log.d("success", room.toString())
                     roomList.add(MainRooms(R.drawable.dog2, room["roomname"].toString(), room["count"].toString().split(".")[0].toInt(), 2))

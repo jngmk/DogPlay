@@ -19,7 +19,6 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class EditPage : Fragment() {
-    var roomList = arrayListOf<EditRooms>()
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -41,6 +40,8 @@ class EditPage : Fragment() {
             override fun onResponse(call: Call<RoomDTO>, response: Response<RoomDTO>) {
                 val data:RoomDTO = response.body()!!
                 roomDetailData = data!!.data
+                var roomList = arrayListOf<EditRooms>()
+
                 for (room in roomDetailData) {
                     Log.d("success", room.toString())
                     roomList.add(EditRooms(R.drawable.dog2, room["roomname"].toString(), room["count"].toString().split(".")[0].toInt()))
