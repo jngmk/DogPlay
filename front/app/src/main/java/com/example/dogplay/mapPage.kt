@@ -30,6 +30,7 @@ import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import io.opencensus.resource.Resource
 import kotlinx.android.synthetic.main.map_hotel_list.view.*
 import kotlinx.android.synthetic.main.map_page.*
 import retrofit2.Call
@@ -315,13 +316,8 @@ class mapPage : Fragment() {
 
         override fun onBindViewHolder(holder: PagerViewHolder, position: Int) {
             val hotel = hotels[position]
-            if (pictures.size != 0 && pictures[position] != null) {
-                val picture = pictures[position]
-                Glide.with(holder.itemView)
-                    .load(picture)
-                    .into(holder.itemView.mapHotelImg)
-            }
-            holder.updateHotelList(hotel)
+            val picture = pictures[position]
+            holder.updateHotelList(hotel, picture)
         }
 
         override fun getItemCount(): Int = hotels.size
@@ -335,7 +331,16 @@ class mapPage : Fragment() {
         private var mapHotelPrice: TextView = itemView.findViewById(R.id.mapHotelPrice)
 
         @SuppressLint("SetTextI18n")
-        fun updateHotelList(hotel: HotelInfoWithStarAndPrice) {
+        fun updateHotelList(hotel: HotelInfoWithStarAndPrice, picture: String?) {
+            if (picture != null) {
+                Glide.with(itemView)
+                    .load(picture)
+                    .into(mapHotelImg)
+            }
+            else {
+                mapHotelImg.setImageResource(R.drawable.dog)
+            }
+
             mapHotelEval.text = hotel.star.toString()
             mapHotelName.text = hotel.hotelname
             mapHotelAddress.text = hotel.address
