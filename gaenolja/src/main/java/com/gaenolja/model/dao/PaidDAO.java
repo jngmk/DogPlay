@@ -13,4 +13,5 @@ public interface PaidDAO {
 	public void insert(Paid paid);
 	public void update(Paid paid);
 	public void delete(int id);
+	public Paid searchbyaid(String aid);
 }

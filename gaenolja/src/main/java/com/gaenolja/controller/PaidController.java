@@ -70,9 +70,7 @@ public class PaidController {
 	@PostMapping("/api/v1/paid/kakaopay")
 	@ApiOperation("카카오페이 결제")
 	public ResponseEntity<Map<String, Object>> kakaopay(@RequestBody Paid paid){
-		boolean res = service.kakaopay(paid);
-		if (res) return handleSuccess("success");
-		else return handleFail("fail", HttpStatus.OK);
+		return handleSuccess(service.kakaopay(paid));
 	}
 	
 	@GetMapping("/api/v1/paid/cancelpay")

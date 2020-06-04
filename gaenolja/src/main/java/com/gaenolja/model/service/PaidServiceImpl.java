@@ -47,7 +47,7 @@ public class PaidServiceImpl implements PaidService{
 	}
 	
 	@Override
-	public boolean kakaopay(Paid paid) {
+	public int kakaopay(Paid paid) {
 		try {
 			HttpHeaders payheaders = new HttpHeaders();
 			RestTemplate payrestTemplate = new RestTemplate();
@@ -73,11 +73,13 @@ public class PaidServiceImpl implements PaidService{
 			
 			dao.insert(paid);
 			
-			return true;
+			int id = dao.searchbyaid(aid).getId();
+			
+			return id;
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
-		return false;
+		return -1;
 	}
 	
 	@Override

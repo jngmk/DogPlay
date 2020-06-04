@@ -13,6 +13,10 @@
 		select * from cart where userid=#{userid}
 	</select>
 	
+	<select id="totalprice" parameterType="string" resultType="int">
+		select ifnull(sum(price), 0) from cart where userid=#{userid}
+	</select>
+	
 	<insert id="insert" parameterType="cart">
 		insert into cart(userid, hotelnumber, roomname, price)
 		values(#{userid}, #{hotelnumber}, #{roomname}, #{price})
@@ -31,6 +35,12 @@
 		delete
 		from cart
 		where id = #{id}
+	</delete>
+	
+	<delete id="deletebyuserid" parameterType="string">
+		delete
+		from cart
+		where userid = #{userid}
 	</delete>
 
 </mapper>	

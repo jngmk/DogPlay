@@ -50,6 +50,12 @@ public class CartController {
 		return handleSuccess(service.searchbyuser(userid));
 	}
 	
+	@GetMapping("/api/v1/cart/totalprice")
+	@ApiOperation("user total price")
+	public ResponseEntity<Map<String, Object>> totalprice(@RequestParam String userid){
+		return handleSuccess(service.totalprice(userid));
+	}
+	
 	@PostMapping("/api/v1/cart/insert")
 	@ApiOperation("insert cart")
 	public ResponseEntity<Map<String, Object>> insert(@RequestBody Cart cart){
@@ -70,6 +76,14 @@ public class CartController {
 	@ApiOperation("delete cart")
 	public ResponseEntity<Map<String, Object>> delete(@RequestParam int id){
 		boolean res = service.delete(id);
+		if (res) return handleSuccess("success");
+		else return handleFail("fail", HttpStatus.OK);
+	}
+	
+	@DeleteMapping("/api/v1/cart/delete/userid")
+	@ApiOperation("delete cart by userid")
+	public ResponseEntity<Map<String, Object>> deletebyuserid(@RequestParam String userid){
+		boolean res = service.deletebyuserid(userid);
 		if (res) return handleSuccess("success");
 		else return handleFail("fail", HttpStatus.OK);
 	}
