@@ -55,7 +55,7 @@ class mapPage : Fragment() {
     private var mapFocus = false
     private var numPage = 0
     private val REQUEST_ACCESS_FINE_LOCATION = 1
-    private val DISTANCE = 1
+    private val DISTANCE = 50
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -174,7 +174,6 @@ class mapPage : Fragment() {
         server!!.getHotelPictures(hotelnumber, name).enqueue(object : Callback<HotelPicturesDTO> {
             override fun onFailure(call: Call<HotelPicturesDTO>, t: Throwable) {
                 Log.d("fail",t.toString())
-                pictures.add(null)
             }
             override fun onResponse(
                 call: Call<HotelPicturesDTO>,
@@ -185,6 +184,8 @@ class mapPage : Fragment() {
                     val downloadUri = response.body()!!.data[0].picture
 //                    val storageRef = FirebaseStorage.getInstance().getReferenceFromUrl(downloadUri)
                     pictures.add(downloadUri)
+                } else {
+                    pictures.add(null)
                 }
                 mPager.adapter = PagerRecyclerAdapter(hotels, pictures)
 //                mPager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
