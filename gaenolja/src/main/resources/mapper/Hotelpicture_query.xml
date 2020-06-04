@@ -13,6 +13,10 @@
 		select * from hotelpicture where hotelnumber=#{hotelnumber} and name=#{name}
 	</select>
 	
+	<select id="searchmain" parameterType="string" resultType="string">
+		select picture from hotelpicture where hotelnumber=#{hotelnumber} and name="main"
+	</select>
+	
 	<select id="search" parameterType="int" resultType="hotelpicture">
 		select * from hotelpicture where id=#{id}
 	</select>
