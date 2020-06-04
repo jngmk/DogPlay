@@ -9,6 +9,11 @@ data class HotelDTO(
     var data:HashMap<String,Any>
 )
 
+data class ReservationDTO(
+    @SerializedName("data")
+    var data:Array<HashMap<String,Any>>
+)
+
 data class RoomDeleteDTO(
     var id: Int? = null
 )
@@ -46,6 +51,11 @@ interface EditService {
     fun searchHotelDetail(
         @Query("hotelnumber") hotelnumber: String
     ):Call<HotelDTO>
+
+    @GET("/api/v1/review/searchbyhotel")
+    fun searchReservation(
+        @Query("hotelnumber") hotelnumber: String
+    ):Call<ReservationDTO>
 
     @GET("/api/v1/hotel/searchall")
     fun searchAllHotel():Call<AllHotelDTO>
