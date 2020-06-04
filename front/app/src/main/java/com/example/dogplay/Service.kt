@@ -113,6 +113,17 @@ data class HotelRoom(
     val info: String
 )
 
+data class HotelRoomToPost(
+    var id: Int = 0,
+    var hotelnumber: String = "",
+    var roomname: String= "",
+    var price: Int = 0,
+    var minsize: Int = 0,
+    var maxsize: Int = 0,
+    var count: Int = 0,
+    var info: String = ""
+)
+
 data class HotelReview(
     val id: Int,
     val hotelnumber: String,
@@ -262,6 +273,13 @@ interface Service {
     @POST("/api/v1/hotel/insert")
     fun postHotelInfo(
         @Body params: HotelInfoToPost
+    ):Call<HotelReturnData>
+
+    @Headers("accept: application/json",
+        "content-type: application/json")
+    @POST("/api/v1/hotelroom/insert")
+    fun postHotelRoomInfo(
+        @Body params: HotelRoomToPost
     ):Call<HotelReturnData>
 
     @Headers("accept: application/json",

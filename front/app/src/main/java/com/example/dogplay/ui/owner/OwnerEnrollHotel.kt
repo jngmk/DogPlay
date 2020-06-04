@@ -284,7 +284,7 @@ class OwnerEnrollHotel : AppCompatActivity() {
                             downloadUrl.addOnSuccessListener {
                                 // 데이터 베이스에 사진 url 올리기
                                 hotelPicture.apply {
-                                    name = "$hotelName"
+                                    name = hotelName
                                     hotelnumber = hotelNumber
                                     picture = it.toString()
                                 }
