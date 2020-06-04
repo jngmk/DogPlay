@@ -15,17 +15,17 @@
    	<select id="searchbyaid" parameterType="string" resultType="paid">
    		select *
    		from paid
-   		where aid=#{aid}
+   		where tid=#{tid}
    </select>
    
 	<insert id="insert" parameterType="paid">
-		insert into paid(pid, cid, aid, cancel_amount, cancel_tax_free_amount, userid, pg_token, partner_order_id)
-		values(#{pid}, #{cid}, #{aid}, #{cancel_amount}, #{cancel_tax_free_amount}, #{userid}, #{pg_token}, #{partner_order_id})
+		insert into paid(tid, cid, aid, cancel_amount, cancel_tax_free_amount, userid, pg_token, partner_order_id)
+		values(#{tid}, #{cid}, #{aid}, #{cancel_amount}, #{cancel_tax_free_amount}, #{userid}, #{pg_token}, #{partner_order_id})
 	</insert>
 	
 	<update id="update" parameterType="paid">
 		update paid set
-		pid=#{pid},
+		tid=#{tid},
 		cid=#{cid},
 		aid=#{aid},
 		cancel_amount=#{cancel_amount},

@@ -3,6 +3,8 @@ package com.gaenolja.controller;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.gaenolja.model.dto.Kakaopay;
 import com.gaenolja.model.dto.Paid;
 import com.gaenolja.model.service.PaidService;
 
@@ -67,10 +70,28 @@ public class PaidController {
 		else return handleFail("fail", HttpStatus.OK);
 	}
 	
-	@PostMapping("/api/v1/paid/kakaopay")
+	@PostMapping("/api/v1/paid/kakaopay/ready")
+	@ApiOperation("카카오페이 준비")
+	public ResponseEntity<Map<String, Object>> kakaopayready(@RequestBody Kakaopay kakao, HttpServletRequest request){
+		return handleSuccess(service.kakaoready(kakao, request));
+	}
+	
+	@GetMapping("/api/v1/paid/kakaopay")
 	@ApiOperation("카카오페이 결제")
-	public ResponseEntity<Map<String, Object>> kakaopay(@RequestBody Paid paid){
-		return handleSuccess(service.kakaopay(paid));
+	public ResponseEntity<Map<String, Object>> kakaopay(HttpServletRequest request){
+		return handleSuccess(service.kakaopay(request));
+	}
+	
+	@GetMapping("/api/v1/paid/usercancel")
+	@ApiOperation("카카오페이 사용자 취소")
+	public ResponseEntity<Map<String, Object>> kakaopayusercancel(HttpServletRequest request){
+		return handleSuccess(service.notapproved(request));
+	}
+	
+	@GetMapping("/api/v1/paid/failkakaopay")
+	@ApiOperation("카카오페이 실패")
+	public ResponseEntity<Map<String, Object>> kakaopayfail(HttpServletRequest request){
+		return handleSuccess(service.kakaofail(request));
 	}
 	
 	@GetMapping("/api/v1/paid/cancelpay")
