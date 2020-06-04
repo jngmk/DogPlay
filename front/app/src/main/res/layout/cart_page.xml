@@ -194,16 +194,15 @@
             />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/SubmitCart"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:text="예약하기"
         android:background="@drawable/payment"
-        android:textSize="25dp"
+        android:textSize="20dp"
         android:gravity="center"
         android:layout_margin="15dp"
-        android:paddingVertical="5dp"
         android:textColor="#eeeeee"
         app:layout_constraintTop_toBottomOf="@id/TotalBar"
         app:layout_constraintBottom_toBottomOf="parent"

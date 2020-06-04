@@ -48,7 +48,7 @@ class OwnerEnrollHotel : AppCompatActivity() {
     private lateinit var mRecyclerView: RecyclerView
     private lateinit var mHotelDetailLayout: LinearLayout
     private lateinit var firestore: FirebaseFirestore
-    private var hotelPicture: HotelPicture = HotelPicture()
+    private var hotelPicture: HotelPicture = HotelPicture(0,"","","")
     private var hotelHash: HotelHashToPost = HotelHashToPost()
     private var hotelData: HotelInfoToPost = HotelInfoToPost()
     private var hotelDetailsLayoutIdx = 3
@@ -73,6 +73,9 @@ class OwnerEnrollHotel : AppCompatActivity() {
 
         getHashTag()
 
+        btnEnrollHotelBack.setOnClickListener {
+            finish()
+        }
         btnEnrollHotelImg.setOnClickListener {
             getImages()
         }
@@ -293,6 +296,7 @@ class OwnerEnrollHotel : AppCompatActivity() {
                         }
                     }
                 }
+                finish()
             }
         })
     }

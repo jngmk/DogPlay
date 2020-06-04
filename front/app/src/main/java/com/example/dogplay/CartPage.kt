@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.dogplay.API.Companion.kserver
 import com.example.dogplay.API.Companion.server
 import kotlinx.android.synthetic.main.cart_item.view.*
 import kotlinx.android.synthetic.main.cart_page.*
@@ -54,24 +55,24 @@ class CartPage:AppCompatActivity(){
                     TotalPrice.text = "${Supplier.totalCartPrice}"
                 }
                 CartList.adapter = adapter
+                val kserver = kserver()
                 SubmitCart.setOnClickListener{
-                    Log.d("예약 총 금액", Supplier.totalCartPrice.toString())
-                    server.kakaoPay(PayForm("TC0ONETIME",
+                    server!!.kakaoPay(PayForm("TC0ONETIME",
                         "partner_order_id",
-                        "partner_user_id",
+                        Supplier.UserId,
                         "초코파이",
                         1,
                         2200,
                         0,
-                        "https://developers.kakao.com/success",
-                        "https://developers.kakao.com/cancel",
-                        "https://developers.kakao.com/fail"
+                        "http://k02a4021.p.ssafy.io:8080/api/v1/paid/kakaopay",
+                        "http://k02a4021.p.ssafy.io:8080/api/v1/paid/usercancel",
+                        "http://k02a4021.p.ssafy.io:8080/api/v1/paid/failkakaopay"
                     )).enqueue(object :Callback<Any>{
                         override fun onFailure(call: Call<Any>, t: Throwable) {
                             Log.d("카카오 페이 실패", t.toString())
                         }
                         override fun onResponse(call: Call<Any>, response: Response<Any>) {
-                            Log.d("카카오 페이 성공", response.toString())
+                            Log.d("카카오 페이 성공", response.body().toString())
                         }
                     })
 
