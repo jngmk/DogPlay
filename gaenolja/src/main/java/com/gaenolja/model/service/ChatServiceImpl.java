@@ -1,5 +1,6 @@
 package com.gaenolja.model.service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -138,14 +139,21 @@ public class ChatServiceImpl implements ChatService {
 	}
 	
 	@Override
-	public boolean insert(Chat chat) {
+	public LocalDateTime insert(Chat chat) {
 		try {
 			dao.insert(chat);
-			return true;
+			String receive = chat.getReceive();
+			String send = chat.getSend();
+			HashMap<Object, Object> map = new HashMap<Object, Object>();
+			map.put("receive", receive);
+			map.put("send", send);
+			Chat newchat = dao.sendtime(map);
+			LocalDateTime time = newchat.getCreated();
+			return time;
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
-		return false;
+		return null;
 	};
 	
 	@Override

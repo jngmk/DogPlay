@@ -41,14 +41,11 @@ class searchPage : Fragment() {
         val server = server()
         server!!.getRequest().enqueue(object : Callback<HotelSerchDTO> {
             override fun onFailure(call: Call<HotelSerchDTO>, t: Throwable) {
-                Log.d("faile",t.toString())
             }
 
             override fun onResponse(call: Call<HotelSerchDTO>, response: retrofit2.Response<HotelSerchDTO>) {
-                Log.d("호텔스타",response?.body().toString())
                 var data: HotelSerchDTO? = response.body()
                 if (data!!.data == null){
-                    Log.d("호텔 뜨는거냐?","호옹")
                 } else {
                     val layoutManager = LinearLayoutManager(context)
                     layoutManager.orientation = LinearLayoutManager.VERTICAL

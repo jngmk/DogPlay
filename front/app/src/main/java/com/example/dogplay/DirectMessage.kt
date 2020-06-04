@@ -44,7 +44,7 @@ class DirectMessage: AppCompatActivity() {
                         Log.d("될줄 알았어", response.body().toString())
                         val layoutInflater = getLayoutInflater()
                         val chatview = layoutInflater.inflate(R.layout.chat_send,null)
-                        Supplier.DMList.add(DMset("test1","owner1",sendMessage.text.toString(),
+                        Supplier.DMList.add(DMset(Supplier.UserId,target,sendMessage.text.toString(),
                             response.body()!!.data,0,"없어 사진",0))
                         sendMessage.setText("")
                         chatRecycler.adapter!!.notifyDataSetChanged()
@@ -53,7 +53,7 @@ class DirectMessage: AppCompatActivity() {
                 })
             }
         }
-        server!!.chatTwoPeople("test1",target).enqueue(object : Callback<DMDTO>{
+        server!!.chatTwoPeople(Supplier.UserId,target).enqueue(object : Callback<DMDTO>{
             override fun onFailure(call: Call<DMDTO>, t: Throwable) {
                 Log.d("또안됐어?", t.toString())
             }
@@ -63,7 +63,7 @@ class DirectMessage: AppCompatActivity() {
                 Log.d("채팅내역", response.body().toString())
                 for(chat in response.body()!!.data){
                     var viewType:Int
-                    if (chat.receive == "test1") viewType = 1
+                    if (chat.receive == Supplier.UserId) viewType = 1
                     else viewType = 0
                     DMList.add(DMset(chat.receive, chat.send, chat.message, chat.created, chat.readmessage, chat.picture,viewType))
                     server.ChatUpdate(ChatIn(chat.id, chat.chatid,chat.receive,chat.send,chat.picture,chat.message,chat.created,1)).enqueue(object :Callback<Any>{

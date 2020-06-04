@@ -1,5 +1,6 @@
 package com.example.dogplay
 
+import com.google.gson.JsonObject
 import com.google.gson.annotations.SerializedName
 import com.google.gson.internal.LinkedTreeMap
 import com.google.gson.internal.ObjectConstructor
@@ -14,11 +15,31 @@ data class HotelSerchDTO(
     @SerializedName("state")
     var state:String = ""
 )
+data class Hotel(var counstar: Int,
+                 var address: String,
+                 var star:Double,
+                 var distance:Int,
+                 var latitude:Double,
+                 val userid:String,
+                 var hashid:ArrayList<Int>,
+                 var hotelnumber:String,
+                 var countreview:Int,
+                 var minprice:Int,
+                 var contact:String,
+                 var detail:ArrayList<ArrayList<String>>,
+                 var hotelname:String,
+                 var longitude:Double,
+                 var info:String,
+                 var hashtag:ArrayList<String>
+)
+
+
 
 data class HotelDetailDTO(
     @SerializedName("data")
-    var data:HashMap<String,Any>
+    var data: HotelDetailHash
 )
+
 
 data class HotelRoomDTO(
     @SerializedName("data")
@@ -31,11 +52,29 @@ data class HotelNearByDTO(
     @SerializedName("state")
     val state: String
 )
+
+data class HashTagDTO(
+    @SerializedName("data")
+    val data: ArrayList<HashTag>,
+    @SerializedName("state")
+    val state: String
+)
+
+data class RoomDetailDTO(
+    @SerializedName("data")
+    var data : RoomDetailData
+)
+
+data class ChatMainDTO(
+    @SerializedName("data")
+    var data : ArrayList<ChatMain>
+)
+
 data class HotelDetailHash(
     val HotelStar:HotelStar,
-    val HotelPicture:ArrayList<String>,
-    val review: ArrayList<String>,
-    val HotelRoom: ArrayList<String>
+    val HotelPicture:ArrayList<HotelPicture>,
+    val review: ArrayList<HotelReview>,
+    val HotelRoom: ArrayList<HotelRoom>
 )
 
 data class HotelStar(
@@ -50,14 +89,42 @@ data class HotelStar(
     val detail: ArrayList<ArrayList<String>>,
     val star:Double,
     val countreview: Int,
-    val hashid: String,
+    val hashid: ArrayList<String>,
     val hashtag: ArrayList<String>,
     val distance: Int,
     val minprice: Int
 )
 
+data class HotelRoom(
+    val id: Int,
+    val hotelnumber: String,
+    val roomname: String,
+    val price: Int,
+    val minsize: Int,
+    val maxsize: Int,
+    val count:Int,
+    val info: String
+)
+
+data class HotelReview(
+    val id: Int,
+    val hotelnumber: String,
+    val userid: String,
+    val visitid:Int,
+    val star: Int,
+    val created: ArrayList<Int>,
+    val content:String
+)
+
+data class HotelPicture(
+    val id: Int,
+    val hotelnumber: String,
+    val name: String,
+    val picture: String
+)
+
 data class HotelInfo(
-    val hotelnumber: Int = 0,
+    val hotelnumber: String = "",
     val userid: String,
     val hashid: String,
     val hotelname: String,
@@ -70,9 +137,9 @@ data class HotelInfo(
 )
 
 data class HotelInfoWithStarAndPrice(
-    val hotelnumber: Int = 0,
+    val hotelnumber: String = "",
     val userid: String,
-    val hashid: String,
+    val hashid: ArrayList<String>,
     val hotelname: String,
     val latitude: Double,
     val longitude: Double,
@@ -88,21 +155,28 @@ data class HotelInfoWithStarAndPrice(
     val minprice: Int
 )
 
-
 data class DMSend(
     @SerializedName("data")
     val data: ArrayList<Int>
 )
 
-data class RoomDetailDTO(
-    @SerializedName("data")
-    var data : RoomDetailData
-
+data class HotelInfoToPost(
+    var hotelnumber: String = "",
+    var userid: String = "owner1",
+    var hashid: String = "",
+    var hotelname: String= "",
+    var latitude: Double = 0.0,
+    var longitude: Double = 0.0,
+    var address: String = "",
+    var contact: String = "",
+    var info: String = "",
+    var detail: JsonObject = JsonObject()
 )
 
-data class ChatMainDTO(
-    @SerializedName("data")
-    var data : ArrayList<ChatMain>
+data class HotelPictureToPost(
+    var hotelnumber: String = "",
+    var name: String = "",
+    var picture: String = ""
 )
 
 data class ChatIn(
@@ -127,13 +201,18 @@ data class ChatMain(
 
 data class RoomDetailData(
     val id:Int,
-    val hotelnumber: Int,
+    val hotelnumber: String,
     val roomname :String,
     val price : Int,
     val minsize:Int,
     val maxsize:Int,
     val count:Int,
     val info:String
+)
+
+data class HashTag(
+    val id: Int,
+    val name: String
 )
 
 data class DMDTO(
@@ -164,23 +243,22 @@ interface Service {
 
     @FormUrlEncoded
     @POST("/api/v1/hotel/insert")
-    fun postRequest(
-        @Field("address") address:String,
-        @Field("contact") contact:String,
-        @Field("detail") detail:HashMap<String,String>,
-        @Field("hashid") hashid:String,
-        @Field("hotelname") hotelname:String,
-        @Field("hotelnumber") hotelnumber:Number,
-        @Field("info") info:String,
-        @Field("latitude") latitude:Double,
-        @Field("longitude") longitude:Double,
-        @Field("userid") userid:String
-    ):Call<HotelSerchDTO>
+    fun postHotelInfo(
+        @Body params: HotelInfoToPost
+    ):Call<HotelInfoToPost>
+
+    @POST("/api/v1/hotelpicture/insert")
+    fun postHotelPictures(
+        @Body params: HotelPictureToPost
+    ):Call<HotelPictureToPost>
 
     @GET("/api/v1/hotelroom/search")
     fun searchRoomDetail(
-        @Query("id") id:Int
+        @Query("id") id:String
     ):Call<RoomDetailDTO>
+
+    @GET("/api/v1/hashtag/searchall")
+    fun getHashTag():Call<HashTagDTO>
 
     @GET("/api/v1/chat/search/userid")
     fun searchChatWithUserId(
@@ -209,7 +287,89 @@ interface Service {
         @Query("receive") receive: String,
         @Query("send") send: String
     ):Call<ChatNew>
+
+    @POST("/api/v1/cart/insert")
+    fun CartInsert(
+        @Body params: CartInsert
+    ):Call<Any>
+
+    @GET("/api/v1/cart/search/userid")
+    fun searchCartById(
+        @Query("userid") userid: String
+    ):Call<responseCartDTO>
+
+    @DELETE("/api/v1/cart/delete/userid")
+    fun deleteCartById(
+        @Query("userid") userid: String
+    ):Call<Any>
+
+    @GET("/api/v1/cart/totalprice")
+    fun calcTotalPrice(
+        @Query("userid") userid: String
+    ):Call<calcTotalPrice>
+
+    @Headers("Authorization: KakaoAK xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "Content-type:application/x-www-form-urlencoded;charset=utf-8")
+    @POST("/v1/payment/ready")
+    fun kakaoPay(
+        @Body params:PayForm
+    ):Call<Any>
+
+//    @Headers("Authorization: KakaoAK xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+//        "Content-type:application/x-www-form-urlencoded;charset=utf-8")
+//    @FormUrlEncoded
+//    @POST("/v1/payment/ready")
+//    fun kakaoPay(
+//        @Field("cid") cid: String,
+//        @Field("partner_order_id") partner_order_id:String,
+//        @Field("partner_user_id") partner_user_id:String,
+//        @Field("item_name")item_name:String,
+//        @Field("quantity") quantity:Int,
+//        @Field("total_amount")total_amount:Int,
+//        @Field("tax_free_amount") tax_free_amount:Int,
+//        @Field("approval_url")approval_url:String,
+//        @Field("fail_url") fail_url:String,
+//        @Field("cancel_url") cancel_url:String
+//    ):Call<Any>
 }
+
+data class PayForm(
+    val cid:String,
+    val partner_order_id:String,
+    val partner_user_id:String,
+    val item_name:String,
+    val quantity:Int,
+    val total_amount:Int,
+    val tax_free_amount:Int,
+    val approval_url:String,
+    val cancel_url:String,
+    val fail_url:String
+)
+
+data class calcTotalPrice(
+    @SerializedName("data")
+    val data:Int
+)
+
+data class responseCartDTO(
+    @SerializedName("data")
+    val data:ArrayList<responseCart>
+)
+data class responseCart(
+    val id: Int,
+    val userid: String,
+    val hotelnumber: String,
+    val roomname: String,
+    val price: Int
+)
+
+data class CartInsert(
+    val hotelnumber: String,
+    val id: Int,
+    val price: Int,
+    val roomname: String,
+    val userid: String
+)
 
 data class ChatInsert(
     val chatid: Int,

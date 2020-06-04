@@ -1,12 +1,15 @@
 package com.example.dogplay
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.widget.ViewPager2
 import com.example.dogplay.API.Companion.server
+import com.google.gson.internal.LinkedTreeMap
 import kotlinx.android.synthetic.main.room_detail.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -16,9 +19,45 @@ class RoomDetail:AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.room_detail)
-        var extra = intent.getStringExtra("rno")
-        var HotelNo = extra.toInt()
         val server = server()
+        server!!.searchCartById(Supplier.UserId).enqueue(object :Callback<responseCartDTO>{
+            override fun onFailure(call: Call<responseCartDTO>, t: Throwable) {
+                Log.d("한번에 됩시다~", t.toString())
+            }
+            override fun onResponse(
+                call: Call<responseCartDTO>,
+                response: Response<responseCartDTO>
+            ) {
+                Log.d("됐지? 돼찌?!", response.body()!!.data.toString())
+                if (response.body()!!.data.size > 0){
+                    if(Supplier.SelectHotel.data.HotelStar.hotelnumber != response.body()!!.data[0].hotelnumber){
+                        server.deleteCartById(Supplier.UserId).enqueue(object :Callback<Any>{
+                            override fun onFailure(call: Call<Any>, t: Throwable) {
+                                Log.d("카트 삭제 실패", t.toString())
+                            }
+                            override fun onResponse(call: Call<Any>, response: Response<Any>) {
+                                Log.d("카트 삭제", response.body().toString())
+                            }
+
+                        })
+                    }
+                }
+            }
+        })
+        var cnt = 1
+        var extra = intent.getStringExtra("rno")
+        var HotelNo = extra
+        Plus.setOnClickListener{
+            cnt++
+            RoomCnt.text = "${cnt}개"
+        }
+        Minus.setOnClickListener{
+            if (cnt > 1){
+                cnt--
+                RoomCnt.text = "${cnt}개"
+            }
+        }
+
         server!!.searchRoomDetail(id = HotelNo).enqueue(object :Callback<RoomDetailDTO>{
             override fun onFailure(call: Call<RoomDetailDTO>, t: Throwable) {
                 Log.d("설마", t.toString())
@@ -26,28 +65,31 @@ class RoomDetail:AppCompatActivity(){
 
             override fun onResponse(call: Call<RoomDetailDTO>, response: Response<RoomDetailDTO>) {
                 Log.d("이걸로 룸 끝", response.body().toString())
-                val roomDetailDate = response.body()!!.data
-                RoomDetailTitle.text = roomDetailDate.roomname
-                RoomDetailSize.text = "${roomDetailDate.minsize}Kg ~ ${roomDetailDate.maxsize}Kg"
+                val roomDetailData = response.body()!!.data
+                Supplier.SelectRoom = roomDetailData
+                RoomDetailTitle.text = roomDetailData.roomname
+                RoomDetailSize.text = "${roomDetailData.minsize}Kg ~ ${roomDetailData.maxsize}Kg"
                 RoomDetailAddress.text = "${Supplier.PickAdress}"
-                RoomDetailPrice.text = "${roomDetailDate.price} 원"
-                RoomIntro.text = "${roomDetailDate.info}"
+                RoomDetailPrice.text = "${roomDetailData.price} 원"
+                RoomIntro.text = "${roomDetailData.info}"
+                subCart.setOnClickListener{
+                    server.CartInsert(CartInsert(roomDetailData.hotelnumber,roomDetailData.id,roomDetailData.price*cnt,roomDetailData.roomname,Supplier.UserId)).enqueue(object :Callback<Any>{
+                        override fun onFailure(call: Call<Any>, t: Throwable) {
+                            Log.d("실패했다면 당근을 흔들어주세요", t.toString())
+                        }
+
+                        override fun onResponse(call: Call<Any>, response: Response<Any>) {
+                            Log.d("성공했어요 추카추카", response.body().toString())
+                            Toast.makeText(applicationContext,"장바구니에 저장되었습니다.",Toast.LENGTH_SHORT).show()
+                            onBackPressed()
+                        }
+                    })
+//                    Supplier.CartList.add(responseCart(cnt,Supplier.UserId,HotelNo,roomDetailData.roomname,roomDetailData.price))
+                    Toast.makeText(applicationContext,"장바구니에 저장되었습니다.",Toast.LENGTH_SHORT).show()
+                    onBackPressed()
+                }
             }
-
         })
-
-
-//        val RoomData = Supplier.RoomDetail[position]
-//        Log.d("Roomdata", RoomData["roomname"].toString())
-//        roomDetailTitle.text = RoomData["roomname"].toString()
-//        val minSize = RoomData["minsize"].toString().toDouble().toInt()
-//        val maxSize = RoomData["maxsize"].toString().toDouble().toInt()
-//        val roomDetailSize = view.findViewById<TextView>(R.id.RoomDetailSize)
-//        roomDetailSize.text = "${minSize} ~ ${maxSize}"
-//        val roomDetailAddress = view.findViewById<TextView>(R.id.RoomDetailAddress)
-//        roomDetailAddress.text = "몰라 안오네"
-//        val roomDetailPrice = view.findViewById<TextView>(R.id.RoomDetailPrice)
-//        roomDetailPrice.text = "${RoomData["price"].toString().toDouble().toInt()}"
 
 
         val vp = findViewById(R.id.RoomDetailCarousel) as ViewPager
@@ -55,6 +97,6 @@ class RoomDetail:AppCompatActivity(){
         vp.adapter = RoomAdapter
         vp.clipToPadding = false
         RoomAdapter.notifyDataSetChanged()
-        Log.d("오늘의 마지막", Supplier.RoomDetail.toString())
+        Log.d("오늘의 마지막", "")
     }
 }
