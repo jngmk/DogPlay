@@ -9,13 +9,14 @@
         android:id="@+id/scrv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginBottom="188dp"
         android:paddingBottom="15dp"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_editor_absoluteX="16dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
 
             <TextView
                 android:id="@+id/tv_hotel_name"
@@ -58,7 +59,8 @@
                 app:layout_constraintTop_toBottomOf="@+id/cv_main" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView><![CDATA[
+    </ScrollView>
+    <![CDATA[
 
 
 

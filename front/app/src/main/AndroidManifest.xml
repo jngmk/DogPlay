@@ -9,6 +9,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:name=".GlobalApplication"
         android:usesCleartextTraffic="true"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -24,9 +25,10 @@
         <activity android:name=".ui.owner.HostReviewPage" />
         <activity android:name=".ui.owner.CheckAllReservation" />
         <activity android:name=".ui.owner.HostReReview" />
+        <activity android:name=".ui.owner.LoginMain" />
 
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.owner.LoginActivity"
             android:windowSoftInputMode="adjustResize|stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -42,6 +44,10 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBoj6Nwjapgdvd4YSmJyU5vkF6DAfh_1ik" />
+
+        <meta-data
+            android:name="com.kakao.sdk.AppKey"
+            android:value="@string/kakao_app_key" />
     </application>
 
 </manifest>

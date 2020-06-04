@@ -18,6 +18,7 @@ class EditRoom : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.host_edit_room)
+
         var int_id = 0
         var roomname = ""
 
