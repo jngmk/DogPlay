@@ -14,7 +14,7 @@ class MainActivity : AppCompatActivity(){
 
 //        로그인 시 owner인지 사용자인지에 따라서 아이콘 변경
         var host = "892-11-00104"
-        if (host != "892-11-00104") {
+        if (host != "892-11-001041") {
             tabLayout.getTabAt(0)?.setIcon(R.drawable.home)
             tabLayout.getTabAt(1)?.setIcon(R.drawable.marker)
             tabLayout.getTabAt(2)?.setIcon(R.drawable.chat)
