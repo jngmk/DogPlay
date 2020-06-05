@@ -145,6 +145,7 @@ public class PaidServiceImpl implements PaidService{
 			Paid paid = dao.searchbyaid(tid);
 			System.out.println(tid);
 			session.removeAttribute(tid);
+			System.out.println(request.getRequestURI());
 			String pg_token = request.getParameter("pg_token");
 			System.out.println(pg_token);
 //			// 결제 승인
@@ -152,14 +153,14 @@ public class PaidServiceImpl implements PaidService{
 			RestTemplate payrestTemplate = new RestTemplate();
 			payheaders.add("Authorization", "KakaoAK " + "426e500513b390adca9cdb419a1d9a8c");
 			payheaders.add("Content-Type", "application/x-www-form-urlencoded;charset=utf-8");
-			System.out.println(payheaders);
+
 			MultiValueMap<String, Object> payparameters = new LinkedMultiValueMap<>();
 			payparameters.add("cid", paid.getCid());
 			payparameters.add("tid", tid);
 			payparameters.add("partner_order_id", paid.getPartner_order_id());
 			payparameters.add("partner_user_id", paid.getUserid());
 			payparameters.add("pg_token", pg_token);
-			System.out.println(payparameters.get("cid"));
+			
 			HttpEntity<MultiValueMap<String, Object>> pay_request = new HttpEntity<>(payparameters, payheaders);
 			URI payuri = URI.create("https://kapi.kakao.com/v1/payment/approve");
 			System.out.println(payuri);
