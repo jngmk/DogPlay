@@ -4,9 +4,6 @@ import java.net.URI;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -77,17 +74,6 @@ public class PaidServiceImpl implements PaidService{
 			ResponseEntity<Map> rest_response;
 			rest_response = restTemplate.postForEntity(uri, rest_request, Map.class);
 			Map body = rest_response.getBody();
-			Paid paid = new Paid();
-			
-			String tid = (String) body.get("tid");
-
-			paid.setTid(tid);
-			paid.setCid(kakao.getCid());
-			paid.setUserid(kakao.getPartner_user_id());
-			paid.setPartner_order_id(kakao.getPartner_order_id());
-			paid.setCancel_amount(kakao.getTotal_amount());
-			paid.setCancel_tax_free_amount(kakao.getTax_free_amount());
-			dao.insert(paid);
 
 			return body;
 		}catch(Exception e) {
@@ -97,16 +83,8 @@ public class PaidServiceImpl implements PaidService{
 	}
 	
 	@Override
-	public String notapproved(HttpServletRequest request) {
+	public String notapproved() {
 		try {
-			HttpSession session = request.getSession();
-			String tid = (String) session.getAttribute("tid");
-			Paid paid = dao.searchbyaid(tid);
-			
-			dao.delete(paid.getId());
-			
-			session.removeAttribute(tid);
-			
 			return "결제 취소";
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -115,17 +93,8 @@ public class PaidServiceImpl implements PaidService{
 	}
 	
 	@Override
-	public String kakaofail(HttpServletRequest request) {
+	public String kakaofail() {
 		try {
-			HttpSession session = request.getSession();
-			String tid = (String) session.getAttribute("tid");
-			
-			Paid paid = dao.searchbyaid(tid);
-			
-			dao.delete(paid.getId());
-			
-			session.removeAttribute(tid);
-			
 			return "결제 실패";
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -136,11 +105,7 @@ public class PaidServiceImpl implements PaidService{
 	@Override
 	public String kakaopay(String pg_token) {
 		try {
-			
-			System.out.println(pg_token);
-			
 			return pg_token;
-
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -210,9 +175,12 @@ public class PaidServiceImpl implements PaidService{
 			String aid = (String) paybody.get("aid");
 			paid.setAid(aid);
 
-			dao.update(paid);
+			dao.insert(paid);
 			
-			return paid.getId();		}catch(Exception e) {
+			Paid newpaid = dao.searchbytid(paid.getTid());
+			
+			return newpaid.getId();		
+		}catch(Exception e) {
 			e.printStackTrace();
 		}
 		return -1;

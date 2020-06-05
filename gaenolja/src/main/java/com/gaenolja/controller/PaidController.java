@@ -3,8 +3,6 @@ package com.gaenolja.controller;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -84,14 +82,14 @@ public class PaidController {
 	
 	@GetMapping("/api/v1/paid/usercancel")
 	@ApiOperation("카카오페이 사용자 취소")
-	public ResponseEntity<Map<String, Object>> kakaopayusercancel(HttpServletRequest request){
-		return handleSuccess(service.notapproved(request));
+	public ResponseEntity<Map<String, Object>> kakaopayusercancel(){
+		return handleSuccess(service.notapproved());
 	}
 	
 	@GetMapping("/api/v1/paid/failkakaopay")
 	@ApiOperation("카카오페이 실패")
-	public ResponseEntity<Map<String, Object>> kakaopayfail(HttpServletRequest request){
-		return handleSuccess(service.kakaofail(request));
+	public ResponseEntity<Map<String, Object>> kakaopayfail(){
+		return handleSuccess(service.kakaofail());
 	}
 	
 	@GetMapping("/api/v1/paid/cancelpay")
