@@ -8,6 +8,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.auth0.android.jwt.JWT
+import com.example.dogplay.MainActivity
 import com.example.dogplay.R
 import com.kakao.auth.ISessionCallback
 import com.kakao.auth.Session
@@ -98,26 +99,29 @@ class LoginActivity : AppCompatActivity() {
                             val jwtData = data!!.data
                             ourToken = jwtData["token"].toString()
                             Log.d("token11221", "${ourToken}")
-//                            val decodeJWT = JWT(ourToken)
-//                            val userId = decodeJWT.getClaim("userId")
-//                            Log.d("token11221", "${userId}")
+
                             val decodeJWT = JWT(ourToken)
                             userId = decodeJWT.getClaim("userId").asString().toString()
                             Log.d("token11221", "$userId")
 
-                            var intent = Intent(this@LoginActivity, LoginMain::class.java)
-//                    intent.putExtra("name", result!!.getNickname())
+                            saveData()
+
+                            var intent = Intent(this@LoginActivity, MainActivity::class.java)
                             intent.putExtra("name", userId)
                             intent.putExtra("profile", result!!.getProfileImagePath())
                             intent.putExtra("token", token)
                             startActivity(intent)
                             finish()
+                        }
 
+                        private fun saveData() {
+                            val pref = getSharedPreferences("pref", 0)
+                            val edit = pref.edit()
+                            edit.putString("name", userId)
+                            edit.apply()
                         }
 
                     })
-
-
 
                 }
 

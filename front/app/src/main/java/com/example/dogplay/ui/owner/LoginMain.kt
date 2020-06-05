@@ -15,7 +15,8 @@ class LoginMain : AppCompatActivity() {
         setContentView(R.layout.login_main)
 
 
-        tvNickname.text = intent.getStringExtra("name")
+        loadData()
+//        tvNickname.text = intent.getStringExtra("name")
         tvProfile.text = intent.getStringExtra("profile")
         btn_logout.setOnClickListener {
             UserManagement.getInstance().requestLogout(object : LogoutResponseCallback() {
@@ -26,6 +27,12 @@ class LoginMain : AppCompatActivity() {
                 }
             })
         }
+    }
+
+    private fun loadData() {
+        val pref = getSharedPreferences("pref", 0)
+        tvNickname.text = pref.getString("name", "")
+
     }
 //        Glide.with(this)
 //            .load(intent.getStringExtra("profile"))

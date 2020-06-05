@@ -52,7 +52,19 @@ data class TokenToDTO(
     var token: String
 )
 
+data class UserInfoDTO(
+    @SerializedName("data")
+    var data:HashMap<String,Any>
+)
+
+
 interface EditService {
+    @GET("/api/v1/user/searchbyuserid")
+    fun getUserInfo(
+        @Query("userid") userid: String
+    ):Call<UserInfoDTO>
+
+
     @Headers("content-type: application/json")
     @POST("/api/v1/user/kakaologin")
     fun kakaoLogin(

@@ -7,26 +7,24 @@ import androidx.fragment.app.FragmentPagerAdapter
 import com.example.dogplay.ui.owner.EditPage
 import com.example.dogplay.ui.owner.HostMain
 import com.example.dogplay.ui.owner.HostReviewPage
-import com.example.dogplay.ui.owner.OwnerMainFragment
 
-class wholeAdapter(fm:FragmentManager):FragmentPagerAdapter(fm){
-
+class wholeAdapter(fm:FragmentManager, admin: String):FragmentPagerAdapter(fm){
+    val admin = admin
 //        로그인 시 owner인지 사용자인지에 따라서 아이콘 변경
-    var host = "892-11-00104"
     override fun getItem(position: Int): Fragment {
-        return if (host == "892-11-00104") {
-            when (position) {
-                0 -> HostMain()
-                1 -> HostReviewPage()
-                2 -> chatPage()
-                else -> EditPage()
-            }
-        } else {
+        return if (admin == "0") {
             when (position) {
                 0 -> searchPage()
                 1 -> mapPage()
                 2 -> chatPage()
                 else -> searchPage()
+            }
+        } else {
+            when (position) {
+                0 -> HostMain()
+                1 -> HostReviewPage()
+                2 -> chatPage()
+                else -> EditPage()
             }
         }
     }
@@ -38,4 +36,6 @@ class wholeAdapter(fm:FragmentManager):FragmentPagerAdapter(fm){
     override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
         super.destroyItem(container, position, `object`)
     }
+
+
 }
