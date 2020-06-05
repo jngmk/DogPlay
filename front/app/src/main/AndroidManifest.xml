@@ -33,9 +33,12 @@
         <activity android:name=".RoomDetail"/>
         <activity android:name=".DirectMessage"/>
         <activity android:name=".CartPage"/>
+        <activity android:name=".AllReview"/>
+        <activity android:name=".KakaoWebView"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBoj6Nwjapgdvd4YSmJyU5vkF6DAfh_1ik" />
     </application>
-
 </manifest>

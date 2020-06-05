@@ -1,6 +1,7 @@
 package com.example.dogplay
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -55,7 +56,6 @@ class CartPage:AppCompatActivity(){
                     TotalPrice.text = "${Supplier.totalCartPrice}"
                 }
                 CartList.adapter = adapter
-                val kserver = kserver()
                 SubmitCart.setOnClickListener{
                     server!!.kakaoPay(PayForm("TC0ONETIME",
                         "partner_order_id",
@@ -67,12 +67,15 @@ class CartPage:AppCompatActivity(){
                         "http://k02a4021.p.ssafy.io:8080/api/v1/paid/kakaopay",
                         "http://k02a4021.p.ssafy.io:8080/api/v1/paid/usercancel",
                         "http://k02a4021.p.ssafy.io:8080/api/v1/paid/failkakaopay"
-                    )).enqueue(object :Callback<Any>{
-                        override fun onFailure(call: Call<Any>, t: Throwable) {
+                    )).enqueue(object :Callback<kakaoReadyDTO>{
+                        override fun onFailure(call: Call<kakaoReadyDTO>, t: Throwable) {
                             Log.d("카카오 페이 실패", t.toString())
                         }
-                        override fun onResponse(call: Call<Any>, response: Response<Any>) {
+                        override fun onResponse(call: Call<kakaoReadyDTO>, response: Response<kakaoReadyDTO>) {
                             Log.d("카카오 페이 성공", response.body().toString())
+                            val intent = Intent(applicationContext, KakaoWebView::class.java)
+                            intent.putExtra("url", response.body()!!.data.next_redirect_mobile_url)
+                            startActivity(intent)
                         }
                     })
 

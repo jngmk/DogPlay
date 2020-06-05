@@ -8,6 +8,7 @@ import android.view.*
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.dogplay.API.Companion.server
 import kotlinx.android.synthetic.main.home_list.view.*
 import kotlinx.android.synthetic.main.home_list.view.address
@@ -18,9 +19,8 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class HotelAdapter(var context:Context, var hotels:ArrayList<Hotel>) :
+class HotelAdapter(var context:Context, var hotels:ArrayList<Hotel>, var pictures:ArrayList<String>) :
     RecyclerView.Adapter<HotelAdapter.ViewHolder>(){
-
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
 
         var currentHotel : Hotel? = null
@@ -37,7 +37,6 @@ class HotelAdapter(var context:Context, var hotels:ArrayList<Hotel>) :
             itemView.review.text = "후기 ${hotel.countreview}"
             itemView.address.text = hotel.address
             itemView.price.text = "${hotel.minprice}원"
-            itemView.cardImg.setImageResource(R.drawable.dog)
         }
     }
 
@@ -53,8 +52,17 @@ class HotelAdapter(var context:Context, var hotels:ArrayList<Hotel>) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val hotel = hotels[position]
         holder.setData(hotel,position)
+        var picture = pictures[position]
+        if (picture != ""){
+            Glide.with(holder.itemView)
+                .load(picture)
+                .into(holder.itemView.cardImg)
+        } else{
+            holder.itemView.cardImg.setImageResource(R.drawable.dog)
+        }
         holder.itemView.setOnClickListener{
             var server = server()
+
             server!!.searchHotelDetail(hotels[position].hotelnumber).enqueue(object :
                 Callback<HotelDetailDTO> {
                 override fun onFailure(call: Call<HotelDetailDTO>, t: Throwable) {

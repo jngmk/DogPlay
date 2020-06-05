@@ -47,6 +47,8 @@
             android:layout_marginLeft="5dp"
             android:layout_marginTop="5dp"
             android:text="아 거 아무말이나 좀 해보시오"
+            android:maxLines="4"
+            android:ellipsize="end"
             app:layout_constraintLeft_toLeftOf="@+id/profilePic"
             app:layout_constraintTop_toBottomOf="@id/profilePic" />
 
