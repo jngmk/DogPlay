@@ -32,8 +32,10 @@ public class PaidController {
 
 	@ExceptionHandler 
 	public ResponseEntity<Map<String, Object>> handler(Exception e){
+		System.out.println(handleFail(e.getMessage(), HttpStatus.OK));
 		return handleFail(e.getMessage(), HttpStatus.OK);
 	}
+	
 	@GetMapping("/api/v1/paid")
 	@ApiOperation("모든 지불 정보 찾기")
 	public ResponseEntity<Map<String, Object>> searchall(){
@@ -77,7 +79,6 @@ public class PaidController {
 	@GetMapping("/api/v1/paid/kakaopay")
 	@ApiOperation("카카오페이 결제")
 	public ResponseEntity<Map<String, Object>> kakaopay(@RequestParam String pg_token){
-		System.out.println(handleSuccess(service.kakaopay(pg_token)));
 		return handleSuccess(service.kakaopay(pg_token));
 	}
 	
