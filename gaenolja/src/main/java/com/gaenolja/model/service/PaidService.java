@@ -11,11 +11,11 @@ import com.gaenolja.model.dto.Paid;
 public interface PaidService {
 	public List<Paid> searchall();
 	public Paid search(int id);
-	public boolean insert(Paid paid);
+	public int insert(String tid, String pg_token);
 	public boolean update(Paid paid);
 	public boolean delete(int id);
-	public Map kakaoready(Kakaopay kakao, HttpServletRequest request);
-	public int kakaopay(HttpServletRequest request);
+	public Map kakaoready(Kakaopay kakao);
+	public String kakaopay(String pg_token);
 	public String notapproved(HttpServletRequest request);
 	public String kakaofail(HttpServletRequest request);
 	public boolean cancelpay(int id);

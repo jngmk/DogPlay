@@ -46,13 +46,11 @@ public class PaidController {
 		return handleSuccess(service.search(id));
 	}
 
-	@PostMapping("/api/v1/paid/insert")
-	@ApiOperation("insert paid")
-	public ResponseEntity<Map<String, Object>> insert(@RequestBody Paid paid){
-		boolean res = service.insert(paid);
-		if (res) return handleSuccess("success");
-		else return handleFail("fail", HttpStatus.OK);
-	}
+//	@PostMapping("/api/v1/paid/insert")
+//	@ApiOperation("insert paid")
+//	public ResponseEntity<Map<String, Object>> insert(@RequestBody Paid paid){
+//		return handleSuccess(service.insert(paid));
+//	}
 		
 	@PutMapping("/api/v1/paid/update")
 	@ApiOperation("update paid")
@@ -72,14 +70,14 @@ public class PaidController {
 	
 	@PostMapping("/api/v1/paid/kakaopay/ready")
 	@ApiOperation("카카오페이 준비")
-	public ResponseEntity<Map<String, Object>> kakaopayready(@RequestBody Kakaopay kakao, HttpServletRequest request){
-		return handleSuccess(service.kakaoready(kakao, request));
+	public ResponseEntity<Map<String, Object>> kakaopayready(@RequestBody Kakaopay kakao){
+		return handleSuccess(service.kakaoready(kakao));
 	}
 	
 	@GetMapping("/api/v1/paid/kakaopay")
 	@ApiOperation("카카오페이 결제")
-	public ResponseEntity<Map<String, Object>> kakaopay(HttpServletRequest request){
-		return handleSuccess(service.kakaopay(request));
+	public ResponseEntity<Map<String, Object>> kakaopay(String pg_token){
+		return handleSuccess(service.kakaopay(pg_token));
 	}
 	
 	@GetMapping("/api/v1/paid/usercancel")

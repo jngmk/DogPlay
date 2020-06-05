@@ -51,7 +51,7 @@ public class PaidServiceImpl implements PaidService{
 	}
 	
 	@Override
-	public Map kakaoready(Kakaopay kakao, HttpServletRequest request) {
+	public Map kakaoready(Kakaopay kakao) {
 		try {
 			HttpHeaders headers = new HttpHeaders();
 			RestTemplate restTemplate = new RestTemplate();
@@ -89,9 +89,6 @@ public class PaidServiceImpl implements PaidService{
 			paid.setCancel_tax_free_amount(kakao.getTax_free_amount());
 			dao.insert(paid);
 
-			HttpSession session = request.getSession();
-			session.setAttribute("tid", tid);
-			System.out.println(session.getAttribute("tid"));
 			return body;
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -137,49 +134,16 @@ public class PaidServiceImpl implements PaidService{
 	}
 	
 	@Override
-	public int kakaopay(HttpServletRequest request) {
+	public String kakaopay(String pg_token) {
 		try {
-			HttpSession session = request.getSession();
-			String tid = (String) session.getAttribute("tid");
-			
-			Paid paid = dao.searchbyaid(tid);
-			System.out.println(tid);
-			session.removeAttribute(tid);
-			System.out.println(request.getRequestURI());
-			String pg_token = request.getParameter("pg_token");
 			System.out.println(pg_token);
-//			// 결제 승인
-			HttpHeaders payheaders = new HttpHeaders();
-			RestTemplate payrestTemplate = new RestTemplate();
-			payheaders.add("Authorization", "KakaoAK " + "426e500513b390adca9cdb419a1d9a8c");
-			payheaders.add("Content-Type", "application/x-www-form-urlencoded;charset=utf-8");
+			
+			return pg_token;
 
-			MultiValueMap<String, Object> payparameters = new LinkedMultiValueMap<>();
-			payparameters.add("cid", paid.getCid());
-			payparameters.add("tid", tid);
-			payparameters.add("partner_order_id", paid.getPartner_order_id());
-			payparameters.add("partner_user_id", paid.getUserid());
-			payparameters.add("pg_token", pg_token);
-			
-			HttpEntity<MultiValueMap<String, Object>> pay_request = new HttpEntity<>(payparameters, payheaders);
-			URI payuri = URI.create("https://kapi.kakao.com/v1/payment/approve");
-			System.out.println(payuri);
-			ResponseEntity<Map> pay_response;
-			pay_response = payrestTemplate.postForEntity(payuri, pay_request, Map.class);
-			Map paybody = pay_response.getBody();
-			
-			paid.setPg_token(pg_token);
-			
-			String aid = (String) paybody.get("aid");
-			paid.setAid(aid);
-
-			dao.update(paid);
-			
-			return paid.getId();
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
-		return -1;
+		return null;
 	}
 	
 	@Override
@@ -220,14 +184,40 @@ public class PaidServiceImpl implements PaidService{
 	}
 	
 	@Override
-	public boolean insert(Paid paid) {
+	public int insert(String tid, String pg_token) {
 		try {
-			dao.insert(paid);
-			return true;
-		}catch(Exception e) {
+			Paid paid = dao.searchbyaid(tid);
+			// 결제 승인
+			HttpHeaders payheaders = new HttpHeaders();
+			RestTemplate payrestTemplate = new RestTemplate();
+			payheaders.add("Authorization", "KakaoAK " + "426e500513b390adca9cdb419a1d9a8c");
+			payheaders.add("Content-Type", "application/x-www-form-urlencoded;charset=utf-8");
+
+			MultiValueMap<String, Object> payparameters = new LinkedMultiValueMap<>();
+			payparameters.add("cid", paid.getCid());
+			payparameters.add("tid", tid);
+			payparameters.add("partner_order_id", paid.getPartner_order_id());
+			payparameters.add("partner_user_id", paid.getUserid());
+			payparameters.add("pg_token", pg_token);
+			
+			HttpEntity<MultiValueMap<String, Object>> pay_request = new HttpEntity<>(payparameters, payheaders);
+			URI payuri = URI.create("https://kapi.kakao.com/v1/payment/approve");
+			System.out.println(payuri);
+			ResponseEntity<Map> pay_response;
+			pay_response = payrestTemplate.postForEntity(payuri, pay_request, Map.class);
+			Map paybody = pay_response.getBody();
+			
+			paid.setPg_token(pg_token);
+			
+			String aid = (String) paybody.get("aid");
+			paid.setAid(aid);
+
+			dao.update(paid);
+			
+			return paid.getId();		}catch(Exception e) {
 			e.printStackTrace();
 		}
-		return false;
+		return -1;
 	}
 	
 	@Override
