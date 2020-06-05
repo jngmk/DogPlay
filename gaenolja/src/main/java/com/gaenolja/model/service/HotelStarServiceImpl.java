@@ -74,6 +74,7 @@ public class HotelStarServiceImpl implements HotelStarService{
 					}
 					star.setDetail(detailarray);
 				}
+				star.setPicture(picturedao.searchmain(hotelnumber));					
 			}
 			return hotelstar;
 		}catch(Exception e) {
@@ -112,6 +113,7 @@ public class HotelStarServiceImpl implements HotelStarService{
 					}
 					star.setDetail(detailarray);
 				}
+				star.setPicture(picturedao.searchmain(hotelnumber));					
 			}
 			return hotelstar;
 		}catch(Exception e) {
@@ -151,6 +153,7 @@ public class HotelStarServiceImpl implements HotelStarService{
 					}
 					star.setDetail(detailarray);
 				}
+				star.setPicture(picturedao.searchmain(hotelnumber));					
 				hotelstar.add(star);
 			}
 		}catch(Exception e) {
@@ -193,6 +196,7 @@ public class HotelStarServiceImpl implements HotelStarService{
 					}
 					star.setDetail(detailarray);
 				}
+				star.setPicture(picturedao.searchmain(hotelnumber));					
 			}
 			return hotel;
 		}catch(Exception e) {
@@ -229,6 +233,7 @@ public class HotelStarServiceImpl implements HotelStarService{
 				}
 				hotelstar.setDetail(detailarray);
 			}
+			hotelstar.setPicture(picturedao.searchmain(hotelnumber));					
 			return hotelstar;
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -271,6 +276,7 @@ public class HotelStarServiceImpl implements HotelStarService{
 					}
 					star.setDetail(detailarray);
 				}
+				star.setPicture(picturedao.searchmain(hotelnumber));					
 			}
 			return hotelstar;
 		}catch(Exception e) {

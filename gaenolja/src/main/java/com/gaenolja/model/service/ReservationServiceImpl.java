@@ -89,7 +89,7 @@ public class ReservationServiceImpl implements ReservationService{
 			map.put("roomname", roomname);
 			map.put("startdate", startdate);
 			map.put("finishdate", finishdate);
-			List<Integer> list = dao.countbyhotelandroom(map);
+			List<Integer> list = dao.countbydate(map);
 			for (int i:list) {
 				count += i;
 			}

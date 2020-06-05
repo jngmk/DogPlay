@@ -14,6 +14,7 @@ import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.Call
 import retrofit2.Callback
+import retrofit2.Response
 
 
 class searchPage : Fragment() {
@@ -31,30 +32,46 @@ class searchPage : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
-//        val retrofit = Retrofit.Builder()
-//            .baseUrl("http://k02a4021.p.ssafy.io:8080")
-//            .addConverterFactory(GsonConverterFactory.create())
-//            .build()
-//        var server = retrofit.create(Service::class.java)
-        // retrofit server -> server() 로 대체
         val server = server()
         server!!.getRequest().enqueue(object : Callback<HotelSerchDTO> {
             override fun onFailure(call: Call<HotelSerchDTO>, t: Throwable) {
-                Log.d("faile",t.toString())
             }
 
             override fun onResponse(call: Call<HotelSerchDTO>, response: retrofit2.Response<HotelSerchDTO>) {
-                Log.d("호텔스타",response?.body().toString())
-                var data: HotelSerchDTO? = response.body()
-                if (data!!.data == null){
-                    Log.d("호텔 뜨는거냐?","호옹")
+                var data = response.body()!!.data
+                var dataSize = data.size
+                var pictures = ArrayList<String>()
+                if (data == null){
                 } else {
-                    val layoutManager = LinearLayoutManager(context)
-                    layoutManager.orientation = LinearLayoutManager.VERTICAL
-                    hotelList.layoutManager = layoutManager
-                    val adapter = HotelAdapter(context!!, data.data)
-                    hotelList.adapter = adapter
+                    Log.d("호텔찾았다", data.toString())
+                    data.forEach{
+                        hotel ->
+                        server.getHotelPictures(hotel.hotelnumber,hotel.hotelname).enqueue(object :Callback<HotelPicturesDTO>{
+                            override fun onFailure(call: Call<HotelPicturesDTO>, t: Throwable) {
+                                Log.d("실패했다네", t.toString())
+                            }
+
+                            override fun onResponse(
+                                call: Call<HotelPicturesDTO>,
+                                response: Response<HotelPicturesDTO>
+                            ) {
+                                Log.d("성공했다네", response.body().toString())
+                                if (response.body()!!.data.size > 0){
+                                    pictures.add(response.body()!!.data[0].picture)
+                                } else {
+                                    pictures.add("")
+                                }
+                                if (pictures.size == dataSize){
+                                    val layoutManager = LinearLayoutManager(context)
+                                    layoutManager.orientation = LinearLayoutManager.VERTICAL
+                                    hotelList.layoutManager = layoutManager
+                                    val adapter = HotelAdapter(context!!, data, pictures)
+                                    hotelList.adapter = adapter
+                                }
+                            }
+
+                        })
+                    }
                 }
             }
         })
