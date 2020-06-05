@@ -105,6 +105,7 @@ public class PaidServiceImpl implements PaidService{
 	@Override
 	public String kakaopay(String pg_token) {
 		try {
+			System.out.println(pg_token);
 			return pg_token;
 		}catch(Exception e) {
 			e.printStackTrace();
