@@ -7,6 +7,8 @@ import com.google.gson.internal.ObjectConstructor
 import retrofit2.Call
 import retrofit2.http.*
 import retrofit2.http.Header
+import java.text.DateFormat
+import java.time.LocalDateTime
 
 
 data class HotelSerchDTO(
@@ -113,6 +115,17 @@ data class HotelRoom(
     val info: String
 )
 
+data class HotelRoomToPost(
+    var id: Int = 0,
+    var hotelnumber: String = "",
+    var roomname: String= "",
+    var price: Int = 0,
+    var minsize: Int = 0,
+    var maxsize: Int = 0,
+    var count: Int = 0,
+    var info: String = ""
+)
+
 data class HotelReview(
     val id: Int,
     val hotelnumber: String,
@@ -157,7 +170,8 @@ data class HotelInfoWithStarAndPrice(
     val countreview: Int,
     val hashtag: ArrayList<String>,
     val distance: Double,
-    val minprice: Int
+    val minprice: Int,
+    val picture: String?
 )
 
 data class DMSend(
@@ -266,6 +280,13 @@ interface Service {
 
     @Headers("accept: application/json",
         "content-type: application/json")
+    @POST("/api/v1/hotelroom/insert")
+    fun postHotelRoomInfo(
+        @Body params: HotelRoomToPost
+    ):Call<HotelReturnData>
+
+    @Headers("accept: application/json",
+        "content-type: application/json")
     @POST("/api/v1/hotelpicture/insert")
     fun postHotelPictures(
         @Body params: HotelPicture
@@ -343,7 +364,7 @@ interface Service {
     @POST("api/v1/paid/kakaopay/ready")
     fun kakaoPay(
         @Body params:PayForm
-    ):Call<Any>
+    ):Call<kakaoReadyDTO>
 
 //    @Headers("Authorization: KakaoAK a48ad79d9d765c639d119d3d093a1449",
 //        "Content-type:application/x-www-form-urlencoded;charset=utf-8")
@@ -361,7 +382,60 @@ interface Service {
 //        @Field("fail_url") fail_url:String,
 //        @Field("cancel_url") cancel_url:String
 //    ):Call<Any>
+    @GET("/api/v1/review/searchbyhotel")
+    fun searchByHotel(
+        @Query("hotelnumber") hotelnumber: String
+    ):Call<SearchReviewDTO>
+
+    @GET("/api/v1/response/search/review")
+    fun searchByReview(
+        @Query("reviewid") reviewid:Int
+    ):Call<SearchResponseDTO>
+
 }
+
+data class kakaoReadyDTO(
+    val data:kakaoReady
+)
+
+data class kakaoReady(
+    val tid:String,
+    val tms_result:Boolean,
+    val next_redirect_app_url:String,
+    val next_redirect_mobile_url:String,
+    val next_redirect_pc_url:String,
+    val android_app_scheme:String,
+    val ios_app_scheme:String,
+    val created_at:String
+)
+
+data class SearchResponseDTO(
+    val data:SearchResponse
+)
+
+data class SearchResponse(
+    val id: Int,
+    val reviewid: Int,
+    val userid: String,
+    val heart:Int,
+    val content:String,
+    val created: ArrayList<Int>
+)
+
+
+data class SearchReviewDTO(
+    val data:ArrayList<SearchReview>
+)
+
+data class SearchReview(
+    val id: Int,
+    val hotelnumber: String,
+    val userid: String,
+    val visitid: Int,
+    val star: Double,
+    val created: ArrayList<Int>,
+    val content: String
+)
 
 data class PayForm(
     val cid:String,

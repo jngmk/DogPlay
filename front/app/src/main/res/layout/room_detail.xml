@@ -219,19 +219,16 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/subCart"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginEnd="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginBottom="15dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:background="@drawable/payment"
             android:gravity="center"
-            android:padding="15dp"
             android:text="장바구니에 담기"
+            android:layout_marginBottom="15dp"
             android:textColor="#ffffff"
             android:textSize="20dp"
             app:layout_constraintBottom_toBottomOf="parent"

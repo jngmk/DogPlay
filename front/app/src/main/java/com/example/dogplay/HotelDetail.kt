@@ -105,6 +105,10 @@ class HotelDetail:AppCompatActivity(), OnMapReadyCallback{
             val intent = Intent(applicationContext,InfoDetail::class.java)
             startActivity(intent)
         }
+        allReview.setOnClickListener{
+            val intent = Intent(applicationContext,AllReview::class.java)
+            startActivity(intent)
+        }
 
 //            이미지 변수화 처리
 //            var imgId = this.getResources().getIdentifier(img,"drawable",this.getPackageName())
@@ -151,7 +155,7 @@ class HotelDetail:AppCompatActivity(), OnMapReadyCallback{
 
     override fun onMapReady(googleMap: GoogleMap) {
         val server = server()
-        server!!.searchHotelDetail(Supplier.UserId).enqueue(object : Callback<HotelDetailDTO> {
+        server!!.searchHotelDetail(Supplier.SelectHotel.data.HotelStar.hotelnumber).enqueue(object : Callback<HotelDetailDTO> {
             override fun onFailure(call: Call<HotelDetailDTO>, t: Throwable) {
             }
             override fun onResponse(

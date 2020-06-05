@@ -1,23 +1,38 @@
 package com.example.dogplay
 
+import android.annotation.SuppressLint
 import android.content.Intent
+import android.icu.util.Calendar
+import android.icu.util.LocaleData
+import android.icu.util.TimeZone
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
+import androidx.core.util.Pair
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dogplay.API.Companion.server
 import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.material.datepicker.MaterialDatePicker
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.Call
 import retrofit2.Callback
+import retrofit2.Response
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.util.*
+import java.util.logging.SimpleFormatter
+import kotlin.collections.ArrayList
 
 
 class searchPage : Fragment() {
     lateinit var compositeDisposable: CompositeDisposable
+    private val today = MaterialDatePicker.todayInUtcMilliseconds()
     companion object {
         fun newInstance() = searchPage()
     }
@@ -29,8 +44,16 @@ class searchPage : Fragment() {
         return inflater.inflate(R.layout.activity_main, container, false)
     }
 
+    @SuppressLint("SimpleDateFormat")
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
+        // date formatter
+        val formatterForView = SimpleDateFormat("MM/dd")
+        val date = formatterForView.format(today)
+
+        curdate.text = "$date - $date"
 
 //        val retrofit = Retrofit.Builder()
 //            .baseUrl("http://k02a4021.p.ssafy.io:8080")
@@ -44,14 +67,40 @@ class searchPage : Fragment() {
             }
 
             override fun onResponse(call: Call<HotelSerchDTO>, response: retrofit2.Response<HotelSerchDTO>) {
-                var data: HotelSerchDTO? = response.body()
-                if (data!!.data == null){
+                var data = response.body()!!.data
+                var dataSize = data.size
+                var pictures = ArrayList<String>()
+                if (data == null){
                 } else {
-                    val layoutManager = LinearLayoutManager(context)
-                    layoutManager.orientation = LinearLayoutManager.VERTICAL
-                    hotelList.layoutManager = layoutManager
-                    val adapter = HotelAdapter(context!!, data.data)
-                    hotelList.adapter = adapter
+                    Log.d("호텔찾았다", data.toString())
+                    data.forEach{
+                        hotel ->
+                        server.getHotelPictures(hotel.hotelnumber,hotel.hotelname).enqueue(object :Callback<HotelPicturesDTO>{
+                            override fun onFailure(call: Call<HotelPicturesDTO>, t: Throwable) {
+                                Log.d("실패했다네", t.toString())
+                            }
+
+                            override fun onResponse(
+                                call: Call<HotelPicturesDTO>,
+                                response: Response<HotelPicturesDTO>
+                            ) {
+                                Log.d("성공했다네", response.body().toString())
+                                if (response.body()!!.data.size > 0){
+                                    pictures.add(response.body()!!.data[0].picture)
+                                } else {
+                                    pictures.add("")
+                                }
+                                if (pictures.size == dataSize){
+                                    val layoutManager = LinearLayoutManager(context)
+                                    layoutManager.orientation = LinearLayoutManager.VERTICAL
+                                    hotelList.layoutManager = layoutManager
+                                    val adapter = HotelAdapter(context!!, data, pictures)
+                                    hotelList.adapter = adapter
+                                }
+                            }
+
+                        })
+                    }
                 }
             }
         })
@@ -70,9 +119,31 @@ class searchPage : Fragment() {
         val adapter2 = DogAdapter(this.requireContext(), dogs)
         dogList.adapter = adapter2
 
+        // setting
+        val calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
+        calendar.clear()
+
+
+        // date picker
+        val builder = MaterialDatePicker.Builder.dateRangePicker()
+        builder.setTitleText("날짜 선택")
+
+        val todayPair = Pair(today, today)
+        builder.setSelection(todayPair)
+
+        val dateRangePicker = builder.build()
+
         curdate.setOnClickListener{
-            val intent = Intent(this.context, CalendarView::class.java)
-            startActivity(intent)
+//            val intent = Intent(this.context, CalendarView::class.java)
+//            startActivity(intent)
+            dateRangePicker.show(activity!!.supportFragmentManager, "DATE PICKER")
+
+            dateRangePicker.addOnPositiveButtonClickListener {
+                val startDate = formatterForView.format(dateRangePicker.selection!!.first)
+                val endDate = formatterForView.format(dateRangePicker.selection!!.second)
+
+                curdate.text = "$startDate - $endDate"
+            }
         }
 
         dogList.setOnClickListener{

@@ -13,12 +13,23 @@
         android:text="모든 리뷰 보기"
         android:textSize="50dp"
         />
+    <TextView
+        android:id="@+id/SelectHotelName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="호텔 이름이 들어갈 자리"
+        app:layout_constraintTop_toBottomOf="@id/AllReviewTitle"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:textSize="30dp"
+        android:layout_margin="15dp"
+        />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/ReviewRecycler"
-        android:layout_width="wrap_content"
-        android:layout_margin="15dp"
+        android:layout_width="match_parent"
+        android:layout_marginVertical="15dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/AllReviewTitle"
+        app:layout_constraintTop_toBottomOf="@id/SelectHotelName"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         />
