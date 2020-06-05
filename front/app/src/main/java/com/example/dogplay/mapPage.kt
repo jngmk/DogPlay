@@ -30,6 +30,7 @@ import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import io.opencensus.resource.Resource
 import kotlinx.android.synthetic.main.map_hotel_list.view.*
 import kotlinx.android.synthetic.main.map_page.*
 import retrofit2.Call
@@ -55,7 +56,7 @@ class mapPage : Fragment() {
     private var mapFocus = false
     private var numPage = 0
     private val REQUEST_ACCESS_FINE_LOCATION = 1
-    private val DISTANCE = 1
+    private val DISTANCE = 50
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -174,7 +175,6 @@ class mapPage : Fragment() {
         server!!.getHotelPictures(hotelnumber, name).enqueue(object : Callback<HotelPicturesDTO> {
             override fun onFailure(call: Call<HotelPicturesDTO>, t: Throwable) {
                 Log.d("fail",t.toString())
-                pictures.add(null)
             }
             override fun onResponse(
                 call: Call<HotelPicturesDTO>,
@@ -185,6 +185,8 @@ class mapPage : Fragment() {
                     val downloadUri = response.body()!!.data[0].picture
 //                    val storageRef = FirebaseStorage.getInstance().getReferenceFromUrl(downloadUri)
                     pictures.add(downloadUri)
+                } else {
+                    pictures.add(null)
                 }
                 mPager.adapter = PagerRecyclerAdapter(hotels, pictures)
 //                mPager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
@@ -314,13 +316,8 @@ class mapPage : Fragment() {
 
         override fun onBindViewHolder(holder: PagerViewHolder, position: Int) {
             val hotel = hotels[position]
-            if (pictures.size != 0 && pictures[position] != null) {
-                val picture = pictures[position]
-                Glide.with(holder.itemView)
-                    .load(picture)
-                    .into(holder.itemView.mapHotelImg)
-            }
-            holder.updateHotelList(hotel)
+            val picture = pictures[position]
+            holder.updateHotelList(hotel, picture)
         }
 
         override fun getItemCount(): Int = hotels.size
@@ -334,7 +331,16 @@ class mapPage : Fragment() {
         private var mapHotelPrice: TextView = itemView.findViewById(R.id.mapHotelPrice)
 
         @SuppressLint("SetTextI18n")
-        fun updateHotelList(hotel: HotelInfoWithStarAndPrice) {
+        fun updateHotelList(hotel: HotelInfoWithStarAndPrice, picture: String?) {
+            if (picture != null) {
+                Glide.with(itemView)
+                    .load(picture)
+                    .into(mapHotelImg)
+            }
+            else {
+                mapHotelImg.setImageResource(R.drawable.dog)
+            }
+
             mapHotelEval.text = hotel.star.toString()
             mapHotelName.text = hotel.hotelname
             mapHotelAddress.text = hotel.address

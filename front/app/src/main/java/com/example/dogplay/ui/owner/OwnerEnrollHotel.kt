@@ -73,6 +73,9 @@ class OwnerEnrollHotel : AppCompatActivity() {
 
         getHashTag()
 
+        btnEnrollHotelBack.setOnClickListener {
+            finish()
+        }
         btnEnrollHotelImg.setOnClickListener {
             getImages()
         }
@@ -293,6 +296,7 @@ class OwnerEnrollHotel : AppCompatActivity() {
                         }
                     }
                 }
+                finish()
             }
         })
     }

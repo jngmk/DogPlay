@@ -16,4 +16,5 @@ public interface HotelpictureDAO {
 	public void insert(Hotelpicture hotelpicture);
 	public void update(Hotelpicture hotelpicture);
 	public void delete(int id);
+	public String searchmain(String hotelnumber);
 }
