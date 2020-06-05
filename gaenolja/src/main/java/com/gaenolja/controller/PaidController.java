@@ -76,7 +76,7 @@ public class PaidController {
 	
 	@GetMapping("/api/v1/paid/kakaopay")
 	@ApiOperation("카카오페이 결제")
-	public ResponseEntity<Map<String, Object>> kakaopay(String pg_token){
+	public ResponseEntity<Map<String, Object>> kakaopay(@RequestParam String pg_token){
 		return handleSuccess(service.kakaopay(pg_token));
 	}
 	

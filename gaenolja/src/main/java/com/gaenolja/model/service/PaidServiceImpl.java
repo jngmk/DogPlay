@@ -136,6 +136,7 @@ public class PaidServiceImpl implements PaidService{
 	@Override
 	public String kakaopay(String pg_token) {
 		try {
+			
 			System.out.println(pg_token);
 			
 			return pg_token;
@@ -184,9 +185,8 @@ public class PaidServiceImpl implements PaidService{
 	}
 	
 	@Override
-	public int insert(String tid, String pg_token) {
+	public int insert(Paid paid) {
 		try {
-			Paid paid = dao.searchbyaid(tid);
 			// 결제 승인
 			HttpHeaders payheaders = new HttpHeaders();
 			RestTemplate payrestTemplate = new RestTemplate();
@@ -195,10 +195,10 @@ public class PaidServiceImpl implements PaidService{
 
 			MultiValueMap<String, Object> payparameters = new LinkedMultiValueMap<>();
 			payparameters.add("cid", paid.getCid());
-			payparameters.add("tid", tid);
+			payparameters.add("tid", paid.getTid());
 			payparameters.add("partner_order_id", paid.getPartner_order_id());
 			payparameters.add("partner_user_id", paid.getUserid());
-			payparameters.add("pg_token", pg_token);
+			payparameters.add("pg_token", paid.getPg_token());
 			
 			HttpEntity<MultiValueMap<String, Object>> pay_request = new HttpEntity<>(payparameters, payheaders);
 			URI payuri = URI.create("https://kapi.kakao.com/v1/payment/approve");
@@ -206,8 +206,6 @@ public class PaidServiceImpl implements PaidService{
 			ResponseEntity<Map> pay_response;
 			pay_response = payrestTemplate.postForEntity(payuri, pay_request, Map.class);
 			Map paybody = pay_response.getBody();
-			
-			paid.setPg_token(pg_token);
 			
 			String aid = (String) paybody.get("aid");
 			paid.setAid(aid);

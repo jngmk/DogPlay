@@ -11,7 +11,7 @@ import com.gaenolja.model.dto.Paid;
 public interface PaidService {
 	public List<Paid> searchall();
 	public Paid search(int id);
-	public int insert(String tid, String pg_token);
+	public int insert(Paid paid);
 	public boolean update(Paid paid);
 	public boolean delete(int id);
 	public Map kakaoready(Kakaopay kakao);
