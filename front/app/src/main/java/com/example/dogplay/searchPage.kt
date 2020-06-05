@@ -1,23 +1,33 @@
 package com.example.dogplay
 
+import android.annotation.SuppressLint
 import android.content.Intent
+import android.icu.util.Calendar
+import android.icu.util.TimeZone
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
+import androidx.core.util.Pair
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dogplay.API.Companion.server
 import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.material.datepicker.MaterialDatePicker
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.Call
 import retrofit2.Callback
+import java.text.SimpleDateFormat
+import java.util.logging.SimpleFormatter
 
 
 class searchPage : Fragment() {
     lateinit var compositeDisposable: CompositeDisposable
+    private val today = MaterialDatePicker.todayInUtcMilliseconds()
     companion object {
         fun newInstance() = searchPage()
     }
@@ -29,8 +39,16 @@ class searchPage : Fragment() {
         return inflater.inflate(R.layout.activity_main, container, false)
     }
 
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
+        // date formatter
+        @SuppressLint("SimpleDateFormat")
+        val formatter = SimpleDateFormat("mm/dd")
+        val date = formatter.format(today)
+
+        curdate.text = "$date - $date"
 
 //        val retrofit = Retrofit.Builder()
 //            .baseUrl("http://k02a4021.p.ssafy.io:8080")
@@ -73,9 +91,31 @@ class searchPage : Fragment() {
         val adapter2 = DogAdapter(this.requireContext(), dogs)
         dogList.adapter = adapter2
 
+        // setting
+        val calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
+        calendar.clear()
+
+
+        // date picker
+        val builder = MaterialDatePicker.Builder.dateRangePicker()
+        builder.setTitleText("날짜 선택")
+
+        val todayPair = Pair(today, today)
+        builder.setSelection(todayPair)
+
+        val dateRangePicker = builder.build()
+
         curdate.setOnClickListener{
-            val intent = Intent(this.context, CalendarView::class.java)
-            startActivity(intent)
+//            val intent = Intent(this.context, CalendarView::class.java)
+//            startActivity(intent)
+            dateRangePicker.show(activity!!.supportFragmentManager, "DATE PICKER")
+
+            dateRangePicker.addOnPositiveButtonClickListener {
+                val startDate = dateRangePicker.selection!!.first
+                val endDate = dateRangePicker.selection!!.second
+
+                curdate.text = "$startDate - $endDate"
+            }
         }
 
         dogList.setOnClickListener{
