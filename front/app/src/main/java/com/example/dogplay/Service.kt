@@ -171,7 +171,8 @@ data class HotelInfoWithStarAndPrice(
     val countreview: Int,
     val hashtag: ArrayList<String>,
     val distance: Double,
-    val minprice: Int
+    val minprice: Int,
+    val picture: String?
 )
 
 data class DMSend(
