@@ -9,7 +9,6 @@
         android:id="@+id/scrv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="188dp"
         android:paddingBottom="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
         tools:layout_editor_absoluteX="16dp">
@@ -37,7 +36,8 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="16dp"
-                android:text="호텔 예약 확인 페이지"
+                android:text="로그아웃!!!"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_hotel_name" />
 

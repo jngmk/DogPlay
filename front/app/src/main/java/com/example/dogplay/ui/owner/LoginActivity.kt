@@ -7,6 +7,7 @@ import android.util.Base64
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.dogplay.MainActivity
 import com.example.dogplay.R
 import com.kakao.auth.ISessionCallback
 import com.kakao.auth.Session
@@ -68,7 +69,7 @@ class LoginActivity : AppCompatActivity() {
             UserManagement.getInstance().me( object : MeV2ResponseCallback() {
                 override fun onSuccess(result: MeV2Response?) {
                     // 로그인이 성공했을 때
-                    var intent = Intent(this@LoginActivity, LoginMain::class.java)
+                    var intent = Intent(this@LoginActivity, MainActivity::class.java)
                     intent.putExtra("name", result!!.getNickname())
                     intent.putExtra("profile", result!!.getProfileImagePath())
                     startActivity(intent)

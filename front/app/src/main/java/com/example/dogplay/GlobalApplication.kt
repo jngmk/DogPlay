@@ -84,3 +84,4 @@ class GlobalApplication : Application() {
         instance = null
     }
 }
+

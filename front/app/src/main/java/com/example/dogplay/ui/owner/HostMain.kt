@@ -1,7 +1,6 @@
 package com.example.dogplay.ui.owner
 
-import android.content.pm.PackageInfo
-import android.content.pm.PackageManager
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,14 +9,14 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dogplay.R
-import com.google.common.reflect.Reflection.getPackageName
+import com.kakao.usermgmt.UserManagement
+import com.kakao.usermgmt.callback.LogoutResponseCallback
 import kotlinx.android.synthetic.main.host_main.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.security.MessageDigest
 
 
 class HostMain : Fragment(){
@@ -25,6 +24,17 @@ class HostMain : Fragment(){
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
+        tv_reservation_page.setOnClickListener {
+            UserManagement.getInstance().requestLogout(object : LogoutResponseCallback() {
+                override fun onCompleteLogout() {
+                    val intent = Intent(context, LoginActivity::class.java)
+                    startActivity(intent)
+
+                }
+            })
+        }
+
 
         val hotelnumber = "892-11-00104"
         var int_id = 0
