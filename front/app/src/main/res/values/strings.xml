@@ -1,14 +1,17 @@
 <resources>
     <string name="app_name">DogPlay</string>
+    <!--  kakao  -->
     <string name="kakao_app_key">6827010c9ea522e1e948fa346928d674</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- mapPage -->
     <string name="searchHotelNearBy">현 지도에서 검색</string>
+
+    <!-- enrollHotel -->
     <string name="enrollHotel">호텔 등록하기</string>
     <string name="enrollHotelRoom">객실 등록하기</string>
-    <string name="EnrollHotelName">호텔 이름을 입력해주세요</string>
     <string name="enroll">등록하기</string>
     <string name="EnrollHotelNameDescription">개놀자에 등록할 이름을 골라주세요</string>
+    <string name="EnrollHotelName">호텔 이름을 입력해주세요</string>
     <string name="EnrollHotelImgDescription">여기를 눌러서 사진을 추가해주세요</string>
     <string name="plus">+</string>
     <string name="EnrollHotelAddress">주소를 입력해주세요</string>
@@ -27,4 +30,17 @@
     <string name="forbiddenContent">전염성 질병이 있는 아이 등</string>
     <string name="enterTheTitle">제목을 입력해주세요</string>
     <string name="enterTheContent">내용을 입력해주세요</string>
+
+    <!-- enrollHotelRoom -->
+    <string name="EnrollHotelRoomName">객실 이름을 입력해주세요</string>
+    <string name="EnrollHotelRoomPrice">객실의 가격을 알려주세요</string>
+    <string name="EnrollHotelRoomPriceDescription">가격을 입력해주세요</string>
+    <string name="EnrollHotelRoomCount">객실의 개수를 알려주세요</string>
+    <string name="EnrollHotelRoomCountDescription">e.g) 10 </string>
+    <string name="EnrollHotelRoomMinKg">수용가능한 최소 몸무게를 알려주세요(단위 kg)</string>
+    <string name="EnrollHotelRoomMinKgDescription">e.g) 5 </string>
+    <string name="EnrollHotelRoomMaxKg">수용가능한 최대 몸무게를 알려주세요(단위 kg)</string>
+    <string name="EnrollHotelRoomMaxKgDescription">e.g) 15 </string>
+    <string name="EnrollHotelRoomInfoDescription">객실에 대한 간략한 소개를 해주세요</string>
+
 </resources>
