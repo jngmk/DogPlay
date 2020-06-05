@@ -9,13 +9,45 @@
     >
 
     <TextView
+        android:id="@+id/txtOwnerHotelTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginTop="30dp"
+        android:text="@string/enrollHotel"
+        android:textSize="30sp"
+        android:textAlignment="center"
+        android:layout_gravity="center"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <ImageView
+        android:id="@+id/btnOwnerHotelBack"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="30dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/back_foreground"
+        tools:ignore="VectorDrawableCompat" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcvOwnerHotel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtOwnerHotelTitle" />
+
+    <TextView
         android:id="@+id/btnAddHotel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/enrollHotel"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/rcvOwnerHotel" />
 
     <TextView
         android:id="@+id/btnAddHotelRoom"

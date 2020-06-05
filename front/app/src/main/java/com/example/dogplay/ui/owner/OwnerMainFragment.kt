@@ -16,6 +16,7 @@ import kotlinx.android.synthetic.main.fragment_owner_main.*
  * create an instance of this fragment.
  */
 class OwnerMainFragment : Fragment() {
+    private val userId = "owner6"
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

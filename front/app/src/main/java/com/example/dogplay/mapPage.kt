@@ -151,7 +151,7 @@ class mapPage : Fragment() {
                     numPage++
 
                     // hotel 이미지 가져오기
-                    getPictures(hotel.hotelnumber, hotel.hotelname)
+                    getPictures(hotel.hotelnumber)
                 }
                 // 초기에 0번째 페이지가 포커싱
                 if (mMarkers.size != 0) {
@@ -170,9 +170,9 @@ class mapPage : Fragment() {
         })
     }
 
-    private fun getPictures(hotelnumber: String, name: String) {
+    private fun getPictures(hotelnumber: String) {
         val server = API.server()
-        server!!.getHotelPictures(hotelnumber, name).enqueue(object : Callback<HotelPicturesDTO> {
+        server!!.getHotelPictures(hotelnumber, "main").enqueue(object : Callback<HotelPicturesDTO> {
             override fun onFailure(call: Call<HotelPicturesDTO>, t: Throwable) {
                 Log.d("fail",t.toString())
             }
