@@ -91,7 +91,7 @@ public class PaidServiceImpl implements PaidService{
 
 			HttpSession session = request.getSession();
 			session.setAttribute("tid", tid);
-			
+			System.out.println(session.getAttribute("tid"));
 			return body;
 		}catch(Exception e) {
 			e.printStackTrace();
