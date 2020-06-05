@@ -32,7 +32,8 @@ data class Hotel(var counstar: Int,
                  var hotelname:String,
                  var longitude:Double,
                  var info:String,
-                 var hashtag:ArrayList<String>
+                 var hashtag:ArrayList<String>,
+                 val picture: String
 )
 
 

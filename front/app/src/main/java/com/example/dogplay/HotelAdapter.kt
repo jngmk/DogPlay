@@ -19,7 +19,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class HotelAdapter(var context:Context, var hotels:ArrayList<Hotel>, var pictures:ArrayList<String>) :
+class HotelAdapter(var context:Context, var hotels:ArrayList<Hotel>) :
     RecyclerView.Adapter<HotelAdapter.ViewHolder>(){
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
 
@@ -52,8 +52,8 @@ class HotelAdapter(var context:Context, var hotels:ArrayList<Hotel>, var picture
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val hotel = hotels[position]
         holder.setData(hotel,position)
-        var picture = pictures[position]
-        if (picture != ""){
+        var picture = hotel.picture
+        if (picture != null){
             Glide.with(holder.itemView)
                 .load(picture)
                 .into(holder.itemView.cardImg)
