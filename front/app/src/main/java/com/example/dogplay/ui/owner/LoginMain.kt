@@ -14,7 +14,8 @@ class LoginMain : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.login_main)
 
-        tvNickname.text = intent.getStringExtra("token")
+
+        tvNickname.text = intent.getStringExtra("name")
         tvProfile.text = intent.getStringExtra("profile")
         btn_logout.setOnClickListener {
             UserManagement.getInstance().requestLogout(object : LogoutResponseCallback() {
