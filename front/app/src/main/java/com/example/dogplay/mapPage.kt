@@ -47,7 +47,6 @@ class mapPage : Fragment() {
     private lateinit var mPager: ViewPager2
     private lateinit var mMarkers: ArrayList<Marker>
     private lateinit var hotels: ArrayList<HotelInfoWithStarAndPrice>
-    private var pictures: ArrayList<String?> = ArrayList()
     private var mMapCurLatitude: Double? = null
     private var mMapCurLongitude: Double? = null
     private var mCurrentMarker: Marker? = null
@@ -149,9 +148,6 @@ class mapPage : Fragment() {
                     marker.tag = numPage
                     mMarkers.add(marker)
                     numPage++
-
-                    // hotel 이미지 가져오기
-                    getPictures(hotel.hotelnumber, hotel.hotelname)
                 }
                 // 초기에 0번째 페이지가 포커싱
                 if (mMarkers.size != 0) {
@@ -163,34 +159,9 @@ class mapPage : Fragment() {
                     mMarkers.add(0, marker)
                     marker.tag = 0
                 }
-                mPager.adapter = PagerRecyclerAdapter(hotels, pictures)
+                mPager.adapter = PagerRecyclerAdapter(hotels)
                 mPager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
                 mPager.registerOnPageChangeCallback(hotelPageChangeCallback)
-            }
-        })
-    }
-
-    private fun getPictures(hotelnumber: String, name: String) {
-        val server = API.server()
-        server!!.getHotelPictures(hotelnumber, name).enqueue(object : Callback<HotelPicturesDTO> {
-            override fun onFailure(call: Call<HotelPicturesDTO>, t: Throwable) {
-                Log.d("fail",t.toString())
-            }
-            override fun onResponse(
-                call: Call<HotelPicturesDTO>,
-                response: Response<HotelPicturesDTO>
-            ) {
-                Log.d("success",response.body().toString())
-                if (response.body() != null && response.body()!!.data.size != 0) {
-                    val downloadUri = response.body()!!.data[0].picture
-//                    val storageRef = FirebaseStorage.getInstance().getReferenceFromUrl(downloadUri)
-                    pictures.add(downloadUri)
-                } else {
-                    pictures.add(null)
-                }
-                mPager.adapter = PagerRecyclerAdapter(hotels, pictures)
-//                mPager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
-//                mPager.registerOnPageChangeCallback(hotelPageChangeCallback)
             }
         })
     }
@@ -309,15 +280,14 @@ class mapPage : Fragment() {
         }
     }
 
-    class PagerRecyclerAdapter(private val hotels: ArrayList<HotelInfoWithStarAndPrice>, private val pictures: ArrayList<String?>) : RecyclerView.Adapter<PagerViewHolder>() {
+    class PagerRecyclerAdapter(private val hotels: ArrayList<HotelInfoWithStarAndPrice>) : RecyclerView.Adapter<PagerViewHolder>() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PagerViewHolder =
             PagerViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.map_hotel_list, parent, false))
 
         override fun onBindViewHolder(holder: PagerViewHolder, position: Int) {
             val hotel = hotels[position]
-            val picture = pictures[position]
-            holder.updateHotelList(hotel, picture)
+            holder.updateHotelList(hotel)
         }
 
         override fun getItemCount(): Int = hotels.size
@@ -331,10 +301,10 @@ class mapPage : Fragment() {
         private var mapHotelPrice: TextView = itemView.findViewById(R.id.mapHotelPrice)
 
         @SuppressLint("SetTextI18n")
-        fun updateHotelList(hotel: HotelInfoWithStarAndPrice, picture: String?) {
-            if (picture != null) {
+        fun updateHotelList(hotel: HotelInfoWithStarAndPrice) {
+            if (hotel.picture != null) {
                 Glide.with(itemView)
-                    .load(picture)
+                    .load(hotel.picture)
                     .into(mapHotelImg)
             }
             else {
