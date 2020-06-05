@@ -81,7 +81,7 @@ class ChatAdapter(var context: Context, var chattings:ArrayList<ChatMain>) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val chat = chattings[position].chat
         val target:String
-        if (chat.receive != "test1") target = chat.receive
+        if (chat.receive != Supplier.UserId) target = chat.receive
         else target = chat.send
         holder.itemView.chatNic.text = target
         holder.itemView.chatTop.text = chat.message

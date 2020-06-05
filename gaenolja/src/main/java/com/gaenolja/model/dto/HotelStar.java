@@ -19,6 +19,13 @@ public class HotelStar {
 	private List<Integer> hashid;
 	private double distance;
 	private int minprice;
+	private String picture;
+	public String getPicture() {
+		return picture;
+	}
+	public void setPicture(String picture) {
+		this.picture = picture;
+	}
 	public int getMinprice() {
 		return minprice;
 	}

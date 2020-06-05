@@ -9,6 +9,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:name=".GlobalApplication"
         android:usesCleartextTraffic="true"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -18,9 +19,19 @@
         android:theme="@style/AppTheme">
         <activity android:name=".ui.owner.OwnerEnrollHotelRoom" />
         <activity android:name=".ui.owner.OwnerEnrollHotel" />
+        <activity android:name=".ui.owner.EditRoom" />
+        <activity android:name=".ui.owner.EditPage" />
+        <activity android:name=".ui.owner.HostMain" />
+        <activity android:name=".ui.owner.HostReviewPage" />
+        <activity android:name=".ui.owner.CheckAllReservation" />
+        <activity android:name=".ui.owner.HostReReview" />
+        <activity android:name=".ui.owner.LoginMain" />
+
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.owner.LoginActivity"
             android:windowSoftInputMode="adjustResize|stateHidden">
+        </activity>
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -32,9 +43,17 @@
         <activity android:name=".MyDogPage"/>
         <activity android:name=".RoomDetail"/>
         <activity android:name=".DirectMessage"/>
+        <activity android:name=".CartPage"/>
+        <activity android:name=".AllReview"/>
+        <activity android:name=".KakaoWebView"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBoj6Nwjapgdvd4YSmJyU5vkF6DAfh_1ik" />
-    </application>
 
+        <meta-data
+            android:name="com.kakao.sdk.AppKey"
+            android:value="@string/kakao_app_key" />
+    </application>
 </manifest>

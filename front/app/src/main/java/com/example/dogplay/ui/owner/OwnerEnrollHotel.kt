@@ -34,6 +34,7 @@ import com.example.dogplay.*
 import com.google.android.material.chip.Chip
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreSettings
+import com.google.firebase.storage.StorageReference
 import com.google.gson.JsonObject
 import kotlinx.android.synthetic.main.activity_owner_enorll_hotel.*
 import kotlinx.android.synthetic.main.owner_hotel_img_item.*
@@ -48,7 +49,8 @@ class OwnerEnrollHotel : AppCompatActivity() {
     private lateinit var mRecyclerView: RecyclerView
     private lateinit var mHotelDetailLayout: LinearLayout
     private lateinit var firestore: FirebaseFirestore
-    private var hotelPicture: HotelPicture = HotelPicture()
+    private lateinit var imageRef: StorageReference
+    private var hotelPicture: HotelPicture = HotelPicture(0,"","","")
     private var hotelHash: HotelHashToPost = HotelHashToPost()
     private var hotelData: HotelInfoToPost = HotelInfoToPost()
     private var hotelDetailsLayoutIdx = 3
@@ -73,6 +75,9 @@ class OwnerEnrollHotel : AppCompatActivity() {
 
         getHashTag()
 
+        btnEnrollHotelBack.setOnClickListener {
+            finish()
+        }
         btnEnrollHotelImg.setOnClickListener {
             getImages()
         }
@@ -268,20 +273,26 @@ class OwnerEnrollHotel : AppCompatActivity() {
 
                 // firebase 에 사진 올리기
                 hotelData.let {
-                    val hotelName = it.hotelname
+                    var categoryName = "detail"
                     val hotelNumber = it.hotelnumber
                     val count = pictures.size - 1
 
                     for (i in 0..count) {
                         val uri = uris[i]
-                        val imageRef = storageReferenence.child("hotels/$hotelNumber/" + uri.lastPathSegment)
+                        if (i == 0) {
+                            imageRef = storageReferenence.child("hotels/$hotelNumber/" + uri.lastPathSegment)
+                            categoryName = "main"
+                        }
+                        else {
+                            imageRef = storageReferenence.child("hotels/$hotelNumber/detail/" + uri.lastPathSegment)
+                        }
                         val uploadTask = imageRef.putFile(uri)
                         uploadTask.addOnSuccessListener {
                             val downloadUrl = imageRef.downloadUrl
                             downloadUrl.addOnSuccessListener {
                                 // 데이터 베이스에 사진 url 올리기
                                 hotelPicture.apply {
-                                    name = "$hotelName"
+                                    name = categoryName
                                     hotelnumber = hotelNumber
                                     picture = it.toString()
                                 }
@@ -293,6 +304,7 @@ class OwnerEnrollHotel : AppCompatActivity() {
                         }
                     }
                 }
+                finish()
             }
         })
     }

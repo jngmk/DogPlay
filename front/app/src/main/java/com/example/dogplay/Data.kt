@@ -3,7 +3,6 @@ package com.example.dogplay
 import com.google.gson.internal.LinkedTreeMap
 import java.net.Inet4Address
 
-data class Hotel(var counstar: Int, var address: String, var star:Double, var distance:Int, var latitude:Double, val userid:String, var hashid:ArrayList<Int>, var hotelnumber:String, var countreview:Int, var minprice:Int, var contact:String, var detail:ArrayList<ArrayList<String>>, var hotelname:String, var longitude:Double, var info:String, var hashtag:ArrayList<String>)
 
 
 data class Dog(var img:String)
@@ -20,11 +19,16 @@ data class DMset(
 
 
 object Supplier{
-    var HotelDetailReview = arrayListOf<LinkedTreeMap<String,Any>>()
-    var HotelDetailInfo = ArrayList<ArrayList<String>>()
-    var RoomDetail = ArrayList<LinkedTreeMap<String,Any>>()
     var PickAdress = String()
-    var UserId = String()
+    var UserId = "test1"
     var DMList = ArrayList<DMset>()
+    var CartList = ArrayList<responseCart>()
+    var SelectHotel = HotelDetailDTO(HotelDetailHash(HotelStar("","","",0.0,0.0,"","","", arrayListOf(
+        arrayListOf(), arrayListOf()),0.0,0,
+        arrayListOf(), arrayListOf(),0,0), arrayListOf(), arrayListOf(),
+        arrayListOf()))
+    var totalCartPrice = 0
+    var SelectHotelRoomPrice = HashMap<String,Int>()
+    var SelectRoom = RoomDetailData(0,"","",0,0,0,0,"")
 }
 
