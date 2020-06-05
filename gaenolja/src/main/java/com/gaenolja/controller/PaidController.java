@@ -46,11 +46,11 @@ public class PaidController {
 		return handleSuccess(service.search(id));
 	}
 
-//	@PostMapping("/api/v1/paid/insert")
-//	@ApiOperation("insert paid")
-//	public ResponseEntity<Map<String, Object>> insert(@RequestBody Paid paid){
-//		return handleSuccess(service.insert(paid));
-//	}
+	@PostMapping("/api/v1/paid/insert")
+	@ApiOperation("insert paid")
+	public ResponseEntity<Map<String, Object>> insert(@RequestBody Paid paid){
+		return handleSuccess(service.insert(paid));
+	}
 		
 	@PutMapping("/api/v1/paid/update")
 	@ApiOperation("update paid")
@@ -77,6 +77,7 @@ public class PaidController {
 	@GetMapping("/api/v1/paid/kakaopay")
 	@ApiOperation("카카오페이 결제")
 	public ResponseEntity<Map<String, Object>> kakaopay(@RequestParam String pg_token){
+		System.out.println(handleSuccess(service.kakaopay(pg_token)));
 		return handleSuccess(service.kakaopay(pg_token));
 	}
 	
