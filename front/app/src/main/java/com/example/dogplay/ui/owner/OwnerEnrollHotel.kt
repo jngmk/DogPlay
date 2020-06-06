@@ -50,6 +50,7 @@ class OwnerEnrollHotel : AppCompatActivity() {
     private lateinit var mHotelDetailLayout: LinearLayout
     private lateinit var firestore: FirebaseFirestore
     private lateinit var imageRef: StorageReference
+    private lateinit var userId: String
     private var hotelPicture: HotelPicture = HotelPicture(0,"","","")
     private var hotelHash: HotelHashToPost = HotelHashToPost()
     private var hotelData: HotelInfoToPost = HotelInfoToPost()
@@ -59,7 +60,6 @@ class OwnerEnrollHotel : AppCompatActivity() {
     private var storageReferenence = FirebaseStorage.getInstance().getReference()
     private val pictures: ArrayList<Bitmap> = ArrayList()
     private val uris: ArrayList<Uri> = ArrayList()
-    private val userId = intent.getStringExtra(USER_ID)
     private val IMAGE_GALLERY_REQUEST_CODE = 1001
 
     @RequiresApi(Build.VERSION_CODES.M)
@@ -70,6 +70,7 @@ class OwnerEnrollHotel : AppCompatActivity() {
         mViewPager2 = vpEnrollHotelImg
         mRecyclerView = rcyEnrollHotelTag
         mHotelDetailLayout = layoutEnrollHotelDetail
+        userId = intent.getStringExtra(USER_ID)!!
 
         firestore = FirebaseFirestore.getInstance()
         firestore.firestoreSettings = FirebaseFirestoreSettings.Builder().build()
