@@ -18,11 +18,16 @@
 	</select>
 	
 	<select id="countbyhotelandroom" parameterType="hashmap" resultType="int">
-		select count from reservation where hotelnumber=#{hotelnumber} and roomname=#{roomname}
+		select ifnull(sum(count), 0) from reservation where hotelnumber=#{hotelnumber} and roomname=#{roomname}
 	</select>
 	
 	<select id="countbydate" parameterType="hashmap" resultType="int">
-		select count from reservation where hotelnumber=#{hotelnumber} and roomname=#{roomname} and
+		select ifnull(sum(count), 0) from reservation where hotelnumber=#{hotelnumber} and roomname=#{roomname} and
+		not (finishdate <![CDATA[<]]>#{startdate} or startdate <![CDATA[>]]>#{finishdate})
+	</select>
+	
+	<select id="searchbydate" parameterType="hashmap" resultType="reservation">
+		select * from reservation where hotelnumber=#{hotelnumber} and roomname=#{roomname} and
 		not (finishdate <![CDATA[<]]>#{startdate} or startdate <![CDATA[>]]>#{finishdate})
 	</select>
 	
