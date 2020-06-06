@@ -18,8 +18,6 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class MainActivity : AppCompatActivity(){
-    internal lateinit var user: User
-    private val userSupplier = UserSupplier()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,16 +31,22 @@ class MainActivity : AppCompatActivity(){
 //            .baseUrl("http://k02a4021.p.ssafy.io:8080")
 //            .addConverterFactory(GsonConverterFactory.create())
 //            .build()
-        var server = API.server()
+        val server = API.server()
         server!!.getUserByUserId(userId.toString()).enqueue(object: Callback<UserDTO> {
             override fun onFailure(call: Call<UserDTO>, t: Throwable) {
                 Log.d("faile", t.toString())
                 Log.d("faile", "실패-----------------------------------")
             }
             override fun onResponse(call: Call<UserDTO>, response: Response<UserDTO>) {
-                val user: User = response.body()!!.data[0]
-                userSupplier.user.value = user
-                val admin = user.admin.toString()
+                var user = response.body()!!.data
+                if (user.phone == null) {
+                    user.phone = ""
+                }
+                if (user.picture == null) {
+                    user.picture = ""
+                }
+                Supplier.user.postValue(user)
+                admin = user.admin.toString()
                 Log.d("faile", "${admin}-----------------------------------")
                 saveData()
 

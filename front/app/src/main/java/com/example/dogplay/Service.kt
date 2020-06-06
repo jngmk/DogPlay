@@ -270,14 +270,16 @@ data class ChatNew(
 
 data class UserDTO(
     @SerializedName("data")
-    val data: ArrayList<User>
+    val data: User,
+    @SerializedName("state")
+    val state: String
 )
 
 data class User(
     var userid: String = "",
     var nickname: String = "",
-    var phone: String = "",
-    var picture: String = "",
+    var phone: String? = "",
+    var picture: String? = "",
     var social: Int = 0,
     var admin: Int = 0
 )

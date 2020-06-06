@@ -34,14 +34,15 @@ object Supplier{
     var SelectPayForm = PayForm("","","","",
         0,0,0,"","","")
     var ResponseTid = ""
+    var user: MutableLiveData<User> = MutableLiveData<User>()
 }
 
-class UserSupplier {
-    private var _user: User = User()
-
-    internal var user : User
-        get() { return _user}
-        set(value) {_user = value}
-}
+//class UserSupplier {
+//    private var _user: User = User()
+//
+//    internal var user : User
+//        get() { return _user}
+//        set(value) {_user = value}
+//}
 
 
