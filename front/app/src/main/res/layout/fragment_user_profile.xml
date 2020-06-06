@@ -74,11 +74,11 @@
         android:background="#DDDDDD" />
 
     <TextView
-        android:id="@+id/btnNotification"
+        android:id="@+id/btnMyDogs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="@string/notification"
+        android:text="@string/myDogs"
         android:textSize="18sp" />
 
     <View
@@ -93,6 +93,20 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="@string/reviews"
+        android:textSize="18sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginTop="16dp"
+        android:background="#DDDDDD" />
+
+    <TextView
+        android:id="@+id/btnNotification"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/notification"
         android:textSize="18sp" />
 
     <View

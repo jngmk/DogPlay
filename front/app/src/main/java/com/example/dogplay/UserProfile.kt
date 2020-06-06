@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.dogplay.ui.owner.LoginActivity
+import com.example.dogplay.ui.owner.OwnerEnrollHotel
+import com.example.dogplay.ui.owner.USER_ID
 import com.kakao.usermgmt.UserManagement
 import com.kakao.usermgmt.callback.LogoutResponseCallback
 import kotlinx.android.synthetic.main.fragment_user_profile.*
@@ -28,17 +30,22 @@ class UserProfile : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        val userId = "owner6"
+
         btnUserInfo.setOnClickListener {
             editUserInfo()
         }
-        btnNotification.setOnClickListener {
-            openNotificationPage()
+        btnMyDogs.setOnClickListener {
+            addMyDogs()
         }
         btnReviews.setOnClickListener {
             openReviewPage()
         }
+        btnNotification.setOnClickListener {
+            openNotificationPage()
+        }
         btnEnrollMyHotel.setOnClickListener {
-            enrollHotel()
+            enrollHotel(userId)
         }
         btnChangeToOwnerView.setOnClickListener {
             changeView()
@@ -49,6 +56,16 @@ class UserProfile : Fragment() {
     }
 
     private fun editUserInfo() {
+        val intent = Intent(this.context, UserInfo::class.java)
+        startActivity(intent)
+    }
+
+    private fun addMyDogs() {
+        val intent = Intent(this.context,MyDogPage::class.java)
+        startActivity(intent)
+    }
+
+    private fun openReviewPage() {
         TODO("Not yet implemented")
     }
 
@@ -56,15 +73,14 @@ class UserProfile : Fragment() {
         TODO("Not yet implemented")
     }
 
-    private fun openReviewPage() {
-        TODO("Not yet implemented")
-    }
-
-    private fun enrollHotel() {
-        TODO("Not yet implemented")
+    private fun enrollHotel(userId: String) {
+        val intent = Intent(this.context, OwnerEnrollHotel::class.java).apply {
+            putExtra(USER_ID, userId)
+        }
+        startActivity(intent)
     }
 
     private fun changeView() {
-        TODO("Not yet implemented")
+
     }
 }
