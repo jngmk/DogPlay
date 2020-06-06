@@ -116,6 +116,7 @@ class HotelDetail:AppCompatActivity(), OnMapReadyCallback{
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.hotelLoc) as SupportMapFragment
         mapFragment.getMapAsync(this)
+
 //        val vp = findViewById(R.id.reviewCarousel) as ViewPager
 //        val reviewAdapter = ReviewCarouselAdapter(this)
 //        vp.adapter = reviewAdapter

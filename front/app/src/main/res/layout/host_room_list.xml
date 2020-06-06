@@ -16,56 +16,53 @@
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintVertical_bias="1.0">
+
 
         <ImageView
             android:id="@+id/iv_room_img"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_margin="15dp"
+            android:background="@drawable/onlyrd"
+            android:scaleType="centerCrop"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@android:drawable/btn_star_big_on"
-            android:layout_marginLeft="16dp" />
+            app:srcCompat="@drawable/dog" />
 
         <TextView
             android:id="@+id/tv_room_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:text="room_name"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/iv_room_img"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginRight="16dp" />
+            android:layout_marginTop="15dp"
+            android:textSize="25sp"
+             />
 
         <TextView
-            android:id="@+id/tv_room_reservation_cnt"
+            android:id="@+id/size"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:text="room_reservation_cnt"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_room_name"
-            android:layout_marginRight="16dp" />
+            android:layout_height="0dp"
+            android:textSize="15sp"
+            app:layout_constraintLeft_toLeftOf="@+id/tv_room_name"
+            app:layout_constraintTop_toBottomOf="@+id/tv_room_name" />
 
         <TextView
             android:id="@+id/tv_room_cnt"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="8dp"
-            android:text="room_cnt"
-            app:layout_constraintEnd_toStartOf="@+id/tv_room_reservation_cnt"
-            app:layout_constraintTop_toBottomOf="@+id/tv_room_name"
-            android:layout_marginRight="8dp" />
+            android:layout_height="0dp"
+            android:layout_marginTop="30dp"
+            android:textSize="15sp"
+            app:layout_constraintLeft_toLeftOf="@+id/size"
+            app:layout_constraintTop_toBottomOf="@+id/size" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

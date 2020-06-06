@@ -1,5 +1,6 @@
 package com.example.dogplay
 
+import com.example.dogplay.ui.owner.RoomDTO
 import com.google.gson.JsonObject
 import com.google.gson.annotations.SerializedName
 import com.google.gson.internal.LinkedTreeMap
@@ -9,6 +10,8 @@ import retrofit2.http.*
 import retrofit2.http.Header
 import java.text.DateFormat
 import java.time.LocalDateTime
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 data class HotelSerchDTO(
@@ -32,7 +35,8 @@ data class Hotel(var counstar: Int,
                  var hotelname:String,
                  var longitude:Double,
                  var info:String,
-                 var hashtag:ArrayList<String>
+                 var hashtag:ArrayList<String>,
+                 val picture: String
 )
 
 
@@ -45,10 +49,19 @@ data class HotelDetailDTO(
 
 data class HotelRoomDTO(
     @SerializedName("data")
-    var data:Array<HashMap<String,Any>>
+    val data: ArrayList<RoomDetailData>,
+    @SerializedName("state")
+    val state: String
 )
 
 data class HotelNearByDTO(
+    @SerializedName("data")
+    val data: ArrayList<HotelInfoWithStarAndPrice>,
+    @SerializedName("state")
+    val state: String
+)
+
+data class HotelSearchByUserIdDTO(
     @SerializedName("data")
     val data: ArrayList<HotelInfoWithStarAndPrice>,
     @SerializedName("state")
@@ -78,6 +91,7 @@ data class ChatMainDTO(
     @SerializedName("data")
     var data : ArrayList<ChatMain>
 )
+
 
 data class HotelDetailHash(
     val HotelStar:HotelStar,
@@ -232,12 +246,12 @@ data class ChatMain(
 data class RoomDetailData(
     val id:Int,
     val hotelnumber: String,
-    val roomname :String,
-    val price : Int,
-    val minsize:Int,
-    val maxsize:Int,
-    val count:Int,
-    val info:String
+    val roomname: String,
+    val price: Int,
+    val minsize: Int,
+    val maxsize: Int,
+    val count: Int,
+    val info: String
 )
 
 data class HashTag(
@@ -270,6 +284,11 @@ interface Service {
         @Query("latitude") latitude: Double,
         @Query("longitude") longitude: Double
     ): Call<HotelNearByDTO>
+
+    @GET("/api/v1/hotelstar/search/userid")
+    fun getHotelSearchByUserId(
+        @Query("userid") userid: String
+    ): Call<HotelSearchByUserIdDTO>
 
     @Headers("accept: application/json",
         "content-type: application/json")
@@ -309,6 +328,11 @@ interface Service {
     fun searchRoomDetail(
         @Query("id") id:String
     ):Call<RoomDetailDTO>
+
+    @GET("/api/v1/hotelroom/searchbyhotel")
+    fun getRoomsSearchByHotel(
+        @Query("hotelnumber") hotelnumber: String
+    ):Call<HotelRoomDTO>
 
     @GET("/api/v1/hashtag/searchall")
     fun getHashTag():Call<HashTagDTO>
@@ -361,7 +385,7 @@ interface Service {
         @Query("userid") userid: String
     ):Call<calcTotalPrice>
 
-    @POST("api/v1/paid/kakaopay/ready")
+    @POST("/api/v1/paid/kakaopay/ready")
     fun kakaoPay(
         @Body params:PayForm
     ):Call<kakaoReadyDTO>
@@ -392,7 +416,30 @@ interface Service {
         @Query("reviewid") reviewid:Int
     ):Call<SearchResponseDTO>
 
+    @POST("/api/v1/paid/insert")
+    fun insertPaid(
+        @Body params: InsertPaid
+    ):Call<Any>
+    @GET("/api/v1/reservation/count/hotel/room/start/finish")
+    fun getReservationRoomCount(
+        @Query("hotelnumber") hotelnumber: String,
+        @Query("roomname") roomname: String,
+        @Query("startdate") startdate: LocalDateTime,
+        @Query("finishdate") finishdate: LocalDateTime
+    ):Call<HotelReturnData>
 }
+
+data class InsertPaid(
+    val aid:String,
+    val cancel_amount:Int,
+    val cancel_tax_free_amount:Int,
+    val cid:String,
+    val id:Int,
+    val partner_order_id: String,
+    val pg_token:String,
+    val tid: String,
+    val userid: String
+)
 
 data class kakaoReadyDTO(
     val data:kakaoReady

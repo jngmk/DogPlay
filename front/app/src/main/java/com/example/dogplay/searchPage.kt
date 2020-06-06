@@ -68,51 +68,21 @@ class searchPage : Fragment() {
 
             override fun onResponse(call: Call<HotelSerchDTO>, response: retrofit2.Response<HotelSerchDTO>) {
                 var data = response.body()!!.data
-                var dataSize = data.size
-                var pictures = ArrayList<String>()
                 if (data == null){
                 } else {
-                    Log.d("호텔찾았다", data.toString())
-                    data.forEach{
-                        hotel ->
-                        server.getHotelPictures(hotel.hotelnumber,hotel.hotelname).enqueue(object :Callback<HotelPicturesDTO>{
-                            override fun onFailure(call: Call<HotelPicturesDTO>, t: Throwable) {
-                                Log.d("실패했다네", t.toString())
-                            }
-
-                            override fun onResponse(
-                                call: Call<HotelPicturesDTO>,
-                                response: Response<HotelPicturesDTO>
-                            ) {
-                                Log.d("성공했다네", response.body().toString())
-                                if (response.body()!!.data.size > 0){
-                                    pictures.add(response.body()!!.data[0].picture)
-                                } else {
-                                    pictures.add("")
-                                }
-                                if (pictures.size == dataSize){
-                                    val layoutManager = LinearLayoutManager(context)
-                                    layoutManager.orientation = LinearLayoutManager.VERTICAL
-                                    hotelList.layoutManager = layoutManager
-                                    val adapter = HotelAdapter(context!!, data, pictures)
-                                    hotelList.adapter = adapter
-                                }
-                            }
-
-                        })
-                    }
+                    Log.d("호텔찾았다", data!![9].toString())
+                    val layoutManager = LinearLayoutManager(context)
+                    layoutManager.orientation = LinearLayoutManager.VERTICAL
+                    hotelList.layoutManager = layoutManager
+                    val adapter = HotelAdapter(context!!, data)
+                    hotelList.adapter = adapter
                 }
             }
         })
-
-
         val layoutManager2 = LinearLayoutManager(this.context)
         layoutManager2.orientation = LinearLayoutManager.HORIZONTAL
         dogList.layoutManager = layoutManager2
-
 //        keyboardListener(MainActivity(), )
-
-
         searchBar.clearFocus()
         val dogs = "@drwable/dog" // 잠시 강아지 사진 대신
 

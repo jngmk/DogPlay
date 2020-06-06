@@ -1,14 +1,17 @@
 <resources>
     <string name="app_name">DogPlay</string>
     <!--  kakao  -->
-    <string name="kakao_app_key">6827010c9ea522e1e948fa346928d674</string>
+    <string name="kakao_app_key">732b0abea9df738fba19390d087643ca</string>
 
     <!-- mapPage -->
     <string name="searchHotelNearBy">현 지도에서 검색</string>
 
+    <!-- hotelMain -->
+    <string name="ownerHotelTitle">내 호텔</string>
+    <string name="enrollHotel">호텔 추가하기</string>
+
     <!-- enrollHotel -->
-    <string name="enrollHotel">호텔 등록하기</string>
-    <string name="enrollHotelRoom">객실 등록하기</string>
+    <string name="enrollHotelRoom">객실 추가하기</string>
     <string name="enroll">등록하기</string>
     <string name="EnrollHotelNameDescription">개놀자에 등록할 이름을 골라주세요</string>
     <string name="EnrollHotelName">호텔 이름을 입력해주세요</string>
@@ -42,5 +45,15 @@
     <string name="EnrollHotelRoomMaxKg">수용가능한 최대 몸무게를 알려주세요(단위 kg)</string>
     <string name="EnrollHotelRoomMaxKgDescription">e.g) 15 </string>
     <string name="EnrollHotelRoomInfoDescription">객실에 대한 간략한 소개를 해주세요</string>
+
+    <!-- profile -->
+    <string name="userInfo">개인 정보</string>
+    <string name="myDogs">내 반려동물</string>
+    <string name="reviews">내 리뷰</string>
+    <string name="notification">알림</string>
+    <string name="enrollMyHotel">호텔 등록하기</string>
+    <string name="changeToOwnerView">호텔 관리자 모드로 전환</string>
+    <string name="changeToUserView">게스트 모드로 전환</string>
+    <string name="logout">로그아웃</string>
 
 </resources>

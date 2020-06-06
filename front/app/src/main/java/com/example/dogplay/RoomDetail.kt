@@ -62,10 +62,21 @@ class RoomDetail:AppCompatActivity(){
                             call: Call<responseCartDTO>,
                             response: Response<responseCartDTO>
                         ) {
-                            Log.d("됐지? 돼찌?!", response.toString())
+                            Log.d("됐지? 돼찌?!", response.body().toString())
                             if (response.body()!!.data.size > 0){
                                 if(Supplier.SelectHotel.data.HotelStar.hotelnumber != response.body()!!.data[0].hotelnumber){
                                     OnClickHandler(View(applicationContext),cnt)
+                                } else {
+                                    server.CartInsert(CartInsert(Supplier.SelectRoom.hotelnumber,Supplier.SelectRoom.id,Supplier.SelectRoom.price*cnt,Supplier.SelectRoom.roomname,Supplier.UserId)).enqueue(object :Callback<Any>{
+                                        override fun onFailure(call: Call<Any>, t: Throwable) {
+                                            Log.d("실패했다면 당근을 흔들어주세요", t.toString())
+                                        }
+                                        override fun onResponse(call: Call<Any>, response: Response<Any>) {
+                                            Log.d("성공했어요 추카추카", response.body().toString())
+                                            Toast.makeText(applicationContext,"장바구니에 저장되었습니다.",Toast.LENGTH_SHORT).show()
+                                            onBackPressed()
+                                        }
+                                    })
                                 }
                             } else{
                                 server.CartInsert(CartInsert(Supplier.SelectRoom.hotelnumber,Supplier.SelectRoom.id,Supplier.SelectRoom.price*cnt,Supplier.SelectRoom.roomname,Supplier.UserId)).enqueue(object :Callback<Any>{
@@ -82,10 +93,6 @@ class RoomDetail:AppCompatActivity(){
                             }
                         }
                     })
-
-                    // 바로저장
-
-                    // 장바구니 저장 로직
                 }
             }
         })
