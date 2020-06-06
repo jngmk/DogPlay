@@ -26,7 +26,7 @@ import java.time.format.DateTimeFormatter
 
 const val ROOM_NAME = "com.example.dogplay.ROOM_NAME"
 
-class HostMain : AppCompatActivity(){
+class HostMain : AppCompatActivity() {
     private lateinit var hotelNumber: String
     private lateinit var hotelName: String
     private lateinit var reservationRoomCount: ArrayList<Int>
@@ -43,13 +43,18 @@ class HostMain : AppCompatActivity(){
         hotelName = intent.getStringExtra(HOTEL_NAME)!!
 
         mRecyclerView = rv_main
-//        formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssZ")
-        formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME
+        formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssZ")
+//        formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME
 
         txtHostMainTitle.text = hotelName
 
         btnHostMainBack.setOnClickListener {
             finish()
+        }
+
+        btnAddHotelRoom.setOnClickListener {
+            val intent = Intent(this, OwnerEnrollHotelRoom::class.java)
+            startActivity(intent)
         }
 
         cv_main.setOnDateChangeListener {
@@ -67,7 +72,7 @@ class HostMain : AppCompatActivity(){
     @RequiresApi(Build.VERSION_CODES.O)
     private fun getHotelRoomData(year: Int, month: Int, date: Int) {
         // 검색 날짜 설정
-        val startDate = LocalDateTime.of(year, month, date, 0, 0, 0, 0).format(formatter)
+        val startDate = LocalDateTime.of(year, month, date, 0, 0, 0, 0).atZone(ZoneId.systemDefault()).toLocalDateTime()
         val finishDate = LocalDateTime.of(year, month, date + 1, 0, 0, 0, 0).atZone(ZoneId.systemDefault()).toLocalDateTime()
 
         val server = API.server()
@@ -88,7 +93,7 @@ class HostMain : AppCompatActivity(){
                     reservationRoomCount.add(0)
                     roomPictures.add(null)
                     // 잔여 객실 수 구하기
-//                    getRoomCount(startDate, finishDate, rooms[i].roomname, i)
+                    getRoomCount(startDate, finishDate, rooms[i].roomname, i)
                     // 객실 사진 가져오기
                     getPictures(hotelNumber, rooms[i].roomname, i)
                 }
@@ -124,22 +129,22 @@ class HostMain : AppCompatActivity(){
     }
 
 
-//    private fun getRoomCount(startDate: LocalDateTime, finishDate: LocalDateTime, roomName: String, position: Int) {
-//        val server = API.server()
-//        server!!.getReservationRoomCount(hotelNumber, roomName, startDate, finishDate).enqueue(object: Callback<HotelReturnData> {
-//            override fun onFailure(call: Call<HotelReturnData>, t: Throwable) {
-//                Log.d("fail", t.toString())
-//            }
-//            override fun onResponse(
-//                call: Call<HotelReturnData>, response: Response<HotelReturnData>
-//            ) {
-//                val count: String = response.body()!!.data
-//                reservationRoomCount[position] = count.toInt()
-//
-//                (mRecyclerView.adapter as RecyclerAdapter).notifyDataSetChanged()
-//            }
-//        })
-//    }
+    private fun getRoomCount(startDate: LocalDateTime, finishDate: LocalDateTime, roomName: String, position: Int) {
+        val server = API.server()
+        server!!.getReservationRoomCount(hotelNumber, roomName, startDate, finishDate).enqueue(object: Callback<RoomCountReturnData> {
+            override fun onFailure(call: Call<RoomCountReturnData>, t: Throwable) {
+                Log.d("fail", t.toString())
+            }
+            override fun onResponse(
+                call: Call<RoomCountReturnData>, response: Response<RoomCountReturnData>
+            ) {
+                val count: Int = response.body()!!.data
+                reservationRoomCount[position] = count
+
+                (mRecyclerView.adapter as RecyclerAdapter).notifyDataSetChanged()
+            }
+        })
+    }
 
 
     class RecyclerAdapter(

@@ -210,6 +210,11 @@ data class HotelReturnData(
     val state: String
 )
 
+data class RoomCountReturnData(
+    val data: Int,
+    val state: String
+)
+
 data class HotelPicture(
     var id: Int = 0,
     var hotelnumber: String = "",
@@ -448,13 +453,13 @@ interface Service {
     fun insertPaid(
         @Body params: InsertPaid
     ):Call<Any>
-    @GET("/api/v1/reservation/count/hotel/room/start/finish")
+    @GET("/api/v1/reservation/count/hotel/room/start/finish/")
     fun getReservationRoomCount(
         @Query("hotelnumber") hotelnumber: String,
         @Query("roomname") roomname: String,
         @Query("startdate") startdate: LocalDateTime,
         @Query("finishdate") finishdate: LocalDateTime
-    ):Call<HotelReturnData>
+    ):Call<RoomCountReturnData>
 }
 
 data class InsertPaid(

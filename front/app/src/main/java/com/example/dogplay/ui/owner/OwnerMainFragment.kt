@@ -37,7 +37,7 @@ const val HOTEL_NAME = "com.example.dogplay.HOTEL_NAME"
 const val USER_ID = "com.example.dogplay.USER_ID"
 
 class OwnerMainFragment : Fragment() {
-    private val userId = "owner6"
+    private val userId = "owner3"
     private lateinit var mRecyclerView: RecyclerView
     private lateinit var hotels: ArrayList<HotelInfoWithStarAndPrice>
 
@@ -58,11 +58,6 @@ class OwnerMainFragment : Fragment() {
             val intent = Intent(this.context, OwnerEnrollHotel::class.java).apply {
                 putExtra(USER_ID, userId)
             }
-            startActivity(intent)
-        }
-
-        btnAddHotelRoom.setOnClickListener {
-            val intent = Intent(this.context, OwnerEnrollHotelRoom::class.java)
             startActivity(intent)
         }
 
