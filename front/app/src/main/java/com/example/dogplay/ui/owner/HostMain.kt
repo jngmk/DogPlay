@@ -48,17 +48,6 @@ class HostMain : AppCompatActivity(){
 
         txtHostMainTitle.text = hotelName
 
-        // 로그아웃
-//        tv_reservation_page.setOnClickListener {
-//            UserManagement.getInstance().requestLogout(object : LogoutResponseCallback() {
-//                override fun onCompleteLogout() {
-//                    val intent = Intent(this@HostMain, LoginActivity::class.java)
-//                    startActivity(intent)
-//
-//                }
-//            })
-//        }
-
         btnHostMainBack.setOnClickListener {
             finish()
         }

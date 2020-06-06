@@ -46,4 +46,14 @@
     <string name="EnrollHotelRoomMaxKgDescription">e.g) 15 </string>
     <string name="EnrollHotelRoomInfoDescription">객실에 대한 간략한 소개를 해주세요</string>
 
+    <!-- profile -->
+    <string name="userInfo">개인 정보</string>
+    <string name="myDogs">내 반려동물</string>
+    <string name="reviews">내 리뷰</string>
+    <string name="notification">알림</string>
+    <string name="enrollMyHotel">호텔 등록하기</string>
+    <string name="changeToOwnerView">호텔 관리자 모드로 전환</string>
+    <string name="changeToUserView">게스트 모드로 전환</string>
+    <string name="logout">로그아웃</string>
+
 </resources>
