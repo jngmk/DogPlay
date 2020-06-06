@@ -453,6 +453,7 @@ interface Service {
     fun insertPaid(
         @Body params: InsertPaid
     ):Call<Any>
+
     @GET("/api/v1/reservation/count/hotel/room/start/finish/")
     fun getReservationRoomCount(
         @Query("hotelnumber") hotelnumber: String,
@@ -460,7 +461,36 @@ interface Service {
         @Query("startdate") startdate: LocalDateTime,
         @Query("finishdate") finishdate: LocalDateTime
     ):Call<RoomCountReturnData>
+
+    @GET("/api/v1/reservation/search/hotel/room/start/finish/")
+    fun getReservationRoomDetail(
+        @Query("hotelnumber") hotelnumber: String,
+        @Query("roomname") roomname: String,
+        @Query("startdate") startdate: LocalDateTime,
+        @Query("finishdate") finishdate: LocalDateTime
+    ):Call<ReservationDTO>
 }
+
+data class ReservationDTO(
+    @SerializedName("data")
+    val data: ArrayList<Reservation>,
+    @SerializedName("state")
+    val state: String
+)
+
+data class Reservation(
+    var id: Int = 0,
+    var paidid: Int = 0,
+    var hotelnumber: String = "",
+    var userid: String = "",
+    var dog: String = "",
+    var roomname: String = "",
+    var startdate: ArrayList<Int> = ArrayList(),
+    var finishdate: ArrayList<Int> = ArrayList(),
+    var count: Int = 0,
+    var visit: Int = 0,
+    var phone: String? = ""
+)
 
 data class InsertPaid(
     val aid:String,

@@ -124,5 +124,4 @@ class OwnerMainFragment : Fragment() {
             hotelAddress.text = hotel.address
         }
     }
-
 }

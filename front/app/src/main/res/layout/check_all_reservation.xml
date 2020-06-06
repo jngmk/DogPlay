@@ -15,16 +15,26 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/tv_room_name"
+                android:id="@+id/txtCheckReservationTitle"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="16dp"
-                android:text="방 이름"
-                android:textSize="24sp"
+                android:layout_height="40dp"
+                android:layout_marginTop="30dp"
+                android:textSize="30sp"
+                android:textAlignment="center"
+                android:layout_gravity="center"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
+
+            <ImageView
+                android:id="@+id/btnBack"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="30dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/back_foreground"
+                tools:ignore="VectorDrawableCompat" />
 
             <CalendarView
                 android:id="@+id/cv_all_reservation"
@@ -37,17 +47,16 @@
                 android:layout_marginRight="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_room_name" />
+                app:layout_constraintTop_toBottomOf="@+id/txtCheckReservationTitle" />
 
             <TextView
                 android:id="@+id/textView3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="24dp"
                 android:text="예약 정보"
                 android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cv_all_reservation" />
 

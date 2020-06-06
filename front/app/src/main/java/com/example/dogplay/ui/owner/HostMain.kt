@@ -32,7 +32,6 @@ class HostMain : AppCompatActivity() {
     private lateinit var reservationRoomCount: ArrayList<Int>
     private lateinit var roomPictures: ArrayList<String?>
     private lateinit var mRecyclerView: RecyclerView
-    private lateinit var formatter: DateTimeFormatter
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,8 +42,6 @@ class HostMain : AppCompatActivity() {
         hotelName = intent.getStringExtra(HOTEL_NAME)!!
 
         mRecyclerView = rv_main
-        formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssZ")
-//        formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME
 
         txtHostMainTitle.text = hotelName
 
@@ -59,7 +56,7 @@ class HostMain : AppCompatActivity() {
 
         cv_main.setOnDateChangeListener {
             view, year, month, dayOfMonth ->
-            getHotelRoomData(year, month, dayOfMonth)
+            getHotelRoomData(year, month + 1, dayOfMonth)
         }
         val current = LocalDateTime.now()
         val year = current.year
@@ -147,7 +144,7 @@ class HostMain : AppCompatActivity() {
     }
 
 
-    class RecyclerAdapter(
+    inner class RecyclerAdapter(
         val context: Context,
         private val rooms: ArrayList<RoomDetailData>,
         private val reservationRoomCnt: ArrayList<Int>,
@@ -169,7 +166,8 @@ class HostMain : AppCompatActivity() {
 
             holder.itemView.setOnClickListener {
                 val intent = Intent(context, CheckAllReservation::class.java).apply {
-                    putExtra("ROOM_NAME", room.roomname)
+                    putExtra(ROOM_NAME, room.roomname)
+                    putExtra(HOTEL_NUMBER, hotelNumber)
                 }
                 context.startActivity(intent)
             }
@@ -182,7 +180,7 @@ class HostMain : AppCompatActivity() {
         }
     }
 
-    class RecyclerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class RecyclerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val roomImg: ImageView = itemView.findViewById(R.id.iv_room_img)
         private val roomName: TextView = itemView.findViewById(R.id.tv_room_name)
         private val roomSize: TextView = itemView.findViewById(R.id.size)

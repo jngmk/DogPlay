@@ -24,11 +24,13 @@ class CheckAllReservationAdapter(val checkReservationList: ArrayList<CheckReserv
         holder.name.text = checkReservationList.get(position).name.toString()
         holder.contact.text = checkReservationList.get(position).contact.toString()
         holder.time.text = checkReservationList.get(position).time.toString()
+//        holder.count.text = checkReservationList.get(position).count.toString()
     }
 
     class CustomViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val name = itemView.findViewById<TextView>(R.id.tv_reservation_name)
         val contact = itemView.findViewById<TextView>(R.id.tv_reservation_contact)
         val time = itemView.findViewById<TextView>(R.id.tv_reservation_time)
+        val count = itemView.findViewById<TextView>(R.id.tv_reservation_count)
     }
 }
