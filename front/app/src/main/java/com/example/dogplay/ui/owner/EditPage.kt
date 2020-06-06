@@ -1,17 +1,17 @@
 package com.example.dogplay.ui.owner
 
-import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dogplay.R
+import com.kakao.usermgmt.UserManagement
+import com.kakao.usermgmt.callback.LogoutResponseCallback
 import kotlinx.android.synthetic.main.edit_page.*
-import kotlinx.android.synthetic.main.host_edit_room.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -22,6 +22,18 @@ class EditPage : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
+        btn_logout.setOnClickListener {
+            UserManagement.getInstance().requestLogout(object : LogoutResponseCallback() {
+                override fun onCompleteLogout() {
+                    val intent = Intent(context, LoginActivity::class.java)
+                    startActivity(intent)
+
+                }
+            })
+        }
+
+
         val hotelnumber = "892-11-00104"
         var roomname = ""
         var int_id = 0

@@ -9,7 +9,13 @@ class WholePage :AppCompatActivity(){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.whole_page)
 
-        val fragmentAdapter = wholeAdapter(supportFragmentManager)
+        val fragmentAdapter = wholeAdapter(supportFragmentManager, "0")
         viewpager.adapter = fragmentAdapter
+    }
+
+    private fun loadData(): String? {
+        val pref = getSharedPreferences("pref", 0)
+        val admin = pref.getString("admin", "")
+        return admin
     }
 }

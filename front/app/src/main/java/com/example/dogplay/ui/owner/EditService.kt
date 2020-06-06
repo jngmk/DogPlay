@@ -36,7 +36,10 @@ data class EditRoomDTO(
     @SerializedName("data")
     var data:HashMap<String,Any>
 )
-
+data class TokenDTO(
+    @SerializedName("data")
+    var data:HashMap<String,Any>
+)
 
 data class AllHotelDTO(
     @SerializedName("data")
@@ -45,7 +48,29 @@ data class AllHotelDTO(
     var state:String = ""
 )
 
+data class TokenToDTO(
+    var token: String
+)
+
+data class UserInfoDTO(
+    @SerializedName("data")
+    var data:HashMap<String,Any>
+)
+
+
 interface EditService {
+    @GET("/api/v1/user/searchbyuserid")
+    fun getUserInfo(
+        @Query("userid") userid: String
+    ):Call<UserInfoDTO>
+
+
+    @Headers("content-type: application/json")
+    @POST("/api/v1/user/kakaologin")
+    fun kakaoLogin(
+        @Body params: String
+    ):Call<TokenDTO>
+
     @POST("/api/v1/response/insert")
     fun reReview(
         @Field("reviewid") reviewid: Int,

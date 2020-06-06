@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">DogPlay</string>
     <!--  kakao  -->
-    <string name="kakao_app_key">6827010c9ea522e1e948fa346928d674</string>
+    <string name="kakao_app_key">732b0abea9df738fba19390d087643ca</string>
 
     <!-- mapPage -->
     <string name="searchHotelNearBy">현 지도에서 검색</string>
