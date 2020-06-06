@@ -14,9 +14,9 @@ class wholeAdapter(fm:FragmentManager):FragmentPagerAdapter(fm){
 //        로그인 시 owner인지 사용자인지에 따라서 아이콘 변경
     var host = "892-11-00104"
     override fun getItem(position: Int): Fragment {
-        return if (host == "892-11-001041") {
+        return if (host == "892-11-00104") {
             when (position) {
-                0 -> HostMain()
+                0 -> OwnerMainFragment()
                 1 -> HostReviewPage()
                 2 -> chatPage()
                 else -> EditPage()

@@ -15,31 +15,29 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/tv_hotel_name"
+                android:id="@+id/txtHostMainTitle"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="16dp"
-                android:text="골든 애견 호텔"
-                android:textSize="24sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:layout_height="40dp"
+                android:layout_marginTop="30dp"
+                android:textSize="30sp"
+                android:textAlignment="center"
+                android:layout_gravity="center"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
 
-            <TextView
-                android:id="@+id/tv_reservation_page"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="16dp"
-                android:text="로그아웃!!!"
-                android:textStyle="bold"
+            <ImageView
+                android:id="@+id/btnHostMainBack"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="30dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_hotel_name" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/back_foreground"
+                tools:ignore="VectorDrawableCompat" />
 
             <CalendarView
                 android:id="@+id/cv_main"
@@ -47,7 +45,7 @@
                 android:layout_height="330dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_reservation_page" />
+                app:layout_constraintTop_toBottomOf="@+id/btnHostMainBack" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_main"
@@ -60,24 +58,4 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
-    <![CDATA[
-
-
-
-
-
-
-
-
-
-
-
-
-    />
-
-
-
-
-
-]]>
 </androidx.constraintlayout.widget.ConstraintLayout>

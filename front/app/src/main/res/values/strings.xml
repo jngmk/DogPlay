@@ -6,9 +6,12 @@
     <!-- mapPage -->
     <string name="searchHotelNearBy">현 지도에서 검색</string>
 
+    <!-- hotelMain -->
+    <string name="ownerHotelTitle">내 호텔</string>
+    <string name="enrollHotel">호텔 추가하기</string>
+
     <!-- enrollHotel -->
-    <string name="enrollHotel">호텔 등록하기</string>
-    <string name="enrollHotelRoom">객실 등록하기</string>
+    <string name="enrollHotelRoom">객실 추가하기</string>
     <string name="enroll">등록하기</string>
     <string name="EnrollHotelNameDescription">개놀자에 등록할 이름을 골라주세요</string>
     <string name="EnrollHotelName">호텔 이름을 입력해주세요</string>

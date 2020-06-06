@@ -34,14 +34,14 @@ class HostMainAdapter(val roomList: ArrayList<MainRooms>) : RecyclerView.Adapter
         holder.img.setImageResource(roomList.get(position).img)
         holder.name.text = roomList.get(position).name
         holder.cnt.text = roomList.get(position).cnt.toString()
-        holder.reservation_cnt.text = roomList.get(position).reservation_cnt.toString()
+//        holder.reservation_cnt.text = roomList.get(position).reservation_cnt.toString()
     }
 
     class CustomViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val img = itemView.findViewById<ImageView>(R.id.iv_room_img)
         val name = itemView.findViewById<TextView>(R.id.tv_room_name)
         val cnt = itemView.findViewById<TextView>(R.id.tv_room_cnt)
-        val reservation_cnt = itemView.findViewById<TextView>(R.id.tv_room_reservation_cnt)
+//        val reservation_cnt = itemView.findViewById<TextView>(R.id.tv_room_reservation_cnt)
         var context = itemView.getContext()
     }
 
