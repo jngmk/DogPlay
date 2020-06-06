@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import com.example.dogplay.MainActivity
 import com.example.dogplay.R
 import kotlinx.android.synthetic.main.host_re_review.*
 import retrofit2.Call
@@ -76,8 +77,6 @@ class HostReReview : AppCompatActivity() {
         })
 
 
-
-
         btn_rereview.setOnClickListener {
             var resultText = et_rereview.text.toString()
             if (responseData == null) {
@@ -110,7 +109,7 @@ class HostReReview : AppCompatActivity() {
                     override fun onResponse(call: Call<ReturnData>, response: Response<ReturnData>) {
                         Log.d("faile", response.toString())
                         Log.d("faile", "성공-----------------------------------")
-                        val intent = Intent(this@HostReReview, HostReviewPage::class.java)
+                        val intent = Intent(this@HostReReview, MainActivity::class.java)
                         startActivity(intent)
                         finish()
                     }
