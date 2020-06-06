@@ -70,7 +70,7 @@ class OwnerEnrollHotel : AppCompatActivity() {
         mViewPager2 = vpEnrollHotelImg
         mRecyclerView = rcyEnrollHotelTag
         mHotelDetailLayout = layoutEnrollHotelDetail
-        userId = intent.getStringExtra(USER_ID)!!
+        userId = Supplier.user.value!!.userid
 
         firestore = FirebaseFirestore.getInstance()
         firestore.firestoreSettings = FirebaseFirestoreSettings.Builder().build()
