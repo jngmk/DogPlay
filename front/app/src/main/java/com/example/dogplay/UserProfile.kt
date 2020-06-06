@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.example.dogplay.ui.owner.LoginActivity
@@ -16,6 +17,9 @@ import com.kakao.usermgmt.callback.LogoutResponseCallback
 import kotlinx.android.synthetic.main.activity_user_info.*
 import kotlinx.android.synthetic.main.fragment_user_profile.*
 import kotlinx.android.synthetic.main.fragment_user_profile.imgProfile
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 /**
  * A simple [Fragment] subclass.
@@ -86,9 +90,11 @@ class UserProfile : Fragment() {
         }
         btnChangeToOwnerView.setOnClickListener {
             changeView()
+            (activity as MainActivity).finish()
         }
         btnLogout.setOnClickListener {
             (activity as MainActivity).logout()
+            (activity as MainActivity).finish()
         }
     }
 
@@ -116,6 +122,25 @@ class UserProfile : Fragment() {
     }
 
     private fun changeView() {
+        if (user.admin == 0) {
+            user.admin = 1
+        } else {
+            user.admin = 0
+        }
 
+        val server = API.server()
+        server!!.putUser(user).enqueue(object :
+            Callback<HotelReturnData> {
+            override fun onFailure(call: Call<HotelReturnData>, t: Throwable) {
+                Toast.makeText(context, "사용자 모드 변경에 실패했습니다.", Toast.LENGTH_LONG).show()
+            }
+
+            override fun onResponse(call: Call<HotelReturnData>, response: Response<HotelReturnData>) {
+                Toast.makeText(context, "사용자 모드가 변경되었습니다..", Toast.LENGTH_LONG).show()
+                Supplier.user.postValue(user)
+                val intent = Intent(context, MainActivity::class.java)
+                startActivity(intent)
+            }
+        })
     }
 }

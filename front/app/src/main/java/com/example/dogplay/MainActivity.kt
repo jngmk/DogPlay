@@ -87,6 +87,9 @@ class MainActivity : AppCompatActivity(){
                 startActivity(intent)
             }
         })
+
+    }
+    fun mainFinish() {
         finish()
     }
 
