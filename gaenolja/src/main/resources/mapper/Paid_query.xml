@@ -12,7 +12,7 @@
    		where id=#{id}
    </select>
    
-   	<select id="searchbyaid" parameterType="string" resultType="paid">
+   	<select id="searchbytid" parameterType="string" resultType="paid">
    		select *
    		from paid
    		where tid=#{tid}

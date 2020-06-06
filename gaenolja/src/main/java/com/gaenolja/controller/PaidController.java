@@ -3,8 +3,6 @@ package com.gaenolja.controller;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,8 +30,10 @@ public class PaidController {
 
 	@ExceptionHandler 
 	public ResponseEntity<Map<String, Object>> handler(Exception e){
+		System.out.println(handleFail(e.getMessage(), HttpStatus.OK));
 		return handleFail(e.getMessage(), HttpStatus.OK);
 	}
+	
 	@GetMapping("/api/v1/paid")
 	@ApiOperation("모든 지불 정보 찾기")
 	public ResponseEntity<Map<String, Object>> searchall(){
@@ -49,9 +49,7 @@ public class PaidController {
 	@PostMapping("/api/v1/paid/insert")
 	@ApiOperation("insert paid")
 	public ResponseEntity<Map<String, Object>> insert(@RequestBody Paid paid){
-		boolean res = service.insert(paid);
-		if (res) return handleSuccess("success");
-		else return handleFail("fail", HttpStatus.OK);
+		return handleSuccess(service.insert(paid));
 	}
 		
 	@PutMapping("/api/v1/paid/update")
@@ -72,26 +70,26 @@ public class PaidController {
 	
 	@PostMapping("/api/v1/paid/kakaopay/ready")
 	@ApiOperation("카카오페이 준비")
-	public ResponseEntity<Map<String, Object>> kakaopayready(@RequestBody Kakaopay kakao, HttpServletRequest request){
-		return handleSuccess(service.kakaoready(kakao, request));
+	public ResponseEntity<Map<String, Object>> kakaopayready(@RequestBody Kakaopay kakao){
+		return handleSuccess(service.kakaoready(kakao));
 	}
 	
 	@GetMapping("/api/v1/paid/kakaopay")
 	@ApiOperation("카카오페이 결제")
-	public ResponseEntity<Map<String, Object>> kakaopay(HttpServletRequest request){
-		return handleSuccess(service.kakaopay(request));
+	public ResponseEntity<Map<String, Object>> kakaopay(@RequestParam String pg_token){
+		return handleSuccess(service.kakaopay(pg_token));
 	}
 	
 	@GetMapping("/api/v1/paid/usercancel")
 	@ApiOperation("카카오페이 사용자 취소")
-	public ResponseEntity<Map<String, Object>> kakaopayusercancel(HttpServletRequest request){
-		return handleSuccess(service.notapproved(request));
+	public ResponseEntity<Map<String, Object>> kakaopayusercancel(){
+		return handleSuccess(service.notapproved());
 	}
 	
 	@GetMapping("/api/v1/paid/failkakaopay")
 	@ApiOperation("카카오페이 실패")
-	public ResponseEntity<Map<String, Object>> kakaopayfail(HttpServletRequest request){
-		return handleSuccess(service.kakaofail(request));
+	public ResponseEntity<Map<String, Object>> kakaopayfail(){
+		return handleSuccess(service.kakaofail());
 	}
 	
 	@GetMapping("/api/v1/paid/cancelpay")
