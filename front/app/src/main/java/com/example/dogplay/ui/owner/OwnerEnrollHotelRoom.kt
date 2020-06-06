@@ -43,7 +43,6 @@ class OwnerEnrollHotelRoom : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_owner_enroll_hotel_room)
-
         mViewPager2 = vpEnrollHotelRoomImg
 
         btnEnrollHotelRoomBack.setOnClickListener {

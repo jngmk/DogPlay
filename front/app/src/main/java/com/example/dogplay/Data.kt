@@ -1,5 +1,6 @@
 package com.example.dogplay
 
+import androidx.lifecycle.MutableLiveData
 import com.google.gson.internal.LinkedTreeMap
 import java.net.Inet4Address
 
@@ -34,4 +35,13 @@ object Supplier{
         0,0,0,"","","")
     var ResponseTid = ""
 }
+
+class UserSupplier {
+    private var _user: User = User()
+
+    internal var user : User
+        get() { return _user}
+        set(value) {_user = value}
+}
+
 

@@ -18,7 +18,23 @@ import kotlinx.android.synthetic.main.fragment_user_profile.*
  * Use the [UserProfile.newInstance] factory method to
  * create an instance of this fragment.
  */
+
+const val USER_ID = "com.example.dogplay.USER_ID"
+const val USER_NICKNAME = "com.example.dogplay.USER_NICKNAME"
+const val USER_PHONE = "com.example.dogplay.USER_PHONE"
+const val USER_PICTURE = "com.example.dogplay.USER_PICTURE"
+const val USER_SOCIAL = "com.example.dogplay.USER_SOCIAL"
+const val USER_ADMIN = "com.example.dogplay.USER_ADMIN"
+
 class UserProfile : Fragment() {
+    private lateinit var userId: String
+    private lateinit var userNickname: String
+    private lateinit var userPhone: String
+    private lateinit var userPicture: String
+    private var userSocial = 0
+    private var userAdmin = 0
+    private val userSupplier = UserSupplier()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -30,7 +46,16 @@ class UserProfile : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        val userId = "owner6"
+//        val user = (activity as MainActivity).user
+        val user = userSupplier.user
+        user.apply {
+            userId = this.userid
+            userNickname = this.nickname
+            userPhone = this.phone
+            userPicture = this.picture
+            userSocial = this.social
+            userAdmin = this.admin
+        }
 
         btnUserInfo.setOnClickListener {
             editUserInfo()
@@ -45,10 +70,10 @@ class UserProfile : Fragment() {
             openNotificationPage()
         }
         btnEnrollMyHotel.setOnClickListener {
-            enrollHotel(userId)
+            enrollHotel(user.userid)
         }
         btnChangeToOwnerView.setOnClickListener {
-            changeView()
+            changeView(user.userid)
         }
         btnLogout.setOnClickListener {
             (activity as MainActivity).logout()
@@ -61,7 +86,7 @@ class UserProfile : Fragment() {
     }
 
     private fun addMyDogs() {
-        val intent = Intent(this.context,MyDogPage::class.java)
+        val intent = Intent(this.context, MyDogPage::class.java)
         startActivity(intent)
     }
 
@@ -80,7 +105,7 @@ class UserProfile : Fragment() {
         startActivity(intent)
     }
 
-    private fun changeView() {
+    private fun changeView(userId: String) {
 
     }
 }
