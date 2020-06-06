@@ -71,11 +71,11 @@ class LoginActivity : AppCompatActivity() {
             // TODO Auto-generated catch block
             Log.e("name not found", e.toString())
         }
-
     }
 
     private inner class SessionCallback : ISessionCallback {
         override fun onSessionOpened() {
+//            getAppKeyHash()
 
             val token = Session.getCurrentSession().tokenInfo.accessToken.toString()
             Log.d("test111", "${token}")

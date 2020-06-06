@@ -7,6 +7,7 @@ import com.kakao.usermgmt.callback.LogoutResponseCallback
 import com.kakao.usermgmt.UserManagement
 import com.example.dogplay.ui.owner.LoginActivity
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.MutableLiveData
 import com.example.dogplay.ui.owner.EditService
 import com.example.dogplay.ui.owner.UserInfoDTO
 import kotlinx.android.synthetic.main.whole_page.*
@@ -17,6 +18,9 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class MainActivity : AppCompatActivity(){
+    internal lateinit var user: User
+    private val userSupplier = UserSupplier()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.whole_page)
@@ -25,20 +29,20 @@ class MainActivity : AppCompatActivity(){
         var userInfo:HashMap<String,Any> = hashMapOf()
 
 
-        var retrofit = Retrofit.Builder()
-            .baseUrl("http://k02a4021.p.ssafy.io:8080")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-        var server = retrofit.create(EditService::class.java)
-        server.getUserInfo(userId.toString()).enqueue(object: Callback<UserInfoDTO> {
-            override fun onFailure(call: Call<UserInfoDTO>, t: Throwable) {
+//        var retrofit = Retrofit.Builder()
+//            .baseUrl("http://k02a4021.p.ssafy.io:8080")
+//            .addConverterFactory(GsonConverterFactory.create())
+//            .build()
+        var server = API.server()
+        server!!.getUserByUserId(userId.toString()).enqueue(object: Callback<UserDTO> {
+            override fun onFailure(call: Call<UserDTO>, t: Throwable) {
                 Log.d("faile", t.toString())
                 Log.d("faile", "실패-----------------------------------")
             }
-            override fun onResponse(call: Call<UserInfoDTO>, response: Response<UserInfoDTO>) {
-                val data:UserInfoDTO = response.body()!!
-                userInfo = data!!.data
-                admin = userInfo["admin"].toString().split('.')[0]
+            override fun onResponse(call: Call<UserDTO>, response: Response<UserDTO>) {
+                val user: User = response.body()!!.data[0]
+                userSupplier.user.value = user
+                val admin = user.admin.toString()
                 Log.d("faile", "${admin}-----------------------------------")
                 saveData()
 
@@ -82,9 +86,9 @@ class MainActivity : AppCompatActivity(){
         finish()
     }
 
-    private fun loadData(): String? {
+     private fun loadData(): String? {
         val pref = getSharedPreferences("pref", 0)
-        val userId = pref.getString("name", "")
+        val userId = pref.getString("name", "")!!
         return userId
     }
 

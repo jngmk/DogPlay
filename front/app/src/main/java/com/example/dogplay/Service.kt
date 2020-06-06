@@ -268,8 +268,34 @@ data class ChatNew(
     val data:Boolean
 )
 
+data class UserDTO(
+    @SerializedName("data")
+    val data: ArrayList<User>
+)
+
+data class User(
+    var userid: String = "",
+    var nickname: String = "",
+    var phone: String = "",
+    var picture: String = "",
+    var social: Int = 0,
+    var admin: Int = 0
+)
+
 
 interface Service {
+    @GET("/api/v1/user/searchbyuserid")
+    fun getUserByUserId(
+        @Query("userid") userid: String
+    ): Call<UserDTO>
+
+    @Headers("accept: application/json",
+        "content-type: application/json")
+    @PUT("/api/v1/user/update")
+    fun putUser(
+        @Body params: User
+    ): Call<HotelReturnData>
+
     @GET("/api/v1/hotelstar/searchall")
     fun getRequest():Call<HotelSerchDTO>
 //
