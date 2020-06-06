@@ -90,11 +90,11 @@ class UserProfile : Fragment() {
         }
         btnChangeToOwnerView.setOnClickListener {
             changeView()
-            (activity as MainActivity).finish()
+            (activity as MainActivity).mainFinish()
         }
         btnLogout.setOnClickListener {
             (activity as MainActivity).logout()
-            (activity as MainActivity).finish()
+            (activity as MainActivity).mainFinish()
         }
     }
 

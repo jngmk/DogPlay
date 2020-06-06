@@ -4,10 +4,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import com.example.dogplay.ui.owner.EditPage
-import com.example.dogplay.ui.owner.HostMain
-import com.example.dogplay.ui.owner.HostReviewPage
-import com.example.dogplay.ui.owner.OwnerMainFragment
+import com.example.dogplay.ui.owner.*
 
 class wholeAdapter(fm:FragmentManager, admin: String):FragmentPagerAdapter(fm){
     val admin = admin
@@ -23,11 +20,11 @@ class wholeAdapter(fm:FragmentManager, admin: String):FragmentPagerAdapter(fm){
             }
         } else {
             when (position) {
-
                 0 -> OwnerMainFragment()
                 1 -> HostReviewPage()
                 2 -> chatPage()
                 3 -> chatPage()
+                4 -> OwnerProfile()
                 else -> EditPage()
             }
         }
