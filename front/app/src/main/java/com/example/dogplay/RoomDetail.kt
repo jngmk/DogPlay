@@ -71,7 +71,6 @@ class RoomDetail:AppCompatActivity(){
                                         override fun onFailure(call: Call<Any>, t: Throwable) {
                                             Log.d("실패했다면 당근을 흔들어주세요", t.toString())
                                         }
-
                                         override fun onResponse(call: Call<Any>, response: Response<Any>) {
                                             Log.d("성공했어요 추카추카", response.body().toString())
                                             Toast.makeText(applicationContext,"장바구니에 저장되었습니다.",Toast.LENGTH_SHORT).show()

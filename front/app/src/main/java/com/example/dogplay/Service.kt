@@ -362,7 +362,7 @@ interface Service {
         @Query("userid") userid: String
     ):Call<calcTotalPrice>
 
-    @POST("api/v1/paid/kakaopay/ready")
+    @POST("/api/v1/paid/kakaopay/ready")
     fun kakaoPay(
         @Body params:PayForm
     ):Call<kakaoReadyDTO>
@@ -393,7 +393,23 @@ interface Service {
         @Query("reviewid") reviewid:Int
     ):Call<SearchResponseDTO>
 
+    @POST("/api/v1/paid/insert")
+    fun insertPaid(
+        @Body params: InsertPaid
+    ):Call<Any>
 }
+
+data class InsertPaid(
+    val aid:String,
+    val cancel_amount:Int,
+    val cancel_tax_free_amount:Int,
+    val cid:String,
+    val id:Int,
+    val partner_order_id: String,
+    val pg_token:String,
+    val tid: String,
+    val userid: String
+)
 
 data class kakaoReadyDTO(
     val data:kakaoReady

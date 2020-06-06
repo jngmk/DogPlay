@@ -1,17 +1,26 @@
 package com.example.dogplay
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.graphics.ImageDecoder
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.widget.ViewPager2
 import com.example.dogplay.API.Companion.kserver
 import com.example.dogplay.API.Companion.server
+import com.example.dogplay.ui.owner.OwnerEnrollHotel
+import kotlinx.android.synthetic.main.activity_owner_enorll_hotel.*
 import kotlinx.android.synthetic.main.cart_item.view.*
 import kotlinx.android.synthetic.main.cart_page.*
 import retrofit2.Call
@@ -20,6 +29,7 @@ import retrofit2.Response
 
 class CartPage:AppCompatActivity(){
     var totalPrice = 0
+    val pg_token = 1
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.cart_page)
@@ -57,6 +67,10 @@ class CartPage:AppCompatActivity(){
                 }
                 CartList.adapter = adapter
                 SubmitCart.setOnClickListener{
+//                    val kserver = kserver()
+                    Supplier.SelectPayForm = PayForm("TC0ONETIME","partner_order_id",Supplier.UserId,Supplier.SelectRoom.roomname,
+                        1,2200,0,"http://k02a4021.p.ssafy.io:8080/api/v1/paid/kakaopay",
+                        "http://k02a4021.p.ssafy.io:8080/api/v1/paid/usercancel","http://k02a4021.p.ssafy.io:8080/api/v1/paid/failkakaopay")
                     server!!.kakaoPay(PayForm("TC0ONETIME",
                         "partner_order_id",
                         Supplier.UserId,
@@ -73,16 +87,25 @@ class CartPage:AppCompatActivity(){
                         }
                         override fun onResponse(call: Call<kakaoReadyDTO>, response: Response<kakaoReadyDTO>) {
                             Log.d("카카오 페이 성공", response.body().toString())
-                            val intent = Intent(applicationContext, KakaoWebView::class.java)
-                            intent.putExtra("url", response.body()!!.data.next_redirect_mobile_url)
+//                            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(response.body()!!.data.next_redirect_mobile_url))
+//                            startActivityForResult(intent,pg_token)
+                            val intent = Intent(applicationContext,KakaoWebView::class.java)
+                            intent.putExtra("url", response.body()!!.data.next_redirect_app_url)
+                            Supplier.ResponseTid = response.body()!!.data.tid
                             startActivity(intent)
+//                            val intent = Intent.parseUri(response.body()!!.data.next_redirect_mobile_url, Intent.URI_INTENT_SCHEME)
+//                            startActivity(intent)
                         }
                     })
-
                 }
             }
         })
-
+    }
+    @RequiresApi(Build.VERSION_CODES.P)
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        Log.d("결제 잘 끝났어?", "${data}")
+        Toast.makeText(applicationContext, "예약되었습니다.",Toast.LENGTH_SHORT).show()
     }
 }
 
