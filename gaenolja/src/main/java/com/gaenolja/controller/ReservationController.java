@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -76,9 +78,15 @@ public class ReservationController {
 	}
 	
 	@GetMapping("/api/v1/reservation/count/hotel/room/start/finish/")
-	@ApiOperation("date reservation 나타내기")
-	public ResponseEntity<Map<String, Object>> countbydate(@RequestParam String hotelnumber, @RequestParam String roomname, @RequestParam LocalDateTime startdate, @RequestParam LocalDateTime finishdate){
+	@ApiOperation("date reservation 숫자 나타내기")
+	public ResponseEntity<Map<String, Object>> countbydate(@RequestParam String hotelnumber, @RequestParam String roomname, @RequestParam("startdate")@DateTimeFormat(iso = ISO.DATE_TIME) LocalDateTime startdate, @RequestParam("finishdate")@DateTimeFormat(iso = ISO.DATE_TIME) LocalDateTime finishdate){
 		return handleSuccess(service.countbydate(hotelnumber, roomname, startdate, finishdate));
+	}
+	
+	@GetMapping("/api/v1/reservation/search/hotel/room/start/finish/")
+	@ApiOperation("date별 총 reservation 나타내기")
+	public ResponseEntity<Map<String, Object>> searchbydate(@RequestParam String hotelnumber, @RequestParam String roomname, @RequestParam("startdate")@DateTimeFormat(iso = ISO.DATE_TIME) LocalDateTime startdate, @RequestParam("finishdate")@DateTimeFormat(iso = ISO.DATE_TIME) LocalDateTime finishdate){
+		return handleSuccess(service.searchbydate(hotelnumber, roomname, startdate, finishdate));
 	}
 	
 	@PostMapping("/api/v1/reservation/insert")

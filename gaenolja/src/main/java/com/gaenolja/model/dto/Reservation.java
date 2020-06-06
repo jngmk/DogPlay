@@ -13,6 +13,13 @@ public class Reservation {
 	private LocalDateTime finishdate;
 	private int count;
 	private int visit;
+	private String phone;
+	public String getPhone() {
+		return phone;
+	}
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
 	public int getId() {
 		return id;
 	}
