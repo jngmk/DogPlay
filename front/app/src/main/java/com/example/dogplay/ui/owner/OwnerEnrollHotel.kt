@@ -59,6 +59,7 @@ class OwnerEnrollHotel : AppCompatActivity() {
     private var storageReferenence = FirebaseStorage.getInstance().getReference()
     private val pictures: ArrayList<Bitmap> = ArrayList()
     private val uris: ArrayList<Uri> = ArrayList()
+    private val userId = intent.getStringExtra(USER_ID)
     private val IMAGE_GALLERY_REQUEST_CODE = 1001
 
     @RequiresApi(Build.VERSION_CODES.M)
@@ -229,6 +230,7 @@ class OwnerEnrollHotel : AppCompatActivity() {
 
     private fun postData() {
         hotelData.apply {
+            userid = userId
             hotelname = findViewById<EditText>(R.id.edtEnrollHotelName).text.toString()
             hotelnumber = findViewById<EditText>(R.id.edtEnrollBN).text.toString()
             address = findViewById<EditText>(R.id.edtEnrollHotelAddress).text.toString()
