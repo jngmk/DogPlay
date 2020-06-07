@@ -23,9 +23,8 @@ class wholeAdapter(fm:FragmentManager, admin: String):FragmentPagerAdapter(fm){
                 0 -> OwnerMainFragment()
                 1 -> HostReviewPage()
                 2 -> chatPage()
-                3 -> chatPage()
-                4 -> OwnerProfile()
-                else -> EditPage()
+                3 -> OwnerEditFragment()
+                else -> OwnerProfile()
             }
         }
     }

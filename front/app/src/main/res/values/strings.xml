@@ -10,6 +10,25 @@
     <string name="ownerHotelTitle">내 호텔</string>
     <string name="enrollHotel">호텔 추가하기</string>
 
+    <!-- editHotel   -->
+    <string name="editHotel">호텔 수정하기</string>
+    <string name="edit">수정하기</string>
+    <string name="EditHotelNameDescription">개놀자에 등록된 이름을 수정해주세요</string>
+    <string name="EditHotelName">호텔 이름을 수정해주세요</string>
+    <string name="EditHotelImgDescription">여기를 눌러서 사진을 수정해주세요</string>
+    <string name="EditHotelAddress">주소를 수정해주세요</string>
+    <string name="EditHotelAddressDescription">호텔의 주소를 수정해주세요</string>
+    <string name="EditHotelContactDescription">대표 연락처를 수정해주세요</string>
+    <string name="EditHotelContact">\'-\' 를 포함해서 수정해주세요</string>
+    <string name="EditHotelBNDescription">호텔 사업자 등록 번호를 수정해주세요</string>
+    <string name="EditHotelBN">\'-\' 를 포함해서 수정해주세요</string>
+    <string name="EditHotelInfo">100자 ~ 200자 정도로 적어주시면 좋습니다</string>
+    <string name="EditHotelInfoDescription">호텔에 대한 간략한 소개를 수정해주세요</string>
+    <string name="EditHotelTagDescription">호텔을 대표할 태그를 수정해주세요</string>
+    <string name="EditHotelDetailDescription">호텔 이용에 필요한 공지사항을 수정해주세요</string>
+
+    <string name="ownerHotelEditTitle">내 호텔 수정하기</string>
+
     <!-- enrollHotel -->
     <string name="enrollHotelRoom">객실 추가하기</string>
     <string name="enroll">등록하기</string>
