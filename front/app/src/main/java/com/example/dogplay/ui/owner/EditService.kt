@@ -57,8 +57,35 @@ data class UserInfoDTO(
     var data:HashMap<String,Any>
 )
 
+data class ResponseDTO(
+    @SerializedName("data")
+    var data:HashMap<String,Any>
+)
+
+data class UpdateResponseDTO(
+    var content: String = "감사합니다 감사합니다.",
+    var heart: Int = 0,
+    var id: Int = 1,
+    var reviewid: Int = 1,
+    var userid: String = ""
+)
+
+data class ReturnData(
+    val data: String,
+    val state: String
+)
 
 interface EditService {
+    @PUT("/api/v1/response/update")
+    fun updateResponse(
+        @Body params: UpdateResponseDTO
+    ):Call<ReturnData>
+
+    @GET("/api/v1/response/search/review")
+    fun responseByReviewId(
+        @Query("reviewid") reviewid: Int
+    ):Call<ResponseDTO>
+
     @GET("/api/v1/user/searchbyuserid")
     fun getUserInfo(
         @Query("userid") userid: String

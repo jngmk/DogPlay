@@ -77,13 +77,13 @@ public class ReservationController {
 		return handleSuccess(service.countbyhotelandroom(hotelnumber, roomname));
 	}
 	
-	@GetMapping("/api/v1/reservation/count/hotel/room/start/finish/")
+	@GetMapping("/api/v1/reservation/count/hotel/room/start/finish")
 	@ApiOperation("date reservation 숫자 나타내기")
 	public ResponseEntity<Map<String, Object>> countbydate(@RequestParam String hotelnumber, @RequestParam String roomname, @RequestParam("startdate")@DateTimeFormat(iso = ISO.DATE_TIME) LocalDateTime startdate, @RequestParam("finishdate")@DateTimeFormat(iso = ISO.DATE_TIME) LocalDateTime finishdate){
 		return handleSuccess(service.countbydate(hotelnumber, roomname, startdate, finishdate));
 	}
 	
-	@GetMapping("/api/v1/reservation/search/hotel/room/start/finish/")
+	@GetMapping("/api/v1/reservation/search/hotel/room/start/finish")
 	@ApiOperation("date별 총 reservation 나타내기")
 	public ResponseEntity<Map<String, Object>> searchbydate(@RequestParam String hotelnumber, @RequestParam String roomname, @RequestParam("startdate")@DateTimeFormat(iso = ISO.DATE_TIME) LocalDateTime startdate, @RequestParam("finishdate")@DateTimeFormat(iso = ISO.DATE_TIME) LocalDateTime finishdate){
 		return handleSuccess(service.searchbydate(hotelnumber, roomname, startdate, finishdate));
