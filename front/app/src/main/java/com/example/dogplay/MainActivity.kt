@@ -59,7 +59,7 @@ class MainActivity : AppCompatActivity(){
                     tabLayout.getTabAt(0)?.setIcon(R.drawable.home)
                     tabLayout.getTabAt(1)?.setIcon(R.drawable.marker)
                     tabLayout.getTabAt(2)?.setIcon(R.drawable.chat)
-                    tabLayout.getTabAt(3)?.setIcon(R.drawable.star)
+                    tabLayout.getTabAt(3)?.setIcon(R.drawable.tab_star)
                     tabLayout.getTabAt(4)?.setIcon(R.drawable.profile)
                 } else {
                     tabLayout.getTabAt(0)?.setIcon(R.drawable.home)

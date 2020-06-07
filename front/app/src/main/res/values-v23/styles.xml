@@ -1,6 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="windowNoTitle">true</item>
@@ -8,6 +8,10 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
 
-    </style>
+        <!--Status Bar 배경색-->
+        <item name="android:statusBarColor">@color/white</item>
+        <!--Status Bar 글자색깔-->
+        <item name="android:windowLightStatusBar">true</item>
 
+    </style>
 </resources>
