@@ -81,7 +81,7 @@ class OwnerEditFragment : Fragment() {
             holder.updateHotelImage(hotel)
 
             holder.itemView.setOnClickListener {
-                val intent = Intent(context, OwnerEditHotel::class.java).apply {
+                val intent = Intent(context, OwnerEditPage::class.java).apply {
                     putExtra(HOTEL_NUMBER, hotel.hotelnumber)
                     putExtra(HOTEL_NAME, hotel.hotelname)
                 }

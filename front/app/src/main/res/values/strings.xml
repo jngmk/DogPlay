@@ -12,6 +12,7 @@
 
     <!-- editHotel   -->
     <string name="editHotel">호텔 수정하기</string>
+    <string name="editRoom">객실 수정하기</string>
     <string name="edit">수정하기</string>
     <string name="EditHotelNameDescription">개놀자에 등록된 이름을 수정해주세요</string>
     <string name="EditHotelName">호텔 이름을 수정해주세요</string>

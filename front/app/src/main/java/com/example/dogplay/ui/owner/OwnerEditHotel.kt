@@ -33,6 +33,8 @@ import kotlinx.android.synthetic.main.activity_owner_edit_hotel.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 class OwnerEditHotel : AppCompatActivity() {
     private lateinit var mViewPager2: ViewPager2
@@ -42,6 +44,8 @@ class OwnerEditHotel : AppCompatActivity() {
     private lateinit var firestore: FirebaseFirestore
     private lateinit var imageRef: StorageReference
     private lateinit var userId: String
+    private lateinit var hotelNumber: String
+
     private var hotelPicture: HotelPicture = HotelPicture(0,"","","")
     private var hotelHash: HotelHashToPost = HotelHashToPost()
     private var hotelData: HotelInfoToPost = HotelInfoToPost()
@@ -52,11 +56,43 @@ class OwnerEditHotel : AppCompatActivity() {
     private val pictures: ArrayList<Bitmap> = ArrayList()
     private val uris: ArrayList<Uri> = ArrayList()
     private val IMAGE_GALLERY_REQUEST_CODE = 1001
-
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_owner_edit_hotel)
+
+        hotelNumber = intent.getStringExtra(HOTEL_NUMBER)!!
+
+        var hotelDetailData:HashMap<String,Any> = hashMapOf()
+        var retrofit = Retrofit.Builder()
+            .baseUrl("http://k02a4021.p.ssafy.io:8080")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+        var server = retrofit.create(EditService::class.java)
+
+        server.searchHotelDetail(hotelNumber).enqueue(object : Callback<HotelDTO> {
+            override fun onFailure(call: Call<HotelDTO>, t: Throwable) {
+                Log.d("faile", t.toString())
+                Log.d("faile", "실패-----------------------------------")
+            }
+
+            override fun onResponse(call: Call<HotelDTO>, response: Response<HotelDTO>) {
+                val data:HotelDTO = response.body()!!
+                hotelDetailData = data!!.data
+                val str_hotelname = hotelDetailData["hotelname"].toString()
+                edtEditHotelName.setText(str_hotelname)
+                val str_address = hotelDetailData["address"].toString()
+                edtEditHotelAddress.setText(str_address)
+                val str_contact = hotelDetailData["contact"].toString()
+                edtEditHotelContact.setText(str_contact)
+                val str_hotelnumber = hotelDetailData["hotelnumber"].toString()
+                edtEditBN.setText(str_hotelnumber)
+                val str_info = hotelDetailData["info"].toString()
+                edtEditInfo.setText(str_info)
+
+            }
+
+        })
 
         mViewPager2 = vpEditHotelImg
         mRecyclerView = rcyEditHotelTag
