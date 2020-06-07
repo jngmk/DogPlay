@@ -36,7 +36,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity" />
-
         <activity android:name=".HotelDetail" />
         <activity android:name=".InfoDetail" />
         <activity android:name=".CalendarView" />
