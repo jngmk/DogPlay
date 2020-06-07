@@ -29,7 +29,7 @@
                 app:srcCompat="@drawable/dog" />
 
             <TextView
-                android:id="@+id/hotelName"
+                android:id="@+id/prehotelName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -73,7 +73,7 @@
                 />
 
             <TextView
-                android:id="@+id/address"
+                android:id="@+id/preAddress"
                 android:layout_width="250dp"
                 android:layout_height="20dp"
                 android:layout_marginLeft="35dp"

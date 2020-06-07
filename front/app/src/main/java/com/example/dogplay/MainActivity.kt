@@ -3,6 +3,7 @@ package com.example.dogplay
 import android.os.Bundle
 import android.content.Intent
 import android.util.Log
+import android.widget.Toast
 import com.kakao.usermgmt.callback.LogoutResponseCallback
 import com.kakao.usermgmt.UserManagement
 import com.example.dogplay.ui.owner.LoginActivity
@@ -32,12 +33,14 @@ class MainActivity : AppCompatActivity(){
 //            .addConverterFactory(GsonConverterFactory.create())
 //            .build()
         val server = API.server()
-        server!!.getUserByUserId(userId.toString()).enqueue(object: Callback<UserDTO> {
+
+        server!!.getUserByUserId("test1").enqueue(object: Callback<UserDTO> {
             override fun onFailure(call: Call<UserDTO>, t: Throwable) {
                 Log.d("faile", t.toString())
                 Log.d("faile", "실패-----------------------------------")
             }
             override fun onResponse(call: Call<UserDTO>, response: Response<UserDTO>) {
+                Log.d("User", response.body().toString())
                 var user = response.body()!!.data
                 if (user.phone == null) {
                     user.phone = ""
@@ -99,4 +102,33 @@ class MainActivity : AppCompatActivity(){
         return userId
     }
 
+    var oneMore:Long = -1500
+    override fun onBackPressed() {
+        if (System.currentTimeMillis()-oneMore <= 1500)
+            finish()
+        oneMore = System.currentTimeMillis()
+        Toast.makeText(this, "이전 버튼을 한번 더 누르면 종료됩니다.",Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val fragmentAdapter = wholeAdapter(supportFragmentManager, "0")
+        viewpager.adapter = fragmentAdapter
+        tabLayout.setupWithViewPager(viewpager)
+//        로그인 시 owner인지 사용자인지에 따라서 아이콘 변경
+
+        if (Supplier.UserId == "test1") {
+            tabLayout.getTabAt(0)?.setIcon(R.drawable.home)
+            tabLayout.getTabAt(1)?.setIcon(R.drawable.marker)
+            tabLayout.getTabAt(2)?.setIcon(R.drawable.chat)
+            tabLayout.getTabAt(3)?.setIcon(R.drawable.tab_star)
+            tabLayout.getTabAt(4)?.setIcon(R.drawable.profile)
+        } else {
+            tabLayout.getTabAt(0)?.setIcon(R.drawable.home)
+            tabLayout.getTabAt(1)?.setIcon(R.drawable.toolbar_review)
+            tabLayout.getTabAt(2)?.setIcon(R.drawable.chat)
+            tabLayout.getTabAt(3)?.setIcon(R.drawable.toolbar_edit)
+            tabLayout.getTabAt(4)?.setIcon(R.drawable.profile)
+        }
+    }
 }

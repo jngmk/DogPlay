@@ -9,10 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.core.content.ContextCompat.startActivity
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -22,7 +19,6 @@ import com.example.dogplay.HotelSearchByUserIdDTO
 
 import com.example.dogplay.R
 import kotlinx.android.synthetic.main.fragment_owner_main.*
-import org.w3c.dom.Text
 import retrofit2.Call
 import retrofit2.Callback
 
@@ -106,10 +102,10 @@ class OwnerMainFragment : Fragment() {
 
     class RecyclerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val hotelImg: ImageView = itemView.findViewById(R.id.cardImg)
-        private val hotelName: TextView = itemView.findViewById(R.id.hotelName)
+        private val hotelName: TextView = itemView.findViewById(R.id.prehotelName)
         private val hotelEval: TextView = itemView.findViewById(R.id.eval)
         private val hotelReview: TextView = itemView.findViewById(R.id.review)
-        private val hotelAddress: TextView = itemView.findViewById(R.id.address)
+        private val hotelAddress: TextView = itemView.findViewById(R.id.preAddress)
 
 
         fun updateHotelImage(hotel: HotelInfoWithStarAndPrice) {

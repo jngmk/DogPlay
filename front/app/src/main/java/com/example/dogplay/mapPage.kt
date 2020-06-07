@@ -94,6 +94,7 @@ class mapPage : Fragment() {
         super.onActivityCreated(savedInstanceState)
         locationInit()
         getData()
+        Log.d("지도 페이지","")
         btnSearchHotelNearBy.setOnClickListener {
             // 지도 중앙 값
             val centerLatLng:LatLng = mMap.projection.visibleRegion.latLngBounds.center

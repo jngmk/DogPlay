@@ -1,41 +1,35 @@
 package com.example.dogplay
-import android.app.ActionBar
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.Intent
-import android.graphics.Color
-import android.graphics.ColorFilter
-import android.graphics.ColorSpace
-import android.graphics.Paint
 import android.os.Bundle
 import android.util.DisplayMetrics
 import android.util.Log
 import android.view.View
-import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.ContextCompat
+import androidx.core.util.Pair
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager.widget.ViewPager
 import com.example.dogplay.API.Companion.server
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.material.datepicker.MaterialDatePicker
 import kotlinx.android.synthetic.main.hotel_detail.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import com.google.gson.internal.LinkedTreeMap
-import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
+import java.time.Instant
+import java.time.LocalDateTime
+import java.time.ZoneId
 
 class HotelDetail:AppCompatActivity(), OnMapReadyCallback{
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.hotel_detail)
-        Supplier.SelectHotelRoomPrice = HashMap<String,Int>()
         val server = server()
         paybtn.setOnClickListener{
             server!!.searchCartById(Supplier.UserId).enqueue(object :Callback<responseCartDTO>{
@@ -60,13 +54,44 @@ class HotelDetail:AppCompatActivity(), OnMapReadyCallback{
                 }
             })
         }
+        val builder = MaterialDatePicker.Builder.dateRangePicker()
+        builder.setTitleText("날짜 선택")
+
+        val todayPair = Pair(Supplier.SelectDate[0], Supplier.SelectDate[1])
+        builder.setSelection(todayPair)
+
+        val dateRangePicker = builder.build()
+
+        checkDate.setOnClickListener{
+            dateRangePicker.show(supportFragmentManager, "DATE PICKER")
+
+            dateRangePicker.addOnPositiveButtonClickListener {
+                Supplier.SelectDateMain = arrayListOf(Supplier.formatterForView.format(dateRangePicker.selection!!.first),Supplier.formatterForView.format(dateRangePicker.selection!!.second))
+                val date1 = dateRangePicker.selection!!.first!!
+                val date2 = dateRangePicker.selection!!.second!!
+                var apiDateFirst = LocalDateTime.ofInstant(Instant.ofEpochMilli(date1), ZoneId.systemDefault()).toString()
+                var apiDateSecond = LocalDateTime.ofInstant(Instant.ofEpochMilli(date2), ZoneId.systemDefault()).toString()
+                Log.d("포멧", apiDateFirst)
+                var viewDateFirst = Supplier.formatterForApi.format(dateRangePicker.selection!!.first)
+                var viewDateSecond = Supplier.formatterForApi.format(dateRangePicker.selection!!.second)
+                Supplier.SelectDateApi = arrayListOf(apiDateFirst, apiDateSecond)
+                Supplier.SelectDateView = arrayListOf(viewDateFirst,viewDateSecond)
+                cinDate.text = "${Supplier.SelectDateView[0]}"
+                coutDate.text = "${Supplier.SelectDateView[1]}"
+            }
+        }
+
+
         Log.d("success", "Get 해결")
         var hotelPicture = Supplier.SelectHotel.data.HotelPicture
         val hotelstar = Supplier.SelectHotel.data.HotelStar
-        hotelName.text = hotelstar.hotelname
+        prehotelName.text = hotelstar.hotelname
         eval.text = "${hotelstar.star}"
-        address.text = hotelstar.address
+        preAddress.text = hotelstar.address
         reviewcnt.text = "후기 ${hotelstar.countreview}"
+
+        cinDate.text = Supplier.SelectDateView[0]
+        coutDate.text = Supplier.SelectDateView[1]
 
         val layoutManager = LinearLayoutManager(applicationContext)
         layoutManager.orientation = LinearLayoutManager.VERTICAL

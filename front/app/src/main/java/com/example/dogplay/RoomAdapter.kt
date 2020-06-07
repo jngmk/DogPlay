@@ -6,22 +6,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.appcompat.view.menu.ActionMenuItemView
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.gms.tasks.Task
-import com.google.gson.Gson
-import com.google.gson.internal.LinkedTreeMap
-import com.google.gson.reflect.TypeToken
-import kotlinx.android.synthetic.main.home_list.view.*
-import kotlinx.android.synthetic.main.home_list.view.address
-import kotlinx.android.synthetic.main.home_list.view.eval
-import kotlinx.android.synthetic.main.home_list.view.hotelName
-import kotlinx.android.synthetic.main.hotel_detail.view.*
 import kotlinx.android.synthetic.main.room_list.view.*
-import java.util.*
 import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
 
 class RoomAdapter(var context:Context, var rooms:ArrayList<HotelRoom>) :
     RecyclerView.Adapter<RoomAdapter.ViewHolder>(){

@@ -70,7 +70,7 @@
             android:scaleType="centerCrop"
             />
         <TextView
-            android:id="@+id/hotelName"
+            android:id="@+id/prehotelName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="호텔 이름"

@@ -33,6 +33,9 @@ class CartPage:AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.cart_page)
+        Supplier.SelectPayRoom = hashMapOf<Pair<String,Int>,Int>()
+        CheckInDate.text = Supplier.SelectDateView[0]
+        CheckOutDate.text = Supplier.SelectDateView[1]
         val layoutManager = LinearLayoutManager(this)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
         CartList.layoutManager = layoutManager
@@ -68,20 +71,10 @@ class CartPage:AppCompatActivity(){
                 CartList.adapter = adapter
                 SubmitCart.setOnClickListener{
 //                    val kserver = kserver()
-                    Supplier.SelectPayForm = PayForm("TC0ONETIME","partner_order_id",Supplier.UserId,Supplier.SelectRoom.roomname,
-                        1,2200,0,"http://k02a4021.p.ssafy.io:8080/api/v1/paid/kakaopay",
+                    Supplier.SelectPayForm = PayForm("TC0ONETIME",Supplier.SelectHotel.data.HotelStar.userid,Supplier.UserId,Supplier.SelectHotel.data.HotelStar.hotelname,
+                        1,Supplier.totalCartPrice,0,"http://k02a4021.p.ssafy.io:8080/api/v1/paid/kakaopay",
                         "http://k02a4021.p.ssafy.io:8080/api/v1/paid/usercancel","http://k02a4021.p.ssafy.io:8080/api/v1/paid/failkakaopay")
-                    server!!.kakaoPay(PayForm("TC0ONETIME",
-                        "partner_order_id",
-                        Supplier.UserId,
-                        "초코파이",
-                        1,
-                        2200,
-                        0,
-                        "http://k02a4021.p.ssafy.io:8080/api/v1/paid/kakaopay",
-                        "http://k02a4021.p.ssafy.io:8080/api/v1/paid/usercancel",
-                        "http://k02a4021.p.ssafy.io:8080/api/v1/paid/failkakaopay"
-                    )).enqueue(object :Callback<kakaoReadyDTO>{
+                    server!!.kakaoPay(Supplier.SelectPayForm).enqueue(object :Callback<kakaoReadyDTO>{
                         override fun onFailure(call: Call<kakaoReadyDTO>, t: Throwable) {
                             Log.d("카카오 페이 실패", t.toString())
                         }
@@ -129,8 +122,15 @@ class CartAdapter(var context: Context, var CartItems:ArrayList<responseCart>, v
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val CartItem = CartItems[position]
-        val roomPrice = Supplier.SelectHotelRoomPrice[CartItem.roomname]
-        var cnt = CartItem.price/roomPrice!!
+        var roomPrice = 1
+        Supplier.SelectHotel.data.HotelRoom.forEach run@{
+            if (CartItem.roomname == it.roomname){
+                roomPrice = it.price
+                return@run
+            }
+        }
+        var cnt = CartItem.price/roomPrice
+        Supplier.SelectPayRoom[Pair(CartItem.roomname, position)] = cnt
         holder.itemView.CartItemName.text = CartItem.roomname
         holder.itemView.roomPrice.text = "${roomPrice!!}"
         holder.itemView.calcPrice.text = "${roomPrice!!*cnt}"
@@ -140,6 +140,7 @@ class CartAdapter(var context: Context, var CartItems:ArrayList<responseCart>, v
             holder.itemView.RoomCnt.text = "${cnt}개"
             holder.itemView.calcPrice.text = "${roomPrice*cnt}"
             Supplier.totalCartPrice += roomPrice
+            Supplier.SelectPayRoom[Pair(CartItem.roomname, position)] = cnt
             itemClick()
         }
         holder.itemView.Minus.setOnClickListener{
@@ -148,6 +149,7 @@ class CartAdapter(var context: Context, var CartItems:ArrayList<responseCart>, v
                 holder.itemView.RoomCnt.text = "${cnt}개"
                 holder.itemView.calcPrice.text = "${roomPrice*cnt}"
                 Supplier.totalCartPrice -= roomPrice
+                Supplier.SelectPayRoom[Pair(CartItem.roomname, position)] = cnt
                 itemClick()
             }
         }

@@ -3,7 +3,14 @@ package com.example.dogplay
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.internal.LinkedTreeMap
 import java.net.Inet4Address
-
+import java.sql.Date
+import java.text.SimpleDateFormat
+import java.time.Instant
+import java.time.LocalDateTime
+import java.time.ZoneId
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 
 data class Dog(var img:String)
@@ -35,6 +42,17 @@ object Supplier{
         0,0,0,"","","")
     var ResponseTid = ""
     var user: MutableLiveData<User> = MutableLiveData<User>()
+    val formatterForView = SimpleDateFormat("MM/dd")
+    val formatterForApi = SimpleDateFormat("MM월 dd일 (EE)",Locale.KOREAN)
+    var SelectDateView = arrayListOf<String>(formatterForApi.format(System.currentTimeMillis()), formatterForApi.format(System.currentTimeMillis()))
+    var SelectDateApi = arrayListOf<String>(LocalDateTime.ofInstant(Instant.ofEpochMilli(System.currentTimeMillis()),
+        ZoneId.systemDefault()).toString(), LocalDateTime.ofInstant(
+        Instant.ofEpochMilli(System.currentTimeMillis()), ZoneId.systemDefault()).toString())
+    var SelectDateMain = arrayListOf<String>(formatterForView.format(System.currentTimeMillis()),formatterForView.format(System.currentTimeMillis()))
+    var SelectDate = arrayListOf<Long>(System.currentTimeMillis(), System.currentTimeMillis())
+    var SelectPayRoom = HashMap<Pair<String,Int>,Int>()
+    var PostReservation = ArrayList<Reservation>()
+    var PreReservation = ArrayList<Reservation>()
 }
 
 //class UserSupplier {

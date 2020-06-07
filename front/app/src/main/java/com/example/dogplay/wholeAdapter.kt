@@ -15,8 +15,8 @@ class wholeAdapter(fm:FragmentManager, admin: String):FragmentPagerAdapter(fm){
                 0 -> searchPage()
                 1 -> mapPage()
                 2 -> chatPage()
-                4 -> UserProfile()
-                else -> searchPage()
+                3 -> ReservationPage()
+                else -> UserProfile()
             }
         } else {
             when (position) {
@@ -37,6 +37,4 @@ class wholeAdapter(fm:FragmentManager, admin: String):FragmentPagerAdapter(fm){
     override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
         super.destroyItem(container, position, `object`)
     }
-
-
 }

@@ -11,10 +11,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.dogplay.API.Companion.server
 import kotlinx.android.synthetic.main.home_list.view.*
-import kotlinx.android.synthetic.main.home_list.view.address
+import kotlinx.android.synthetic.main.home_list.view.Address
 import kotlinx.android.synthetic.main.home_list.view.eval
 import kotlinx.android.synthetic.main.home_list.view.hotelName
-import kotlinx.android.synthetic.main.hotel_detail.view.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -35,7 +34,7 @@ class HotelAdapter(var context:Context, var hotels:ArrayList<Hotel>) :
             itemView.hotelName.text = hotel.hotelname
             itemView.eval.text = "${hotel.star} / 5.0"
             itemView.review.text = "후기 ${hotel.countreview}"
-            itemView.address.text = hotel.address
+            itemView.Address.text = hotel.address
             itemView.price.text = "${hotel.minprice}원"
         }
     }

@@ -5,14 +5,7 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.appcompat.view.menu.ActionMenuItemView
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.home_list.view.*
-import kotlinx.android.synthetic.main.home_list.view.address
-import kotlinx.android.synthetic.main.home_list.view.eval
-import kotlinx.android.synthetic.main.home_list.view.hotelName
-import kotlinx.android.synthetic.main.hotel_detail.view.*
 
 class DogAdapter(var context:Context, var dogs:String) :
     RecyclerView.Adapter<DogAdapter.ViewHolder>(){

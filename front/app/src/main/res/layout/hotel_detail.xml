@@ -28,7 +28,7 @@
                 app:srcCompat="@drawable/dog" />
 
             <TextView
-                android:id="@+id/hotelName"
+                android:id="@+id/prehotelName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
@@ -46,7 +46,7 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="5dp"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/hotelName"
+                app:layout_constraintTop_toBottomOf="@+id/prehotelName"
                 app:srcCompat="@drawable/star" />
 
             <TextView
@@ -59,7 +59,7 @@
                 android:text="4.5/5.0"
                 android:textSize="22dp"
                 app:layout_constraintLeft_toRightOf="@id/star"
-                app:layout_constraintTop_toBottomOf="@id/hotelName" />
+                app:layout_constraintTop_toBottomOf="@id/prehotelName" />
 
             <TextView
                 android:id="@+id/reviewcnt"
@@ -70,7 +70,7 @@
                 android:textSize="22dp"
                 app:layout_constraintLeft_toRightOf="@id/eval"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/hotelName"
+                app:layout_constraintTop_toBottomOf="@id/prehotelName"
 
                 />
 
@@ -84,7 +84,7 @@
                 app:srcCompat="@drawable/marker" />
 
             <TextView
-                android:id="@+id/address"
+                android:id="@+id/preAddress"
                 android:layout_width="wrap_content"
                 android:layout_height="20dp"
                 android:layout_marginTop="7dp"
@@ -101,7 +101,7 @@
                 android:layout_height="0.5dp"
                 android:layout_marginTop="15dp"
                 android:background="#888888"
-                app:layout_constraintTop_toBottomOf="@id/address" />
+                app:layout_constraintTop_toBottomOf="@id/preAddress" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/checkDate"
@@ -124,7 +124,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="5월 30일(수)"
-                        android:textSize="30dp"
+                        android:textSize="25dp"
                         app:layout_constraintBottom_toBottomOf="@+id/checkin"
                         app:layout_constraintLeft_toLeftOf="@id/checkin"
                         app:layout_constraintRight_toRightOf="@+id/checkin"
@@ -154,7 +154,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="6월 2일(금)"
-                        android:textSize="30dp"
+                        android:textSize="25dp"
                         app:layout_constraintBottom_toBottomOf="@+id/checkout"
                         app:layout_constraintLeft_toLeftOf="@id/checkout"
                         app:layout_constraintRight_toRightOf="@id/checkout"

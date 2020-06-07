@@ -29,67 +29,62 @@
                 app:srcCompat="@drawable/dog" />
 
             <TextView
-                android:id="@+id/hotelName"
+                android:id="@+id/prehotelName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="250dp"
-                android:text=""
-                android:textSize="30dp"
-                />
-
-            <ImageView
-                android:id="@+id/imageView2"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                app:srcCompat="@drawable/star"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="290dp"
+                android:text="호텔 이름이 들어가"
+                android:textSize="20dp"
                 />
 
             <TextView
-                android:id="@+id/eval"
-                android:layout_width="80dp"
+                android:id="@+id/preDate"
+                android:layout_width="wrap_content"
                 android:layout_height="30dp"
-                android:layout_marginLeft="40dp"
-                android:layout_marginTop="288dp"
-                android:text=""
+                android:layout_marginLeft="200dp"
+                android:layout_marginTop="250dp"
+                android:text="날짜가 들어가"
                 android:textSize="20dp" />
 
-            <TextView
-                android:id="@+id/review"
-                android:layout_width="100dp"
-                android:layout_height="30dp"
-                android:layout_marginLeft="190dp"
-                android:layout_marginTop="287dp"
-                android:text=""
-                android:textSize="22dp" />
             <ImageView
-                android:layout_width="15dp"
-                android:layout_height="15dp"
+                android:layout_width="14dp"
+                android:layout_height="14dp"
                 android:layout_marginLeft="15dp"
-                android:layout_marginTop="325dp"
+                android:layout_marginTop="315dp"
                 android:src="@drawable/marker"
                 />
 
             <TextView
-                android:id="@+id/Address"
+                android:id="@+id/preAddress"
                 android:layout_width="250dp"
                 android:layout_height="20dp"
                 android:layout_marginLeft="35dp"
-                android:layout_marginTop="322dp"
-                android:text=""
+                android:layout_marginTop="311dp"
+                android:text="주소가 들어갈 자리"
                 android:textSize="15dp" />
 
             <TextView
-                android:id="@+id/price"
-                android:layout_width="200dp"
-                android:layout_height="30dp"
+                android:id="@+id/preItemName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:layout_marginTop="345dp"
-                android:text=""
-                android:textSize="27dp" />
+                android:layout_marginTop="285dp"
+                android:text="예약 내용"
+                android:textSize="17dp" />
 
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/writeBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:text="리뷰 쓰기"
+                android:textSize="25dp"
+                android:paddingBottom="10dp"
+                android:textColor="#ffaaaa"
+                android:layout_marginTop="350dp"
+                />
         </androidx.cardview.widget.CardView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
+

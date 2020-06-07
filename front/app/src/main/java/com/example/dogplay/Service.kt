@@ -305,6 +305,11 @@ interface Service {
 
     @GET("/api/v1/hotelstar/searchall")
     fun getRequest():Call<HotelSerchDTO>
+
+    @GET("/api/v1/hotelstar/search/hotelnumber")
+    fun searchHotelStar(
+        @Query("hotelnumber") hotelnumber: String
+    ):Call<HotelDTO>
 //
     @GET("/api/v1/hoteldetail/search/")
     fun searchHotelDetail(
@@ -452,7 +457,7 @@ interface Service {
     @POST("/api/v1/paid/insert")
     fun insertPaid(
         @Body params: InsertPaid
-    ):Call<Any>
+    ):Call<PaidResponse>
 
     @GET("/api/v1/reservation/count/hotel/room/start/finish/")
     fun getReservationRoomCount(
@@ -469,7 +474,55 @@ interface Service {
         @Query("startdate") startdate: LocalDateTime,
         @Query("finishdate") finishdate: LocalDateTime
     ):Call<ReservationDTO>
+
+    @POST("/api/v1/reservation/insert")
+    fun insertReservation(
+        @Body params:InsertReservation
+    ):Call<Any>
+
+    @GET("/api/v1/reservation/searchbyuserid")
+    fun searchReservationByUser(
+        @Query("userid") userid: String
+    ):Call<ReservationDTO>
+
+    @POST("/api/v1/review/insert")
+    fun insertReview(
+        @Body params: InsertReview
+    ):Call<Any>
+
+    @PUT("/api/v1/reservation/update")
+    fun updateReservation(
+        @Body params: InsertReservation
+    ):Call<Any>
 }
+data class InsertReview(
+    val content: String,
+    val created: String,
+    val hotelnumber:String,
+    val id: Int,
+    val star: Double,
+    val userid: String,
+    val visitid: Int
+)
+
+data class InsertReservation(
+    val count: Int,
+    val dog: String,
+    val finishdate: String,
+    val hotelnumber: String,
+    val id:Int,
+    val paidid: Int,
+    val phone:String,
+    val roomname: String,
+    val startdate: String,
+    val userid: String,
+    val visitid: Int
+)
+
+data class PaidResponse(
+    @SerializedName("data")
+    val data:Int
+)
 
 data class ReservationDTO(
     @SerializedName("data")
@@ -506,6 +559,11 @@ data class InsertPaid(
 
 data class kakaoReadyDTO(
     val data:kakaoReady
+)
+
+data class HotelDTO(
+    @SerializedName("data")
+    val data: Hotel
 )
 
 data class kakaoReady(

@@ -23,11 +23,16 @@ import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.sql.Date
 import java.text.SimpleDateFormat
-import java.time.LocalDate
+import java.time.Instant
+import java.time.LocalDateTime
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 import java.util.*
 import java.util.logging.SimpleFormatter
 import kotlin.collections.ArrayList
+import kotlin.time.days
 
 
 class searchPage : Fragment() {
@@ -41,6 +46,7 @@ class searchPage : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        Log.d("서치페이지", "서치")
         return inflater.inflate(R.layout.activity_main, container, false)
     }
 
@@ -48,12 +54,7 @@ class searchPage : Fragment() {
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
-        // date formatter
-        val formatterForView = SimpleDateFormat("MM/dd")
-        val date = formatterForView.format(today)
-
-        curdate.text = "$date - $date"
+        curdate.text = "${Supplier.SelectDateMain[0]} ~ ${Supplier.SelectDateMain[1]}"
 
 //        val retrofit = Retrofit.Builder()
 //            .baseUrl("http://k02a4021.p.ssafy.io:8080")
@@ -109,10 +110,18 @@ class searchPage : Fragment() {
             dateRangePicker.show(activity!!.supportFragmentManager, "DATE PICKER")
 
             dateRangePicker.addOnPositiveButtonClickListener {
-                val startDate = formatterForView.format(dateRangePicker.selection!!.first)
-                val endDate = formatterForView.format(dateRangePicker.selection!!.second)
-
-                curdate.text = "$startDate - $endDate"
+                Supplier.SelectDateMain = arrayListOf(Supplier.formatterForView.format(dateRangePicker.selection!!.first),Supplier.formatterForView.format(dateRangePicker.selection!!.second))
+               val date1 = dateRangePicker.selection!!.first!!
+                val date2 = dateRangePicker.selection!!.second!!
+                Supplier.SelectDate = arrayListOf(date1, date2)
+                var apiDateFirst = LocalDateTime.ofInstant(Instant.ofEpochMilli(date1), ZoneId.systemDefault()).toString()
+                var apiDateSecond = LocalDateTime.ofInstant(Instant.ofEpochMilli(date2), ZoneId.systemDefault()).toString()
+                Log.d("포멧", apiDateFirst)
+                var viewDateFirst = Supplier.formatterForApi.format(dateRangePicker.selection!!.first)
+                var viewDateSecond = Supplier.formatterForApi.format(dateRangePicker.selection!!.second)
+                Supplier.SelectDateApi = arrayListOf(apiDateFirst, apiDateSecond)
+                Supplier.SelectDateView = arrayListOf(viewDateFirst,viewDateSecond)
+                curdate.text = "${Supplier.SelectDateMain[0]} - ${Supplier.SelectDateMain[1]}"
             }
         }
 
