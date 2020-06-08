@@ -33,7 +33,7 @@
         <activity android:name=".ui.owner.HostReReview" />
         <activity android:name=".ui.owner.LoginMain" />
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.owner.LoginActivity"
             android:windowSoftInputMode="adjustResize|stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -41,7 +41,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-<!--        <activity android:name=".MainActivity" />-->
+        <activity android:name=".MainActivity" />
         <activity android:name=".HotelDetail" />
         <activity android:name=".InfoDetail" />
         <activity android:name=".CalendarView" />
