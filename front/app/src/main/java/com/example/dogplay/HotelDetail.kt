@@ -5,14 +5,20 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.DisplayMetrics
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.util.Pair
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
+import androidx.viewpager2.widget.ViewPager2
+import com.bumptech.glide.Glide
 import com.example.dogplay.API.Companion.server
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.LatLng
@@ -27,9 +33,18 @@ import java.time.LocalDateTime
 import java.time.ZoneId
 
 class HotelDetail:AppCompatActivity(), OnMapReadyCallback{
+    private lateinit var mViewPager: ViewPager2
+    private var hotelPictures: ArrayList<HotelPicture> = ArrayList()
+    private var roomPictures: ArrayList<HotelPicture> = ArrayList()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.hotel_detail)
+
+        mViewPager = mainImg
+
+        getPicture()
+
         val server = server()
         paybtn.setOnClickListener{
             server!!.searchCartById(Supplier.UserId).enqueue(object :Callback<responseCartDTO>{
@@ -97,7 +112,7 @@ class HotelDetail:AppCompatActivity(), OnMapReadyCallback{
         layoutManager.orientation = LinearLayoutManager.VERTICAL
         roomList.layoutManager = layoutManager
         val HotelRoomData = Supplier.SelectHotel.data.HotelRoom
-        val adapter = RoomAdapter(applicationContext, HotelRoomData)
+        val adapter = RoomAdapter(applicationContext, HotelRoomData, roomPictures)
         roomList.adapter = adapter
         hotelIntro.text = hotelstar.info
         hotelLocInfo.text = hotelstar.address
@@ -158,6 +173,32 @@ class HotelDetail:AppCompatActivity(), OnMapReadyCallback{
 //        }
     }
 
+    private fun getPicture() {
+        val server = server()
+        server!!.getHotelAllPictures(Supplier.SelectHotel.data.HotelStar.hotelnumber).enqueue(object :Callback<HotelPicturesDTO>{
+            override fun onFailure(call: Call<HotelPicturesDTO>, t: Throwable) {
+                Log.d("picture error", t.toString())
+            }
+            override fun onResponse(
+                call: Call<HotelPicturesDTO>,
+                response: Response<HotelPicturesDTO>
+            ) {
+                Log.d("picture successs", response.body()!!.data.toString())
+                val pictures = response.body()!!.data
+                pictures.forEach {
+                    if (it.name == "main" || it.name == "detail") {
+                        hotelPictures.add(it)
+                    } else {
+                        roomPictures.add(it)
+                    }
+                }
+                mViewPager.adapter = PagerAdapter(hotelPictures)
+                mViewPager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
+                (roomList.adapter as RoomAdapter).notifyDataSetChanged()
+            }
+        })
+    }
+
     fun OnClickHandler(v:View){
         val builder = AlertDialog.Builder(this)
         builder.setTitle("개놀자 알림!")
@@ -206,6 +247,29 @@ class HotelDetail:AppCompatActivity(), OnMapReadyCallback{
         getWindowManager().getDefaultDisplay().getMetrics(metrics)
         var pageMargin = (metrics.heightPixels / 9) * 2
         return pageMargin
+    }
+
+    class PagerAdapter(private val pictures: ArrayList<HotelPicture>) : RecyclerView.Adapter<PagerViewHolder>() {
+
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PagerViewHolder =
+            PagerViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.owner_hotel_img_item, parent, false))
+
+        override fun onBindViewHolder(holder: PagerViewHolder, position: Int) {
+            val picture = pictures[position]
+            holder.updateHotelImage(picture)
+        }
+
+        override fun getItemCount(): Int = pictures.size
+    }
+
+    class PagerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private var hotelImg: ImageView = itemView.findViewById(R.id.imgEnrollHotel)
+
+        fun updateHotelImage(picture: HotelPicture) {
+            Glide.with(itemView)
+                .load(picture.picture)
+                .into(hotelImg)
+        }
     }
 }
 

@@ -59,7 +59,7 @@ class mapPage : Fragment() {
     private var mapFocus = false
     private var numPage = 0
     private val REQUEST_ACCESS_FINE_LOCATION = 1
-    private val DISTANCE = 5
+    private val DISTANCE = 1
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

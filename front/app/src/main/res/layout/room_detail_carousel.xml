@@ -5,9 +5,10 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/rdcs"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
         <ImageView
+            android:id="@+id/roomImg"
             android:layout_width="match_parent"
             android:layout_height="280dp"
             android:scaleType="centerCrop"
