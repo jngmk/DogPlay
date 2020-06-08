@@ -53,9 +53,7 @@ public class DoginfoController {
 	@PostMapping("/api/v1/doginfo/insert")
 	@ApiOperation("insert doginfo")
 	public ResponseEntity<Map<String, Object>> insert(@RequestBody Doginfo doginfo){
-		boolean res = service.insert(doginfo);
-		if (res) return handleSuccess("success");
-		else return handleFail("fail", HttpStatus.OK);
+		return handleSuccess(service.insert(doginfo));
 	}
 		
 	@PutMapping("/api/v1/doginfo/update")

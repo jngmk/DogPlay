@@ -95,18 +95,19 @@ public class DoginfoServiceImpl implements DoginfoService {
 	}
 		
 	@Override
-	public boolean insert(Doginfo doginfo) {
+	public int insert(Doginfo doginfo) {
 		try {
 			Object obj = doginfo.getDetail();
 			Gson gson = new Gson();
 			String json = gson.toJson(obj);
 			doginfo.setDetail(json);
 			dao.insert(doginfo);
-			return true;
+			int id = dao.last();
+			return id;
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
-		return false;
+		return -1;
 	};
 	
 	@Override
@@ -116,7 +117,7 @@ public class DoginfoServiceImpl implements DoginfoService {
 			Gson gson = new Gson();
 			String json = gson.toJson(obj);
 			doginfo.setDetail(json);
-			dao.insert(doginfo);
+			dao.update(doginfo);
 			return true;
 		}catch (Exception e) {
 			e.printStackTrace();
