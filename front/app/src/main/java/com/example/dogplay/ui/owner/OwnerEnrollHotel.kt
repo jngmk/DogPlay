@@ -276,11 +276,11 @@ class OwnerEnrollHotel : AppCompatActivity() {
 
                 // firebase 에 사진 올리기
                 hotelData.let {
-                    var categoryName = "detail"
                     val hotelNumber = it.hotelnumber
                     val count = pictures.size - 1
 
                     for (i in 0..count) {
+                        var categoryName = "detail"
                         val uri = uris[i]
                         if (i == 0) {
                             imageRef = storageReferenence.child("hotels/$hotelNumber/" + uri.lastPathSegment)
