@@ -17,7 +17,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".UserInfo"></activity>
+        <activity android:name=".AddMyDogInfo"></activity>
+        <activity android:name=".AddMyDog" />
+        <activity android:name=".UserInfo" />
         <activity android:name=".ui.owner.OwnerEnrollHotelRoom" />
         <activity android:name=".ui.owner.OwnerEnrollHotel" />
         <activity android:name=".ui.owner.EditRoom" />
@@ -32,11 +34,11 @@
             android:windowSoftInputMode="adjustResize|stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity" />
-
         <activity android:name=".HotelDetail" />
         <activity android:name=".InfoDetail" />
         <activity android:name=".CalendarView" />

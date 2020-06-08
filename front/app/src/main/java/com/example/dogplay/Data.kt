@@ -21,7 +21,7 @@ data class DMset(
 
 object Supplier{
     var PickAdress = String()
-    var UserId = "test1"
+    var UserId = ""
     var DMList = ArrayList<DMset>()
     var CartList = ArrayList<responseCart>()
     var SelectHotel = HotelDetailDTO(HotelDetailHash(HotelStar("","","",0.0,0.0,"","","", arrayListOf(
@@ -34,7 +34,16 @@ object Supplier{
     var SelectPayForm = PayForm("","","","",
         0,0,0,"","","")
     var ResponseTid = ""
-    var user: MutableLiveData<User> = MutableLiveData<User>()
+    var user: User = User()
+    var dogsSelected: ArrayList<DogInfo> = ArrayList()
+    var dogs: ArrayList<DogInfo> = ArrayList()
+    var dogEdit: DogInfo = DogInfo()
+}
+
+object MutableSupplier {
+    var user: MutableLiveData<User> = MutableLiveData()
+    var dogsSelected: MutableLiveData<ArrayList<DogInfo>> = MutableLiveData()
+    var dogs: MutableLiveData<ArrayList<DogInfo>> = MutableLiveData()
 }
 
 //class UserSupplier {

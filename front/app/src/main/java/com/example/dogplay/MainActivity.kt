@@ -8,6 +8,8 @@ import com.kakao.usermgmt.UserManagement
 import com.example.dogplay.ui.owner.LoginActivity
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.example.dogplay.ui.owner.EditService
 import com.example.dogplay.ui.owner.UserInfoDTO
 import kotlinx.android.synthetic.main.whole_page.*
@@ -18,12 +20,18 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class MainActivity : AppCompatActivity(){
+    private lateinit var userId: String
+    private lateinit var admin: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.whole_page)
-        var admin = "0"
-        val userId = loadData()
+
+        MutableSupplier.user.postValue(User())
+        Supplier.user = User()
+
+        admin = "0"
+        userId = loadData()!!
         var userInfo:HashMap<String,Any> = hashMapOf()
 
 
@@ -31,21 +39,30 @@ class MainActivity : AppCompatActivity(){
 //            .baseUrl("http://k02a4021.p.ssafy.io:8080")
 //            .addConverterFactory(GsonConverterFactory.create())
 //            .build()
+
+        getUserData()
+
+        getDogsData()
+    }
+
+    private fun getUserData() {
         val server = API.server()
-        server!!.getUserByUserId(userId.toString()).enqueue(object: Callback<UserDTO> {
+        server!!.getUserByUserId(userId).enqueue(object: Callback<UserDTO> {
             override fun onFailure(call: Call<UserDTO>, t: Throwable) {
                 Log.d("faile", t.toString())
                 Log.d("faile", "실패-----------------------------------")
             }
             override fun onResponse(call: Call<UserDTO>, response: Response<UserDTO>) {
-                var user = response.body()!!.data
+                val user = response.body()!!.data
                 if (user.phone == null) {
                     user.phone = ""
                 }
                 if (user.picture == null) {
                     user.picture = ""
                 }
-                Supplier.user.postValue(user)
+                MutableSupplier.user.postValue(user)
+                Supplier.user = user
+                Supplier.UserId = user.userid
                 admin = user.admin.toString()
                 Log.d("faile", "${admin}-----------------------------------")
                 saveData()
@@ -77,7 +94,23 @@ class MainActivity : AppCompatActivity(){
                 edit.apply()
             }
         })
+    }
 
+    private fun getDogsData() {
+        val server = API.server()
+        server!!.getDogByUserId(userId).enqueue(object: Callback<DogInfoDTO> {
+            override fun onFailure(call: Call<DogInfoDTO>, t: Throwable) {
+                Log.d("fail", t.toString())
+            }
+
+            override fun onResponse(call: Call<DogInfoDTO>, response: Response<DogInfoDTO>) {
+                val dogs = response.body()!!.data
+                if (dogs.size > 0) {
+                    Supplier.dogs = dogs
+                    MutableSupplier.dogs.postValue(dogs)
+                }
+            }
+        })
     }
 
     fun logout() {
@@ -88,9 +121,6 @@ class MainActivity : AppCompatActivity(){
             }
         })
 
-    }
-    fun mainFinish() {
-        finish()
     }
 
      private fun loadData(): String? {

@@ -35,7 +35,7 @@ const val USER_SOCIAL = "com.example.dogplay.USER_SOCIAL"
 const val USER_ADMIN = "com.example.dogplay.USER_ADMIN"
 
 class UserProfile : Fragment() {
-    private val user = Supplier.user.value!!
+    private val user = Supplier.user
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,7 +48,7 @@ class UserProfile : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        Supplier.user.observe(viewLifecycleOwner, Observer {
+        MutableSupplier.user.observe(viewLifecycleOwner, Observer {
             user ->
             if (user.picture != "") {
                 Glide.with(this)
@@ -60,6 +60,7 @@ class UserProfile : Fragment() {
             }
             txtProfileName.text = user.nickname
             txtProfileUserId.text = user.userid
+            Supplier.user = user
         })
 
         txtProfileName.text = user.nickname
@@ -90,11 +91,11 @@ class UserProfile : Fragment() {
         }
         btnChangeToOwnerView.setOnClickListener {
             changeView()
-            (activity as MainActivity).mainFinish()
+            (activity as MainActivity).finish()
         }
         btnLogout.setOnClickListener {
             (activity as MainActivity).logout()
-            (activity as MainActivity).mainFinish()
+            (activity as MainActivity).finish()
         }
     }
 
@@ -104,7 +105,7 @@ class UserProfile : Fragment() {
     }
 
     private fun addMyDogs() {
-        val intent = Intent(this.context, MyDogPage::class.java)
+        val intent = Intent(this.context, AddMyDog::class.java)
         startActivity(intent)
     }
 
@@ -137,7 +138,8 @@ class UserProfile : Fragment() {
 
             override fun onResponse(call: Call<HotelReturnData>, response: Response<HotelReturnData>) {
                 Toast.makeText(context, "사용자 모드가 변경되었습니다..", Toast.LENGTH_LONG).show()
-                Supplier.user.postValue(user)
+                MutableSupplier.user.postValue(user)
+                Supplier.user = user
                 val intent = Intent(context, MainActivity::class.java)
                 startActivity(intent)
             }
