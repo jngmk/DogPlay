@@ -67,7 +67,7 @@ class KakaoWebView :AppCompatActivity(){
                                 Log.d("하나씩 뽑아서 보여주자", i.toString())
                                 server.insertReservation(
                                     InsertReservation(i.value,"강아지",Supplier.SelectDateApi[1],Supplier.SelectHotel.data.HotelStar.hotelnumber,
-                                0,response.body()!!.data,"010-0101-2020",i.key.first,Supplier.SelectDateApi[0],"test1",0))
+                                0,response.body()!!.data,"010-0101-2020",i.key.first,Supplier.SelectDateApi[0],Supplier.UserId,0))
                                     .enqueue(object :Callback<Any>{
                                         override fun onFailure(call: Call<Any>, t: Throwable) {
                                             Log.d("예약목록 추가 실패", t.toString())

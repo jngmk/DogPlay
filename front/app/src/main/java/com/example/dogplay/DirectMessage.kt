@@ -35,7 +35,7 @@ class DirectMessage: AppCompatActivity() {
             }
             else {
                 Log.d("뭐라 친건데", sendMessage.text.toString())
-                server!!.PostChatInsert(ChatInsert(1,"", 0,sendMessage.text.toString(),"사진같음",0,"owner1","test1")).enqueue(object :Callback<DMSend>{
+                server!!.PostChatInsert(ChatInsert(1,"", 0,sendMessage.text.toString(),"사진같음",0,"owner1",Supplier.UserId)).enqueue(object :Callback<DMSend>{
                     override fun onFailure(call: Call<DMSend>, t: Throwable) {
                         Log.d("말썽이네", t.toString())
                     }

@@ -2,6 +2,8 @@ package com.example.dogplay
 
 import android.content.Context
 import android.content.DialogInterface
+import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.util.Log
@@ -31,6 +33,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.time.LocalDateTime
+import java.time.Year
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -56,8 +59,34 @@ class preReservationAdapter(var context: Context, var reservations:ArrayList<Res
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         // Pre
         val reservation = reservations[position]
+        holder.itemView.setOnClickListener{
+            server!!.searchHotelDetail(reservation.hotelnumber).enqueue(object :
+                Callback<HotelDetailDTO> {
+                override fun onFailure(call: Call<HotelDetailDTO>, t: Throwable) {
+                    Log.d("faile", t.toString())
+                }
+
+                override fun onResponse(
+                    call: Call<HotelDetailDTO>,
+                    response: Response<HotelDetailDTO>
+                ) {
+                    val data: HotelDetailDTO = response.body()!!
+                    val hotelDetailData = data
+                    Supplier.SelectHotel = hotelDetailData
+
+                    Log.d("리뷰", Supplier.SelectHotel.data.toString())
+//                    Log.d("방",Supplier.SelectHotel.data.HotelRoom.toString())
+                    val intent = Intent(context,HotelDetail::class.java)
+                    context.startActivity(intent)
+                }
+            })
+        }
         Log.d("호텔번호뭔데", reservation.hotelnumber)
         holder.itemView.preDate.text = "${reservation.startdate[0]}.${reservation.startdate[1]}.${reservation.startdate[2]} ~ ${(reservation.finishdate[1]-reservation.startdate[1])*30 + (reservation.finishdate[2]-reservation.startdate[2])} 박"
+        val calendar = Calendar.getInstance()
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH)
+        val day = calendar.get(Calendar.DATE)
         server!!.searchHotelStar(reservation.hotelnumber).enqueue(object :Callback<HotelDTO>{
             override fun onFailure(call: Call<HotelDTO>, t: Throwable) {
             }
@@ -79,49 +108,56 @@ class preReservationAdapter(var context: Context, var reservations:ArrayList<Res
                 } else{
                     holder.itemView.cardImg.setImageResource(R.drawable.dog)
                 }
-                holder.itemView.writeBtn.setOnClickListener{
-                    val builder = AlertDialog.Builder(context)
-                    val dialogView = LayoutInflater.from(context).inflate(R.layout.review_form, null, false)
-                    val dialogText = dialogView.findViewById<EditText>(R.id.dialogEt)
-                    val dialogRatingBar = dialogView.findViewById<RatingBar>(R.id.dialogRb)
-                    builder.setView(dialogView)
-                        .setPositiveButton("확인"){
-                            dialog, i ->
-                            val score = dialogRatingBar.rating.toDouble()
-                            Log.d("별 몇개", dialogText.text.toString())
-                            server.insertReview(InsertReview(dialogText.text.toString(),"",response.body()!!.data.hotelnumber,0,score,Supplier.UserId,0))
-                                .enqueue(object :Callback<Any>{
-                                    override fun onFailure(call: Call<Any>, t: Throwable) {
-                                    }
-                                    override fun onResponse(
-                                        call: Call<Any>,
-                                        response: Response<Any>
-                                    ) {
-                                        server.updateReservation(InsertReservation(reservation.count,"hello",
-                                            LocalDateTime.of(reservation.finishdate[0],reservation.finishdate[1],reservation.finishdate[2],reservation.finishdate[3],reservation.finishdate[4],reservation.finishdate[5]).toString(),
-                                        reservation.hotelnumber,reservation.id,reservation.paidid,reservation.phone!!,reservation.roomname,
-                                            LocalDateTime.of(reservation.finishdate[0],reservation.finishdate[1],reservation.finishdate[2],reservation.finishdate[3],reservation.finishdate[4],reservation.finishdate[5]).toString(),
-                                        reservation.userid,1)).enqueue(object :Callback<Any>{
-                                            override fun onFailure(call: Call<Any>, t: Throwable) {
-                                            }
-                                            override fun onResponse(
-                                                call: Call<Any>,
-                                                response: Response<Any>
-                                            ) {
-                                                Log.d("수정 되었어요", response.body().toString())
-                                            }
+                if (reservation.visit == 0){
+                    holder.itemView.writeBtn.setOnClickListener{
+                        val builder = AlertDialog.Builder(context)
+                        val dialogView = LayoutInflater.from(context).inflate(R.layout.review_form, null, false)
+                        val dialogText = dialogView.findViewById<EditText>(R.id.dialogEt)
+                        val dialogRatingBar = dialogView.findViewById<RatingBar>(R.id.dialogRb)
+                        builder.setView(dialogView)
+                            .setPositiveButton("확인"){
+                                    dialog, i ->
+                                val score = dialogRatingBar.rating.toDouble()
+                                Log.d("별 몇개", dialogText.text.toString())
+                                server.insertReview(InsertReview(dialogText.text.toString(),"",response.body()!!.data.hotelnumber,0,score,Supplier.UserId,0))
+                                    .enqueue(object :Callback<Any>{
+                                        override fun onFailure(call: Call<Any>, t: Throwable) {
+                                        }
+                                        override fun onResponse(
+                                            call: Call<Any>,
+                                            response: Response<Any>
+                                        ) {
+                                            server.updateReservation(InsertReservation(reservation.count,"hey",
+                                                LocalDateTime.of(reservation.finishdate[0],reservation.finishdate[1],reservation.finishdate[2],reservation.finishdate[3],reservation.finishdate[4],reservation.finishdate[5]).toString(),
+                                                reservation.hotelnumber,reservation.id,reservation.paidid,reservation.phone!!,reservation.roomname,
+                                                LocalDateTime.of(reservation.finishdate[0],reservation.finishdate[1],reservation.finishdate[2],reservation.finishdate[3],reservation.finishdate[4],reservation.finishdate[5]).toString(),
+                                                reservation.userid,2)).enqueue(object :Callback<Any>{
+                                                override fun onFailure(call: Call<Any>, t: Throwable) {
+                                                }
+                                                override fun onResponse(
+                                                    call: Call<Any>,
+                                                    response: Response<Any>
+                                                ) {
+                                                    Log.d("수정 되었어요", response.toString())
+                                                }
+                                            })
+                                            Toast.makeText(context,"리뷰 등록이 완료되었습니다.",Toast.LENGTH_SHORT).show()
+                                        }
 
-                                        })
-                                        Toast.makeText(context,"리뷰 등록이 완료되었습니다.",Toast.LENGTH_SHORT).show()
-                                    }
-
-                                })
-                            //버튼 눌렀을 때
-                        }
-                        .setNegativeButton("취소"){
-                            dialog, i ->
-                        }
-                        .show()
+                                    })
+                                //버튼 눌렀을 때
+                            }
+                            .setNegativeButton("취소"){
+                                    dialog, i ->
+                            }
+                            .show()
+                    }
+                } else if ((year*365+month*30+day) > (reservation.finishdate[0]*365+reservation.finishdate[1]*30+reservation.finishdate[2])+14){
+                    holder.itemView.writeBtn.text = "리뷰 작성기간이 만료되었습니다."
+                    holder.itemView.writeBtn.setTextColor(Color.parseColor("#aaaaaa"))
+                } else {
+                    holder.itemView.writeBtn.text = "리뷰를 작성하셨습니다."
+                    holder.itemView.writeBtn.setTextColor(Color.parseColor("#aaaaaa"))
                 }
             }
         })
@@ -149,6 +185,28 @@ class postReservationAdapter(var context: Context, var reservations:ArrayList<Re
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val reservation = reservations[position]
+        holder.itemView.setOnClickListener{
+            server!!.searchHotelDetail(reservation.hotelnumber).enqueue(object :
+                Callback<HotelDetailDTO> {
+                override fun onFailure(call: Call<HotelDetailDTO>, t: Throwable) {
+                    Log.d("faile", t.toString())
+                }
+
+                override fun onResponse(
+                    call: Call<HotelDetailDTO>,
+                    response: Response<HotelDetailDTO>
+                ) {
+                    val data: HotelDetailDTO = response.body()!!
+                    val hotelDetailData = data
+                    Supplier.SelectHotel = hotelDetailData
+
+                    Log.d("리뷰", Supplier.SelectHotel.data.toString())
+//                    Log.d("방",Supplier.SelectHotel.data.HotelRoom.toString())
+                    val intent = Intent(context,HotelDetail::class.java)
+                    context.startActivity(intent)
+                }
+            })
+        }
         holder.itemView.postDate.text = "${reservation.startdate[0]}.${reservation.startdate[1]}.${reservation.startdate[2]} ~ ${(reservation.finishdate[1]-reservation.startdate[1])*30 + (reservation.finishdate[2]-reservation.startdate[2])} 박"
         server!!.searchHotelStar(reservation.hotelnumber).enqueue(object :Callback<HotelDTO>{
             override fun onFailure(call: Call<HotelDTO>, t: Throwable) {
@@ -190,7 +248,7 @@ class ReservationPage : Fragment() {
         super.onActivityCreated(savedInstanceState)
         val server = server()
         Log.d("예약페이지", "")
-        server!!.searchReservationByUser("test1").enqueue(object :Callback<ReservationDTO>{
+        server!!.searchReservationByUser(Supplier.UserId).enqueue(object :Callback<ReservationDTO>{
             override fun onFailure(call: Call<ReservationDTO>, t: Throwable) {
             }
             override fun onResponse(

@@ -28,7 +28,7 @@ data class DMset(
 
 object Supplier{
     var PickAdress = String()
-    var UserId = ""
+    var UserId = "test1"
     var DMList = ArrayList<DMset>()
     var CartList = ArrayList<responseCart>()
     var SelectHotel = HotelDetailDTO(HotelDetailHash(HotelStar("","","",0.0,0.0,"","","", arrayListOf(
@@ -52,7 +52,7 @@ object Supplier{
     var SelectPayRoom = HashMap<Pair<String,Int>,Int>()
     var PostReservation = ArrayList<Reservation>()
     var PreReservation = ArrayList<Reservation>()
-
+    var MainSearch = ArrayList<Hotel>()
     var user: User = User()
     var dogsSelected: ArrayList<DogInfo> = ArrayList()
     var dogs: ArrayList<DogInfo> = ArrayList()
@@ -64,7 +64,6 @@ object MutableSupplier {
     var dogsSelected: MutableLiveData<ArrayList<DogInfo>> = MutableLiveData()
     var dogs: MutableLiveData<ArrayList<DogInfo>> = MutableLiveData()
 }
-
 //class UserSupplier {
 //    private var _user: User = User()
 //

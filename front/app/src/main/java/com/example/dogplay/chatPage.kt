@@ -41,7 +41,7 @@ class chatPage : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         val server = server()
-        server!!.searchChatWithUserId("test1").enqueue(object :Callback<ChatMainDTO>{
+        server!!.searchChatWithUserId(Supplier.UserId).enqueue(object :Callback<ChatMainDTO>{
             override fun onFailure(call: Call<ChatMainDTO>, t: Throwable) {
                 Log.d("왜 안될까잉?", t.toString())
             }

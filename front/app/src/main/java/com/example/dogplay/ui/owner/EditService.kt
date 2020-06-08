@@ -144,10 +144,8 @@ interface EditService {
         @Query("hotelnumber") hotelnumber: String
     ):Call<RoomDTO>
 
-
     @DELETE("/api/v1/hotelroom/delete")
     fun deleteRoom(
         @Field("id") id: Int
     ):Call<RoomDeleteDTO>
-
 }

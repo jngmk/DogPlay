@@ -111,8 +111,13 @@ class HotelDetail:AppCompatActivity(), OnMapReadyCallback{
             vp.clipToPadding = false
             vp.setPageMargin(25)
             reviewAdapter.notifyDataSetChanged()
+            allReview.setOnClickListener{
+                val intent = Intent(applicationContext,AllReview::class.java)
+                startActivity(intent)
+            }
         } else{
             Log.d("리뷰가 없기는 한데", "안나오네")
+            allReview.text = "리뷰가 없습니다"
             val textView = TextView(this)
             textView.setText("첫 리뷰를 작성해주세요")
             val layoutParams = ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.WRAP_CONTENT,ConstraintLayout.LayoutParams.WRAP_CONTENT)
@@ -130,10 +135,7 @@ class HotelDetail:AppCompatActivity(), OnMapReadyCallback{
             val intent = Intent(applicationContext,InfoDetail::class.java)
             startActivity(intent)
         }
-        allReview.setOnClickListener{
-            val intent = Intent(applicationContext,AllReview::class.java)
-            startActivity(intent)
-        }
+
 
 //            이미지 변수화 처리
 //            var imgId = this.getResources().getIdentifier(img,"drawable",this.getPackageName())

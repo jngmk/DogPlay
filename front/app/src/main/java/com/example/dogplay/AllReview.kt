@@ -54,10 +54,12 @@ class AllReview:AppCompatActivity(){
                             call: Call<SearchResponseDTO>,
                             response: Response<SearchResponseDTO>
                         ) {
-                            Log.d("사장님 리뷰 검색 성공", response.body()!!.data.toString())
-                            val rData = response.body()!!.data
+                            Log.d("사장님 리뷰", response.body().toString())
                             ReviewResponseSet.add(data)
-                            ReviewResponseSet.add(SearchReview(rData.id,Supplier.SelectHotel.data.HotelStar.hotelnumber,rData.userid,-1,5.0,rData.created,rData.content))
+                            if (response.body()!!.data != null){
+                                val rData = response.body()!!.data
+                                ReviewResponseSet.add(SearchReview(rData.id,Supplier.SelectHotel.data.HotelStar.hotelnumber,rData.userid,-1,5.0,rData.created,rData.content))
+                            }
                             Log.d("아마 비동기 떄문", ReviewResponseSet.toString())
                             val adapter = AllReviewAdapter(applicationContext,ReviewResponseSet)
                             ReviewRecycler.adapter = adapter
