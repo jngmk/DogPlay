@@ -16,11 +16,8 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.dogplay.API
-import com.example.dogplay.HotelInfoWithStarAndPrice
-import com.example.dogplay.HotelSearchByUserIdDTO
+import com.example.dogplay.*
 
-import com.example.dogplay.R
 import kotlinx.android.synthetic.main.fragment_owner_main.*
 import org.w3c.dom.Text
 import retrofit2.Call
@@ -37,7 +34,7 @@ const val HOTEL_NAME = "com.example.dogplay.HOTEL_NAME"
 const val USER_ID = "com.example.dogplay.USER_ID"
 
 class OwnerMainFragment : Fragment() {
-    private val userId = "owner3"
+    private val userId = Supplier.UserId
     private lateinit var mRecyclerView: RecyclerView
     private lateinit var hotels: ArrayList<HotelInfoWithStarAndPrice>
 

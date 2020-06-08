@@ -31,7 +31,7 @@ class AddMyDogInfo : Fragment() {
     private lateinit var dogs: ArrayList<DogInfo>
     private lateinit var species: ArrayList<Species>
     private var storageReferenence = FirebaseStorage.getInstance().getReference()
-    private val userId = Supplier.user.userid
+    private lateinit var userId: String
     private var dogImage: Uri? = null
     private var dogToPost = DogInfoToPost()
     private var dog = DogInfo()
@@ -69,6 +69,7 @@ class AddMyDogInfo : Fragment() {
         mRecyclerView = rcyPrecaution
         mSpinner = spnSpecies
         dogs = Supplier.dogs
+        userId = Supplier.user.userid
 
         btnBack.setOnClickListener {
             (activity as AddMyDog).onOpenAddDog()
@@ -190,7 +191,6 @@ class AddMyDogInfo : Fragment() {
             dog.detail.add(array)
             dogToPost.detail.addProperty(title, content)
         }
-
     }
 
     private fun addPrecaution() {

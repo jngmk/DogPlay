@@ -483,6 +483,13 @@ interface Service {
         @Body params: DogInfoToPost
     ):Call<HotelReturnData>
 
+    @Headers("accept: application/json",
+        "content-type: application/json")
+    @PUT("/api/v1/doginfo/update")
+    fun putDogInfo(
+        @Body params: DogInfoToPost
+    ):Call<HotelReturnData>
+
     @GET("/api/v1/species/searchall")
     fun getSpecies(
     ):Call<SpeciesDTO>
