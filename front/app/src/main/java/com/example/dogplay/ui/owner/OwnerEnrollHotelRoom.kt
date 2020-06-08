@@ -24,6 +24,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.example.dogplay.*
 import com.google.firebase.storage.FirebaseStorage
+import kotlinx.android.synthetic.main.activity_owner_enorll_hotel.*
 import kotlinx.android.synthetic.main.activity_owner_enroll_hotel_room.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -50,6 +51,15 @@ class OwnerEnrollHotelRoom : AppCompatActivity() {
         }
         btnEnrollHotelRoomImg.setOnClickListener {
             getImages()
+        }
+        btnExitEnrollHotel.setOnClickListener {
+            val idx = mViewPager2.currentItem
+            pictures.removeAt(idx)
+            uris.removeAt(idx)
+            mViewAdapter.notifyDataSetChanged()
+            if (pictures.size == 0) {
+                it.visibility = View.GONE
+            }
         }
         btnEnrollHotelRoomData.setOnClickListener {
             if (edtEnrollHotelRoomName.text == null || edtEnrollHotelRoomName.text.toString() == "") {
@@ -81,11 +91,16 @@ class OwnerEnrollHotelRoom : AppCompatActivity() {
 
     @RequiresApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
     private fun getImages() {
-        Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI).apply {
+        Intent(Intent.ACTION_GET_CONTENT).apply {
             type = "image/*"
             putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
             startActivityForResult(this, IMAGE_GALLERY_REQUEST_CODE)
         }
+//        Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI).apply {
+//            type = "image/*"
+//            putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
+//            startActivityForResult(this, IMAGE_GALLERY_REQUEST_CODE)
+//        }
     }
 
     private fun postData() {
@@ -191,7 +206,18 @@ class OwnerEnrollHotelRoom : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == IMAGE_GALLERY_REQUEST_CODE) {
-                if (data != null && data.clipData != null) {  // data: stuff back to us, data.data: image uri user select
+                if (data != null && data.data != null) {
+                    pictures.clear()
+                    uris.clear()
+                    val image = data.data
+                    val source = ImageDecoder.createSource(this.contentResolver, image!!)
+                    val bitmap = ImageDecoder.decodeBitmap(source)
+
+                    pictures.add(bitmap)
+                    uris.add(image)
+                    fetchAdapter()
+                }
+                else if (data != null && data.clipData != null) {  // data: stuff back to us, data.data: image uri user select
                     pictures.clear()
                     uris.clear()
                     val count = data.clipData!!.itemCount - 1
@@ -202,15 +228,19 @@ class OwnerEnrollHotelRoom : AppCompatActivity() {
                         pictures.add(bitmap)
                         uris.add(picture.uri)
                     }
-                    mViewAdapter = PagerAdapter(pictures)
-                    mViewPager2.adapter = mViewAdapter
-                    mViewPager2.orientation = ViewPager2.ORIENTATION_HORIZONTAL
-
-                    if (pictures.size > 0) {
-                        btnExitEnrollRoomHotel.visibility = View.VISIBLE
-                    }
+                    fetchAdapter()
                 }
             }
+        }
+    }
+
+    private fun fetchAdapter() {
+        mViewAdapter = PagerAdapter(pictures)
+        mViewPager2.adapter = mViewAdapter
+        mViewPager2.orientation = ViewPager2.ORIENTATION_HORIZONTAL
+
+        if (pictures.size > 0) {
+            btnExitEnrollRoomHotel.visibility = View.VISIBLE
         }
     }
 }

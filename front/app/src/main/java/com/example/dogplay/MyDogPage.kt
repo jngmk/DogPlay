@@ -1,85 +1,161 @@
 package com.example.dogplay
-import android.content.Context
-import android.content.Intent
-import android.graphics.drawable.ShapeDrawable
-import android.graphics.drawable.shapes.OvalShape
-import android.os.Build
+
 import android.os.Bundle
-import android.util.DisplayMetrics
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.FrameLayout
 import android.widget.ImageView
-import android.widget.LinearLayout
-import androidx.annotation.RequiresApi
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.view.setMargins
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.viewpager.widget.ViewPager
-import com.example.dogplay.API.Companion.server
-import com.google.android.gms.maps.*
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
-import com.google.android.material.chip.ChipGroup
-import kotlinx.android.synthetic.main.hotel_detail.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import com.google.gson.internal.LinkedTreeMap
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.my_dog_list.*
-import kotlinx.android.synthetic.main.room_detail.*
 import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
 
 class MyDogPage:AppCompatActivity() {
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+    private lateinit var mRecyclerViewTop: RecyclerView
+    private lateinit var mRecyclerViewBot: RecyclerView
+    private val dogsSelected = Supplier.dogsSelected
+    private val dogs = Supplier.dogs
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.my_dog_list)
-        var cnt = 0
-        var dp:Float
-        dp = resources.displayMetrics.density
-        PlusDog.setBackground(ShapeDrawable(OvalShape()))
-        PlusDog.layoutParams.height = 80*dp.toInt()
-        PlusDog.layoutParams.width = 80*dp.toInt()
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            PlusDog.clipToOutline = true
+
+        mRecyclerViewTop = rcvDogSelected
+        mRecyclerViewBot = rcvMyDog
+
+        MutableSupplier.dogsSelected.observe(this, Observer {
+                dogs ->
+            mRecyclerViewTop.adapter!!.notifyDataSetChanged()
+            Supplier.dogsSelected = dogs
+        })
+
+        MutableSupplier.dogs.observe(this, Observer {
+                dogs ->
+            mRecyclerViewBot.adapter!!.notifyDataSetChanged()
+            Supplier.dogs = dogs
+        })
+
+        mRecyclerViewTop.adapter = RecyclerAdapterTop(dogsSelected)
+        mRecyclerViewTop.layoutManager = GridLayoutManager(this, 4, RecyclerView.VERTICAL,false)
+
+        mRecyclerViewBot.adapter = RecyclerAdapterBot(dogs)
+        mRecyclerViewBot.layoutManager = GridLayoutManager(this, 4, RecyclerView.VERTICAL,false)
+
+
+    }
+
+    inner class RecyclerAdapterTop(private val dogs: ArrayList<DogInfo>) : RecyclerView.Adapter<RecyclerViewHolderTop>() {
+
+        init {
+            setHasStableIds(true)
         }
-        PlusDog.setOnClickListener{
-            val img = ImageView(this)
-            img.setImageResource(R.drawable.dog3)
-            img.background = ShapeDrawable(OvalShape())
-            img.clipToOutline = true
-            val layoutParams = LinearLayout.LayoutParams(80*dp.toInt(),80*dp.toInt())
-            layoutParams.topMargin = 10*dp.toInt()
-            layoutParams.leftMargin = 10*dp.toInt()
-            layoutParams.bottomMargin= 10*dp.toInt()
-            layoutParams.rightMargin = 10*dp.toInt()
-            img.layoutParams = layoutParams
-            img.setOnClickListener{
-                val sameImg = ImageView(this)
-                sameImg.setImageResource(R.drawable.dog3)
-                sameImg.background=ShapeDrawable(OvalShape())
-                sameImg.clipToOutline=true
-                val layoutParams = LinearLayout.LayoutParams(80*dp.toInt(),80*dp.toInt())
-                layoutParams.topMargin = 10*dp.toInt()
-                layoutParams.leftMargin = 10*dp.toInt()
-                layoutParams.bottomMargin= 10*dp.toInt()
-                layoutParams.rightMargin = 10*dp.toInt()
-                sameImg.layoutParams = layoutParams
-                sameImg.setOnClickListener{
-                    SelectDog.removeView(sameImg)
+
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerViewHolderTop =
+            RecyclerViewHolderTop(LayoutInflater.from(parent.context).inflate(R.layout.add_my_dog_item_with_name, parent, false))
+
+        override fun onBindViewHolder(holder: RecyclerViewHolderTop, position: Int) {
+            val dog = dogs[position]
+            holder.updateDogsSelected(dog)
+
+            val img: ImageView = holder.itemView.findViewById(R.id.imgDog)
+            img.setOnClickListener {
+                val count = dogsSelected.size - 1
+                for (i in 0..count) {
+                    if (dogsSelected[i].id == dog.id) {
+                        dogsSelected.removeAt(i)
+                        MutableSupplier.dogsSelected.postValue(dogsSelected)
+                        break
+                    }
                 }
-                SelectDog.addView(sameImg)
-
             }
-            MyDogList.addView(img,cnt)
-            cnt++
         }
 
+        override fun getItemCount(): Int = dogs.size
+
+        override fun getItemId(position: Int): Long {
+            return position.toLong()
+        }
+    }
+
+    inner class RecyclerViewHolderTop(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private var img: ImageView = itemView.findViewById(R.id.imgDog)
+        private var name: TextView = itemView.findViewById(R.id.txtMyDogName)
+
+        fun updateDogsSelected(dog: DogInfo) {
+            if (dog.picture != "") {
+                Glide.with(itemView)
+                    .load(dog.picture)
+                    .into(img)
+            }
+            else {
+                img.setImageResource(R.drawable.dog)
+            }
+            name.text = dog.dogname
+        }
+    }
+
+
+    inner class RecyclerAdapterBot(private val dogs: ArrayList<DogInfo>) : RecyclerView.Adapter<RecyclerViewHolderBot>() {
+
+        init {
+            setHasStableIds(true)
+        }
+
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerViewHolderBot =
+            RecyclerViewHolderBot(LayoutInflater.from(parent.context).inflate(R.layout.add_my_dog_item_with_name, parent, false))
+
+        override fun onBindViewHolder(holder: RecyclerViewHolderBot, position: Int) {
+            val dog = dogs[position]
+            holder.updateDogs(dog)
+
+            val img: ImageView = holder.itemView.findViewById(R.id.imgDog)
+            img.setOnClickListener {
+                val count = dogsSelected.size - 1
+                if (count == -1) {
+                    dogsSelected.add(dog)
+                }
+                else {
+                    var flag = true
+                    for (i in 0..count) {
+                        if (dogsSelected[i].id == dog.id) {
+                            dogsSelected[i] = dog
+                            flag = false
+                            break
+                        }
+                    }
+                    if (flag) dogsSelected.add(dog)
+                }
+                MutableSupplier.dogsSelected.postValue(dogsSelected)
+            }
+        }
+
+        override fun getItemCount(): Int = dogs.size
+
+        override fun getItemId(position: Int): Long {
+            return position.toLong()
+        }
+    }
+
+    inner class RecyclerViewHolderBot(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private var img: ImageView = itemView.findViewById(R.id.imgDog)
+        private var name: TextView = itemView.findViewById(R.id.txtMyDogName)
+
+        fun updateDogs(dog: DogInfo) {
+            if (dog.picture != "") {
+                Glide.with(itemView)
+                    .load(dog.picture)
+                    .into(img)
+            }
+            else {
+                img.setImageResource(R.drawable.dog)
+            }
+            name.text = dog.dogname
+        }
     }
 }
 

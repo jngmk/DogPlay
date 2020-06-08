@@ -459,7 +459,7 @@ interface Service {
         @Body params: InsertPaid
     ):Call<PaidResponse>
 
-    @GET("/api/v1/reservation/count/hotel/room/start/finish/")
+    @GET("/api/v1/reservation/count/hotel/room/start/finish")
     fun getReservationRoomCount(
         @Query("hotelnumber") hotelnumber: String,
         @Query("roomname") roomname: String,
@@ -467,13 +467,36 @@ interface Service {
         @Query("finishdate") finishdate: LocalDateTime
     ):Call<RoomCountReturnData>
 
-    @GET("/api/v1/reservation/search/hotel/room/start/finish/")
+    @GET("/api/v1/reservation/search/hotel/room/start/finish")
     fun getReservationRoomDetail(
         @Query("hotelnumber") hotelnumber: String,
         @Query("roomname") roomname: String,
         @Query("startdate") startdate: LocalDateTime,
         @Query("finishdate") finishdate: LocalDateTime
     ):Call<ReservationDTO>
+
+    @GET("/api/v1/doginfo/search/userid")
+    fun getDogByUserId(
+        @Query("userid") userid: String
+    ):Call<DogInfoDTO>
+
+    @Headers("accept: application/json",
+        "content-type: application/json")
+    @POST("/api/v1/doginfo/insert")
+    fun postDogInfo(
+        @Body params: DogInfoToPost
+    ):Call<HotelReturnData>
+
+    @Headers("accept: application/json",
+        "content-type: application/json")
+    @PUT("/api/v1/doginfo/update")
+    fun putDogInfo(
+        @Body params: DogInfoToPost
+    ):Call<HotelReturnData>
+
+    @GET("/api/v1/species/searchall")
+    fun getSpecies(
+    ):Call<SpeciesDTO>
 
     @POST("/api/v1/reservation/insert")
     fun insertReservation(
@@ -653,3 +676,51 @@ data class ChatInsert(
     val receive: String,
     val send: String
 )
+
+// dog
+data class DogInfoDTO(
+    @SerializedName("data")
+    val data: ArrayList<DogInfo>,
+    @SerializedName("state")
+    val state: String
+)
+
+data class SpeciesDTO(
+    @SerializedName("data")
+    val data: ArrayList<Species>,
+    @SerializedName("state")
+    val state: String
+)
+
+data class DogInfo(
+    var id: Int = 0,
+    var speciesId: Int = 1,
+    var userid: String = "",
+    var dogname: String = "",
+    var age: ArrayList<Int> = ArrayList(),
+    var gender: Int = 0,
+    var size: Int = 0,
+    var picture: String = "",
+    var detail: ArrayList<ArrayList<String>> = ArrayList()
+)
+
+data class DogInfoToPost(
+    var id: Int = 0,
+    var speciesId: Int = 1,
+    var userid: String = "",
+    var dogname: String = "",
+    var age: String = "",
+    var gender: Int = 0,
+    var size: Int = 0,
+    var picture: String = "",
+    var detail: JsonObject = JsonObject()
+)
+
+data class Species(
+    var id: Int = 0,
+    var name: String = ""
+) {
+    override fun toString(): String {
+        return name
+    }
+}

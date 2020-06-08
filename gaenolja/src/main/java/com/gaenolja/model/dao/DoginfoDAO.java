@@ -11,6 +11,7 @@ public interface DoginfoDAO {
 	public List<Doginfo> searchall();
 	public List<Doginfo> searchbyuserid(String userid);
 	public Doginfo search(int id);
+	public int last();
 	public void insert(Doginfo doginfo);
 	public void update(Doginfo doginfo);
 	public void delete(int id);

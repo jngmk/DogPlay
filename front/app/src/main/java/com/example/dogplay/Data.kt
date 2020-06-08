@@ -41,21 +41,29 @@ object Supplier{
     var SelectPayForm = PayForm("","","","",
         0,0,0,"","","")
     var ResponseTid = ""
-    var user: MutableLiveData<User> = MutableLiveData<User>()
     val formatterForView = SimpleDateFormat("MM/dd")
     val formatterForApi = SimpleDateFormat("MM월 dd일 (EE)",Locale.KOREAN)
-    var SelectDateView = arrayListOf<String>(formatterForApi.format(System.currentTimeMillis()), formatterForApi.format(System.currentTimeMillis()+86400000))
+    var SelectDateView = arrayListOf<String>(formatterForApi.format(System.currentTimeMillis()), formatterForApi.format(System.currentTimeMillis()))
     var SelectDateApi = arrayListOf<String>(LocalDateTime.ofInstant(Instant.ofEpochMilli(System.currentTimeMillis()),
         ZoneId.systemDefault()).toString(), LocalDateTime.ofInstant(
-        Instant.ofEpochMilli(System.currentTimeMillis()+86400000), ZoneId.systemDefault()).toString())
-    var SelectDateMain = arrayListOf<String>(formatterForView.format(System.currentTimeMillis()),formatterForView.format(System.currentTimeMillis()+86400000))
-    var SelectDate = arrayListOf<Long>(System.currentTimeMillis(), System.currentTimeMillis()+86400000)
+        Instant.ofEpochMilli(System.currentTimeMillis()), ZoneId.systemDefault()).toString())
+    var SelectDateMain = arrayListOf<String>(formatterForView.format(System.currentTimeMillis()),formatterForView.format(System.currentTimeMillis()))
+    var SelectDate = arrayListOf<Long>(System.currentTimeMillis(), System.currentTimeMillis())
     var SelectPayRoom = HashMap<Pair<String,Int>,Int>()
     var PostReservation = ArrayList<Reservation>()
     var PreReservation = ArrayList<Reservation>()
     var MainSearch = ArrayList<Hotel>()
+    var user: User = User()
+    var dogsSelected: ArrayList<DogInfo> = ArrayList()
+    var dogs: ArrayList<DogInfo> = ArrayList()
+    var dogEdit: DogInfo = DogInfo()
 }
 
+object MutableSupplier {
+    var user: MutableLiveData<User> = MutableLiveData()
+    var dogsSelected: MutableLiveData<ArrayList<DogInfo>> = MutableLiveData()
+    var dogs: MutableLiveData<ArrayList<DogInfo>> = MutableLiveData()
+}
 //class UserSupplier {
 //    private var _user: User = User()
 //

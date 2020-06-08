@@ -8,7 +8,7 @@ public interface DoginfoService {
 	public List<Doginfo> searchall();
 	public List<Doginfo> searchbyuserid(String userid);
 	public Doginfo search(int id);
-	public boolean insert(Doginfo doginfo);
+	public int insert(Doginfo doginfo);
 	public boolean update(Doginfo doginfo);
 	public boolean delete(int id);
 }
