@@ -97,7 +97,7 @@ class OwnerEditHotel : AppCompatActivity() {
         mViewPager2 = vpEditHotelImg
         mRecyclerView = rcyEditHotelTag
         mHotelDetailLayout = layoutEditHotelDetail
-        userId = Supplier.user.value!!.userid
+        userId = Supplier.user.userid
 
         firestore = FirebaseFirestore.getInstance()
         firestore.firestoreSettings = FirebaseFirestoreSettings.Builder().build()
