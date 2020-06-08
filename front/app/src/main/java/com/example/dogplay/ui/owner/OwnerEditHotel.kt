@@ -8,7 +8,6 @@ import android.graphics.ImageDecoder
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.provider.MediaStore
 import android.text.InputType
 import android.util.Log
 import android.util.TypedValue
@@ -35,6 +34,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import kotlin.properties.Delegates
 
 class OwnerEditHotel : AppCompatActivity() {
     private lateinit var mViewPager2: ViewPager2
@@ -45,7 +45,9 @@ class OwnerEditHotel : AppCompatActivity() {
     private lateinit var imageRef: StorageReference
     private lateinit var userId: String
     private lateinit var hotelNumber: String
+    private var photoId by Delegates.notNull<Int>()
 
+    private val editPhotoData: UpdatePhotoDTO = UpdatePhotoDTO()
     private var hotelPicture: HotelPicture = HotelPicture(0,"","","")
     private var hotelHash: HotelHashToPost = HotelHashToPost()
     private var hotelData: HotelInfoToPost = HotelInfoToPost()
@@ -64,11 +66,31 @@ class OwnerEditHotel : AppCompatActivity() {
         hotelNumber = intent.getStringExtra(HOTEL_NUMBER)!!
 
         var hotelDetailData:HashMap<String,Any> = hashMapOf()
+        var photoData:HashMap<String,Any> = hashMapOf()
+
         var retrofit = Retrofit.Builder()
             .baseUrl("http://k02a4021.p.ssafy.io:8080")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
         var server = retrofit.create(EditService::class.java)
+
+        server.getPhotoInfo(hotelNumber).enqueue(object:Callback<PhotoDTO> {
+            override fun onFailure(call: Call<PhotoDTO>, t: Throwable) {
+                Log.d("faile", t.toString())
+                Log.d("faile", "실패-----------------------------------")
+                Log.d("faile", "${hotelNumber}")
+
+            }
+
+            override fun onResponse(call: Call<PhotoDTO>, response: Response<PhotoDTO>) {
+                val data:PhotoDTO = response.body()!!
+                photoData = data!!.data[0]
+                photoId = photoData["id"].toString().split('.')[0].toInt()
+                Log.d("faile", "성공 사진 아이디${photoId}-----------------------------------")
+            }
+
+        })
+
 
         server.searchHotelDetail(hotelNumber).enqueue(object : Callback<HotelDTO> {
             override fun onFailure(call: Call<HotelDTO>, t: Throwable) {
@@ -249,7 +271,7 @@ class OwnerEditHotel : AppCompatActivity() {
 //            putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
 //            startActivityForResult(this, IMAGE_GALLERY_REQUEST_CODE)
 //        }
-        Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI).apply {
+        Intent(Intent.ACTION_GET_CONTENT).apply {
             type = "image/*"
             putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
             startActivityForResult(this, IMAGE_GALLERY_REQUEST_CODE)
@@ -259,17 +281,17 @@ class OwnerEditHotel : AppCompatActivity() {
     private fun postData() {
         hotelData.apply {
             userid = userId
-            hotelname = findViewById<EditText>(R.id.edtEnrollHotelName).text.toString()
-            hotelnumber = findViewById<EditText>(R.id.edtEnrollBN).text.toString()
-            address = findViewById<EditText>(R.id.edtEnrollHotelAddress).text.toString()
-            contact = findViewById<EditText>(R.id.edtEnrollHotelContact).text.toString()
-            info = findViewById<EditText>(R.id.edtEnrollInfo).text.toString()
+            hotelname = findViewById<EditText>(R.id.edtEditHotelName).text.toString()
+            hotelnumber = findViewById<EditText>(R.id.edtEditBN).text.toString()
+            address = findViewById<EditText>(R.id.edtEditHotelAddress).text.toString()
+            contact = findViewById<EditText>(R.id.edtEditHotelContact).text.toString()
+            info = findViewById<EditText>(R.id.edtEditInfo).text.toString()
         }
         // Details 추가하기
-        val title1 = findViewById<EditText>(R.id.edtEnrollHotelDetailTitle1).text.toString()
-        val content1 = findViewById<EditText>(R.id.edtEnrollHotelDetailContent1).text.toString()
-        val title2 = findViewById<EditText>(R.id.edtEnrollHotelDetailTitle2).text.toString()
-        val content2 = findViewById<EditText>(R.id.edtEnrollHotelDetailContent2).text.toString()
+        val title1 = findViewById<EditText>(R.id.edtEditHotelDetailTitle1).text.toString()
+        val content1 = findViewById<EditText>(R.id.edtEditHotelDetailContent1).text.toString()
+        val title2 = findViewById<EditText>(R.id.edtEditHotelDetailTitle2).text.toString()
+        val content2 = findViewById<EditText>(R.id.edtEditHotelDetailContent2).text.toString()
 
         hotelData.detail.addProperty(title1, content1)
         hotelData.detail.addProperty(title2, content2)
@@ -285,11 +307,11 @@ class OwnerEditHotel : AppCompatActivity() {
         server!!.putHotelInfo(hotelData).enqueue(object :
             Callback<HotelReturnData> {
             override fun onFailure(call: Call<HotelReturnData>, t: Throwable) {
-                Toast.makeText(applicationContext, "호텔 등록에 실패하였습니다.", Toast.LENGTH_LONG).show()
+                Toast.makeText(applicationContext, "호텔 수정에 실패하였습니다.", Toast.LENGTH_LONG).show()
             }
 
             override fun onResponse(call: Call<HotelReturnData>, response: Response<HotelReturnData>) {
-                Toast.makeText(applicationContext, "호텔이 성공적으로 등록되었습니다.", Toast.LENGTH_LONG).show()
+                Toast.makeText(applicationContext, "호텔이 성공적으로 수정되었습니다.", Toast.LENGTH_LONG).show()
 
                 // 선택된 hashTag 추가하기
                 mRecyclerView.children.forEach {
@@ -325,6 +347,13 @@ class OwnerEditHotel : AppCompatActivity() {
                                     name = categoryName
                                     hotelnumber = hotelNumber
                                     picture = it.toString()
+                                }
+                                editPhotoData.apply {
+                                    name = categoryName
+                                    hotelnumber = hotelNumber
+                                    picture = it.toString()
+                                    id = photoId
+
                                 }
                                 postPictures()
                             }
@@ -364,15 +393,19 @@ class OwnerEditHotel : AppCompatActivity() {
     }
 
     private fun postPictures() {
-        val server = API.server()
+        var retrofit = Retrofit.Builder()
+            .baseUrl("http://k02a4021.p.ssafy.io:8080")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+        var server = retrofit.create(EditService::class.java)
 
-        server!!.postHotelPictures(hotelPicture).enqueue(object :
-            Callback<HotelReturnData> {
-            override fun onFailure(call: Call<HotelReturnData>, t: Throwable) {
+        server.putPhotoInfo(editPhotoData).enqueue(object :
+            Callback<ReturnData> {
+            override fun onFailure(call: Call<ReturnData>, t: Throwable) {
                 Log.d("fail",t.toString())
             }
 
-            override fun onResponse(call: Call<HotelReturnData>, response: Response<HotelReturnData>) {
+            override fun onResponse(call: Call<ReturnData>, response: Response<ReturnData>) {
                 Log.d("success",response.body().toString())
                 clearHotelPicture()
             }
@@ -435,7 +468,19 @@ class OwnerEditHotel : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == IMAGE_GALLERY_REQUEST_CODE) {
-                if (data != null && data.clipData != null) {  // data: stuff back to us, data.data: image uri user select
+                if (data != null && data.data != null) {
+                    pictures.clear()
+                    uris.clear()
+                    val image = data.data
+                    val source = ImageDecoder.createSource(this.contentResolver, image!!)
+                    val bitmap = ImageDecoder.decodeBitmap(source)
+
+                    pictures.add(bitmap)
+                    uris.add(image)
+                    fetchAdapter()
+
+                }
+                else if (data != null && data.clipData != null) {  // data: stuff back to us, data.data: image uri user select
                     pictures.clear()
                     uris.clear()
                     val count = data.clipData!!.itemCount - 1
@@ -446,16 +491,21 @@ class OwnerEditHotel : AppCompatActivity() {
                         pictures.add(bitmap)
                         uris.add(picture.uri)
                     }
-                    mViewAdapter = PagerAdapter(pictures)
-//                    mViewAdapter.notifyDataSetChanged()
-                    mViewPager2.adapter = mViewAdapter
-                    mViewPager2.orientation = ViewPager2.ORIENTATION_HORIZONTAL
+                    fetchAdapter()
 
-                    if (pictures.size > 0) {
-                        btnExitEditHotel.visibility = View.VISIBLE
-                    }
                 }
             }
         }
     }
+
+    private fun fetchAdapter() {
+        mViewAdapter = PagerAdapter(pictures)
+        mViewPager2.adapter = mViewAdapter
+        mViewPager2.orientation = ViewPager2.ORIENTATION_HORIZONTAL
+
+        if (pictures.size > 0) {
+            btnExitEditHotel.visibility = View.VISIBLE
+        }
+    }
+
 }

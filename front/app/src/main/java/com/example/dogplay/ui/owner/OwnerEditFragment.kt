@@ -13,10 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.dogplay.API
-import com.example.dogplay.HotelInfoWithStarAndPrice
-import com.example.dogplay.HotelSearchByUserIdDTO
-import com.example.dogplay.R
+import com.example.dogplay.*
 import kotlinx.android.synthetic.main.fragment_owner_main.*
 import retrofit2.Call
 import retrofit2.Callback
