@@ -74,7 +74,7 @@ class OwnerEditFragment : Fragment() {
     class RecyclerAdapter(val context: Context, val hotels: ArrayList<HotelInfoWithStarAndPrice>) : RecyclerView.Adapter<RecyclerViewHolder>() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerViewHolder =
-            RecyclerViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.owner_main_hotel_item, parent, false))
+            RecyclerViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.owner_edit_hotel_item, parent, false))
 
         override fun onBindViewHolder(holder: RecyclerViewHolder, position: Int) {
             val hotel = hotels[position]
@@ -95,9 +95,6 @@ class OwnerEditFragment : Fragment() {
     class RecyclerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val hotelImg: ImageView = itemView.findViewById(R.id.cardImg)
         private val hotelName: TextView = itemView.findViewById(R.id.hotelName)
-        private val hotelEval: TextView = itemView.findViewById(R.id.eval)
-        private val hotelReview: TextView = itemView.findViewById(R.id.review)
-        private val hotelAddress: TextView = itemView.findViewById(R.id.address)
 
 
         fun updateHotelImage(hotel: HotelInfoWithStarAndPrice) {
@@ -107,9 +104,7 @@ class OwnerEditFragment : Fragment() {
                     .into(hotelImg)
             }
             hotelName.text = hotel.hotelname
-            hotelEval.text = "${hotel.star} / 5.0"
-            hotelReview.text = "후기 ${hotel.countreview}"
-            hotelAddress.text = hotel.address
+
         }
     }
 }

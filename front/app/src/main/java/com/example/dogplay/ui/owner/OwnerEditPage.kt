@@ -164,7 +164,7 @@ class OwnerEditPage : AppCompatActivity() {
             holder.updateHotelImage(room, picture, reservationCnt)
 
             holder.itemView.setOnClickListener {
-                val intent = Intent(context, CheckAllReservation::class.java).apply {
+                val intent = Intent(context, OwnerEditRoom::class.java).apply {
                     putExtra(ROOM_NAME, room.roomname)
                     putExtra(HOTEL_NUMBER, hotelNumber)
                 }
