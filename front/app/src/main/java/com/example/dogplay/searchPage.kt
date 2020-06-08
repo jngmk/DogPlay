@@ -99,8 +99,9 @@ class searchPage : Fragment() {
         val builder = MaterialDatePicker.Builder.dateRangePicker()
         builder.setTitleText("날짜 선택")
 
-        val todayPair = Pair(today, today)
+        val todayPair = Pair(today, today + 86400000)
         builder.setSelection(todayPair)
+
 
         val dateRangePicker = builder.build()
 
@@ -111,7 +112,7 @@ class searchPage : Fragment() {
 
             dateRangePicker.addOnPositiveButtonClickListener {
                 Supplier.SelectDateMain = arrayListOf(Supplier.formatterForView.format(dateRangePicker.selection!!.first),Supplier.formatterForView.format(dateRangePicker.selection!!.second))
-               val date1 = dateRangePicker.selection!!.first!!
+                val date1 = dateRangePicker.selection!!.first!!
                 val date2 = dateRangePicker.selection!!.second!!
                 Supplier.SelectDate = arrayListOf(date1, date2)
                 var apiDateFirst = LocalDateTime.ofInstant(Instant.ofEpochMilli(date1), ZoneId.systemDefault()).toString()

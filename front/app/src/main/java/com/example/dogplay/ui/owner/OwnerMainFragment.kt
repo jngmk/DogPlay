@@ -57,9 +57,13 @@ class OwnerMainFragment : Fragment() {
         getData()
     }
 
+    override fun onResume() {
+        super.onResume()
+        getData()
+    }
+
     private fun getData() {
         val server = API.server()
-        // 근처에 있는 호텔 정보 가져오기
         server!!.getHotelSearchByUserId(userId).enqueue(object : Callback<HotelSearchByUserIdDTO> {
             override fun onFailure(call: Call<HotelSearchByUserIdDTO>, t: Throwable) {
                 Log.d("fail",t.toString())

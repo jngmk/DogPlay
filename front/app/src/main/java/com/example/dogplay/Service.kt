@@ -485,7 +485,7 @@ interface Service {
     @POST("/api/v1/doginfo/insert")
     fun postDogInfo(
         @Body params: DogInfoToPost
-    ):Call<HotelReturnData>
+    ):Call<RoomCountReturnData>
 
     @Headers("accept: application/json",
         "content-type: application/json")

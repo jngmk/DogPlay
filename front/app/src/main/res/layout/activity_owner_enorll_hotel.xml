@@ -194,7 +194,7 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="@string/EnrollHotelInfo"
-                android:inputType="text"
+                android:inputType="textMultiLine"
                 android:paddingBottom="32dp"
                 app:layout_constraintTop_toBottomOf="@+id/txtEnrollHotelInfo"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -257,9 +257,11 @@
                     android:id="@+id/edtEnrollHotelDetailContent1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:maxHeight="100dp"
                     android:ems="10"
                     android:hint="@string/OperatingTimeContent"
-                    android:inputType="text"
+                    android:inputType="textMultiLine"
+                    android:imeOptions="flagNoEnterAction"
                     android:paddingBottom="32dp"
                     android:textSize="@dimen/EnrollHotelDetailTitle" />
 
@@ -278,9 +280,10 @@
                     android:id="@+id/edtEnrollHotelDetailContent2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:maxHeight="100dp"
                     android:ems="10"
                     android:hint="@string/forbiddenContent"
-                    android:inputType="text"
+                    android:inputType="textMultiLine"
                     android:paddingBottom="32dp"
                     android:textSize="@dimen/EnrollHotelDetailTitle" />
 
