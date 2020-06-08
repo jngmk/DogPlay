@@ -137,26 +137,4 @@ class MainActivity : AppCompatActivity(){
         oneMore = System.currentTimeMillis()
         Toast.makeText(this, "이전 버튼을 한번 더 누르면 종료됩니다.",Toast.LENGTH_SHORT).show()
     }
-
-    override fun onResume() {
-        super.onResume()
-        val fragmentAdapter = wholeAdapter(supportFragmentManager, "0")
-        viewpager.adapter = fragmentAdapter
-        tabLayout.setupWithViewPager(viewpager)
-//        로그인 시 owner인지 사용자인지에 따라서 아이콘 변경
-
-        if (admin == "0") {
-            tabLayout.getTabAt(0)?.setIcon(R.drawable.home)
-            tabLayout.getTabAt(1)?.setIcon(R.drawable.marker)
-            tabLayout.getTabAt(2)?.setIcon(R.drawable.chat)
-            tabLayout.getTabAt(3)?.setIcon(R.drawable.tab_star)
-            tabLayout.getTabAt(4)?.setIcon(R.drawable.profile)
-        } else {
-            tabLayout.getTabAt(0)?.setIcon(R.drawable.home)
-            tabLayout.getTabAt(1)?.setIcon(R.drawable.toolbar_review)
-            tabLayout.getTabAt(2)?.setIcon(R.drawable.chat)
-            tabLayout.getTabAt(3)?.setIcon(R.drawable.toolbar_edit)
-            tabLayout.getTabAt(4)?.setIcon(R.drawable.profile)
-        }
-    }
 }

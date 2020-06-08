@@ -43,8 +43,8 @@ object Supplier{
     var ResponseTid = ""
     val formatterForView = SimpleDateFormat("MM/dd")
     val formatterForApi = SimpleDateFormat("MM월 dd일 (EE)",Locale.KOREAN)
-    var SelectDateView = arrayListOf<String>(formatterForApi.format(System.currentTimeMillis()), formatterForApi.format(System.currentTimeMillis()) )
-    var SelectDateApi = arrayListOf<String>(LocalDateTime.ofInstant(Instant.ofEpochMilli(System.currentTimeMillis()),
+    var SelectDateView = arrayListOf<String>(formatterForApi.format(System.currentTimeMillis()), formatterForApi.format(System.currentTimeMillis() + 86400000) )
+    var SelectDateApi = arrayListOf<String>(LocalDateTime.ofInstant(Instant.ofEpochMilli(System.currentTimeMillis() + 86400000),
         ZoneId.systemDefault()).toString(), LocalDateTime.ofInstant(
         Instant.ofEpochMilli(System.currentTimeMillis()), ZoneId.systemDefault()).toString())
     var SelectDateMain = arrayListOf<String>(formatterForView.format(System.currentTimeMillis()),formatterForView.format(System.currentTimeMillis() + 86400000))

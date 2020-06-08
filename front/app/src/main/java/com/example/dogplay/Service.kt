@@ -87,7 +87,7 @@ data class ChatMainDTO(
 
 
 data class HotelDetailHash(
-    val HotelStar:HotelStar,
+    var HotelStar:HotelStar,
     val HotelPicture:ArrayList<HotelPictureP>,
     val review: ArrayList<HotelReview>,
     val HotelRoom: ArrayList<HotelRoom>
