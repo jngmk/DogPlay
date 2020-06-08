@@ -70,7 +70,7 @@ class OwnerEnrollHotel : AppCompatActivity() {
         mViewPager2 = vpEnrollHotelImg
         mRecyclerView = rcyEnrollHotelTag
         mHotelDetailLayout = layoutEnrollHotelDetail
-        userId = Supplier.user.value!!.userid
+        userId = Supplier.user.userid
 
         firestore = FirebaseFirestore.getInstance()
         firestore.firestoreSettings = FirebaseFirestoreSettings.Builder().build()
@@ -217,16 +217,16 @@ class OwnerEnrollHotel : AppCompatActivity() {
 
     @RequiresApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
     private fun getImages() {
-//        Intent(Intent.ACTION_GET_CONTENT).apply {
-//            type = "image/*"
-//            putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
-//            startActivityForResult(this, IMAGE_GALLERY_REQUEST_CODE)
-//        }
-        Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI).apply {
+        Intent(Intent.ACTION_GET_CONTENT).apply {
             type = "image/*"
             putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
             startActivityForResult(this, IMAGE_GALLERY_REQUEST_CODE)
         }
+//        Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI).apply {
+//            type = "image/*"
+//            putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
+//            startActivityForResult(this, IMAGE_GALLERY_REQUEST_CODE)
+//        }
     }
 
     private fun postData() {
@@ -408,7 +408,19 @@ class OwnerEnrollHotel : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == IMAGE_GALLERY_REQUEST_CODE) {
-                if (data != null && data.clipData != null) {  // data: stuff back to us, data.data: image uri user select
+                if (data != null && data.data != null) {
+                    pictures.clear()
+                    uris.clear()
+                    val image = data.data
+                    val source = ImageDecoder.createSource(this.contentResolver, image!!)
+                    val bitmap = ImageDecoder.decodeBitmap(source)
+
+                    pictures.add(bitmap)
+                    uris.add(image)
+                    fetchAdapter()
+
+                }
+                else if (data != null && data.clipData != null) {  // data: stuff back to us, data.data: image uri user select
                     pictures.clear()
                     uris.clear()
                     val count = data.clipData!!.itemCount - 1
@@ -419,16 +431,20 @@ class OwnerEnrollHotel : AppCompatActivity() {
                         pictures.add(bitmap)
                         uris.add(picture.uri)
                     }
-                    mViewAdapter = PagerAdapter(pictures)
-//                    mViewAdapter.notifyDataSetChanged()
-                    mViewPager2.adapter = mViewAdapter
-                    mViewPager2.orientation = ViewPager2.ORIENTATION_HORIZONTAL
+                    fetchAdapter()
 
-                    if (pictures.size > 0) {
-                        btnExitEnrollHotel.visibility = View.VISIBLE
-                    }
                 }
             }
+        }
+    }
+
+    private fun fetchAdapter() {
+        mViewAdapter = PagerAdapter(pictures)
+        mViewPager2.adapter = mViewAdapter
+        mViewPager2.orientation = ViewPager2.ORIENTATION_HORIZONTAL
+
+        if (pictures.size > 0) {
+            btnExitEnrollHotel.visibility = View.VISIBLE
         }
     }
 }

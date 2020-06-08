@@ -26,7 +26,7 @@ import retrofit2.Response
 
 
 class OwnerProfile : Fragment() {
-    private val user = Supplier.user.value!!
+    private val user = Supplier.user
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,7 +39,7 @@ class OwnerProfile : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        Supplier.user.observe(viewLifecycleOwner, Observer {
+        MutableSupplier.user.observe(viewLifecycleOwner, Observer {
                 user ->
             if (user.picture != "") {
                 Glide.with(this)
@@ -75,11 +75,11 @@ class OwnerProfile : Fragment() {
         }
         btnChangeToUserView.setOnClickListener {
             changeView()
-            (activity as MainActivity).mainFinish()
+            (activity as MainActivity).finish()
         }
         btnLogout.setOnClickListener {
             (activity as MainActivity).logout()
-            (activity as MainActivity).mainFinish()
+            (activity as MainActivity).finish()
         }
     }
 
@@ -113,7 +113,8 @@ class OwnerProfile : Fragment() {
 
             override fun onResponse(call: Call<HotelReturnData>, response: Response<HotelReturnData>) {
                 Toast.makeText(context, "사용자 모드가 변경되었습니다..", Toast.LENGTH_LONG).show()
-                Supplier.user.postValue(user)
+                MutableSupplier.user.postValue(user)
+                Supplier.user = user
                 val intent = Intent(context, MainActivity::class.java)
                 startActivity(intent)
             }

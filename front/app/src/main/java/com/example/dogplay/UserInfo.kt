@@ -22,7 +22,7 @@ import retrofit2.Response
 
 class UserInfo : AppCompatActivity() {
     private var storageReferenence = FirebaseStorage.getInstance().getReference()
-    private var user = Supplier.user.value!!
+    private var user = Supplier.user
     private val IMAGE_GALLERY_REQUEST_CODE = 1004
 
 
@@ -67,7 +67,7 @@ class UserInfo : AppCompatActivity() {
 
             override fun onResponse(call: Call<HotelReturnData>, response: Response<HotelReturnData>) {
                 Toast.makeText(applicationContext, "정보가 성공적으로 수정되었습니다.", Toast.LENGTH_LONG).show()
-                Supplier.user.postValue(user)
+                MutableSupplier.user.postValue(user)
                 finish()
             }
         })
