@@ -32,7 +32,7 @@ import retrofit2.Callback
 //const val USER_ID = "com.example.dogplay.USER_ID"
 
 class OwnerEditFragment : Fragment() {
-    private val userId = "owner3"
+    private val userId = Supplier.UserId
     private lateinit var mRecyclerView: RecyclerView
     private lateinit var hotels: ArrayList<HotelInfoWithStarAndPrice>
 
