@@ -123,7 +123,7 @@ class OwnerEnrollHotel : AppCompatActivity() {
             val edtHotelDetailContent = EditText(this)
             edtHotelDetailContent.hint = resources.getString(R.string.enterTheContent)
             edtHotelDetailContent.setTextSize(sp, 16F)
-            edtHotelDetailContent.inputType = InputType.TYPE_CLASS_TEXT
+            edtHotelDetailContent.inputType = InputType.TYPE_TEXT_FLAG_MULTI_LINE
             edtHotelDetailContent.setPadding(10,26,10,(32 * dp).toInt())
 
             val contentParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)

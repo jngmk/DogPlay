@@ -24,13 +24,13 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.example.dogplay.*
 import com.google.firebase.storage.FirebaseStorage
-import kotlinx.android.synthetic.main.activity_owner_enorll_hotel.*
 import kotlinx.android.synthetic.main.activity_owner_enroll_hotel_room.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class OwnerEnrollHotelRoom : AppCompatActivity() {
+    private lateinit var hotelNumber: String
     private lateinit var mViewPager2: ViewPager2
     private lateinit var mViewAdapter: PagerAdapter
     private var hotelPicture: HotelPicture = HotelPicture(0,"","","")
@@ -44,6 +44,8 @@ class OwnerEnrollHotelRoom : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_owner_enroll_hotel_room)
+
+        hotelNumber = intent.getStringExtra(HOTEL_NUMBER)!!
         mViewPager2 = vpEnrollHotelRoomImg
 
         btnEnrollHotelRoomBack.setOnClickListener {
@@ -52,7 +54,7 @@ class OwnerEnrollHotelRoom : AppCompatActivity() {
         btnEnrollHotelRoomImg.setOnClickListener {
             getImages()
         }
-        btnExitEnrollHotel.setOnClickListener {
+        btnExitEnrollRoomHotel.setOnClickListener {
             val idx = mViewPager2.currentItem
             pictures.removeAt(idx)
             uris.removeAt(idx)
@@ -105,7 +107,7 @@ class OwnerEnrollHotelRoom : AppCompatActivity() {
 
     private fun postData() {
         hotelRoomData.apply {
-//            hotelnumber =
+            hotelnumber = hotelNumber
             roomname = findViewById<EditText>(R.id.edtEnrollHotelRoomName).text.toString()
             price = findViewById<EditText>(R.id.edtEnrollHotelRoomPrice).text.toString().toInt()
             count = findViewById<EditText>(R.id.edtEnrollHotelRoomCount).text.toString().toInt()

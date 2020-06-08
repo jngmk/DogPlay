@@ -32,6 +32,9 @@ class HostMain : AppCompatActivity() {
     private lateinit var reservationRoomCount: ArrayList<Int>
     private lateinit var roomPictures: ArrayList<String?>
     private lateinit var mRecyclerView: RecyclerView
+    private var year: Int = 0
+    private var month: Int = 0
+    private var date: Int = 0
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,19 +53,30 @@ class HostMain : AppCompatActivity() {
         }
 
         btnAddHotelRoom.setOnClickListener {
-            val intent = Intent(this, OwnerEnrollHotelRoom::class.java)
+            val intent = Intent(this, OwnerEnrollHotelRoom::class.java).apply {
+                putExtra(HOTEL_NUMBER, hotelNumber)
+            }
             startActivity(intent)
         }
 
         cv_main.setOnDateChangeListener {
-            view, year, month, dayOfMonth ->
-            getHotelRoomData(year, month + 1, dayOfMonth)
+            view, yyyy, mm, dd ->
+            year = yyyy
+            month = mm + 1
+            date = dd
+            getHotelRoomData(year, month, date)
         }
         val current = LocalDateTime.now()
-        val year = current.year
-        val month = current.monthValue
-        val date = current.dayOfMonth
+        year = current.year
+        month = current.monthValue
+        date = current.dayOfMonth
 
+        getHotelRoomData(year, month, date)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    override fun onResume() {
+        super.onResume()
         getHotelRoomData(year, month, date)
     }
 
