@@ -35,6 +35,7 @@ object Supplier{
         arrayListOf(), arrayListOf()),0.0,0,
         arrayListOf(), arrayListOf(),0,0), arrayListOf(), arrayListOf(),
         arrayListOf()))
+    var selectedRoomPictures = ArrayList<HotelPicture>()
     var totalCartPrice = 0
     var SelectHotelRoomPrice = HashMap<String,Int>()
     var SelectRoom = RoomDetailData(0,"","",0,0,0,0,"")

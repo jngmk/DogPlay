@@ -49,9 +49,9 @@ class OwnerEnrollHotel : AppCompatActivity() {
     private lateinit var mRecyclerView: RecyclerView
     private lateinit var mHotelDetailLayout: LinearLayout
     private lateinit var firestore: FirebaseFirestore
-    private lateinit var imageRef: StorageReference
+//    private lateinit var imageRef: StorageReference
     private lateinit var userId: String
-    private var hotelPicture: HotelPicture = HotelPicture(0,"","","")
+//    private var hotelPicture: HotelPicture = HotelPicture(0,"","","")
     private var hotelHash: HotelHashToPost = HotelHashToPost()
     private var hotelData: HotelInfoToPost = HotelInfoToPost()
     private var hotelDetailsLayoutIdx = 3
@@ -282,6 +282,7 @@ class OwnerEnrollHotel : AppCompatActivity() {
                     for (i in 0..count) {
                         var categoryName = "detail"
                         val uri = uris[i]
+                        var imageRef: StorageReference? = null
                         if (i == 0) {
                             imageRef = storageReferenence.child("hotels/$hotelNumber/" + uri.lastPathSegment)
                             categoryName = "main"
@@ -293,13 +294,15 @@ class OwnerEnrollHotel : AppCompatActivity() {
                         uploadTask.addOnSuccessListener {
                             val downloadUrl = imageRef.downloadUrl
                             downloadUrl.addOnSuccessListener {
+                                val hotelPicture = HotelPicture()
                                 // 데이터 베이스에 사진 url 올리기
                                 hotelPicture.apply {
                                     name = categoryName
                                     hotelnumber = hotelNumber
                                     picture = it.toString()
                                 }
-                                postPictures()
+                                postPictures(hotelPicture)
+//                                clearHotelPicture()
                             }
                         }
                         uploadTask.addOnFailureListener {
@@ -336,7 +339,7 @@ class OwnerEnrollHotel : AppCompatActivity() {
         }
     }
 
-    private fun postPictures() {
+    private fun postPictures(hotelPicture: HotelPicture) {
         val server = API.server()
 
         server!!.postHotelPictures(hotelPicture).enqueue(object :
@@ -347,18 +350,17 @@ class OwnerEnrollHotel : AppCompatActivity() {
 
             override fun onResponse(call: Call<HotelReturnData>, response: Response<HotelReturnData>) {
                 Log.d("success",response.body().toString())
-                clearHotelPicture()
             }
         })
     }
 
-    private fun clearHotelPicture() {
-        hotelPicture.apply {
-            name = ""
-            picture = ""
-            hotelnumber = ""
-        }
-    }
+//    private fun clearHotelPicture() {
+//        hotelPicture.apply {
+//            name = ""
+//            picture = ""
+//            hotelnumber = ""
+//        }
+//    }
 
     class PagerAdapter(private val bitmaps: ArrayList<Bitmap>) : RecyclerView.Adapter<PagerViewHolder>() {
 

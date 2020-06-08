@@ -363,6 +363,11 @@ interface Service {
         @Query("name") name: String
     ): Call<HotelPicturesDTO>
 
+    @GET("/api/v1/hotelpicture/searchbyhotel")
+    fun getHotelAllPictures(
+        @Query("hotelnumber") hotelnumber: String
+    ): Call<HotelPicturesDTO>
+
     @Headers("accept: application/json",
         "content-type: application/json")
     @POST("/api/v1/hotelhash/insert")
@@ -684,6 +689,9 @@ data class ChatInsert(
     val receive: String,
     val send: String
 )
+
+// hotel image
+
 
 // dog
 data class DogInfoDTO(
