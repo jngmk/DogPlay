@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="8dp"
+    tools:context=".ui.owner.OwnerEditHotel">
+
+    <ScrollView
+        android:id="@+id/scrvEditHotelRoom"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="80dp"
+        android:paddingBottom="15dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txtEditHotelRoomTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginTop="30dp"
+                android:text="@string/EditHotelRoom"
+                android:textSize="30sp"
+                android:textAlignment="center"
+                android:layout_gravity="center"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
+
+            <ImageView
+                android:id="@+id/btnEditHotelRoomBack"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="30dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/back_foreground"
+                tools:ignore="VectorDrawableCompat" />
+
+            <TextView
+                android:id="@+id/txtEditHotelRoomName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="48dp"
+                android:text="@string/EditHotelNameDescription"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@+id/txtEditHotelRoomTitle"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
+
+
+            <EditText
+                android:id="@+id/edtEditHotelRoomName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/EditHotelRoomName"
+                android:inputType="textPersonName"
+                android:paddingBottom="32dp"
+                app:layout_constraintTop_toBottomOf="@+id/txtEditHotelRoomName"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
+
+            <TextView
+                android:id="@+id/btnEditHotelRoomImg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:text="@string/EditHotelImgDescription"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@+id/edtEditHotelRoomName"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/vpEditHotelRoomImg"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                app:layout_constraintTop_toBottomOf="@+id/btnEditHotelRoomImg"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent">
+
+            </androidx.viewpager2.widget.ViewPager2>
+
+            <ImageView
+                android:id="@+id/btnExitEditRoomHotel"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginRight="8dp"
+                android:visibility="gone"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btnEditHotelRoomImg"
+                app:srcCompat="@drawable/exit_foreground"
+                tools:ignore="VectorDrawableCompat" />
+
+            <TextView
+                android:id="@+id/txtEditHotelRoomPrice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:text="@string/EditHotelRoomPrice"
+                android:textSize="12sp"
+                app:layout_constraintTop_toBottomOf="@+id/vpEditHotelRoomImg"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
+
+            <EditText
+                android:id="@+id/edtEditHotelRoomPrice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/EditHotelRoomPriceDescription"
+                android:inputType="numberDecimal"
+                android:paddingBottom="32dp"
+                app:layout_constraintTop_toBottomOf="@+id/txtEditHotelRoomPrice"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
+
+            <TextView
+                android:id="@+id/txtEditHotelRoomCount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:text="@string/EditHotelRoomCount"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@+id/edtEditHotelRoomPrice"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
+
+            <EditText
+                android:id="@+id/edtEditHotelRoomCount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/EditHotelRoomCountDescription"
+                android:inputType="numberDecimal"
+                android:paddingBottom="32dp"
+                app:layout_constraintTop_toBottomOf="@+id/txtEditHotelRoomCount"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
+
+            <TextView
+                android:id="@+id/txtEditHotelRoomMinKg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:text="@string/EditHotelRoomMinKg"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@+id/edtEditHotelRoomCount"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
+
+            <EditText
+                android:id="@+id/edtEditHotelRoomMinKg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/EditHotelRoomMinKgDescription"
+                android:inputType="numberDecimal"
+                android:paddingBottom="32dp"
+                app:layout_constraintTop_toBottomOf="@+id/txtEditHotelRoomMinKg"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
+
+            <TextView
+                android:id="@+id/txtEditHotelRoomMaxKg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:text="@string/EditHotelRoomMaxKg"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@+id/edtEditHotelRoomMinKg"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
+
+            <EditText
+                android:id="@+id/edtEditHotelRoomMaxKg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/EditHotelRoomMaxKgDescription"
+                android:inputType="numberDecimal"
+                android:paddingBottom="32dp"
+                app:layout_constraintTop_toBottomOf="@+id/txtEditHotelRoomMaxKg"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
+
+            <TextView
+                android:id="@+id/txtEditHotelRoomInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:text="@string/EditHotelRoomInfoDescription"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@+id/edtEditHotelRoomMaxKg"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
+
+            <EditText
+                android:id="@+id/edtEditHotelRoomInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/EditHotelInfo"
+                android:inputType="text"
+                android:paddingBottom="32dp"
+                app:layout_constraintTop_toBottomOf="@+id/txtEditHotelRoomInfo"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                app:layout_constraintTop_toBottomOf="@+id/edtEditHotelRoomInfo"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_begin="48dp" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+    <View
+        android:id="@+id/paytop"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#888888"
+        app:layout_constraintTop_toBottomOf="@id/scrvEditHotelRoom"
+        />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnEditHotelRoomData"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/payment"
+        android:gravity="center_horizontal|center_vertical"
+        android:text="@string/Edit"
+        android:textColor="#ffffff"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

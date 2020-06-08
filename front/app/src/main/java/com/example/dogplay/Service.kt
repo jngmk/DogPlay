@@ -1,17 +1,10 @@
 package com.example.dogplay
 
-import com.example.dogplay.ui.owner.RoomDTO
 import com.google.gson.JsonObject
 import com.google.gson.annotations.SerializedName
-import com.google.gson.internal.LinkedTreeMap
-import com.google.gson.internal.ObjectConstructor
 import retrofit2.Call
 import retrofit2.http.*
-import retrofit2.http.Header
-import java.text.DateFormat
 import java.time.LocalDateTime
-import java.util.*
-import kotlin.collections.ArrayList
 
 
 data class HotelSerchDTO(
@@ -332,6 +325,14 @@ interface Service {
         "content-type: application/json")
     @POST("/api/v1/hotel/insert")
     fun postHotelInfo(
+        @Body params: HotelInfoToPost
+    ):Call<HotelReturnData>
+
+
+    @Headers("accept: application/json",
+        "content-type: application/json")
+    @POST("/api/v1/hotel/update")
+    fun putHotelInfo(
         @Body params: HotelInfoToPost
     ):Call<HotelReturnData>
 

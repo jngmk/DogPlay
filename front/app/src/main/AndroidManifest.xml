@@ -22,6 +22,9 @@
         <activity android:name=".UserInfo" />
         <activity android:name=".ui.owner.OwnerEnrollHotelRoom" />
         <activity android:name=".ui.owner.OwnerEnrollHotel" />
+        <activity android:name=".ui.owner.OwnerEditHotel" />
+        <activity android:name=".ui.owner.OwnerEditRoom" />
+        <activity android:name=".ui.owner.OwnerEditPage" />
         <activity android:name=".ui.owner.EditRoom" />
         <activity android:name=".ui.owner.EditPage" />
         <activity android:name=".ui.owner.HostMain" />
