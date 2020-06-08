@@ -31,8 +31,9 @@ class MainActivity : AppCompatActivity(){
         MutableSupplier.user.postValue(User())
         Supplier.user = User()
 
+        userId = Supplier.UserId
         admin = "0"
-        userId = loadData()!!
+//        userId = loadData()!!
         var userInfo:HashMap<String,Any> = hashMapOf()
 
 
