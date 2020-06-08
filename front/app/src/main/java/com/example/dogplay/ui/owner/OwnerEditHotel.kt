@@ -34,7 +34,6 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import kotlin.properties.Delegates
 
 class OwnerEditHotel : AppCompatActivity() {
     private lateinit var mViewPager2: ViewPager2
@@ -45,7 +44,7 @@ class OwnerEditHotel : AppCompatActivity() {
     private lateinit var imageRef: StorageReference
     private lateinit var userId: String
     private lateinit var hotelNumber: String
-    private var photoId by Delegates.notNull<Int>()
+    private var photoId = 0
 
     private val editPhotoData: UpdatePhotoDTO = UpdatePhotoDTO()
     private var hotelPicture: HotelPicture = HotelPicture(0,"","","")
@@ -84,10 +83,11 @@ class OwnerEditHotel : AppCompatActivity() {
 
             override fun onResponse(call: Call<PhotoDTO>, response: Response<PhotoDTO>) {
                 val data:PhotoDTO = response.body()!!
+                if (data!!.data.isNotEmpty()){
                 photoData = data!!.data[0]
                 photoId = photoData["id"].toString().split('.')[0].toInt()
                 Log.d("faile", "성공 사진 아이디${photoId}-----------------------------------")
-            }
+            }}
 
         })
 
@@ -343,11 +343,14 @@ class OwnerEditHotel : AppCompatActivity() {
                             val downloadUrl = imageRef.downloadUrl
                             downloadUrl.addOnSuccessListener {
                                 // 데이터 베이스에 사진 url 올리기
-                                hotelPicture.apply {
+                                if (photoId == 0) {
+                                    hotelPicture.apply {
                                     name = categoryName
                                     hotelnumber = hotelNumber
                                     picture = it.toString()
                                 }
+                                    postPictures()
+                                } else {
                                 editPhotoData.apply {
                                     name = categoryName
                                     hotelnumber = hotelNumber
@@ -355,7 +358,7 @@ class OwnerEditHotel : AppCompatActivity() {
                                     id = photoId
 
                                 }
-                                postPictures()
+                                putPictures()}
                             }
                         }
                         uploadTask.addOnFailureListener {
@@ -393,6 +396,22 @@ class OwnerEditHotel : AppCompatActivity() {
     }
 
     private fun postPictures() {
+        val server = API.server()
+
+        server!!.postHotelPictures(hotelPicture).enqueue(object :
+            Callback<HotelReturnData> {
+            override fun onFailure(call: Call<HotelReturnData>, t: Throwable) {
+                Log.d("fail",t.toString())
+            }
+
+            override fun onResponse(call: Call<HotelReturnData>, response: Response<HotelReturnData>) {
+                Log.d("success",response.body().toString())
+                clearHotelPicture()
+            }
+        })
+    }
+
+    private fun putPictures() {
         var retrofit = Retrofit.Builder()
             .baseUrl("http://k02a4021.p.ssafy.io:8080")
             .addConverterFactory(GsonConverterFactory.create())
