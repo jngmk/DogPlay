@@ -92,7 +92,18 @@ data class hotelDetailDTO(
     var data:Array<HashMap<String,Any>>
 )
 
+data class roomPhotoDTO(
+    @SerializedName("data")
+    var data:Array<HashMap<String,Any>>
+)
+
 interface EditService {
+    @GET("/api/v1/hotelpicture/searchbyhotel/name")
+    fun getRoomPhotoInfo(
+        @Query("hotelnumber") hotelnumber: String,
+        @Query("name") name: String
+    ):Call<roomPhotoDTO>
+
     @GET("/api/v1/hotelstar/search/userid")
     fun getHotelInfo(
         @Query("userid") userid: String

@@ -62,8 +62,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
+                android:background="@drawable/payment"
                 android:text="@string/editHotel"
-                android:textSize="24sp"
+                android:textColor="#FFFFFF"
+                android:textSize="21sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/btnHostMainBack" />
@@ -76,6 +78,7 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="48dp"
                 android:text="@string/editRoom"
+                android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_edit_hotel" />
 

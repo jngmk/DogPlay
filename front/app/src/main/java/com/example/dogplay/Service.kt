@@ -345,6 +345,13 @@ interface Service {
 
     @Headers("accept: application/json",
         "content-type: application/json")
+    @POST("/api/v1/hotelroom/update")
+    fun putHotelRoomInfo(
+        @Body params: HotelRoomToPost
+    ):Call<HotelReturnData>
+
+    @Headers("accept: application/json",
+        "content-type: application/json")
     @POST("/api/v1/hotelpicture/insert")
     fun postHotelPictures(
         @Body params: HotelPicture
