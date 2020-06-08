@@ -50,7 +50,7 @@ class mapPage : Fragment() {
     private lateinit var mMap: GoogleMap
     private lateinit var mPager: ViewPager2
     private lateinit var mMarkers: ArrayList<Marker>
-    private lateinit var hotels: ArrayList<HotelInfoWithStarAndPrice>
+    private var hotels: ArrayList<HotelInfoWithStarAndPrice> = ArrayList()
     private var mMapCurLatitude: Double? = null
     private var mMapCurLongitude: Double? = null
     private var mCurrentMarker: Marker? = null

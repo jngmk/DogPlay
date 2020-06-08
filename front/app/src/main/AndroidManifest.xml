@@ -31,15 +31,17 @@
         <activity android:name=".ui.owner.HostReviewPage" />
         <activity android:name=".ui.owner.CheckAllReservation" />
         <activity android:name=".ui.owner.HostReReview" />
-        <activity android:name=".ui.owner.LoginMain" />
+        <activity android:name=".ui.owner.LoginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".ui.owner.LoginMain" >
+        </activity>
         <activity
             android:name=".MainActivity"
             android:windowSoftInputMode="adjustResize|stateHidden">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 <!--        <activity android:name=".MainActivity" />-->
         <activity android:name=".HotelDetail" />
