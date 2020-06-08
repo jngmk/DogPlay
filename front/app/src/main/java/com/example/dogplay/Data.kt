@@ -44,15 +44,16 @@ object Supplier{
     var user: MutableLiveData<User> = MutableLiveData<User>()
     val formatterForView = SimpleDateFormat("MM/dd")
     val formatterForApi = SimpleDateFormat("MM월 dd일 (EE)",Locale.KOREAN)
-    var SelectDateView = arrayListOf<String>(formatterForApi.format(System.currentTimeMillis()), formatterForApi.format(System.currentTimeMillis()))
+    var SelectDateView = arrayListOf<String>(formatterForApi.format(System.currentTimeMillis()), formatterForApi.format(System.currentTimeMillis()+86400000))
     var SelectDateApi = arrayListOf<String>(LocalDateTime.ofInstant(Instant.ofEpochMilli(System.currentTimeMillis()),
         ZoneId.systemDefault()).toString(), LocalDateTime.ofInstant(
-        Instant.ofEpochMilli(System.currentTimeMillis()), ZoneId.systemDefault()).toString())
-    var SelectDateMain = arrayListOf<String>(formatterForView.format(System.currentTimeMillis()),formatterForView.format(System.currentTimeMillis()))
-    var SelectDate = arrayListOf<Long>(System.currentTimeMillis(), System.currentTimeMillis())
+        Instant.ofEpochMilli(System.currentTimeMillis()+86400000), ZoneId.systemDefault()).toString())
+    var SelectDateMain = arrayListOf<String>(formatterForView.format(System.currentTimeMillis()),formatterForView.format(System.currentTimeMillis()+86400000))
+    var SelectDate = arrayListOf<Long>(System.currentTimeMillis(), System.currentTimeMillis()+86400000)
     var SelectPayRoom = HashMap<Pair<String,Int>,Int>()
     var PostReservation = ArrayList<Reservation>()
     var PreReservation = ArrayList<Reservation>()
+    var MainSearch = ArrayList<Hotel>()
 }
 
 //class UserSupplier {

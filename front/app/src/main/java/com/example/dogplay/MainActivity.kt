@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity(){
 //            .build()
         val server = API.server()
 
-        server!!.getUserByUserId("test1").enqueue(object: Callback<UserDTO> {
+        server!!.getUserByUserId(Supplier.UserId).enqueue(object: Callback<UserDTO> {
             override fun onFailure(call: Call<UserDTO>, t: Throwable) {
                 Log.d("faile", t.toString())
                 Log.d("faile", "실패-----------------------------------")

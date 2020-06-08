@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.auth0.android.jwt.JWT
 import com.example.dogplay.MainActivity
 import com.example.dogplay.R
+import com.example.dogplay.Supplier
 import com.kakao.auth.ISessionCallback
 import com.kakao.auth.Session
 import com.kakao.network.ErrorResult
@@ -103,6 +104,7 @@ class LoginActivity : AppCompatActivity() {
                             val decodeJWT = JWT(ourToken)
                             userId = decodeJWT.getClaim("userId").asString().toString()
                             Log.d("token11221", "$userId")
+                            Supplier.UserId = userId
 
                             saveData()
 

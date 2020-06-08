@@ -516,7 +516,7 @@ data class InsertReservation(
     val roomname: String,
     val startdate: String,
     val userid: String,
-    val visitid: Int
+    val visit: Int
 )
 
 data class PaidResponse(

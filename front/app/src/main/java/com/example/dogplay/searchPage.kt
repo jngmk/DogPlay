@@ -8,10 +8,12 @@ import android.icu.util.TimeZone
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.KeyEvent
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import androidx.annotation.RequiresApi
 import androidx.core.util.Pair
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -53,6 +55,39 @@ class searchPage : Fragment() {
     @SuppressLint("SimpleDateFormat")
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onActivityCreated(savedInstanceState: Bundle?) {
+        searchBar.setOnQueryTextListener(object :SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                Log.d("서치바", query)
+                var newData = ArrayList<Hotel>()
+                for (i in Supplier.MainSearch){
+                    if (query!! in i.hotelname){
+                        newData.add(i)
+                    }
+                }
+                hotelList.adapter = HotelAdapter(context!!,newData)
+                return false
+            }
+            override fun onQueryTextChange(newText: String?): Boolean {
+                Log.d("서치바상시", newText)
+                var newData = ArrayList<Hotel>()
+                for (i in Supplier.MainSearch){
+                    if (newText!! in i.hotelname){
+                        newData.add(i)
+                    }
+                }
+                hotelList.adapter = HotelAdapter(context!!,newData)
+
+                return false
+            }
+        })
+        searchBar.setOnKeyListener(View.OnKeyListener OnkeyListener@{
+                v, keyCode, event ->
+            if (keyCode == KeyEvent.KEYCODE_ENTER){
+                Log.d("서치바", searchBar.query.toString())
+                return@OnkeyListener true
+            }
+            false
+        })
         super.onActivityCreated(savedInstanceState)
         curdate.text = "${Supplier.SelectDateMain[0]} ~ ${Supplier.SelectDateMain[1]}"
 
@@ -71,6 +106,7 @@ class searchPage : Fragment() {
                 var data = response.body()!!.data
                 if (data == null){
                 } else {
+                    Supplier.MainSearch = data
                     Log.d("호텔찾았다", data!![9].toString())
                     val layoutManager = LinearLayoutManager(context)
                     layoutManager.orientation = LinearLayoutManager.VERTICAL
@@ -99,7 +135,9 @@ class searchPage : Fragment() {
         val builder = MaterialDatePicker.Builder.dateRangePicker()
         builder.setTitleText("날짜 선택")
 
-        val todayPair = Pair(today, today)
+        val todayPair = Pair(today, today+86400000)
+        Supplier.SelectDate = arrayListOf(todayPair.first!!, todayPair.second!!)
+        Log.d("today", todayPair.toString())
         builder.setSelection(todayPair)
 
         val dateRangePicker = builder.build()

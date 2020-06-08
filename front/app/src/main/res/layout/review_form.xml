@@ -35,5 +35,5 @@
         android:layout_marginRight="16dp"
         android:ems="10"
         android:hint="리뷰를 입력해주세요."
-        android:inputType="textPersonName" />
+        android:inputType="textMultiLine" />
 </LinearLayout>
