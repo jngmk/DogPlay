@@ -18,6 +18,12 @@
    		from doginfo
    		where id = #{id}
     </select>
+    
+   	<select id="last" resultType="int">
+   		select id
+   		from doginfo
+   		order by id desc limit 1
+    </select>
    
 	<insert id="insert" parameterType="doginfo">
 		insert into doginfo(userid, dogname, speciesId, size, age, gender, picture, detail)
