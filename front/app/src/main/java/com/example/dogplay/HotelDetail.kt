@@ -37,11 +37,25 @@ class HotelDetail:AppCompatActivity(), OnMapReadyCallback{
     private lateinit var mViewPager: ViewPager2
     private var hotelPictures: ArrayList<HotelPicture> = ArrayList()
     private var roomPictures: ArrayList<HotelPicture> = ArrayList()
+    var likes = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.hotel_detail)
-
+        if (likes == 0){
+            like.setImageResource(R.drawable.empty_heart)
+        } else{
+            like.setImageResource(R.drawable.full_heart)
+        }
+        like.setOnClickListener{
+            if (likes == 0){
+                like.setImageResource(R.drawable.full_heart)
+                likes = 1
+            } else{
+                like.setImageResource(R.drawable.empty_heart)
+                likes = 0
+            }
+        }
         mViewPager = mainImg
 
         getPicture()
