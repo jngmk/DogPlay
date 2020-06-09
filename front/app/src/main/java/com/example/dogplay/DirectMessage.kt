@@ -1,6 +1,7 @@
 package com.example.dogplay
 
 import android.Manifest
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -18,9 +19,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.dogplay.API.Companion.server
+import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.chat_list.*
 import kotlinx.android.synthetic.main.chat_page.*
 import kotlinx.android.synthetic.main.chat_send.view.*
@@ -36,11 +40,13 @@ import java.util.concurrent.TimeUnit
 import kotlin.collections.ArrayList
 
 class DirectMessage: AppCompatActivity() {
+    private var storageReferenence = FirebaseStorage.getInstance().getReference()
     private lateinit var currentPhotoPath: String
     private lateinit var target: String
     private val CAMERA_PERMISSION_REQUEST_CODE = 1006
     private val SAVE_IMAGE_REQUEST_CODE = 1007
     private var photoURI : Uri? = null
+    private var picture: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,12 +67,6 @@ class DirectMessage: AppCompatActivity() {
 
         takePhoto.setOnClickListener {
             prepTakePhoto()
-            if (sendMessage.text.isEmpty()) {
-                Log.d("비었다", "하하")
-            } else {
-                val picture = ""
-                postMessage(picture)
-            }
         }
 
         server!!.chatTwoPeople(Supplier.UserId, target).enqueue(object : Callback<DMDTO> {
@@ -122,7 +122,7 @@ class DirectMessage: AppCompatActivity() {
         })
     }
 
-    private fun postMessage(picture: String) {
+    private fun postMessage(pic: String) {
         val server = server()
         Log.d("뭐라 친건데", sendMessage.text.toString())
         server!!.chatTwoPeople(Supplier.UserId, target).enqueue(object : Callback<DMDTO> {
@@ -145,7 +145,7 @@ class DirectMessage: AppCompatActivity() {
                         "",
                         0,
                         sendMessage.text.toString(),
-                        picture,
+                        pic,
                         0,
                         receiver,
                         Supplier.UserId
@@ -162,10 +162,11 @@ class DirectMessage: AppCompatActivity() {
                         Supplier.DMList.add(
                             DMset(
                                 Supplier.UserId, receiver, sendMessage.text.toString(),
-                                response.body()!!.data, 0, picture, 0
+                                response.body()!!.data, 0, pic, 0
                             )
                         )
                         sendMessage.setText("")
+                        picture = ""
                         chatRecycler.adapter!!.notifyDataSetChanged()
                         chatRecycler.scrollToPosition(chatRecycler.adapter!!.itemCount - 1)
                     }
@@ -193,9 +194,30 @@ class DirectMessage: AppCompatActivity() {
                 // if we are here, we have a valid intent
                 val photoFile: File = createImageFile()
                 photoFile.also {
-                    photoURI = FileProvider.getUriForFile(this, "com.myplantdiary.android.FileProvider", it)
+                    photoURI = FileProvider.getUriForFile(this, "com.example.dogplay.fileprovider", it)
                     takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
                     startActivityForResult(takePictureIntent, SAVE_IMAGE_REQUEST_CODE)
+                }
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == SAVE_IMAGE_REQUEST_CODE) {
+                Toast.makeText(this, "이미지가 저장되었습니다.", Toast.LENGTH_LONG).show()
+                val image = photoURI!!
+
+                // firebase update
+                val imageRef = storageReferenence.child("chat/${Supplier.UserId}/$target/" + image.lastPathSegment)
+                val uploadTask = imageRef.putFile(image)
+                uploadTask.addOnSuccessListener {
+                    val downloadUrl = imageRef.downloadUrl
+                    downloadUrl.addOnSuccessListener {
+                        picture = it.toString()
+                        postMessage(picture)
+                    }
                 }
             }
         }
@@ -208,7 +230,7 @@ class DirectMessage: AppCompatActivity() {
         // get access to the directory where we can write pictures.
         val storageDir: File? = this.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
 
-        return File.createTempFile("PlantDiary${timeStamp}", ".jpg", storageDir).apply {
+        return File.createTempFile("DogPlay${timeStamp}", ".jpg", storageDir).apply {
             currentPhotoPath = absolutePath
         }
     }
@@ -266,10 +288,23 @@ class DirectMessage: AppCompatActivity() {
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             val DM = DMs[position]
+            if (DM.message != "") {
+                holder.itemView.msg.text = DM.message
+            } else {
+                holder.itemView.msg.visibility = View.GONE
+            }
+            if (DM.picture != "") {
+                Glide.with(holder.itemView)
+                    .load(DM.picture)
+                    .into(holder.itemView.chatImg)
+            } else {
+//                holder.itemView.chatImg.visibility = View.GONE
+            }
+
+
             val target: String
             var half: String
             var hour: Int
-            holder.itemView.msg.text = DM.message
             if (DM.created[3] > 12) {
                 half = "오후"; hour = DM.created[3] - 12
             } else if (DM.created[3] == 12) {

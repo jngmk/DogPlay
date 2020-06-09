@@ -13,27 +13,29 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" >
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cvImg"
-            android:layout_width="280dp"
+<!--        <androidx.cardview.widget.CardView-->
+<!--            android:id="@+id/cvImg"-->
+<!--            android:layout_width="280dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_margin="16dp"-->
+<!--            app:cardCornerRadius="25dp"-->
+<!--            app:layout_constraintLeft_toLeftOf="parent"-->
+<!--            app:layout_constraintRight_toRightOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent" >-->
+
+<!--            -->
+
+<!--        </androidx.cardview.widget.CardView>-->
+
+        <ImageView
+            android:id="@+id/chatImg"
+            android:layout_width="wrap_content"
+            android:maxWidth="280dp"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            app:cardCornerRadius="25dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" >
-
-            <ImageView
-                android:id="@+id/img"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:adjustViewBounds="true"
-                android:scaleType="centerCrop"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/dog" />
-
-        </androidx.cardview.widget.CardView>
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/msg"
@@ -47,7 +49,7 @@
             android:text="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
             android:background="@drawable/recieve_message"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cvImg"
+            app:layout_constraintTop_toBottomOf="@+id/chatImg"
             app:layout_constraintBottom_toBottomOf="parent"
             />
 
