@@ -39,6 +39,7 @@ object Supplier{
     var totalCartPrice = 0
     var SelectHotelRoomPrice = HashMap<String,Int>()
     var SelectRoom = RoomDetailData(0,"","",0,0,0,0,"")
+    var SelectHotelRoomPictures = ArrayList<HotelPicture>()
     var SelectPayForm = PayForm("","","","",
         0,0,0,"","","")
     var ResponseTid = ""

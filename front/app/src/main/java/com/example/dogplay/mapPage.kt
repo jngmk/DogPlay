@@ -59,7 +59,7 @@ class mapPage : Fragment() {
     private var mapFocus = false
     private var numPage = 0
     private val REQUEST_ACCESS_FINE_LOCATION = 1
-    private val DISTANCE = 1
+    private val DISTANCE = 2
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -106,7 +106,7 @@ class mapPage : Fragment() {
         }
         btnGoCurPos.setOnClickListener {
             if (mMapCurLatitude != null && mMapCurLongitude != null) {
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(mMapCurLatitude!!, mMapCurLongitude!!), 15f))
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(mMapCurLatitude!!, mMapCurLongitude!!), 14f))
             }
         }
     }
@@ -271,7 +271,7 @@ class mapPage : Fragment() {
                     .icon(BitmapDescriptorFactory.fromResource(R.drawable.map_cur_pos_marker))
                     .title("현재위치"))
                 if (!mapFocus) {
-                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(now, 15f))
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(now, 14f))
                     getData(latitude, longitude)
                     mapFocus = true
                 }

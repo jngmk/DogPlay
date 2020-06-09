@@ -16,6 +16,7 @@ import android.view.ViewGroup
 import android.widget.SearchView
 import androidx.annotation.RequiresApi
 import androidx.core.util.Pair
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dogplay.API.Companion.server
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -55,6 +56,12 @@ class searchPage : Fragment() {
     @SuppressLint("SimpleDateFormat")
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onActivityCreated(savedInstanceState: Bundle?) {
+        MutableSupplier.dogsSelected.observe(viewLifecycleOwner, Observer {
+                dogs ->
+            dogList.adapter!!.notifyDataSetChanged()
+            Supplier.dogsSelected = dogs
+        })
+
         searchBar.setOnQueryTextListener(object :SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {
                 Log.d("서치바", query)
@@ -126,7 +133,7 @@ class searchPage : Fragment() {
         searchBar.clearFocus()
         val dogs = "@drwable/dog" // 잠시 강아지 사진 대신
 
-        val adapter2 = DogAdapter(this.requireContext(), dogs)
+        val adapter2 = DogAdapter(this.requireContext(), Supplier.dogsSelected)
         dogList.adapter = adapter2
 
         // setting
@@ -207,7 +214,7 @@ class searchPage : Fragment() {
         searchBar.clearFocus()
         val dogs = "@drwable/dog" // 잠시 강아지 사진 대신
 
-        val adapter2 = DogAdapter(this.requireContext(), dogs)
+        val adapter2 = DogAdapter(this.requireContext(), Supplier.dogsSelected)
         dogList.adapter = adapter2
 
         // setting

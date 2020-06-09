@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
+import com.bumptech.glide.Glide
 import com.example.dogplay.API.Companion.kserver
 import com.example.dogplay.API.Companion.server
 import com.example.dogplay.ui.owner.OwnerEnrollHotel
@@ -122,6 +123,9 @@ class CartAdapter(var context: Context, var CartItems:ArrayList<responseCart>, v
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val CartItem = CartItems[position]
+
+        getPicture(CartItem.hotelnumber, CartItem.roomname, holder.itemView)
+
         var roomPrice = 1
         Supplier.SelectHotel.data.HotelRoom.forEach run@{
             if (CartItem.roomname == it.roomname){
@@ -153,5 +157,31 @@ class CartAdapter(var context: Context, var CartItems:ArrayList<responseCart>, v
                 itemClick()
             }
         }
+    }
+
+    private fun getPicture(hotelnumber: String, name: String, itemView: View) {
+        val server = server()
+        server!!.getHotelPictures(hotelnumber, name).enqueue(object : Callback<HotelPicturesDTO> {
+            override fun onFailure(call: Call<HotelPicturesDTO>, t: Throwable) {
+                Log.d("fail",t.toString())
+            }
+            override fun onResponse(
+                call: Call<HotelPicturesDTO>,
+                response: Response<HotelPicturesDTO>
+            ) {
+                Log.d("success",response.body().toString())
+                if (response.body() != null && response.body()!!.data.size != 0) {
+                    val picture = response.body()!!.data[0].picture
+                    if (picture != "") {
+                        Glide.with(itemView)
+                            .load(picture)
+                            .into(itemView.CartItemImg)
+                    } else {
+                        itemView.CartItemImg.setImageResource(R.drawable.dog)
+                    }
+                }
+            }
+        })
+
     }
 }
