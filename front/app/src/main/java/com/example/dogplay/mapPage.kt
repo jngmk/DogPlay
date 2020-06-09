@@ -1,6 +1,8 @@
 package com.example.dogplay
 
 import android.annotation.SuppressLint
+import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
@@ -13,10 +15,12 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.startActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
+import com.example.dogplay.API.Companion.server
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
@@ -46,7 +50,7 @@ class mapPage : Fragment() {
     private lateinit var mMap: GoogleMap
     private lateinit var mPager: ViewPager2
     private lateinit var mMarkers: ArrayList<Marker>
-    private lateinit var hotels: ArrayList<HotelInfoWithStarAndPrice>
+    private var hotels: ArrayList<HotelInfoWithStarAndPrice> = ArrayList()
     private var mMapCurLatitude: Double? = null
     private var mMapCurLongitude: Double? = null
     private var mCurrentMarker: Marker? = null
@@ -55,7 +59,7 @@ class mapPage : Fragment() {
     private var mapFocus = false
     private var numPage = 0
     private val REQUEST_ACCESS_FINE_LOCATION = 1
-    private val DISTANCE = 5
+    private val DISTANCE = 1
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -160,7 +164,7 @@ class mapPage : Fragment() {
                     mMarkers.add(0, marker)
                     marker.tag = 0
                 }
-                mPager.adapter = PagerRecyclerAdapter(hotels)
+                mPager.adapter = PagerRecyclerAdapter(context!!, hotels)
                 mPager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
                 mPager.registerOnPageChangeCallback(hotelPageChangeCallback)
             }
@@ -264,7 +268,7 @@ class mapPage : Fragment() {
                 // 현재 위치 마커 추가
                 mCurrentMarker = mMap.addMarker(MarkerOptions()
                     .position(now)
-                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.map_marker))
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.map_cur_pos_marker))
                     .title("현재위치"))
                 if (!mapFocus) {
                     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(now, 15f))
@@ -281,7 +285,8 @@ class mapPage : Fragment() {
         }
     }
 
-    class PagerRecyclerAdapter(private val hotels: ArrayList<HotelInfoWithStarAndPrice>) : RecyclerView.Adapter<PagerViewHolder>() {
+    class PagerRecyclerAdapter(val context: Context, private val hotels: ArrayList<HotelInfoWithStarAndPrice>) : RecyclerView.Adapter<PagerViewHolder>() {
+
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PagerViewHolder =
             PagerViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.map_hotel_list, parent, false))
@@ -289,6 +294,31 @@ class mapPage : Fragment() {
         override fun onBindViewHolder(holder: PagerViewHolder, position: Int) {
             val hotel = hotels[position]
             holder.updateHotelList(hotel)
+
+            holder.itemView.setOnClickListener {
+                val server = server()
+
+                server!!.searchHotelDetail(hotels[position].hotelnumber).enqueue(object :
+                    Callback<HotelDetailDTO> {
+                    override fun onFailure(call: Call<HotelDetailDTO>, t: Throwable) {
+                        Log.d("faile", t.toString())
+                    }
+
+                    override fun onResponse(
+                        call: Call<HotelDetailDTO>,
+                        response: Response<HotelDetailDTO>
+                    ) {
+                        val data: HotelDetailDTO = response.body()!!
+                        val hotelDetailData = data
+                        Supplier.SelectHotel = hotelDetailData
+
+                        Log.d("리뷰", Supplier.SelectHotel.data.toString())
+//                    Log.d("방",Supplier.SelectHotel.data.HotelRoom.toString())
+                        val intent = Intent(context,HotelDetail::class.java)
+                        context.startActivity(intent)
+                    }
+                })
+            }
         }
 
         override fun getItemCount(): Int = hotels.size
@@ -300,6 +330,7 @@ class mapPage : Fragment() {
         private var mapHotelName: TextView = itemView.findViewById(R.id.mapHotelName)
         private var mapHotelAddress: TextView = itemView.findViewById(R.id.mapHotelAddress)
         private var mapHotelPrice: TextView = itemView.findViewById(R.id.mapHotelPrice)
+
 
         @SuppressLint("SetTextI18n")
         fun updateHotelList(hotel: HotelInfoWithStarAndPrice) {

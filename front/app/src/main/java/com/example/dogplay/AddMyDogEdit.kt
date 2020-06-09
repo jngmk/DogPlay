@@ -89,12 +89,12 @@ class AddMyDogEdit : Fragment() {
         mRecyclerView.adapter = RecyclerAdapter(precautions)
         mRecyclerView.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
 
-        init()
+        update()
     }
 
-    private fun init() {
+    private fun update() {
         edtEnterName.setText(dogEdit.dogname)
-        edtEnterAge.setText(dogEdit.age.joinToString(separator = "-"))
+        edtEnterAge.setText(dogEdit.age.joinToString("-"))
         edtEnterSize.setText(dogEdit.size.toString())
         (rbGroupGender[dogEdit.gender] as RadioButton).isChecked = true
         spnSpecies.setSelection(dogEdit.speciesId)
@@ -106,7 +106,10 @@ class AddMyDogEdit : Fragment() {
         else {
             imgProfile.setImageResource(R.drawable.dog)
         }
-        precautions = dog.detail
+        precautions.clear()
+        precautions = dogEdit.detail
+        mRecyclerView.adapter = RecyclerAdapter(precautions)
+        mRecyclerView.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         (mRecyclerView.adapter as RecyclerAdapter).notifyDataSetChanged()
     }
 
@@ -144,7 +147,7 @@ class AddMyDogEdit : Fragment() {
             }
 
             override fun onResponse(call: Call<HotelReturnData>, response: Response<HotelReturnData>) {
-                Toast.makeText(context, "반려견 정보가 수정되었습니다.", Toast.LENGTH_LONG).show()
+//                Toast.makeText(context, "반려견 정보가 수정되었습니다.", Toast.LENGTH_LONG).show()
                 val count = dogs.size - 1
                 for (i in 0..count) {
                     if (dogs[i].id == dog.id) {
@@ -160,6 +163,9 @@ class AddMyDogEdit : Fragment() {
 
 
     private fun prepare() {
+        dog.id = dogEdit.id
+        dogToPost.id = dogEdit.id
+
         dog.userid = userId
         dogToPost.userid = userId
 
@@ -176,11 +182,18 @@ class AddMyDogEdit : Fragment() {
 
         val age = edtEnterAge.text.toString()
         val ageList = ArrayList<Int>()
+        val ageStringList = ArrayList<String>()
         age.split('-').forEach {
             ageList.add(it.toInt())
+            if (it.length < 4) {
+                ageStringList.add(it.padStart(2, '0'))
+            }
+            else {
+                ageStringList.add(it)
+            }
         }
         dog.age = ageList
-        dogToPost.age = age
+        dogToPost.age = ageStringList.joinToString("-")
 
         val count = precautions.size - 1
         for (i in 0..count) {
@@ -198,7 +211,7 @@ class AddMyDogEdit : Fragment() {
     private fun addPrecaution() {
         val precaution = ArrayList<String>()
         precaution.add("특징")
-        precaution.add("호텔에서 알아두면 좋은 점을 적어주세요.")
+        precaution.add("")
         precautions.add(precaution)
 
         (mRecyclerView.adapter as RecyclerAdapter).notifyDataSetChanged()
@@ -216,11 +229,11 @@ class AddMyDogEdit : Fragment() {
         server!!.getSpecies().enqueue(object :
             Callback<SpeciesDTO> {
             override fun onFailure(call: Call<SpeciesDTO>, t: Throwable) {
-                Toast.makeText(context, "반려견 등록에 실패했습니다.", Toast.LENGTH_LONG).show()
+//                Toast.makeText(context, "반려견 등록에 실패했습니다.", Toast.LENGTH_LONG).show()
             }
 
             override fun onResponse(call: Call<SpeciesDTO>, response: Response<SpeciesDTO>) {
-                Toast.makeText(context, "반려견이 등록되었습니다.", Toast.LENGTH_LONG).show()
+//                Toast.makeText(context, "반려견이 등록되었습니다.", Toast.LENGTH_LONG).show()
                 species = response.body()!!.data
 
                 mSpinner.adapter = ArrayAdapter(context!!, R.layout.support_simple_spinner_dropdown_item, species)
@@ -295,7 +308,7 @@ class AddMyDogEdit : Fragment() {
 
         fun updatePrecautions(precaution: ArrayList<String>, position: Int) {
             title.setText(precaution[0])
-            content.hint = precaution[1]
+            content.setText(precaution[1])
         }
     }
 }

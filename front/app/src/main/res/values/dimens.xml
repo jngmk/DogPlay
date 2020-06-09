@@ -2,4 +2,6 @@
 <resources>
     <dimen name="EnrollHotelDetailTitle">16sp</dimen>
     <dimen name="EnrollHotelDetailContent">14sp</dimen>
+    <dimen name="EditHotelDetailTitle">16sp</dimen>
+    <dimen name="EditHotelDetailContent">14sp</dimen>
 </resources>

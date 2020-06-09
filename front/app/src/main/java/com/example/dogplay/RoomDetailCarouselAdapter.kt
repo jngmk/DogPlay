@@ -14,7 +14,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.PagerAdapter
-class RoomDetailCarouselAdapter(private val context: Context):PagerAdapter(){
+class RoomDetailCarouselAdapter(private val context: Context, private val selectedRoomPictures: ArrayList<HotelPicture>):PagerAdapter(){
     override fun isViewFromObject(view: View, `object`: Any): Boolean {
         return view ===`object`
     }

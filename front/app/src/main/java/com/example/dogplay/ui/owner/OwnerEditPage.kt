@@ -16,30 +16,26 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.dogplay.*
-import kotlinx.android.synthetic.main.host_main.*
+import kotlinx.android.synthetic.main.owner_edit_page.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.time.LocalDateTime
 import java.time.ZoneId
-import java.time.format.DateTimeFormatter
 
-const val ROOM_NAME = "com.example.dogplay.ROOM_NAME"
+// const val ROOM_NAME = "com.example.dogplay.ROOM_NAME"
 
-class HostMain : AppCompatActivity() {
+class OwnerEditPage : AppCompatActivity() {
     private lateinit var hotelNumber: String
     private lateinit var hotelName: String
     private lateinit var reservationRoomCount: ArrayList<Int>
     private lateinit var roomPictures: ArrayList<String?>
     private lateinit var mRecyclerView: RecyclerView
-    private var year: Int = 0
-    private var month: Int = 0
-    private var date: Int = 0
-
+    private val userId = "owner3"
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.host_main)
+        setContentView(R.layout.owner_edit_page)
 
         hotelNumber = intent.getStringExtra(HOTEL_NUMBER)!!
         hotelName = intent.getStringExtra(HOTEL_NAME)!!
@@ -48,35 +44,24 @@ class HostMain : AppCompatActivity() {
 
         txtHostMainTitle.text = hotelName
 
-        btnHostMainBack.setOnClickListener {
-            finish()
-        }
-
-        btnAddHotelRoom.setOnClickListener {
-            val intent = Intent(this, OwnerEnrollHotelRoom::class.java).apply {
+        tv_edit_hotel.setOnClickListener {
+            val intent = Intent(this, OwnerEditHotel::class.java).apply {
+                putExtra(USER_ID, userId)
                 putExtra(HOTEL_NUMBER, hotelNumber)
+                putExtra(HOTEL_NAME, hotelName)
             }
             startActivity(intent)
         }
 
-        cv_main.setOnDateChangeListener {
-            view, yyyy, mm, dd ->
-            year = yyyy
-            month = mm + 1
-            date = dd
-            getHotelRoomData(year, month, date)
+        btnHostMainBack.setOnClickListener {
+            finish()
         }
+
         val current = LocalDateTime.now()
-        year = current.year
-        month = current.monthValue
-        date = current.dayOfMonth
+        val year = current.year
+        val month = current.monthValue
+        val date = current.dayOfMonth
 
-        getHotelRoomData(year, month, date)
-    }
-
-    @RequiresApi(Build.VERSION_CODES.O)
-    override fun onResume() {
-        super.onResume()
         getHotelRoomData(year, month, date)
     }
 
@@ -109,8 +94,8 @@ class HostMain : AppCompatActivity() {
                     getPictures(hotelNumber, rooms[i].roomname, i)
                 }
 
-                mRecyclerView.adapter = RecyclerAdapter(this@HostMain, rooms, reservationRoomCount, roomPictures)
-                mRecyclerView.layoutManager = LinearLayoutManager(this@HostMain, RecyclerView.VERTICAL,false)
+                mRecyclerView.adapter = RecyclerAdapter(this@OwnerEditPage, rooms, reservationRoomCount, roomPictures)
+                mRecyclerView.layoutManager = LinearLayoutManager(this@OwnerEditPage, RecyclerView.VERTICAL,false)
 
 
                 (mRecyclerView.adapter as RecyclerAdapter).notifyDataSetChanged()
@@ -179,7 +164,7 @@ class HostMain : AppCompatActivity() {
             holder.updateHotelImage(room, picture, reservationCnt)
 
             holder.itemView.setOnClickListener {
-                val intent = Intent(context, CheckAllReservation::class.java).apply {
+                val intent = Intent(context, OwnerEditRoom::class.java).apply {
                     putExtra(ROOM_NAME, room.roomname)
                     putExtra(HOTEL_NUMBER, hotelNumber)
                 }

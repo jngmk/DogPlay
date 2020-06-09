@@ -4,17 +4,16 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.dogplay.*
-
 import kotlinx.android.synthetic.main.fragment_owner_main.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -25,11 +24,11 @@ import retrofit2.Callback
  * create an instance of this fragment.
  */
 
-const val HOTEL_NUMBER = "com.example.dogplay.HOTEL_NUMBER"
-const val HOTEL_NAME = "com.example.dogplay.HOTEL_NAME"
-const val USER_ID = "com.example.dogplay.USER_ID"
+//const val HOTEL_NUMBER = "com.example.dogplay.HOTEL_NUMBER"
+//const val HOTEL_NAME = "com.example.dogplay.HOTEL_NAME"
+//const val USER_ID = "com.example.dogplay.USER_ID"
 
-class OwnerMainFragment : Fragment() {
+class OwnerEditFragment : Fragment() {
     private val userId = Supplier.UserId
     private lateinit var mRecyclerView: RecyclerView
     private lateinit var hotels: ArrayList<HotelInfoWithStarAndPrice>
@@ -39,7 +38,7 @@ class OwnerMainFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_owner_main, container, false)
+        return inflater.inflate(R.layout.fragment_owner_edit, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -47,23 +46,12 @@ class OwnerMainFragment : Fragment() {
 
         mRecyclerView = rcvOwnerHotel
 
-        btnAddHotel.setOnClickListener {
-            val intent = Intent(this.context, OwnerEnrollHotel::class.java).apply {
-                putExtra(USER_ID, userId)
-            }
-            startActivity(intent)
-        }
-
-        getData()
-    }
-
-    override fun onResume() {
-        super.onResume()
         getData()
     }
 
     private fun getData() {
         val server = API.server()
+        // 근처에 있는 호텔 정보 가져오기
         server!!.getHotelSearchByUserId(userId).enqueue(object : Callback<HotelSearchByUserIdDTO> {
             override fun onFailure(call: Call<HotelSearchByUserIdDTO>, t: Throwable) {
                 Log.d("fail",t.toString())
@@ -83,14 +71,14 @@ class OwnerMainFragment : Fragment() {
     class RecyclerAdapter(val context: Context, val hotels: ArrayList<HotelInfoWithStarAndPrice>) : RecyclerView.Adapter<RecyclerViewHolder>() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerViewHolder =
-            RecyclerViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.owner_main_hotel_item, parent, false))
+            RecyclerViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.owner_edit_hotel_item, parent, false))
 
         override fun onBindViewHolder(holder: RecyclerViewHolder, position: Int) {
             val hotel = hotels[position]
             holder.updateHotelImage(hotel)
 
             holder.itemView.setOnClickListener {
-                val intent = Intent(context, HostMain::class.java).apply {
+                val intent = Intent(context, OwnerEditPage::class.java).apply {
                     putExtra(HOTEL_NUMBER, hotel.hotelnumber)
                     putExtra(HOTEL_NAME, hotel.hotelname)
                 }
@@ -103,10 +91,7 @@ class OwnerMainFragment : Fragment() {
 
     class RecyclerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val hotelImg: ImageView = itemView.findViewById(R.id.cardImg)
-        private val hotelName: TextView = itemView.findViewById(R.id.prehotelName)
-        private val hotelEval: TextView = itemView.findViewById(R.id.eval)
-        private val hotelReview: TextView = itemView.findViewById(R.id.review)
-        private val hotelAddress: TextView = itemView.findViewById(R.id.preAddress)
+        private val hotelName: TextView = itemView.findViewById(R.id.hotelName)
 
 
         fun updateHotelImage(hotel: HotelInfoWithStarAndPrice) {
@@ -116,9 +101,7 @@ class OwnerMainFragment : Fragment() {
                     .into(hotelImg)
             }
             hotelName.text = hotel.hotelname
-            hotelEval.text = "${hotel.star} / 5.0"
-            hotelReview.text = "후기 ${hotel.countreview}"
-            hotelAddress.text = hotel.address
+
         }
     }
 }

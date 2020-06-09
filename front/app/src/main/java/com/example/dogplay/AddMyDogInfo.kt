@@ -28,6 +28,7 @@ import retrofit2.Response
 class AddMyDogInfo : Fragment() {
     private lateinit var mRecyclerView: RecyclerView
     private lateinit var mSpinner: Spinner
+    private lateinit var mAutoCompleteTextView: AutoCompleteTextView
     private lateinit var dogs: ArrayList<DogInfo>
     private lateinit var species: ArrayList<Species>
     private var storageReferenence = FirebaseStorage.getInstance().getReference()
@@ -68,6 +69,7 @@ class AddMyDogInfo : Fragment() {
 
         mRecyclerView = rcyPrecaution
         mSpinner = spnSpecies
+//        mAutoCompleteTextView = spnSpecies
         dogs = Supplier.dogs
         userId = Supplier.user.userid
 
@@ -135,13 +137,15 @@ class AddMyDogInfo : Fragment() {
     private fun saveDogInfo() {
         val server = API.server()
         server!!.postDogInfo(dogToPost).enqueue(object :
-            Callback<HotelReturnData> {
-            override fun onFailure(call: Call<HotelReturnData>, t: Throwable) {
-                Toast.makeText(context, "반려견 등록에 실패했습니다.", Toast.LENGTH_LONG).show()
+            Callback<RoomCountReturnData> {
+            override fun onFailure(call: Call<RoomCountReturnData>, t: Throwable) {
+//                Toast.makeText(context, "반려견 등록에 실패했습니다.", Toast.LENGTH_LONG).show()
             }
 
-            override fun onResponse(call: Call<HotelReturnData>, response: Response<HotelReturnData>) {
-                Toast.makeText(context, "반려견이 등록되었습니다.", Toast.LENGTH_LONG).show()
+            override fun onResponse(call: Call<RoomCountReturnData>, response: Response<RoomCountReturnData>) {
+//                Toast.makeText(context, "반려견이 등록되었습니다.", Toast.LENGTH_LONG).show()
+                val dogId = response.body()!!.data
+                dog.id = dogId
                 dogs.add(dog)
                 MutableSupplier.dogs.postValue(dogs)
                 clearAll()
@@ -174,11 +178,18 @@ class AddMyDogInfo : Fragment() {
 
         val age = edtEnterAge.text.toString()
         val ageList = ArrayList<Int>()
+        val ageStringList = ArrayList<String>()
         age.split('-').forEach {
             ageList.add(it.toInt())
+            if (it.length < 4) {
+                ageStringList.add(it.padStart(2, '0'))
+            }
+            else {
+                ageStringList.add(it)
+            }
         }
         dog.age = ageList
-        dogToPost.age = age
+        dogToPost.age = ageStringList.joinToString("-")
 
         val count = precautions.size - 1
         for (i in 0..count) {
@@ -214,12 +225,19 @@ class AddMyDogInfo : Fragment() {
         server!!.getSpecies().enqueue(object :
             Callback<SpeciesDTO> {
             override fun onFailure(call: Call<SpeciesDTO>, t: Throwable) {
-                Toast.makeText(context, "반려견 등록에 실패했습니다.", Toast.LENGTH_LONG).show()
+//                Toast.makeText(context, "반려견 등록에 실패했습니다.", Toast.LENGTH_LONG).show()
             }
 
             override fun onResponse(call: Call<SpeciesDTO>, response: Response<SpeciesDTO>) {
-                Toast.makeText(context, "반려견이 등록되었습니다.", Toast.LENGTH_LONG).show()
+//                Toast.makeText(context, "반려견이 등록되었습니다.", Toast.LENGTH_LONG).show()
                 species = response.body()!!.data
+
+//                mAutoCompleteTextView.setAdapter(ArrayAdapter(context!!, R.layout.support_simple_spinner_dropdown_item, species))
+//                mAutoCompleteTextView.setOnItemClickListener { parent, view, position, id ->
+//                    val dogSpecies = parent.getItemAtPosition(position) as Species
+//                    dog.speciesId = dogSpecies.id
+//                    dogToPost.speciesId = dogSpecies.id
+//                }
 
                 mSpinner.adapter = ArrayAdapter(context!!, R.layout.support_simple_spinner_dropdown_item, species)
                 mSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {

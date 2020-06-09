@@ -1,17 +1,10 @@
 package com.example.dogplay
 
-import com.example.dogplay.ui.owner.RoomDTO
 import com.google.gson.JsonObject
 import com.google.gson.annotations.SerializedName
-import com.google.gson.internal.LinkedTreeMap
-import com.google.gson.internal.ObjectConstructor
 import retrofit2.Call
 import retrofit2.http.*
-import retrofit2.http.Header
-import java.text.DateFormat
 import java.time.LocalDateTime
-import java.util.*
-import kotlin.collections.ArrayList
 
 
 data class HotelSerchDTO(
@@ -94,7 +87,7 @@ data class ChatMainDTO(
 
 
 data class HotelDetailHash(
-    val HotelStar:HotelStar,
+    var HotelStar:HotelStar,
     val HotelPicture:ArrayList<HotelPictureP>,
     val review: ArrayList<HotelReview>,
     val HotelRoom: ArrayList<HotelRoom>
@@ -335,10 +328,25 @@ interface Service {
         @Body params: HotelInfoToPost
     ):Call<HotelReturnData>
 
+
+    @Headers("accept: application/json",
+        "content-type: application/json")
+    @PUT("/api/v1/hotel/update")
+    fun putHotelInfo(
+        @Body params: HotelInfoToPost
+    ):Call<HotelReturnData>
+
     @Headers("accept: application/json",
         "content-type: application/json")
     @POST("/api/v1/hotelroom/insert")
     fun postHotelRoomInfo(
+        @Body params: HotelRoomToPost
+    ):Call<HotelReturnData>
+
+    @Headers("accept: application/json",
+        "content-type: application/json")
+    @POST("/api/v1/hotelroom/update")
+    fun putHotelRoomInfo(
         @Body params: HotelRoomToPost
     ):Call<HotelReturnData>
 
@@ -353,6 +361,11 @@ interface Service {
     fun getHotelPictures(
         @Query("hotelnumber") hotelnumber: String,
         @Query("name") name: String
+    ): Call<HotelPicturesDTO>
+
+    @GET("/api/v1/hotelpicture/searchbyhotel")
+    fun getHotelAllPictures(
+        @Query("hotelnumber") hotelnumber: String
     ): Call<HotelPicturesDTO>
 
     @Headers("accept: application/json",
@@ -485,7 +498,7 @@ interface Service {
     @POST("/api/v1/doginfo/insert")
     fun postDogInfo(
         @Body params: DogInfoToPost
-    ):Call<HotelReturnData>
+    ):Call<RoomCountReturnData>
 
     @Headers("accept: application/json",
         "content-type: application/json")
@@ -690,6 +703,9 @@ data class ChatInsert(
     val receive: String,
     val send: String
 )
+
+// hotel image
+
 
 // dog
 data class DogInfoDTO(

@@ -75,7 +75,50 @@ data class ReturnData(
     val state: String
 )
 
+data class PhotoDTO(
+    @SerializedName("data")
+    var data:Array<HashMap<String,Any>>
+)
+
+data class UpdatePhotoDTO(
+    var name: String = "",
+    var hotelnumber: String = "",
+    var picture: String = "",
+    var id: Int = 0
+)
+
+data class hotelDetailDTO(
+    @SerializedName("data")
+    var data:Array<HashMap<String,Any>>
+)
+
+data class roomPhotoDTO(
+    @SerializedName("data")
+    var data:Array<HashMap<String,Any>>
+)
+
 interface EditService {
+    @GET("/api/v1/hotelpicture/searchbyhotel/name")
+    fun getRoomPhotoInfo(
+        @Query("hotelnumber") hotelnumber: String,
+        @Query("name") name: String
+    ):Call<roomPhotoDTO>
+
+    @GET("/api/v1/hotelstar/search/userid")
+    fun getHotelInfo(
+        @Query("userid") userid: String
+    ):Call<hotelDetailDTO>
+
+    @GET("/api/v1/hotelpicture/searchbyhotel")
+    fun getPhotoInfo(
+        @Query("hotelnumber") hotelnumber : String
+    ):Call<PhotoDTO>
+
+    @PUT("/api/v1/hotelpicture/update")
+    fun putPhotoInfo(
+        @Body params: UpdatePhotoDTO
+    ):Call<ReturnData>
+
     @PUT("/api/v1/response/update")
     fun updateResponse(
         @Body params: UpdateResponseDTO

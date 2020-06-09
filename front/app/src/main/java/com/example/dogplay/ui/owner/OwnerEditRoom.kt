@@ -5,32 +5,30 @@ import android.content.ContentValues
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.ImageDecoder
-import android.media.Image
 import android.net.Uri
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageView
-import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.example.dogplay.*
 import com.google.firebase.storage.FirebaseStorage
-import kotlinx.android.synthetic.main.activity_owner_enroll_hotel_room.*
+import kotlinx.android.synthetic.main.owner_edit_room.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
-class OwnerEnrollHotelRoom : AppCompatActivity() {
-    private lateinit var hotelNumber: String
+class OwnerEditRoom : AppCompatActivity() {
     private lateinit var mViewPager2: ViewPager2
     private lateinit var mViewAdapter: PagerAdapter
     private var hotelPicture: HotelPicture = HotelPicture(0,"","","")
@@ -39,22 +37,85 @@ class OwnerEnrollHotelRoom : AppCompatActivity() {
     private val pictures: ArrayList<Bitmap> = ArrayList()
     private val uris: ArrayList<Uri> = ArrayList()
     private val IMAGE_GALLERY_REQUEST_CODE = 1002
+    private var roomname = ""
+    private var hotelNumber = ""
+    private var photoId = 0
+    private val editPhotoData: UpdatePhotoDTO = UpdatePhotoDTO()
 
     @RequiresApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_owner_enroll_hotel_room)
+        setContentView(R.layout.owner_edit_room)
 
+        roomname = intent.getStringExtra(ROOM_NAME)!!
         hotelNumber = intent.getStringExtra(HOTEL_NUMBER)!!
-        mViewPager2 = vpEnrollHotelRoomImg
 
-        btnEnrollHotelRoomBack.setOnClickListener {
+
+        var roomDetailData: HashMap<String, Any>
+        var photoData: HashMap<String, Any>
+        var retrofit = Retrofit.Builder()
+            .baseUrl("http://k02a4021.p.ssafy.io:8080")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+        var server = retrofit.create(EditService::class.java)
+
+
+        server.getRoomPhotoInfo(hotelNumber, roomname).enqueue(object: Callback<roomPhotoDTO> {
+            override fun onFailure(call: Call<roomPhotoDTO>, t: Throwable) {
+                Log.d("faile", t.toString())
+                Log.d("faile", "실패-----------------------------------")
+                Log.d("faile", "${hotelNumber}")
+            }
+
+            override fun onResponse(call: Call<roomPhotoDTO>, response: Response<roomPhotoDTO>) {
+                val data:roomPhotoDTO = response.body()!!
+                if (data!!.data.isNotEmpty()) {
+                    photoData = data!!.data[0]
+                    photoId = photoData["id"].toString().split('.')[0].toInt()
+                    Log.d("success", "성공 사진 아이디${photoId}-----------------------------------")
+                }
+            }
+
+        })
+
+        server.searchHotelRoomDetail(hotelNumber, roomname).enqueue(object: Callback<EditRoomDTO> {
+            override fun onFailure(call: Call<EditRoomDTO>, t: Throwable) {
+                Log.d("faile", t.toString())
+                Log.d("faile", "실패-----------------------------------")
+            }
+
+            override fun onResponse(call: Call<EditRoomDTO>, response: Response<EditRoomDTO>) {
+                val data:EditRoomDTO = response.body()!!
+                roomDetailData = data!!.data
+                var str_roomname = roomDetailData["roomname"].toString()
+                var int_price = roomDetailData["price"].toString().split(".")[0].toInt()
+                var int_count = roomDetailData["count"].toString().split(".")[0].toInt()
+                var int_min_size = roomDetailData["minsize"].toString().split(".")[0].toInt()
+                var int_max_size = roomDetailData["maxsize"].toString().split(".")[0].toInt()
+                var str_info = roomDetailData["info"].toString()
+                edtEditHotelRoomName.setText(str_roomname)
+                edtEditHotelRoomPrice.setText(int_price.toString())
+                edtEditHotelRoomCount.setText(int_count.toString())
+                edtEditHotelRoomMinKg.setText(int_min_size.toString())
+                edtEditHotelRoomMaxKg.setText(int_max_size.toString())
+                edtEditHotelRoomInfo.setText(str_info)
+
+
+
+            }
+
+        })
+
+
+        mViewPager2 = vpEditHotelRoomImg
+
+        btnEditHotelRoomBack.setOnClickListener {
             finish()
         }
-        btnEnrollHotelRoomImg.setOnClickListener {
+        btnEditHotelRoomImg.setOnClickListener {
             getImages()
         }
-        btnExitEnrollRoomHotel.setOnClickListener {
+        btnExitEditRoomHotel.setOnClickListener {
             val idx = mViewPager2.currentItem
             pictures.removeAt(idx)
             uris.removeAt(idx)
@@ -63,26 +124,27 @@ class OwnerEnrollHotelRoom : AppCompatActivity() {
                 it.visibility = View.GONE
             }
         }
-        btnEnrollHotelRoomData.setOnClickListener {
-            if (edtEnrollHotelRoomName.text == null || edtEnrollHotelRoomName.text.toString() == "") {
+
+        btnEditHotelRoomData.setOnClickListener {
+            if (edtEditHotelRoomName.text == null || edtEditHotelRoomName.text.toString() == "") {
                 Toast.makeText(this, "객실 이름을 입력해주세요.", Toast.LENGTH_LONG).show()
             }
             else if (pictures.size == 0) {
                 Toast.makeText(this, "객실 사진을 등록해주세요.", Toast.LENGTH_LONG).show()
             }
-            else if (edtEnrollHotelRoomPrice.text == null || edtEnrollHotelRoomPrice.text.toString() == "") {
+            else if (edtEditHotelRoomPrice.text == null || edtEditHotelRoomPrice.text.toString() == "") {
                 Toast.makeText(this, "객실 가격을 입력해주세요.", Toast.LENGTH_LONG).show()
             }
-            else if (edtEnrollHotelRoomCount.text == null && edtEnrollHotelRoomCount.text.toString() == "") {
+            else if (edtEditHotelRoomCount.text == null && edtEditHotelRoomCount.text.toString() == "") {
                 Toast.makeText(this, "객실 개수를 입력해주세요.", Toast.LENGTH_LONG).show()
             }
-            else if (edtEnrollHotelRoomMinKg.text == null && edtEnrollHotelRoomMinKg.text.toString() == "") {
+            else if (edtEditHotelRoomMinKg.text == null && edtEditHotelRoomMinKg.text.toString() == "") {
                 Toast.makeText(this, "수용할 수 있는 최소 몸무게를 입력해주세요.", Toast.LENGTH_LONG).show()
             }
-            else if (edtEnrollHotelRoomMaxKg.text == null && edtEnrollHotelRoomMaxKg.text.toString() == "") {
+            else if (edtEditHotelRoomMaxKg.text == null && edtEditHotelRoomMaxKg.text.toString() == "") {
                 Toast.makeText(this, "수용할 수 있는 최대 몸무게를 입력해주세요.", Toast.LENGTH_LONG).show()
             }
-            else if (edtEnrollHotelRoomInfo.text == null && edtEnrollHotelRoomInfo.text.toString() == "") {
+            else if (edtEditHotelRoomInfo.text == null && edtEditHotelRoomInfo.text.toString() == "") {
                 Toast.makeText(this, "객실 소개를 입력해주세요.", Toast.LENGTH_LONG).show()
             }
             else {
@@ -98,33 +160,28 @@ class OwnerEnrollHotelRoom : AppCompatActivity() {
             putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
             startActivityForResult(this, IMAGE_GALLERY_REQUEST_CODE)
         }
-//        Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI).apply {
-//            type = "image/*"
-//            putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
-//            startActivityForResult(this, IMAGE_GALLERY_REQUEST_CODE)
-//        }
     }
 
     private fun postData() {
         hotelRoomData.apply {
             hotelnumber = hotelNumber
-            roomname = findViewById<EditText>(R.id.edtEnrollHotelRoomName).text.toString()
-            price = findViewById<EditText>(R.id.edtEnrollHotelRoomPrice).text.toString().toInt()
-            count = findViewById<EditText>(R.id.edtEnrollHotelRoomCount).text.toString().toInt()
-            minsize = findViewById<EditText>(R.id.edtEnrollHotelRoomMinKg).text.toString().toInt()
-            maxsize = findViewById<EditText>(R.id.edtEnrollHotelRoomMaxKg).text.toString().toInt()
-            info = findViewById<EditText>(R.id.edtEnrollHotelRoomInfo).text.toString()
+            roomname = findViewById<EditText>(R.id.edtEditHotelRoomName).text.toString()
+            price = findViewById<EditText>(R.id.edtEditHotelRoomPrice).text.toString().toInt()
+            count = findViewById<EditText>(R.id.edtEditHotelRoomCount).text.toString().toInt()
+            minsize = findViewById<EditText>(R.id.edtEditHotelRoomMinKg).text.toString().toInt()
+            maxsize = findViewById<EditText>(R.id.edtEditHotelRoomMaxKg).text.toString().toInt()
+            info = findViewById<EditText>(R.id.edtEditHotelRoomInfo).text.toString()
         }
 
         val server = API.server()
-        server!!.postHotelRoomInfo(hotelRoomData).enqueue(object :
+        server!!.putHotelRoomInfo(hotelRoomData).enqueue(object :
             Callback<HotelReturnData> {
             override fun onFailure(call: Call<HotelReturnData>, t: Throwable) {
-                Toast.makeText(applicationContext, "호텔 등록에 실패하였습니다.", Toast.LENGTH_LONG).show()
+                Toast.makeText(applicationContext, "객실 수정에 실패하였습니다.", Toast.LENGTH_LONG).show()
             }
 
             override fun onResponse(call: Call<HotelReturnData>, response: Response<HotelReturnData>) {
-                Toast.makeText(applicationContext, "호텔이 성공적으로 등록되었습니다.", Toast.LENGTH_LONG).show()
+                Toast.makeText(applicationContext, "객실이 성공적으로 수정되었습니다.", Toast.LENGTH_LONG).show()
 
                 // firebase 에 사진 올리기
                 hotelRoomData.let {
@@ -140,12 +197,22 @@ class OwnerEnrollHotelRoom : AppCompatActivity() {
                             val downloadUrl = imageRef.downloadUrl
                             downloadUrl.addOnSuccessListener {
                                 // 데이터 베이스에 사진 url 올리기
+                                if (photoId == 0) {
                                 hotelPicture.apply {
                                     name = roomName
                                     hotelnumber = hotelNumber
                                     picture = it.toString()
                                 }
-                                postPictures()
+                                    postPictures()
+                                } else {
+                                editPhotoData.apply {
+                                    name = roomName
+                                    hotelnumber = hotelNumber
+                                    picture = it.toString()
+                                    id = photoId
+
+                                }
+                                putPictures()}
                             }
                         }
                         uploadTask.addOnFailureListener {
@@ -157,7 +224,6 @@ class OwnerEnrollHotelRoom : AppCompatActivity() {
             }
         })
     }
-
     private fun postPictures() {
         val server = API.server()
 
@@ -168,6 +234,25 @@ class OwnerEnrollHotelRoom : AppCompatActivity() {
             }
 
             override fun onResponse(call: Call<HotelReturnData>, response: Response<HotelReturnData>) {
+                Log.d("success",response.body().toString())
+                clearHotelPicture()
+            }
+        })
+    }
+    private fun putPictures() {
+        var retrofit = Retrofit.Builder()
+            .baseUrl("http://k02a4021.p.ssafy.io:8080")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+        var server = retrofit.create(EditService::class.java)
+
+        server.putPhotoInfo(editPhotoData).enqueue(object :
+            Callback<ReturnData> {
+            override fun onFailure(call: Call<ReturnData>, t: Throwable) {
+                Log.d("fail",t.toString())
+            }
+
+            override fun onResponse(call: Call<ReturnData>, response: Response<ReturnData>) {
                 Log.d("success",response.body().toString())
                 clearHotelPicture()
             }
@@ -242,7 +327,7 @@ class OwnerEnrollHotelRoom : AppCompatActivity() {
         mViewPager2.orientation = ViewPager2.ORIENTATION_HORIZONTAL
 
         if (pictures.size > 0) {
-            btnExitEnrollRoomHotel.visibility = View.VISIBLE
+            btnExitEditRoomHotel.visibility = View.VISIBLE
         }
     }
 }

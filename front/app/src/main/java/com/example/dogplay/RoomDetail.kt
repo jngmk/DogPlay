@@ -7,17 +7,27 @@ import android.graphics.Color
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.util.Pair
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.widget.ViewPager2
+import com.bumptech.glide.Glide
 import com.example.dogplay.API.Companion.server
+import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.gson.internal.LinkedTreeMap
 import kotlinx.android.synthetic.main.room_detail.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.time.Instant
+import java.time.LocalDateTime
+import java.time.ZoneId
 
 class RoomDetail:AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,6 +46,36 @@ class RoomDetail:AppCompatActivity(){
             if (cnt > 1){
                 cnt--
                 RoomCnt.text = "${cnt}개"
+            }
+        }
+
+        val builder = MaterialDatePicker.Builder.dateRangePicker()
+        builder.setTitleText("날짜 선택")
+
+        builder.setSelection(Supplier.datepickerSelection)
+
+        cinDate.text = "${Supplier.SelectDateView[0]}"
+        coutDate.text = "${Supplier.SelectDateView[1]}"
+
+        val dateRangePicker = builder.build()
+
+        checkDate.setOnClickListener{
+            dateRangePicker.show(supportFragmentManager, "DATE PICKER")
+
+            dateRangePicker.addOnPositiveButtonClickListener {
+                Supplier.SelectDateMain = arrayListOf(Supplier.formatterForView.format(dateRangePicker.selection!!.first),Supplier.formatterForView.format(dateRangePicker.selection!!.second))
+                val date1 = dateRangePicker.selection!!.first!!
+                val date2 = dateRangePicker.selection!!.second!!
+                var apiDateFirst = LocalDateTime.ofInstant(Instant.ofEpochMilli(date1), ZoneId.systemDefault()).toString()
+                var apiDateSecond = LocalDateTime.ofInstant(Instant.ofEpochMilli(date2), ZoneId.systemDefault()).toString()
+                Log.d("포멧", apiDateFirst)
+                var viewDateFirst = Supplier.formatterForApi.format(dateRangePicker.selection!!.first)
+                var viewDateSecond = Supplier.formatterForApi.format(dateRangePicker.selection!!.second)
+                Supplier.SelectDateApi = arrayListOf(apiDateFirst, apiDateSecond)
+                Supplier.SelectDateView = arrayListOf(viewDateFirst,viewDateSecond)
+                Supplier.datepickerSelection = dateRangePicker.selection!!
+                cinDate.text = "${Supplier.SelectDateView[0]}"
+                coutDate.text = "${Supplier.SelectDateView[1]}"
             }
         }
 
@@ -98,11 +138,11 @@ class RoomDetail:AppCompatActivity(){
         })
 
 
-        val vp = findViewById(R.id.RoomDetailCarousel) as ViewPager
-        val RoomAdapter = RoomDetailCarouselAdapter(applicationContext)
-        vp.adapter = RoomAdapter
+        val vp = findViewById<ViewPager2>(R.id.RoomDetailCarousel)
+        vp.adapter = PagerAdapter(Supplier.selectedRoomPictures)
+        vp.orientation = ViewPager2.ORIENTATION_HORIZONTAL
         vp.clipToPadding = false
-        RoomAdapter.notifyDataSetChanged()
+//        RoomAdapter.notifyDataSetChanged()
         Log.d("오늘의 마지막", "")
     }
 
@@ -140,5 +180,28 @@ class RoomDetail:AppCompatActivity(){
         }
         val alertDialog = builder.create()
         alertDialog.show()
+    }
+
+    class PagerAdapter(private val pictures: ArrayList<HotelPicture>) : RecyclerView.Adapter<PagerViewHolder>() {
+
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PagerViewHolder =
+            PagerViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.room_detail_carousel, parent, false))
+
+        override fun onBindViewHolder(holder: PagerViewHolder, position: Int) {
+            val picture = pictures[position]
+            holder.updateHotelImage(picture)
+        }
+
+        override fun getItemCount(): Int = pictures.size
+    }
+
+    class PagerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private var roomImg: ImageView = itemView.findViewById(R.id.roomImg)
+
+        fun updateHotelImage(picture: HotelPicture) {
+            Glide.with(itemView)
+                .load(picture.picture)
+                .into(roomImg)
+        }
     }
 }

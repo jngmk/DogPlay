@@ -22,23 +22,28 @@
         <activity android:name=".UserInfo" />
         <activity android:name=".ui.owner.OwnerEnrollHotelRoom" />
         <activity android:name=".ui.owner.OwnerEnrollHotel" />
+        <activity android:name=".ui.owner.OwnerEditHotel" />
+        <activity android:name=".ui.owner.OwnerEditRoom" />
+        <activity android:name=".ui.owner.OwnerEditPage" />
         <activity android:name=".ui.owner.EditRoom" />
         <activity android:name=".ui.owner.EditPage" />
         <activity android:name=".ui.owner.HostMain" />
         <activity android:name=".ui.owner.HostReviewPage" />
         <activity android:name=".ui.owner.CheckAllReservation" />
         <activity android:name=".ui.owner.HostReReview" />
-        <activity android:name=".ui.owner.LoginMain" />
-        <activity
-            android:name=".ui.owner.LoginActivity"
-            android:windowSoftInputMode="adjustResize|stateHidden">
+        <activity android:name=".ui.owner.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" />
+        <activity android:name=".ui.owner.LoginMain" >
+        </activity>
+        <activity
+            android:name=".MainActivity"
+            android:windowSoftInputMode="adjustResize|stateHidden">
+        </activity>
+<!--        <activity android:name=".MainActivity" />-->
         <activity android:name=".HotelDetail" />
         <activity android:name=".InfoDetail" />
         <activity android:name=".CalendarView" />

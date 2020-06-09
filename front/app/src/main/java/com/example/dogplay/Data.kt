@@ -35,6 +35,7 @@ object Supplier{
         arrayListOf(), arrayListOf()),0.0,0,
         arrayListOf(), arrayListOf(),0,0), arrayListOf(), arrayListOf(),
         arrayListOf()))
+    var selectedRoomPictures = ArrayList<HotelPicture>()
     var totalCartPrice = 0
     var SelectHotelRoomPrice = HashMap<String,Int>()
     var SelectRoom = RoomDetailData(0,"","",0,0,0,0,"")
@@ -43,12 +44,13 @@ object Supplier{
     var ResponseTid = ""
     val formatterForView = SimpleDateFormat("MM/dd")
     val formatterForApi = SimpleDateFormat("MM월 dd일 (EE)",Locale.KOREAN)
-    var SelectDateView = arrayListOf<String>(formatterForApi.format(System.currentTimeMillis()), formatterForApi.format(System.currentTimeMillis()))
-    var SelectDateApi = arrayListOf<String>(LocalDateTime.ofInstant(Instant.ofEpochMilli(System.currentTimeMillis()),
+    var SelectDateView = arrayListOf<String>(formatterForApi.format(System.currentTimeMillis()), formatterForApi.format(System.currentTimeMillis() + 86400000) )
+    var SelectDateApi = arrayListOf<String>(LocalDateTime.ofInstant(Instant.ofEpochMilli(System.currentTimeMillis() + 86400000),
         ZoneId.systemDefault()).toString(), LocalDateTime.ofInstant(
         Instant.ofEpochMilli(System.currentTimeMillis()), ZoneId.systemDefault()).toString())
-    var SelectDateMain = arrayListOf<String>(formatterForView.format(System.currentTimeMillis()),formatterForView.format(System.currentTimeMillis()))
-    var SelectDate = arrayListOf<Long>(System.currentTimeMillis(), System.currentTimeMillis())
+    var SelectDateMain = arrayListOf<String>(formatterForView.format(System.currentTimeMillis()),formatterForView.format(System.currentTimeMillis() + 86400000))
+    var SelectDate = arrayListOf<Long>(System.currentTimeMillis(), System.currentTimeMillis() + 86400000)
+    var datepickerSelection = androidx.core.util.Pair(SelectDate[0], SelectDate[1])
     var SelectPayRoom = HashMap<Pair<String,Int>,Int>()
     var PostReservation = ArrayList<Reservation>()
     var PreReservation = ArrayList<Reservation>()
