@@ -39,6 +39,7 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        getAppKeyHash()
         setContentView(R.layout.kakao_login)
         callback = SessionCallback()
         Session.getCurrentSession().addCallback(callback)
@@ -76,8 +77,7 @@ class LoginActivity : AppCompatActivity() {
 
     private inner class SessionCallback : ISessionCallback {
         override fun onSessionOpened() {
-//            getAppKeyHash()
-
+            getAppKeyHash()
             val token = Session.getCurrentSession().tokenInfo.accessToken.toString()
             Log.d("test111", "${token}")
 
@@ -129,6 +129,7 @@ class LoginActivity : AppCompatActivity() {
 
                 override fun onSessionClosed(errorResult: ErrorResult?) {
                     // 로그인 도중 세션이 비정상적인 이유로 닫혔을 때
+                    Log.d("로그인 에러", errorResult.toString())
                     Toast.makeText(
                         this@LoginActivity,
                         "다시 로그인 해주세요!",
@@ -148,7 +149,6 @@ class LoginActivity : AppCompatActivity() {
                     Toast.LENGTH_SHORT).show()
             }
         }
-
     }
 
     private fun redirectSignupActivity() {
@@ -156,5 +156,4 @@ class LoginActivity : AppCompatActivity() {
         startActivity(intent)
         finish()
     }
-
 }

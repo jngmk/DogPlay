@@ -70,10 +70,10 @@
             android:scaleType="centerCrop"
             />
         <TextView
-            android:id="@+id/prehotelName"
+            android:id="@+id/hotelName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="호텔 이름"
+            android:text="도그윈 애견호텔"
             android:textSize="20dp"
             app:layout_constraintTop_toTopOf="@+id/BackBtn"
             app:layout_constraintBottom_toBottomOf="@id/BackBtn"

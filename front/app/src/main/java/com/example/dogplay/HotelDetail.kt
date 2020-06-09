@@ -61,7 +61,61 @@ class HotelDetail:AppCompatActivity(), OnMapReadyCallback{
         builder.setSelection(todayPair)
 
         val dateRangePicker = builder.build()
+        dm.setOnClickListener{
+            server!!.chatTwoPeople(Supplier.UserId,Supplier.SelectHotel.data.HotelStar.userid).enqueue(object :Callback<DMDTO>{
+                override fun onFailure(call: Call<DMDTO>, t: Throwable) {
+                    TODO("Not yet implemented")
+                }
+                override fun onResponse(call: Call<DMDTO>, response: Response<DMDTO>) {
+                    var DMList = ArrayList<DMset>()
+                    Log.d("1", response.body().toString())
+                    Log.d("2", "진짜")
+                    if (response.body()!!.data.size == 0){
+                        Log.d("호텔 주인", Supplier.SelectHotel.data.HotelStar.userid)
+                        server.getChatroom(getChatRoom(0)).enqueue(object :Callback<chatRoom>{
+                            override fun onFailure(call: Call<chatRoom>, t: Throwable) {
+                            }
+                            override fun onResponse(
+                                call: Call<chatRoom>,
+                                response: Response<chatRoom>
+                            ) {
+                                Log.d("챗룸을 받나",response.body()!!.data.toString())
+                                server!!.PostChatInsert(ChatInsert(response.body()!!.data,"",0,"${Supplier.SelectHotel.data.HotelStar.userid.split('@')[0]}님에게 문의드립니다.",
+                                    "",1,"${Supplier.SelectHotel.data.HotelStar.userid}", "${Supplier.UserId}")).enqueue(object :Callback<DMSend>{
+                                    override fun onFailure(call: Call<DMSend>, t: Throwable) {
+                                        TODO("Not yet implemented")
+                                    }
 
+                                    override fun onResponse(call: Call<DMSend>, response: Response<DMSend>) {
+                                        Log.d("채팅 결과", response.body().toString())
+                                        val intent = Intent(applicationContext,DirectMessage::class.java)
+                                        intent.putExtra("target", Supplier.SelectHotel.data.HotelStar.userid)
+                                        startActivity(intent)
+                                    }
+                                })
+                            }
+
+                        })
+                    } else {
+                        val chatid = response.body()!!.data[0].chatid
+                        server!!.PostChatInsert(ChatInsert(chatid,"",0,"${Supplier.SelectHotel.data.HotelStar.userid.split('@')[0]}님에게 문의드립니다.",
+                            "",1,"${Supplier.SelectHotel.data.HotelStar.userid}", "${Supplier.UserId}")).enqueue(object :Callback<DMSend>{
+                            override fun onFailure(call: Call<DMSend>, t: Throwable) {
+                                TODO("Not yet implemented")
+                            }
+
+                            override fun onResponse(call: Call<DMSend>, response: Response<DMSend>) {
+                                Log.d("채팅 결과", response.body().toString())
+                                val intent = Intent(applicationContext,DirectMessage::class.java)
+                                intent.putExtra("target", Supplier.SelectHotel.data.HotelStar.userid)
+                                startActivity(intent)
+                            }
+                        })
+
+                    }
+                }
+            })
+        }
         checkDate.setOnClickListener{
             dateRangePicker.show(supportFragmentManager, "DATE PICKER")
 

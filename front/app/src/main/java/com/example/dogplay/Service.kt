@@ -517,7 +517,21 @@ interface Service {
     fun updateReservation(
         @Body params: InsertReservation
     ):Call<Any>
+
+    @POST("/api/v1/chatroom/insert")
+    fun getChatroom(
+        @Body params:getChatRoom
+    ):Call<chatRoom>
 }
+data class getChatRoom(
+    val id:Int
+)
+
+data class chatRoom(
+    @SerializedName("data")
+    val data:Int
+)
+
 data class InsertReview(
     val content: String,
     val created: String,

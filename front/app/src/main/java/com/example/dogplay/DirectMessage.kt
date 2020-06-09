@@ -29,26 +29,42 @@ class DirectMessage: AppCompatActivity() {
         setContentView(R.layout.direct_message)
         val server = server()
         val target = intent.getStringExtra("target")
+        Log.d("타겟", target)
         sendBtn.setOnClickListener{
             if (sendMessage.text.isEmpty()){
                 Log.d("비었다","하하")
             }
             else {
                 Log.d("뭐라 친건데", sendMessage.text.toString())
-                server!!.PostChatInsert(ChatInsert(1,"", 0,sendMessage.text.toString(),"사진같음",0,"owner1",Supplier.UserId)).enqueue(object :Callback<DMSend>{
-                    override fun onFailure(call: Call<DMSend>, t: Throwable) {
-                        Log.d("말썽이네", t.toString())
+                server!!.chatTwoPeople(Supplier.UserId, target).enqueue(object :Callback<DMDTO>{
+                    override fun onFailure(call: Call<DMDTO>, t: Throwable) {
                     }
 
-                    override fun onResponse(call: Call<DMSend>, response: Response<DMSend>) {
-                        Log.d("될줄 알았어", response.body().toString())
-                        val layoutInflater = getLayoutInflater()
-                        val chatview = layoutInflater.inflate(R.layout.chat_send,null)
-                        Supplier.DMList.add(DMset(Supplier.UserId,target,sendMessage.text.toString(),
-                            response.body()!!.data,0,"없어 사진",0))
-                        sendMessage.setText("")
-                        chatRecycler.adapter!!.notifyDataSetChanged()
-                        chatRecycler.scrollToPosition(chatRecycler.adapter!!.itemCount-1)
+                    override fun onResponse(call: Call<DMDTO>, response: Response<DMDTO>) {
+                        Log.d("DM", response.body().toString())
+                        val chatid = response.body()!!.data[0].chatid
+                        var receiver:String
+                        if (response.body()!!.data[0].receive == Supplier.UserId){
+                            receiver = response.body()!!.data[0].send
+                        } else {
+                            receiver = response.body()!!.data[0].receive
+                        }
+                        server!!.PostChatInsert(ChatInsert(chatid,"", 0,sendMessage.text.toString(),"사진같음",0,receiver,Supplier.UserId)).enqueue(object :Callback<DMSend>{
+                            override fun onFailure(call: Call<DMSend>, t: Throwable) {
+                                Log.d("말썽이네", t.toString())
+                            }
+
+                            override fun onResponse(call: Call<DMSend>, response: Response<DMSend>) {
+                                Log.d("될줄 알았어", response.body().toString())
+                                val layoutInflater = getLayoutInflater()
+                                val chatview = layoutInflater.inflate(R.layout.chat_send,null)
+                                Supplier.DMList.add(DMset(Supplier.UserId,receiver,sendMessage.text.toString(),
+                                    response.body()!!.data,0,"없어 사진",0))
+                                sendMessage.setText("")
+                                chatRecycler.adapter!!.notifyDataSetChanged()
+                                chatRecycler.scrollToPosition(chatRecycler.adapter!!.itemCount-1)
+                            }
+                        })
                     }
                 })
             }

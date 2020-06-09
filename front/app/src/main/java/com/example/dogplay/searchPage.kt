@@ -52,6 +52,87 @@ class searchPage : Fragment() {
         return inflater.inflate(R.layout.activity_main, container, false)
     }
 
+    override fun onResume() {
+        super.onResume()
+        curdate.text = "${Supplier.SelectDateMain[0]} ~ ${Supplier.SelectDateMain[1]}"
+
+//        val retrofit = Retrofit.Builder()
+//            .baseUrl("http://k02a4021.p.ssafy.io:8080")
+//            .addConverterFactory(GsonConverterFactory.create())
+//            .build()
+//        var server = retrofit.create(Service::class.java)
+        // retrofit server -> server() 로 대체
+        val server = server()
+        server!!.getRequest().enqueue(object : Callback<HotelSerchDTO> {
+            override fun onFailure(call: Call<HotelSerchDTO>, t: Throwable) {
+            }
+
+            override fun onResponse(call: Call<HotelSerchDTO>, response: retrofit2.Response<HotelSerchDTO>) {
+                var data = response.body()!!.data
+                if (data == null){
+                } else {
+                    Supplier.MainSearch = data
+                    val layoutManager = LinearLayoutManager(context)
+                    layoutManager.orientation = LinearLayoutManager.VERTICAL
+                    hotelList.layoutManager = layoutManager
+                    val adapter = HotelAdapter(context!!, data)
+                    hotelList.adapter = adapter
+                }
+            }
+        })
+        val layoutManager2 = LinearLayoutManager(this.context)
+        layoutManager2.orientation = LinearLayoutManager.HORIZONTAL
+        dogList.layoutManager = layoutManager2
+//        keyboardListener(MainActivity(), )
+        searchBar.clearFocus()
+        val dogs = "@drwable/dog" // 잠시 강아지 사진 대신
+
+        val adapter2 = DogAdapter(this.requireContext(), dogs)
+        dogList.adapter = adapter2
+
+        // setting
+        val calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
+        calendar.clear()
+
+
+        // date picker
+        val builder = MaterialDatePicker.Builder.dateRangePicker()
+        builder.setTitleText("날짜 선택")
+
+        val todayPair = Pair(today, today+86400000)
+        Supplier.SelectDate = arrayListOf(todayPair.first!!, todayPair.second!!)
+        Log.d("today", todayPair.toString())
+        builder.setSelection(todayPair)
+
+        val dateRangePicker = builder.build()
+
+        curdate.setOnClickListener{
+//            val intent = Intent(this.context, CalendarView::class.java)
+//            startActivity(intent)
+            dateRangePicker.show(activity!!.supportFragmentManager, "DATE PICKER")
+
+            dateRangePicker.addOnPositiveButtonClickListener {
+                Supplier.SelectDateMain = arrayListOf(Supplier.formatterForView.format(dateRangePicker.selection!!.first),Supplier.formatterForView.format(dateRangePicker.selection!!.second))
+                val date1 = dateRangePicker.selection!!.first!!
+                val date2 = dateRangePicker.selection!!.second!!
+                Supplier.SelectDate = arrayListOf(date1, date2)
+                var apiDateFirst = LocalDateTime.ofInstant(Instant.ofEpochMilli(date1), ZoneId.systemDefault()).toString()
+                var apiDateSecond = LocalDateTime.ofInstant(Instant.ofEpochMilli(date2), ZoneId.systemDefault()).toString()
+                Log.d("포멧", apiDateFirst)
+                var viewDateFirst = Supplier.formatterForApi.format(dateRangePicker.selection!!.first)
+                var viewDateSecond = Supplier.formatterForApi.format(dateRangePicker.selection!!.second)
+                Supplier.SelectDateApi = arrayListOf(apiDateFirst, apiDateSecond)
+                Supplier.SelectDateView = arrayListOf(viewDateFirst,viewDateSecond)
+                curdate.text = "${Supplier.SelectDateMain[0]} - ${Supplier.SelectDateMain[1]}"
+            }
+        }
+
+        dogList.setOnClickListener{
+            val intent = Intent(this.context,MyDogPage::class.java)
+            startActivity(intent)
+        }
+    }
+
     @SuppressLint("SimpleDateFormat")
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -61,6 +142,8 @@ class searchPage : Fragment() {
                 var newData = ArrayList<Hotel>()
                 for (i in Supplier.MainSearch){
                     if (query!! in i.hotelname){
+                        newData.add(i)
+                    } else if (query!! in i.address){
                         newData.add(i)
                     }
                 }
@@ -73,7 +156,10 @@ class searchPage : Fragment() {
                 for (i in Supplier.MainSearch){
                     if (newText!! in i.hotelname){
                         newData.add(i)
+                    }else if (newText!! in i.address){
+                        newData.add(i)
                     }
+
                 }
                 hotelList.adapter = HotelAdapter(context!!,newData)
 
@@ -107,7 +193,6 @@ class searchPage : Fragment() {
                 if (data == null){
                 } else {
                     Supplier.MainSearch = data
-                    Log.d("호텔찾았다", data!![9].toString())
                     val layoutManager = LinearLayoutManager(context)
                     layoutManager.orientation = LinearLayoutManager.VERTICAL
                     hotelList.layoutManager = layoutManager
