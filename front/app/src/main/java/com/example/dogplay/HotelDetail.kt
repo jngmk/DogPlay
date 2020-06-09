@@ -246,6 +246,7 @@ class HotelDetail:AppCompatActivity(), OnMapReadyCallback{
                         roomPictures.add(it)
                     }
                 }
+//                Supplier.selectedRoomPictures = roomPictures
                 mViewPager.adapter = PagerAdapter(hotelPictures)
                 mViewPager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
                 (roomList.adapter as RoomAdapter).notifyDataSetChanged()
