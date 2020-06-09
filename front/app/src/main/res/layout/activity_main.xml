@@ -44,7 +44,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:gravity="center_vertical|center_horizontal"
-        android:text="현재 내위치가 들어갈 자리"
+        android:text="내 위치"
         android:layout_marginTop="13dp"
         android:textSize="18dp"
         />
