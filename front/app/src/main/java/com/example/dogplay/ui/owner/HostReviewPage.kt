@@ -18,9 +18,9 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class HostReviewPage : Fragment() {
     private val userId = Supplier.UserId
-    lateinit var reservationData: Array<HashMap<String, Any>>
-    lateinit var hoteldetailData: Array<HashMap<String, Any>>
-    lateinit var hotelnumber: String
+    private lateinit var reservationData: Array<HashMap<String, Any>>
+    private lateinit var hoteldetailData: Array<HashMap<String, Any>>
+    private var hotelnumber = ""
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -46,8 +46,10 @@ class HostReviewPage : Fragment() {
                 val data: hotelDetailDTO = response.body()!!
                 hoteldetailData = data!!.data
 
-                var hoteldata = hoteldetailData[0]
-                hotelnumber = hoteldata["hotelnumber"].toString()
+                if (hoteldetailData.isNotEmpty()) {
+                    val hoteldata = hoteldetailData[0]
+                    hotelnumber = hoteldata["hotelnumber"].toString()
+                }
 
                 server.searchReservation(hotelnumber).enqueue(object: Callback<ReservationDTO> {
                     override fun onFailure(call: Call<ReservationDTO>, t: Throwable) {

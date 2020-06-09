@@ -110,7 +110,7 @@ class searchPage : Fragment() {
                 if (data == null){
                 } else {
                     Supplier.MainSearch = data
-                    Log.d("호텔찾았다", data!![9].toString())
+                    Log.d("호텔찾았다", data.toString())
                     val layoutManager = LinearLayoutManager(context)
                     layoutManager.orientation = LinearLayoutManager.VERTICAL
                     hotelList.layoutManager = layoutManager
@@ -191,7 +191,7 @@ class searchPage : Fragment() {
                 if (data == null){
                 } else {
                     Supplier.MainSearch = data
-                    Log.d("호텔찾았다", data!![9].toString())
+//                    Log.d("호텔찾았다", data.toString())
                     val layoutManager = LinearLayoutManager(context)
                     layoutManager.orientation = LinearLayoutManager.VERTICAL
                     hotelList.layoutManager = layoutManager
