@@ -49,7 +49,8 @@ object Supplier{
         ZoneId.systemDefault()).toString(), LocalDateTime.ofInstant(
         Instant.ofEpochMilli(System.currentTimeMillis()), ZoneId.systemDefault()).toString())
     var SelectDateMain = arrayListOf<String>(formatterForView.format(System.currentTimeMillis()),formatterForView.format(System.currentTimeMillis() + 86400000))
-    var SelectDate = arrayListOf<Long>(System.currentTimeMillis(), System.currentTimeMillis())
+    var SelectDate = arrayListOf<Long>(System.currentTimeMillis(), System.currentTimeMillis() + 86400000)
+    var datepickerSelection = androidx.core.util.Pair(SelectDate[0], SelectDate[1])
     var SelectPayRoom = HashMap<Pair<String,Int>,Int>()
     var PostReservation = ArrayList<Reservation>()
     var PreReservation = ArrayList<Reservation>()

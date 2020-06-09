@@ -52,8 +52,10 @@ class RoomDetail:AppCompatActivity(){
         val builder = MaterialDatePicker.Builder.dateRangePicker()
         builder.setTitleText("날짜 선택")
 
-        val todayPair = Pair(Supplier.SelectDate[0], Supplier.SelectDate[1])
-        builder.setSelection(todayPair)
+        builder.setSelection(Supplier.datepickerSelection)
+
+        cinDate.text = "${Supplier.SelectDateView[0]}"
+        coutDate.text = "${Supplier.SelectDateView[1]}"
 
         val dateRangePicker = builder.build()
 
@@ -71,6 +73,7 @@ class RoomDetail:AppCompatActivity(){
                 var viewDateSecond = Supplier.formatterForApi.format(dateRangePicker.selection!!.second)
                 Supplier.SelectDateApi = arrayListOf(apiDateFirst, apiDateSecond)
                 Supplier.SelectDateView = arrayListOf(viewDateFirst,viewDateSecond)
+                Supplier.datepickerSelection = dateRangePicker.selection!!
                 cinDate.text = "${Supplier.SelectDateView[0]}"
                 coutDate.text = "${Supplier.SelectDateView[1]}"
             }

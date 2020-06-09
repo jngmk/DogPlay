@@ -219,10 +219,10 @@ class searchPage : Fragment() {
         val builder = MaterialDatePicker.Builder.dateRangePicker()
         builder.setTitleText("날짜 선택")
 
-        val todayPair = Pair(today, today+86400000)
-        Supplier.SelectDate = arrayListOf(todayPair.first!!, todayPair.second!!)
-        Log.d("today", todayPair.toString())
-        builder.setSelection(todayPair)
+//        val todayPair = Pair(today, today+86400000)
+//        Supplier.SelectDate = arrayListOf(todayPair.first!!, todayPair.second!!)
+//        Log.d("today", todayPair.toString())
+        builder.setSelection(Supplier.datepickerSelection)
 
         val dateRangePicker = builder.build()
 
@@ -243,6 +243,7 @@ class searchPage : Fragment() {
                 var viewDateSecond = Supplier.formatterForApi.format(dateRangePicker.selection!!.second)
                 Supplier.SelectDateApi = arrayListOf(apiDateFirst, apiDateSecond)
                 Supplier.SelectDateView = arrayListOf(viewDateFirst,viewDateSecond)
+                Supplier.datepickerSelection = dateRangePicker.selection!!
                 curdate.text = "${Supplier.SelectDateMain[0]} - ${Supplier.SelectDateMain[1]}"
             }
         }
