@@ -3,21 +3,55 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <TextView
-        android:id="@+id/msg"
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/msgContainer"
         android:layout_width="wrap_content"
         android:maxWidth="280dp"
         android:layout_height="wrap_content"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         android:layout_margin="15dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:paddingHorizontal="10dp"
-        android:paddingVertical="5dp"
-        android:textSize="18dp"
-        android:text="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-        android:background="@drawable/recieve_message"
-        />
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" >
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cvImg"
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            app:cardCornerRadius="25dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" >
+
+            <ImageView
+                android:id="@+id/img"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/dog" />
+
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/msg"
+            android:layout_width="wrap_content"
+            android:maxWidth="280dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cvImg"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="8dp"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="5dp"
+            android:textSize="18sp"
+            android:text="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            android:background="@drawable/recieve_message"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
         android:id="@+id/messageAt"
@@ -26,8 +60,8 @@
         android:layout_marginLeft="5dp"
         android:text="오후 08:11"
         android:textSize="11dp"
-        app:layout_constraintBottom_toBottomOf="@id/msg"
+        app:layout_constraintBottom_toBottomOf="@id/msgContainer"
 
-        app:layout_constraintLeft_toRightOf="@id/msg" />
+        app:layout_constraintLeft_toRightOf="@id/msgContainer" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
