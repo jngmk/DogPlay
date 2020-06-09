@@ -8,6 +8,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.auth0.android.jwt.JWT
+import com.example.dogplay.API
 import com.example.dogplay.MainActivity
 import com.example.dogplay.R
 import com.example.dogplay.Supplier
@@ -112,8 +113,17 @@ class LoginActivity : AppCompatActivity() {
                             intent.putExtra("name", userId)
                             intent.putExtra("profile", result!!.getProfileImagePath())
                             intent.putExtra("token", token)
-                            startActivity(intent)
-                            finish()
+                            val server2 = API.server()
+                            server2!!.deleteCartById(Supplier.UserId).enqueue(object :Callback<Any>{
+                                override fun onFailure(call: Call<Any>, t: Throwable) {
+                                }
+
+                                override fun onResponse(call: Call<Any>, response: Response<Any>) {
+                                    Log.d("장바구니 삭제완료", "삭제!")
+                                    startActivity(intent)
+                                    finish()
+                                }
+                            })
                         }
 
                         private fun saveData() {

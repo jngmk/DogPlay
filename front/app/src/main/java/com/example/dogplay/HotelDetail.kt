@@ -2,6 +2,7 @@ package com.example.dogplay
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.util.DisplayMetrics
 import android.util.Log
@@ -58,8 +59,7 @@ class HotelDetail:AppCompatActivity(), OnMapReadyCallback{
                     Log.d("호텔디테일 장바구니검색", response.body()!!.data.toString())
                     if (response.body()!!.data.size > 0){
                         if(Supplier.SelectHotel.data.HotelStar.hotelnumber == response.body()!!.data[0].hotelnumber){
-                            val intent = Intent(applicationContext,CartPage::class.java)
-                            startActivity(intent)
+                            OnClickHandler2(View(applicationContext))
                         } else{
                             OnClickHandler(View(applicationContext))
                         }
@@ -78,7 +78,6 @@ class HotelDetail:AppCompatActivity(), OnMapReadyCallback{
         dm.setOnClickListener{
             server!!.chatTwoPeople(Supplier.UserId,Supplier.SelectHotel.data.HotelStar.userid).enqueue(object :Callback<DMDTO>{
                 override fun onFailure(call: Call<DMDTO>, t: Throwable) {
-                    TODO("Not yet implemented")
                 }
                 override fun onResponse(call: Call<DMDTO>, response: Response<DMDTO>) {
                     var DMList = ArrayList<DMset>()
@@ -273,6 +272,32 @@ class HotelDetail:AppCompatActivity(), OnMapReadyCallback{
 
         val alertDialog = builder.create()
         alertDialog.show()
+        val ntBtn = alertDialog.getButton(DialogInterface.BUTTON_NEGATIVE)
+        val ptBtn = alertDialog.getButton(DialogInterface.BUTTON_POSITIVE)
+        ntBtn.background = null
+        ptBtn.background = null
+        ntBtn.setTextColor(Color.parseColor("#ffaaaa"))
+        ptBtn.setTextColor(Color.parseColor("#ffaaaa"))
+    }
+    fun OnClickHandler2(v:View){
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("개놀자 알림!")
+            .setMessage("결제 전에 이용안내를 잘 숙지하셨나요? \n이용약관을 확인하지 않으면 불이익이 생길수 있답니다 ㅠ")
+        builder.setPositiveButton("네!"){ dialogInterface: DialogInterface, i: Int ->
+            val intent = Intent(applicationContext,CartPage::class.java)
+            startActivity(intent)
+        }
+        builder.setNegativeButton("아니요...") { dialogInterface: DialogInterface, i: Int ->
+        }
+
+        val alertDialog = builder.create()
+        alertDialog.show()
+        val ntBtn = alertDialog.getButton(DialogInterface.BUTTON_NEGATIVE)
+        val ptBtn = alertDialog.getButton(DialogInterface.BUTTON_POSITIVE)
+        ntBtn.background = null
+        ptBtn.background = null
+        ntBtn.setTextColor(Color.parseColor("#ffaaaa"))
+        ptBtn.setTextColor(Color.parseColor("#ffaaaa"))
     }
 
     override fun onMapReady(googleMap: GoogleMap) {

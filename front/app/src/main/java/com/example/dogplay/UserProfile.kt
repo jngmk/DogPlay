@@ -86,9 +86,9 @@ class UserProfile : Fragment() {
         btnNotification.setOnClickListener {
             openNotificationPage()
         }
-        btnEnrollMyHotel.setOnClickListener {
-            enrollHotel()
-        }
+//        btnEnrollMyHotel.setOnClickListener {
+//            enrollHotel()
+//        }
         btnChangeToOwnerView.setOnClickListener {
             changeView()
             (activity as MainActivity).finish()
@@ -110,11 +110,9 @@ class UserProfile : Fragment() {
     }
 
     private fun openReviewPage() {
-        TODO("Not yet implemented")
     }
 
     private fun openNotificationPage() {
-        TODO("Not yet implemented")
     }
 
     private fun enrollHotel() {

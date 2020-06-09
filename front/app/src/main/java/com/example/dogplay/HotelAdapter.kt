@@ -52,6 +52,17 @@ class HotelAdapter(var context:Context, var hotels:ArrayList<Hotel>) :
         val hotel = hotels[position]
         holder.setData(hotel,position)
         var picture = hotel.picture
+        var like = 0
+        holder.itemView.like.setOnClickListener {
+            if (like == 1){
+                holder.itemView.like.setImageResource(R.drawable.empty_heart)
+                like = 0
+            } else{
+                holder.itemView.like.setImageResource(R.drawable.full_heart)
+                like = 1
+            }
+            Log.d("좋아요 버튼!","조아요")
+        }
         if (picture != null){
             Glide.with(holder.itemView)
                 .load(picture)

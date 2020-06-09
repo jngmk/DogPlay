@@ -89,7 +89,6 @@ class OwnerProfile : Fragment() {
     }
 
     private fun openNotificationPage() {
-        TODO("Not yet implemented")
     }
 
     private fun enrollHotel() {

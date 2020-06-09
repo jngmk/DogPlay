@@ -420,6 +420,7 @@
         android:layout_height="50dp"
         android:text="DM"
         android:textSize="16dp"
+        android:textColor="#ffffff"
         android:gravity="center"
         android:background="@drawable/payment"
         app:layout_constraintTop_toTopOf="parent"

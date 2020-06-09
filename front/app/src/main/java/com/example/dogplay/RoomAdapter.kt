@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import kotlinx.android.synthetic.main.home_list.view.*
 import kotlinx.android.synthetic.main.room_list.view.*
 import kotlin.collections.ArrayList
 
@@ -49,8 +50,6 @@ class RoomAdapter(var context:Context, var rooms:ArrayList<HotelRoom>, private v
         } else {
             holder.itemView.roomImg.setImageResource(R.drawable.dog)
         }
-
-
         Supplier.SelectHotelRoomPrice[room.roomname] = room.price
         Log.d("room is", room.toString())
         holder.itemView.roomName.text = room.roomname

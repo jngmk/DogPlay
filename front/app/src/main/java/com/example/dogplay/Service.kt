@@ -535,6 +535,8 @@ interface Service {
     fun getChatroom(
         @Body params:getChatRoom
     ):Call<chatRoom>
+
+
 }
 data class getChatRoom(
     val id:Int

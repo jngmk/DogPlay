@@ -115,19 +115,19 @@
         android:layout_marginTop="16dp"
         android:background="#DDDDDD" />
 
-    <TextView
-        android:id="@+id/btnEnrollMyHotel"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/enrollMyHotel"
-        android:textSize="18sp" />
+<!--    <TextView-->
+<!--        android:id="@+id/btnEnrollMyHotel"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="16dp"-->
+<!--        android:text="@string/enrollMyHotel"-->
+<!--        android:textSize="18sp" />-->
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:layout_marginTop="16dp"
-        android:background="#DDDDDD" />
+<!--    <View-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="0.5dp"-->
+<!--        android:layout_marginTop="16dp"-->
+<!--        android:background="#DDDDDD" />-->
 
     <TextView
         android:id="@+id/btnChangeToOwnerView"

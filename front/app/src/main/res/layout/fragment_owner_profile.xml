@@ -11,10 +11,11 @@
     >
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/profilTop"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="24dp"
-        android:paddingLeft="8dp">
+        android:paddingLeft="8dp"
+        android:paddingTop="24dp">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView"
@@ -39,9 +40,9 @@
             android:id="@+id/txtProfileName"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
+            android:layout_marginLeft="16dp"
             android:text="유저네임"
             android:textSize="30sp"
-            android:layout_marginLeft="16dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintStart_toEndOf="@+id/cardView"
             app:layout_constraintTop_toTopOf="parent" />
@@ -50,8 +51,8 @@
             android:id="@+id/txtProfileUserId"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
             android:layout_marginLeft="16dp"
+            android:layout_marginTop="8dp"
             android:text="유저아이디"
             android:textSize="15sp"
             app:layout_constraintStart_toEndOf="@+id/cardView"

@@ -77,6 +77,20 @@ class KakaoWebView :AppCompatActivity(){
                                             response: Response<Any>
                                         ) {
                                             Log.d("예약 목록 추가 성공", response.body().toString())
+                                            server.deleteCartById(Supplier.UserId).enqueue(object :Callback<Any>{
+                                                override fun onFailure(
+                                                    call: Call<Any>,
+                                                    t: Throwable
+                                                ) {
+                                                }
+                                                override fun onResponse(
+                                                    call: Call<Any>,
+                                                    response: Response<Any>
+                                                ) {
+                                                    Log.d("장바구니 삭제 완료", "삭제!")
+                                                }
+
+                                            })
                                         }
 
                                     })
