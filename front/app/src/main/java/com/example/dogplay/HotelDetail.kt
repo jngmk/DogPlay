@@ -82,8 +82,6 @@ class HotelDetail:AppCompatActivity(), OnMapReadyCallback{
                 }
                 override fun onResponse(call: Call<DMDTO>, response: Response<DMDTO>) {
                     var DMList = ArrayList<DMset>()
-                    Log.d("1", response.body().toString())
-                    Log.d("2", "진짜")
                     if (response.body()!!.data.size == 0){
                         Log.d("호텔 주인", Supplier.SelectHotel.data.HotelStar.userid)
                         server.getChatroom(getChatRoom(0)).enqueue(object :Callback<chatRoom>{
