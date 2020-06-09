@@ -29,6 +29,7 @@ class DirectMessage: AppCompatActivity() {
         setContentView(R.layout.direct_message)
         val server = server()
         val target = intent.getStringExtra("target")
+        hotelName.text = target.split('@')[0]
         Log.d("타겟", target)
         sendBtn.setOnClickListener{
             if (sendMessage.text.isEmpty()){
