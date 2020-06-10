@@ -35,14 +35,29 @@ import java.time.ZoneId
 
 class HotelDetail:AppCompatActivity(), OnMapReadyCallback{
     private lateinit var mViewPager: ViewPager2
+    private lateinit var targetUser: User
     private var hotelPictures: ArrayList<HotelPicture> = ArrayList()
     private var roomPictures: ArrayList<HotelPicture> = ArrayList()
+    private lateinit var targetId: String
     val server = server()
     var likes = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.hotel_detail)
+
+        targetId = Supplier.SelectHotel.data.HotelStar.userid
+
+        server!!.getUserByUserId(targetId).enqueue(object : Callback<UserDTO> {
+            override fun onFailure(call: Call<UserDTO>, t: Throwable) {
+                Log.d("faile", t.toString())
+                Log.d("faile", "실패-----------------------------------")
+            }
+
+            override fun onResponse(call: Call<UserDTO>, response: Response<UserDTO>) {
+                targetUser = response.body()!!.data
+            }
+        })
         server!!.checkLike(Supplier.SelectHotel.data.HotelStar.hotelnumber,Supplier.UserId)
             .enqueue(object :Callback<checkLikes>{
                 override fun onFailure(call: Call<checkLikes>, t: Throwable) {
@@ -113,55 +128,62 @@ class HotelDetail:AppCompatActivity(), OnMapReadyCallback{
 
         val dateRangePicker = builder.build()
         dm.setOnClickListener{
-            server!!.chatTwoPeople(Supplier.UserId,Supplier.SelectHotel.data.HotelStar.userid).enqueue(object :Callback<DMDTO>{
-                override fun onFailure(call: Call<DMDTO>, t: Throwable) {
-                }
-                override fun onResponse(call: Call<DMDTO>, response: Response<DMDTO>) {
-                    var DMList = ArrayList<DMset>()
-                    if (response.body()!!.data.size == 0){
-                        Log.d("호텔 주인", Supplier.SelectHotel.data.HotelStar.userid)
-                        server.getChatroom(getChatRoom(0)).enqueue(object :Callback<chatRoom>{
-                            override fun onFailure(call: Call<chatRoom>, t: Throwable) {
-                            }
-                            override fun onResponse(
-                                call: Call<chatRoom>,
-                                response: Response<chatRoom>
-                            ) {
-                                Log.d("챗룸을 받나",response.body()!!.data.toString())
-                                server!!.PostChatInsert(ChatInsert(response.body()!!.data,"",0,"${Supplier.SelectHotel.data.HotelStar.userid.split('@')[0]}님에게 문의드립니다.",
-                                    "",1,"${Supplier.SelectHotel.data.HotelStar.userid}", "${Supplier.UserId}",Supplier.SelectHotel.data.HotelStar.hotelnumber)).enqueue(object :Callback<DMSend>{
-                                    override fun onFailure(call: Call<DMSend>, t: Throwable) {
-                                        TODO("Not yet implemented")
-                                    }
+            val intent = Intent(applicationContext,DirectMessage::class.java)
+            intent.putExtra("targetId", targetId)
+            intent.putExtra("targetName", targetUser.nickname)
+            intent.putExtra("targetPicture", targetUser.picture ?: "")
+            startActivity(intent)
 
-                                    override fun onResponse(call: Call<DMSend>, response: Response<DMSend>) {
-                                        Log.d("채팅 결과", response.body().toString())
-                                        val intent = Intent(applicationContext,DirectMessage::class.java)
-                                        intent.putExtra("target", Supplier.SelectHotel.data.HotelStar.userid)
-                                        startActivity(intent)
-                                    }
-                                })
-                            }
-
-                        })
-                    } else {
-                        val chatid = response.body()!!.data[0].chatid
-                        server!!.PostChatInsert(ChatInsert(chatid,"",0,"${Supplier.SelectHotel.data.HotelStar.userid.split('@')[0]}님에게 문의드립니다.",
-                            "",1,"${Supplier.SelectHotel.data.HotelStar.userid}", "${Supplier.UserId}",Supplier.SelectHotel.data.HotelStar.hotelnumber)).enqueue(object :Callback<DMSend>{
-                            override fun onFailure(call: Call<DMSend>, t: Throwable) {
-                            }
-
-                            override fun onResponse(call: Call<DMSend>, response: Response<DMSend>) {
-                                Log.d("채팅 결과", response.body().toString())
-                                val intent = Intent(applicationContext,DirectMessage::class.java)
-                                intent.putExtra("target", Supplier.SelectHotel.data.HotelStar.userid)
-                                startActivity(intent)
-                            }
-                        })
-
-                    }
-                }
-            })
+//            server!!.chatTwoPeople(Supplier.UserId,Supplier.SelectHotel.data.HotelStar.userid).enqueue(object :Callback<DMDTO>{
+//                override fun onFailure(call: Call<DMDTO>, t: Throwable) {
+//                }
+//                override fun onResponse(call: Call<DMDTO>, response: Response<DMDTO>) {
+//                    var DMList = ArrayList<DMset>()
+//                    if (response.body()!!.data.size == 0){
+//                        Log.d("호텔 주인", Supplier.SelectHotel.data.HotelStar.userid)
+//                        server.getChatroom(getChatRoom(0)).enqueue(object :Callback<chatRoom>{
+//                            override fun onFailure(call: Call<chatRoom>, t: Throwable) {
+//                            }
+//                            override fun onResponse(
+//                                call: Call<chatRoom>,
+//                                response: Response<chatRoom>
+//                            ) {
+//                                Log.d("챗룸을 받나",response.body()!!.data.toString())
+//                                server!!.PostChatInsert(ChatInsert(response.body()!!.data,"",0,"${Supplier.SelectHotel.data.HotelStar.userid.split('@')[0]}님에게 문의드립니다.",
+//                                    "",1,"${Supplier.SelectHotel.data.HotelStar.userid}", "${Supplier.UserId}",Supplier.SelectHotel.data.HotelStar.hotelnumber)).enqueue(object :Callback<DMSend>{
+//                                    override fun onFailure(call: Call<DMSend>, t: Throwable) {
+//                                        TODO("Not yet implemented")
+//                                    }
+//
+//                                    override fun onResponse(call: Call<DMSend>, response: Response<DMSend>) {
+//                                        Log.d("채팅 결과", response.body().toString())
+//                                        val intent = Intent(applicationContext,DirectMessage::class.java)
+//                                        intent.putExtra("target", Supplier.SelectHotel.data.HotelStar.userid)
+////                                        intent.putExtra("targetName", Supplier.SelectHotel.data.HotelStar.)
+//                                        startActivity(intent)
+//                                    }
+//                                })
+//                            }
+//
+//                        })
+//                    } else {
+//                        val chatid = response.body()!!.data[0].chatid
+//                        server!!.PostChatInsert(ChatInsert(chatid,"",0,"${Supplier.SelectHotel.data.HotelStar.userid.split('@')[0]}님에게 문의드립니다.",
+//                            "",1,"${Supplier.SelectHotel.data.HotelStar.userid}", "${Supplier.UserId}",Supplier.SelectHotel.data.HotelStar.hotelnumber)).enqueue(object :Callback<DMSend>{
+//                            override fun onFailure(call: Call<DMSend>, t: Throwable) {
+//                            }
+//
+//                            override fun onResponse(call: Call<DMSend>, response: Response<DMSend>) {
+//                                Log.d("채팅 결과", response.body().toString())
+//                                val intent = Intent(applicationContext,DirectMessage::class.java)
+//                                intent.putExtra("target", Supplier.SelectHotel.data.HotelStar.userid)
+//                                startActivity(intent)
+//                            }
+//                        })
+//
+//                    }
+//                }
+//            })
         }
         checkDate.setOnClickListener{
             dateRangePicker.show(supportFragmentManager, "DATE PICKER")

@@ -6,178 +6,202 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
-import android.text.Layout
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
-import androidx.core.view.isVisible
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.dogplay.API.Companion.server
-import com.google.firebase.storage.FirebaseStorage
-import kotlinx.android.synthetic.main.chat_list.*
-import kotlinx.android.synthetic.main.chat_page.*
-import kotlinx.android.synthetic.main.chat_send.view.*
+import com.google.firebase.database.ChildEventListener
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.FirebaseFirestoreSettings
 import kotlinx.android.synthetic.main.direct_message.*
-import kotlinx.coroutines.internal.artificialFrame
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import java.io.File
 import java.text.SimpleDateFormat
+import java.time.format.DateTimeFormatter
 import java.util.*
-import java.util.concurrent.TimeUnit
 import kotlin.collections.ArrayList
+import com.google.firebase.database.FirebaseDatabase as RealTimeDatabase
+import com.google.firebase.storage.FirebaseStorage as ImageDatabase
 
 class DirectMessage: AppCompatActivity() {
-    private var storageReferenence = FirebaseStorage.getInstance().getReference()
+    private var realTimeDatabase = RealTimeDatabase.getInstance().reference
+    private var imageDatabase = ImageDatabase.getInstance().reference
+    private var storeDatabase = FirebaseFirestore.getInstance()
+    private lateinit var formatter: SimpleDateFormat
+    private lateinit var mRecyclerView: RecyclerView
     private lateinit var currentPhotoPath: String
-    private lateinit var target: String
+    private lateinit var userId: String
+    private lateinit var userName: String
+    private lateinit var userPicture: String
+    private lateinit var targetId: String
+    private lateinit var targetName: String
+    private lateinit var targetPicture: String
+    private lateinit var userChatId: String
+    private lateinit var targetChatId: String
+    private lateinit var chatRoomId: String
+    private val dataSnapShots: ArrayList<DataSnapshot> = ArrayList()
     private val CAMERA_PERMISSION_REQUEST_CODE = 1006
     private val SAVE_IMAGE_REQUEST_CODE = 1007
     private var photoURI : Uri? = null
     private var picture: String = ""
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.direct_message)
-        val server = server()
-        target = intent.getStringExtra("target")!!
-        hotelName.text = target.split('@')[0]
-        Log.d("타겟", target)
+
+        userId = Supplier.UserId
+        userName = Supplier.user.nickname
+        userPicture = Supplier.user.picture!!
+        targetId = intent.getStringExtra("targetId")!!
+        targetName = intent.getStringExtra("targetName")!!
+        targetPicture = intent.getStringExtra("targetPicture")!!
+
+        hotelName.text = targetName
+        Glide.with(this)
+            .load(targetPicture)
+            .into(hotelImg)
+
+        formatter = SimpleDateFormat("yyyy:MM:dd HH:mm:ss")
+        mRecyclerView = chatRecycler
+        mRecyclerView.adapter = RecyclerAdapter(this@DirectMessage, dataSnapShots)
+        mRecyclerView.layoutManager = LinearLayoutManager(this@DirectMessage, RecyclerView.VERTICAL, false)
+
+        storeDatabase.firestoreSettings = FirebaseFirestoreSettings.Builder().build()
+
+        val smoothScroller: RecyclerView.SmoothScroller by lazy {
+            object : LinearSmoothScroller(this) {
+                override fun getVerticalSnapPreference() = SNAP_TO_START
+            }
+        }
+
+        // 유저 채팅방 id
+        storeDatabase.collection("users").whereEqualTo("userId", userId).get()
+            .addOnSuccessListener {
+                result ->
+                if (result.documents.size != 0) {
+                    userChatId = result.documents[0].id
+                }
+                else {
+                    val document = storeDatabase.collection("users").document()
+                    document.set(UserChatId(userId))
+                    userChatId = document.id
+                }
+            }
+        // 상대 채팅방 id
+        storeDatabase.collection("users").whereEqualTo("userId", targetId).get()
+            .addOnSuccessListener {
+                    result ->
+                if (result.documents.size != 0) {
+                    targetChatId = result.documents[0].id
+                }
+                else {
+                    val document = storeDatabase.collection("users").document()
+                    document.set(UserChatId(targetId))
+                    targetChatId = document.id
+                }
+            }
+
+        // 채팅방 id
+        storeDatabase.collection("chatRooms").whereEqualTo("user1", userId).whereEqualTo("user2", targetId).get()
+            .addOnSuccessListener {
+                    firstResult ->
+                if (firstResult.documents.size != 0) {
+                    chatRoomId = firstResult.documents[0].id
+//                    Log.d("chatRoomId", chatRoomId)
+                    getChatData(smoothScroller)
+                }
+                else {
+                    storeDatabase.collection("chatRooms").whereEqualTo("user1", targetId).whereEqualTo("user2", userId).get()
+                        .addOnSuccessListener {
+                                secondResult ->
+                            if (secondResult.documents.size != 0) {
+                                chatRoomId = secondResult.documents[0].id
+//                                Log.d("chatRoomId", chatRoomId)
+                                getChatData(smoothScroller)
+                            }
+                            else {
+                                val document = storeDatabase.collection("chatRooms").document()
+                                document.set(ChatRoom(userId, targetId, userName, targetName, userPicture, targetPicture))
+                                chatRoomId = document.id
+                                getChatData(smoothScroller)
+                            }
+//                            Log.d("chatRoomId", chatRoomId)
+                        }
+                }
+            }
 
         sendBtn.setOnClickListener {
-            if (sendMessage.text.isEmpty()) {
-                Log.d("비었다", "하하")
-            } else {
-                val picture = ""
-                postMessage(picture)
+            val message = sendMessage.text.toString()
+            if (message != "") {
+                send(message = message)
+                sendMessage.setText("")
             }
         }
 
         takePhoto.setOnClickListener {
             prepTakePhoto()
         }
+    }
 
-        server!!.chatTwoPeople(Supplier.UserId, target).enqueue(object : Callback<DMDTO> {
-            override fun onFailure(call: Call<DMDTO>, t: Throwable) {
-                Log.d("또안됐어?", t.toString())
+    private fun getChatData(smoothScroller: RecyclerView.SmoothScroller) {
+        realTimeDatabase.child("chats").child(chatRoomId).orderByChild("timestamp").addChildEventListener(object: ChildEventListener {
+            override fun onChildAdded(dataSnapShot: DataSnapshot, previousChildName: String?) {
+                dataSnapShots.add(dataSnapShot)
+                (mRecyclerView.adapter as RecyclerAdapter).notifyDataSetChanged()
+
+                // move scroll to bottom
+                smoothScroller.targetPosition = dataSnapShots.size
+                (mRecyclerView.layoutManager as LinearLayoutManager).startSmoothScroll(smoothScroller)
+
+                // last chat update
+                val document = storeDatabase.collection("chatRooms").document(chatRoomId)
+                document.update("lastChat", dataSnapShot.child("message").value)
+                document.update("timestamp", dataSnapShot.child("timestamp").value)
             }
 
-            override fun onResponse(call: Call<DMDTO>, response: Response<DMDTO>) {
-                var DMList = ArrayList<DMset>()
-                Log.d("채팅내역", response.body().toString())
-                for (chat in response.body()!!.data) {
-                    var viewType: Int
-                    if (chat.receive == Supplier.UserId) viewType = 1
-                    else viewType = 0
-                    DMList.add(
-                        DMset(
-                            chat.receive,
-                            chat.send,
-                            chat.message,
-                            chat.created,
-                            chat.readmessage,
-                            chat.picture,
-                            viewType
-                        )
-                    )
-                    server.ChatUpdate(
-                        ChatIn(
-                            chat.id,
-                            chat.chatid,
-                            chat.receive,
-                            chat.send,
-                            chat.picture,
-                            chat.message,
-                            chat.created,
-                            1,
-                            chat.hotelnumber
-                        )
-                    ).enqueue(object : Callback<Any> {
-                        override fun onFailure(call: Call<Any>, t: Throwable) {
-                        }
+            override fun onChildChanged(p0: DataSnapshot, p1: String?) {
+            }
 
-                        override fun onResponse(call: Call<Any>, response: Response<Any>) {
-                        }
-                    })
-                }
-                Supplier.DMList = DMList
-                val layoutManager = LinearLayoutManager(applicationContext)
-                layoutManager.orientation = LinearLayoutManager.VERTICAL
-                chatRecycler.layoutManager = layoutManager
-                val adapter = DMAdapter(applicationContext, Supplier.DMList)
-                chatRecycler.adapter = adapter
-                chatRecycler.scrollToPosition(adapter.itemCount - 1)
+            override fun onChildRemoved(p0: DataSnapshot) {
+            }
+
+            override fun onChildMoved(p0: DataSnapshot, p1: String?) {
+            }
+            override fun onCancelled(p0: DatabaseError) {
+                Toast.makeText(applicationContext, "메세지를 불러올 수 없습니다.", Toast.LENGTH_LONG).show()
             }
         })
     }
 
-    private fun postMessage(pic: String) {
-        val server = server()
-        Log.d("뭐라 친건데", sendMessage.text.toString())
-        server!!.chatTwoPeople(Supplier.UserId, target).enqueue(object : Callback<DMDTO> {
-            override fun onFailure(call: Call<DMDTO>, t: Throwable) {
-            }
-
-            override fun onResponse(call: Call<DMDTO>, response: Response<DMDTO>) {
-                Log.d("DM", response.body().toString())
-                val ChatData = response.body()!!.data[0]
-                val chatid = response.body()!!.data[0].chatid
-                var receiver: String
-                if (response.body()!!.data[0].receive == Supplier.UserId) {
-                    receiver = response.body()!!.data[0].send
-                } else {
-                    receiver = response.body()!!.data[0].receive
-                }
-
-                server!!.PostChatInsert(
-                    ChatInsert(
-                        chatid,
-                        "",
-                        0,
-                        sendMessage.text.toString(),
-                        pic,
-                        0,
-                        receiver,
-                        Supplier.UserId,
-                        ChatData.hotelnumber
-                    )
-                ).enqueue(object : Callback<DMSend> {
-                    override fun onFailure(call: Call<DMSend>, t: Throwable) {
-                        Log.d("말썽이네", t.toString())
-                    }
-
-                    override fun onResponse(call: Call<DMSend>, response: Response<DMSend>) {
-                        Log.d("될줄 알았어", response.body().toString())
-                        val layoutInflater = getLayoutInflater()
-                        val chatview = layoutInflater.inflate(R.layout.chat_send, null)
-                        Supplier.DMList.add(
-                            DMset(
-                                Supplier.UserId, receiver, sendMessage.text.toString(),
-                                response.body()!!.data, 0, pic, 0
-                            )
-                        )
-                        sendMessage.setText("")
-                        picture = ""
-                        chatRecycler.adapter!!.notifyDataSetChanged()
-                        chatRecycler.scrollToPosition(chatRecycler.adapter!!.itemCount - 1)
-                    }
-                })
-            }
-        })
+    private fun send(message: String = "", picture: String = "") {
+        var sendMessage = message
+        if (picture != "") {
+            sendMessage = "사진을 전송하였습니다."
+        }
+        val chat = Chat(userChatId, sendMessage, picture, System.currentTimeMillis())
+        realTimeDatabase.child("chats").child(chatRoomId).push().setValue(chat)
     }
 
+    @RequiresApi(Build.VERSION_CODES.M)
     private fun prepTakePhoto() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
             takePhoto()
@@ -192,7 +216,7 @@ class DirectMessage: AppCompatActivity() {
         Intent(MediaStore.ACTION_IMAGE_CAPTURE).also {
                 takePictureIntent -> takePictureIntent.resolveActivity(this.packageManager)
             if (takePictureIntent == null) {
-                Toast.makeText(this, "Unable to save photo", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "사진을 저장할 수 없습니다.", Toast.LENGTH_LONG).show()
             } else {
                 // if we are here, we have a valid intent
                 val photoFile: File = createImageFile()
@@ -213,13 +237,13 @@ class DirectMessage: AppCompatActivity() {
                 val image = photoURI!!
 
                 // firebase update
-                val imageRef = storageReferenence.child("chat/${Supplier.UserId}/$target/" + image.lastPathSegment)
+                val imageRef = imageDatabase.child("chat/${Supplier.UserId}/$targetId/" + image.lastPathSegment)
                 val uploadTask = imageRef.putFile(image)
                 uploadTask.addOnSuccessListener {
                     val downloadUrl = imageRef.downloadUrl
                     downloadUrl.addOnSuccessListener {
                         picture = it.toString()
-                        postMessage(picture)
+                        send(picture = picture)
                     }
                 }
             }
@@ -258,72 +282,85 @@ class DirectMessage: AppCompatActivity() {
         }
     }
 
-    inner class DMAdapter(var context: Context, var DMs: ArrayList<DMset>) :
-        RecyclerView.Adapter<DMAdapter.ViewHolder>() {
+    inner class RecyclerAdapter(private val context: Context, private val messages: ArrayList<DataSnapshot>) : RecyclerView.Adapter<RecyclerViewHolder>() {
 
-        inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
-            init {
-            }
+        init {
+            setHasStableIds(true)
         }
 
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-            Log.d("viewType", parent.context.toString())
-            val context = parent.context
-            val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE)
-            var view: View
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerViewHolder =
             if (viewType == 0) {
-                view = LayoutInflater.from(context).inflate(R.layout.chat_send, parent, false)
+                RecyclerViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.chat_send, parent, false))
             } else {
-                view = LayoutInflater.from(context).inflate(R.layout.chat_receieve, parent, false)
+                RecyclerViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.chat_receieve, parent, false))
             }
 
-            return ViewHolder(view)
+        override fun getItemViewType(position: Int): Int =
+            if (messages.elementAt(position).child("sender").value == userChatId) {
+                0
+            } else {
+                1
+            }
+
+        override fun onBindViewHolder(holder: RecyclerViewHolder, position: Int) {
+            val message = messages.elementAt(position)
+            holder.updateMessages(message)
         }
 
-        override fun getItemViewType(position: Int): Int {
-            return DMs[position].viewType
-        }
+        override fun getItemCount(): Int = messages.size
 
-        override fun getItemCount(): Int {
-            return DMs.size
-        }
-
-        override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-            val DM = DMs[position]
-            if (DM.message != "") {
-                holder.itemView.msg.text = DM.message
-            } else {
-                holder.itemView.msg.visibility = View.GONE
-            }
-            if (DM.picture != "") {
-                Glide.with(holder.itemView)
-                    .load(DM.picture)
-                    .into(holder.itemView.chatImg)
-            } else {
-//                holder.itemView.chatImg.visibility = View.GONE
-            }
-
-
-            val target: String
-            var half: String
-            var hour: Int
-            if (DM.created[3] > 12) {
-                half = "오후"; hour = DM.created[3] - 12
-            } else if (DM.created[3] == 12) {
-                half = "오후"; hour = 12
-            } else {
-                half = "오전"; hour = DM.created[3]
-            }
-            var min: String
-            if (DM.created[4] < 10) {
-                min = "0${DM.created[4]}"
-            } else {
-                min = "${DM.created[4]}"
-            }
-            holder.itemView.messageAt.text = "${half} ${hour}:${DM.created[4]}"
-            holder.itemView.messageAt.text =
-                "${DM.created[0]}-${DM.created[1]}-${DM.created[2]} ${DM.created[3]}:${min}"
+        override fun getItemId(position: Int): Long {
+            return position.toLong()
         }
     }
+
+    inner class RecyclerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private val img: ImageView = itemView.findViewById(R.id.chatImg)
+        private val content: TextView = itemView.findViewById(R.id.msg)
+        private val msgAt: TextView = itemView.findViewById(R.id.messageAt)
+
+        fun updateMessages(message: DataSnapshot) {
+            val picture = message.child("picture").value.toString()
+            val msg = message.child("message").value.toString()
+            val timestamp = message.child("timestamp").value
+
+            if (picture != "") {
+                Glide.with(itemView)
+                    .load(picture)
+                    .into(img)
+                content.visibility = View.GONE
+            }
+            else {
+                content.text = msg
+                img.visibility = View.GONE
+            }
+
+            if (timestamp != null) {
+                val formatted = formatter.format(timestamp)
+                msgAt.text = formatted
+            }
+        }
+    }
+
+    data class UserChatId (
+        var userId: String
+    )
+
+    data class Chat (
+        var sender: String = "",
+        var message: String = "",
+        var picture: String = "",
+        var timestamp: Long
+    )
+
+    data class ChatRoom (
+        var user1: String = "",
+        var user2: String = "",
+        var userName1: String = "",
+        var userName2: String = "",
+        var userPicture1: String = "",
+        var userPicture2: String = "",
+        var lastChat: String = "",
+        var timestamp: Long = 0
+    )
 }

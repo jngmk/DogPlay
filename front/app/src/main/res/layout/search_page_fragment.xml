@@ -41,13 +41,13 @@
         android:id="@+id/curadd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="14dp"
-        android:gravity="center_vertical|center_horizontal"
-        android:textSize="10dp"
+        app:layout_constraintTop_toBottomOf="@+id/searchBar"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchBar" />
-
+        android:gravity="center_vertical|center_horizontal"
+        android:layout_marginTop="13dp"
+        android:textSize="12sp"
+        />
     <ImageView
         android:id="@+id/curmarker"
         android:layout_width="14dp"
