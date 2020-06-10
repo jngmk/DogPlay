@@ -5,6 +5,10 @@
 		select * from hotel where hotelnumber=#{hotelnumber}
 	</select>
 	
+	<select id="hotelnamebyhotelnumber" parameterType="string" resultType="string">
+		select hotelname from hotel where hotelnumber=#{hotelnumber}
+	</select>
+	
 	<select id="searchbyname" parameterType="string" resultType="hotel">
 		select * from hotel where hotelname like concat('%', #{hotelname), '%')
 	</select>
