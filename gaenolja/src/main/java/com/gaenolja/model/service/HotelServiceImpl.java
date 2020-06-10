@@ -39,6 +39,16 @@ public class HotelServiceImpl implements HotelService {
 	}
 	
 	@Override
+	public String hotelnamebyhotelnumber(String hotelnumber) {
+		try {
+			return dao.hotelnamebyhotelnumber(hotelnumber);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	@Override
 	public Hotel search(String hotelnumber) {
 		try {
 			Hotel hotel = dao.search(hotelnumber);

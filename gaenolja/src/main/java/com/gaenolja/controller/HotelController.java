@@ -48,6 +48,12 @@ public class HotelController {
 		return handleSuccess(service.search(hotelnumber));
 	}
 	
+	@GetMapping("/api/v1/hotel/find/hotelname")
+	@ApiOperation("hotel name")
+	public ResponseEntity<Map<String, Object>> searchhotelname(@RequestParam String hotelnumber){
+		return handleSuccess(service.hotelnamebyhotelnumber(hotelnumber));
+	}
+	
 	@GetMapping("/api/v1/hotel/search/hotelname")
 	@ApiOperation("name으로 hotel 찾기")
 	public ResponseEntity<Map<String, Object>> searchbyname(@RequestParam String hotelname){

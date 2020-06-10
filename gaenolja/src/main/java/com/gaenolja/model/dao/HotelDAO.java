@@ -13,6 +13,7 @@ public interface HotelDAO {
 	public Hotel search(String hotelnumber);
 	public List<Hotel> searchbyname(String hotelname);
 	public List<Hotel> searchbydistance(HashMap<Object, Object> map);
+	public String hotelnamebyhotelnumber(String hotelnumber);
 	public void insert(Hotel hotel);
 	public void update(Hotel hotel);
 	public void delete(String hotelnumber);
