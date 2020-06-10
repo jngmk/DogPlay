@@ -16,7 +16,6 @@ class InfoAdapter(var context:Context, var infos:ArrayList<ArrayList<String>>) :
 
         init {
             itemView.setOnClickListener{
-                Toast.makeText(context,"bow", Toast.LENGTH_LONG).show()
             }
         }
     }

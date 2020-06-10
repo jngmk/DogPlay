@@ -27,7 +27,6 @@ class HotelAdapter(var context:Context, var hotels:ArrayList<Hotel>) :
 
         init {
             itemView.setOnClickListener{
-                Toast.makeText(context,"hi i'm", Toast.LENGTH_LONG).show()
             }
         }
         fun setData(hotel:Hotel,pos: Int){

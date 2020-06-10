@@ -115,7 +115,8 @@ class UserProfile : Fragment() {
     }
 
     private fun openNotificationPage() {
-            
+        val intent = Intent(this.context, LikeHotel::class.java)
+        startActivity(intent)
     }
 
     private fun enrollHotel() {

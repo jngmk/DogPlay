@@ -43,6 +43,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".MyReview"/>
+        <activity android:name=".LikeHotel"/>
         <activity android:name=".ui.owner.LoginMain">
         </activity>
         <activity

@@ -563,7 +563,15 @@ interface Service {
     fun findHotelName(
         @Query("hotelnumber") hotelnumber: String
     ):Call<findHotelName>
+
+    @GET("/api/v1/likes/search/userid")
+    fun likeSearch(
+        @Query("userid") userid: String
+    ):Call<searchLikeDTO>
 }
+data class searchLikeDTO(
+    val data: ArrayList<insertLike>
+)
 
 data class findHotelName(
     val data:String

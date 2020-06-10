@@ -151,7 +151,6 @@ class RoomDetail:AppCompatActivity(){
         builder.setTitle("개놀자 알림!")
             .setMessage("장바구니에 다른 호텔의 방이 있어요! \n이전에 담은 방을 삭제하시겠어요?")
         builder.setPositiveButton("네!"){ dialogInterface: DialogInterface, i: Int ->
-            Toast.makeText(applicationContext,"없애부리!",Toast.LENGTH_SHORT).show()
             val server = server()
             server!!.deleteCartById(Supplier.UserId).enqueue(object :Callback<Any>{
                 override fun onFailure(call: Call<Any>, t: Throwable) {
@@ -176,7 +175,6 @@ class RoomDetail:AppCompatActivity(){
             })
         }
         builder.setNegativeButton("아니요...") { dialogInterface: DialogInterface, i: Int ->
-            Toast.makeText(applicationContext, "아니되요...", Toast.LENGTH_SHORT).show()
         }
         val alertDialog = builder.create()
         alertDialog.show()

@@ -2,6 +2,7 @@ package com.example.dogplay
 
 import android.app.ActionBar
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -66,6 +67,29 @@ class MyReviewAdapter(var context: Context, var MyReviews:ArrayList<SearchReview
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         var myReview = MyReviews[position]
         val server = server()
+        holder.itemView.setOnClickListener {
+            server!!.searchHotelDetail(myReview.hotelnumber).enqueue(object :
+                Callback<HotelDetailDTO> {
+                override fun onFailure(call: Call<HotelDetailDTO>, t: Throwable) {
+                    Log.d("faile", t.toString())
+                }
+
+                override fun onResponse(
+                    call: Call<HotelDetailDTO>,
+                    response: Response<HotelDetailDTO>
+                ) {
+                    val data: HotelDetailDTO = response.body()!!
+                    val hotelDetailData = data
+                    Supplier.SelectHotel = hotelDetailData
+
+                    Log.d("리뷰", Supplier.SelectHotel.data.toString())
+//                    Log.d("방",Supplier.SelectHotel.data.HotelRoom.toString())
+                    val intent = Intent(context,HotelDetail::class.java)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    context.startActivity(intent)
+                }
+            })
+        }
         server!!.findHotelName(myReview.hotelnumber).enqueue(object :Callback<findHotelName>{
             override fun onFailure(call: Call<findHotelName>, t: Throwable) {
                 Log.d("안된건가?", t.toString())
