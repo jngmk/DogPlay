@@ -10,6 +10,7 @@ public interface LikesService {
 	public List<Likes> searchbyuserid(String userid);
 	public List<Likes> searchbyhotelnumber(String hotelnumber);
 	public List<HotelLikes> searchhotelbyuserid(String visitor);
+	public int check(String userid, String hotelnumber);
 	public boolean insert(Likes likes);
 	public boolean delete(String userid, String hotelnumber);
 }

@@ -66,8 +66,8 @@
     </select>
    
 	<insert id="insert" parameterType="chat">
-		insert into chat(chatid, receive, send, picture, message, readmessage)
-		values(#{chatid}, #{receive}, #{send}, #{picture}, #{message}, #{readmessage})
+		insert into chat(chatid, receive, send, picture, message, readmessage, hotelnumber)
+		values(#{chatid}, #{receive}, #{send}, #{picture}, #{message}, #{readmessage}, #{hotelnumber})
 	</insert>
 	
 	<update id="update" parameterType="chat">
@@ -77,7 +77,8 @@
 		send = #{send},
 		picture = #{picture},
 		message = #{message},
-		readmessage = #{readmessage}
+		readmessage = #{readmessage},
+		hotelnumber=#{hotelnumber}
 		where id = #{id}
 	</update>
 

@@ -185,6 +185,7 @@ create table chat (
 	id integer primary key auto_increment,
     chatid integer not null,
     receive varchar(200) not null,
+    hotelnumber varchar(50) not null,
     send varchar(200) not null,
     picture varchar(500) null,
     message varchar(500) not null,
@@ -195,6 +196,8 @@ create table chat (
 	constraint FK_user_chat_send foreign key(send) references user(userid)
     on update cascade on delete cascade,
 	constraint FK_chat_room foreign key(chatid) references chatroom(id)
+    on update cascade on delete cascade,
+	constraint FK_chat_hotel foreign key(hotelnumber) references hotel(hotelnumber)
     on update cascade on delete cascade
 );
 

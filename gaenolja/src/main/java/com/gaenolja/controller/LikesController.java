@@ -37,6 +37,12 @@ public class LikesController {
 		return handleSuccess(service.searchall());
 	}
 	
+	@GetMapping("/api/v1/likes/checklikes")
+	@ApiOperation("check likes")
+	public ResponseEntity<Map<String, Object>> check(@RequestParam String userid, @RequestParam String hotelnumber){
+		return handleSuccess(service.check(userid, hotelnumber));
+	}
+	
 	@GetMapping("/api/v1/likes/search/userid")
 	@ApiOperation("user로 likes 찾기")
 	public ResponseEntity<Map<String, Object>> searchbyuserid(@RequestParam String userid){
