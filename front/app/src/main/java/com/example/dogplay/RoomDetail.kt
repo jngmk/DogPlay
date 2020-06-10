@@ -90,7 +90,7 @@ class RoomDetail:AppCompatActivity(){
                 Supplier.SelectRoom = roomDetailData
                 RoomDetailTitle.text = roomDetailData.roomname
                 RoomDetailSize.text = "${roomDetailData.minsize}Kg ~ ${roomDetailData.maxsize}Kg"
-                RoomDetailAddress.text = "${Supplier.PickAdress}"
+//                RoomDetailAddress.text = "${Supplier.PickAdress}"
                 RoomDetailPrice.text = "${roomDetailData.price} 원"
                 RoomIntro.text = "${roomDetailData.info}"
                 subCart.setOnClickListener{

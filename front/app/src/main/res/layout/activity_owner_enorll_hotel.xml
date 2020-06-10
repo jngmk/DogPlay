@@ -327,7 +327,7 @@
         android:id="@+id/paytop"
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
-        android:background="#888888"
+        android:background="#DDDDDD"
         app:layout_constraintTop_toBottomOf="@id/scrvEnrollHotel"
         />
 

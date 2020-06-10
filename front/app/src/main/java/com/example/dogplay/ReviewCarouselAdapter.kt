@@ -37,7 +37,7 @@ class ReviewCarouselAdapter(private val context: Context):PagerAdapter(){
         reviewContent.text = review.content
         val reviewAt = view.findViewById<TextView>(R.id.reviewAt)
         val dateAt = review.created
-        reviewAt.text = "${dateAt[0]}-${dateAt[1]}-${dateAt[2]}-${dateAt[3]}:${dateAt[4]}:${dateAt[5]}"
+        reviewAt.text = "${dateAt[0]}-${dateAt[1]}-${dateAt[2]}-${dateAt[3]}:${dateAt[4]}"
         cell.clipToOutline = true
         val drawable = context.getDrawable(R.drawable.rounded)
         profileImg.setBackground(drawable)
