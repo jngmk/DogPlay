@@ -46,7 +46,6 @@
             android:paddingHorizontal="10dp"
             android:paddingVertical="5dp"
             android:textSize="18sp"
-            android:text="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
             android:background="@drawable/recieve_message"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/chatImg"

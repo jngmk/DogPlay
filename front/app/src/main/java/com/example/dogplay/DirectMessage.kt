@@ -23,8 +23,10 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -35,6 +37,7 @@ import java.io.File
 import java.text.SimpleDateFormat
 import java.time.format.DateTimeFormatter
 import java.util.*
+import kotlin.collections.ArrayList
 import com.google.firebase.database.FirebaseDatabase as RealTimeDatabase
 import com.google.firebase.storage.FirebaseStorage as ImageDatabase
 
@@ -46,10 +49,15 @@ class DirectMessage: AppCompatActivity() {
     private lateinit var mRecyclerView: RecyclerView
     private lateinit var currentPhotoPath: String
     private lateinit var userId: String
+    private lateinit var userName: String
+    private lateinit var userPicture: String
     private lateinit var targetId: String
+    private lateinit var targetName: String
+    private lateinit var targetPicture: String
     private lateinit var userChatId: String
     private lateinit var targetChatId: String
     private lateinit var chatRoomId: String
+    private val dataSnapShots: ArrayList<DataSnapshot> = ArrayList()
     private val CAMERA_PERMISSION_REQUEST_CODE = 1006
     private val SAVE_IMAGE_REQUEST_CODE = 1007
     private var photoURI : Uri? = null
@@ -61,12 +69,29 @@ class DirectMessage: AppCompatActivity() {
         setContentView(R.layout.direct_message)
 
         userId = Supplier.UserId
-        targetId = intent.getStringExtra("target")!!
-        hotelName.text = targetId.split('@')[0]
-        mRecyclerView = chatRecycler
+        userName = Supplier.user.nickname
+        userPicture = Supplier.user.picture!!
+        targetId = intent.getStringExtra("targetId")!!
+        targetName = intent.getStringExtra("targetName")!!
+        targetPicture = intent.getStringExtra("targetPicture")!!
+
+        hotelName.text = targetName
+        Glide.with(this)
+            .load(targetPicture)
+            .into(hotelImg)
+
         formatter = SimpleDateFormat("yyyy:MM:dd HH:mm:ss")
+        mRecyclerView = chatRecycler
+        mRecyclerView.adapter = RecyclerAdapter(this@DirectMessage, dataSnapShots)
+        mRecyclerView.layoutManager = LinearLayoutManager(this@DirectMessage, RecyclerView.VERTICAL, false)
 
         storeDatabase.firestoreSettings = FirebaseFirestoreSettings.Builder().build()
+
+        val smoothScroller: RecyclerView.SmoothScroller by lazy {
+            object : LinearSmoothScroller(this) {
+                override fun getVerticalSnapPreference() = SNAP_TO_START
+            }
+        }
 
         // 유저 채팅방 id
         storeDatabase.collection("users").whereEqualTo("userId", userId).get()
@@ -94,6 +119,7 @@ class DirectMessage: AppCompatActivity() {
                     targetChatId = document.id
                 }
             }
+
         // 채팅방 id
         storeDatabase.collection("chatRooms").whereEqualTo("user1", userId).whereEqualTo("user2", targetId).get()
             .addOnSuccessListener {
@@ -101,6 +127,7 @@ class DirectMessage: AppCompatActivity() {
                 if (firstResult.documents.size != 0) {
                     chatRoomId = firstResult.documents[0].id
 //                    Log.d("chatRoomId", chatRoomId)
+                    getChatData(smoothScroller)
                 }
                 else {
                     storeDatabase.collection("chatRooms").whereEqualTo("user1", targetId).whereEqualTo("user2", userId).get()
@@ -109,28 +136,17 @@ class DirectMessage: AppCompatActivity() {
                             if (secondResult.documents.size != 0) {
                                 chatRoomId = secondResult.documents[0].id
 //                                Log.d("chatRoomId", chatRoomId)
+                                getChatData(smoothScroller)
                             }
                             else {
                                 val document = storeDatabase.collection("chatRooms").document()
-                                document.set(ChatRoom(userId, targetId))
+                                document.set(ChatRoom(userId, targetId, userName, targetName, userPicture, targetPicture))
                                 chatRoomId = document.id
+                                getChatData(smoothScroller)
                             }
 //                            Log.d("chatRoomId", chatRoomId)
                         }
                 }
-                // 채팅 목록 불러오기
-                realTimeDatabase.child("chats").child(chatRoomId).orderByChild("timestamp").addListenerForSingleValueEvent(object: ValueEventListener {
-                    override fun onDataChange(dataSnapShot: DataSnapshot) {
-                        mRecyclerView.adapter = RecyclerAdapter(this@DirectMessage, dataSnapShot.children)
-                        mRecyclerView.layoutManager = LinearLayoutManager(this@DirectMessage, RecyclerView.VERTICAL, false)
-//                        for (snapshot in dataSnapShot.children) {
-//                            Log.d("채팅순서", snapshot.toString())
-//                        }
-                    }
-
-                    override fun onCancelled(p0: DatabaseError) {
-                    }
-                })
             }
 
         sendBtn.setOnClickListener {
@@ -146,8 +162,42 @@ class DirectMessage: AppCompatActivity() {
         }
     }
 
+    private fun getChatData(smoothScroller: RecyclerView.SmoothScroller) {
+        realTimeDatabase.child("chats").child(chatRoomId).orderByChild("timestamp").addChildEventListener(object: ChildEventListener {
+            override fun onChildAdded(dataSnapShot: DataSnapshot, previousChildName: String?) {
+                dataSnapShots.add(dataSnapShot)
+                (mRecyclerView.adapter as RecyclerAdapter).notifyDataSetChanged()
+
+                // move scroll to bottom
+                smoothScroller.targetPosition = dataSnapShots.size
+                (mRecyclerView.layoutManager as LinearLayoutManager).startSmoothScroll(smoothScroller)
+
+                // last chat update
+                val document = storeDatabase.collection("chatRooms").document(chatRoomId)
+                document.update("lastChat", dataSnapShot.child("message").value)
+                document.update("timestamp", dataSnapShot.child("timestamp").value)
+            }
+
+            override fun onChildChanged(p0: DataSnapshot, p1: String?) {
+            }
+
+            override fun onChildRemoved(p0: DataSnapshot) {
+            }
+
+            override fun onChildMoved(p0: DataSnapshot, p1: String?) {
+            }
+            override fun onCancelled(p0: DatabaseError) {
+                Toast.makeText(applicationContext, "메세지를 불러올 수 없습니다.", Toast.LENGTH_LONG).show()
+            }
+        })
+    }
+
     private fun send(message: String = "", picture: String = "") {
-        val chat = Chat(userChatId, message, picture, System.currentTimeMillis())
+        var sendMessage = message
+        if (picture != "") {
+            sendMessage = "사진을 전송하였습니다."
+        }
+        val chat = Chat(userChatId, sendMessage, picture, System.currentTimeMillis())
         realTimeDatabase.child("chats").child(chatRoomId).push().setValue(chat)
     }
 
@@ -166,7 +216,7 @@ class DirectMessage: AppCompatActivity() {
         Intent(MediaStore.ACTION_IMAGE_CAPTURE).also {
                 takePictureIntent -> takePictureIntent.resolveActivity(this.packageManager)
             if (takePictureIntent == null) {
-                Toast.makeText(this, "Unable to save photo", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "사진을 저장할 수 없습니다.", Toast.LENGTH_LONG).show()
             } else {
                 // if we are here, we have a valid intent
                 val photoFile: File = createImageFile()
@@ -232,7 +282,7 @@ class DirectMessage: AppCompatActivity() {
         }
     }
 
-    inner class RecyclerAdapter(private val context: Context, private val messages: Iterable<DataSnapshot>) : RecyclerView.Adapter<RecyclerViewHolder>() {
+    inner class RecyclerAdapter(private val context: Context, private val messages: ArrayList<DataSnapshot>) : RecyclerView.Adapter<RecyclerViewHolder>() {
 
         init {
             setHasStableIds(true)
@@ -257,7 +307,7 @@ class DirectMessage: AppCompatActivity() {
             holder.updateMessages(message)
         }
 
-        override fun getItemCount(): Int = messages.count()
+        override fun getItemCount(): Int = messages.size
 
         override fun getItemId(position: Int): Long {
             return position.toLong()
@@ -272,20 +322,23 @@ class DirectMessage: AppCompatActivity() {
         fun updateMessages(message: DataSnapshot) {
             val picture = message.child("picture").value.toString()
             val msg = message.child("message").value.toString()
-            val timestamp = message.child("timestamp").value as Long
-            val formatted = formatter.format(timestamp)
+            val timestamp = message.child("timestamp").value
 
             if (picture != "") {
                 Glide.with(itemView)
                     .load(picture)
                     .into(img)
+                content.visibility = View.GONE
             }
             else {
                 content.text = msg
                 img.visibility = View.GONE
             }
 
-            msgAt.text = formatted
+            if (timestamp != null) {
+                val formatted = formatter.format(timestamp)
+                msgAt.text = formatted
+            }
         }
     }
 
@@ -303,6 +356,11 @@ class DirectMessage: AppCompatActivity() {
     data class ChatRoom (
         var user1: String = "",
         var user2: String = "",
-        var lastChat: String = ""
+        var userName1: String = "",
+        var userName2: String = "",
+        var userPicture1: String = "",
+        var userPicture2: String = "",
+        var lastChat: String = "",
+        var timestamp: Long = 0
     )
 }
