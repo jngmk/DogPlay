@@ -42,6 +42,7 @@ class CartPage:AppCompatActivity(){
         CartList.layoutManager = layoutManager
         HotelName.text = Supplier.SelectHotel.data.HotelStar.hotelname
         val server = server()
+        var day =1
         server!!.calcTotalPrice(Supplier.UserId).enqueue(object :Callback<calcTotalPrice>{
             override fun onFailure(call: Call<calcTotalPrice>, t: Throwable) {
                 Log.d("장바구니 총 가격 구하기 실패", t.toString())
@@ -51,8 +52,11 @@ class CartPage:AppCompatActivity(){
                 response: Response<calcTotalPrice>
             ) {
                 totalPrice = response.body()!!.data
-                TotalPrice.text = "${totalPrice}"
-                Supplier.totalCartPrice = totalPrice
+                day = ((Supplier.SelectDate[1] - Supplier.SelectDate[0])/86400000).toInt()
+                Log.d("날짜 가져온거", Supplier.SelectDate.toString())
+                Log.d("몇일인지 보자",day.toString())
+                TotalPrice.text = "${totalPrice*day}"
+                Supplier.totalCartPrice = totalPrice*day
             }
 
         })
@@ -67,7 +71,7 @@ class CartPage:AppCompatActivity(){
             ) {
                 Log.d("될줄 알구이써따구", response.body().toString())
                 val adapter = CartAdapter(applicationContext,response.body()!!.data){
-                    TotalPrice.text = "${Supplier.totalCartPrice}"
+                    TotalPrice.text = "${Supplier.totalCartPrice*day}"
                 }
                 CartList.adapter = adapter
                 SubmitCart.setOnClickListener{
@@ -109,7 +113,7 @@ class CartAdapter(var context: Context, var CartItems:ArrayList<responseCart>, v
         init {
 
         }
-}
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.cart_item ,parent, false)
@@ -126,7 +130,7 @@ class CartAdapter(var context: Context, var CartItems:ArrayList<responseCart>, v
 
         getPicture(CartItem.hotelnumber, CartItem.roomname, holder.itemView)
 
-        var roomPrice = 1
+        var roomPrice = 10000
         Supplier.SelectHotel.data.HotelRoom.forEach run@{
             if (CartItem.roomname == it.roomname){
                 roomPrice = it.price

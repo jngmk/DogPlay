@@ -83,7 +83,7 @@ class UserProfile : Fragment() {
         btnReviews.setOnClickListener {
             openReviewPage()
         }
-        btnNotification.setOnClickListener {
+        btnLikes.setOnClickListener {
             openNotificationPage()
         }
 //        btnEnrollMyHotel.setOnClickListener {
@@ -110,9 +110,12 @@ class UserProfile : Fragment() {
     }
 
     private fun openReviewPage() {
+        val intent = Intent(this.context, MyReview::class.java)
+        startActivity(intent)
     }
 
     private fun openNotificationPage() {
+            
     }
 
     private fun enrollHotel() {

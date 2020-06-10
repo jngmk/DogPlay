@@ -102,11 +102,11 @@
         android:background="#DDDDDD" />
 
     <TextView
-        android:id="@+id/btnNotification"
+        android:id="@+id/btnLikes"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="@string/notification"
+        android:text="즐겨찾기"
         android:textSize="18sp" />
 
     <View

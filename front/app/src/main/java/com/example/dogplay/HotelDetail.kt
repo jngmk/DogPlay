@@ -170,6 +170,7 @@ class HotelDetail:AppCompatActivity(), OnMapReadyCallback{
                 Supplier.SelectDateMain = arrayListOf(Supplier.formatterForView.format(dateRangePicker.selection!!.first),Supplier.formatterForView.format(dateRangePicker.selection!!.second))
                 val date1 = dateRangePicker.selection!!.first!!
                 val date2 = dateRangePicker.selection!!.second!!
+                Supplier.SelectDate = arrayListOf(date1, date2)
                 var apiDateFirst = LocalDateTime.ofInstant(Instant.ofEpochMilli(date1), ZoneId.systemDefault()).toString()
                 var apiDateSecond = LocalDateTime.ofInstant(Instant.ofEpochMilli(date2), ZoneId.systemDefault()).toString()
                 Log.d("포멧", apiDateFirst)

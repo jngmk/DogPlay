@@ -41,23 +41,22 @@
         android:id="@+id/curadd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/searchBar"
+        android:layout_marginTop="14dp"
+        android:gravity="center_vertical|center_horizontal"
+        android:textSize="10dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:gravity="center_vertical|center_horizontal"
-        android:layout_marginTop="13dp"
-        android:textSize="12sp"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/searchBar" />
+
     <ImageView
         android:id="@+id/curmarker"
-        android:layout_width="15dp"
-        android:layout_height="15dp"
+        android:layout_width="14dp"
+        android:layout_height="14dp"
         android:layout_marginTop="15dp"
         android:layout_marginRight="5dp"
-        app:layout_constraintRight_toLeftOf="@+id/curadd"
-        app:layout_constraintTop_toBottomOf="@+id/searchBar"
         android:src="@drawable/marker"
-        />
+        app:layout_constraintRight_toLeftOf="@+id/curadd"
+        app:layout_constraintTop_toBottomOf="@+id/searchBar" />
 
     <TextView
         android:id="@+id/curdate"

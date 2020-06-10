@@ -553,7 +553,22 @@ interface Service {
         @Query("hotelnumber")hotelnumber: String,
         @Query("userid")userid: String
     ):Call<Any>
+
+    @GET("/api/v1/review/searchbyuserid")
+    fun searchReviewById(
+        @Query("userid") userid: String
+    ):Call<SearchReviewDTO>
+
+    @GET("/api/v1/hotel/find/hotelname")
+    fun findHotelName(
+        @Query("hotelnumber") hotelnumber: String
+    ):Call<findHotelName>
 }
+
+data class findHotelName(
+    val data:String
+)
+
 data class insertLike(
     val hotelnumber: String,
     val userid: String
@@ -665,7 +680,8 @@ data class SearchResponse(
     val userid: String,
     val heart:Int,
     val content:String,
-    val created: ArrayList<Int>
+    val created: ArrayList<Int>,
+    val hotelnumber: String
 )
 
 

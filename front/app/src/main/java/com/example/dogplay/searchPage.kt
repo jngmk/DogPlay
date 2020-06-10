@@ -44,7 +44,6 @@ class searchPage : Fragment() {
     companion object {
         fun newInstance() = searchPage()
     }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
