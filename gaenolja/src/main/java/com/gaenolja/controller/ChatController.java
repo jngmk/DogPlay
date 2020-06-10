@@ -49,6 +49,12 @@ public class ChatController {
 		return handleSuccess(service.search(id));
 	}
 	
+	@GetMapping("/api/v1/chat/searchbyhotel")
+	@ApiOperation("hotel + send")
+	public ResponseEntity<Map<String, Object>> searchbyhotel(@RequestParam String hotelnumber, @RequestParam String send){
+		return handleSuccess(service.searchbyhotel(hotelnumber, send));
+	}
+	
 	@GetMapping("/api/v1/chat/search/receive")
 	@ApiOperation("받은 사람으로 chat 찾기")
 	public ResponseEntity<Map<String, Object>> searchbyreceive(@RequestParam String receive){

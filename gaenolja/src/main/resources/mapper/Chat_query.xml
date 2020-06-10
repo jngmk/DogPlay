@@ -64,6 +64,12 @@
    		from chat
    		where id = #{id}
     </select>
+    
+    <select id="searchbyhotel" parameterType="hashmap" resultType="int">
+    	select count(*)
+    	from chat
+    	where hotelnumber=#{hotelnumber} and send=#{send}
+    </select>
    
 	<insert id="insert" parameterType="chat">
 		insert into chat(chatid, receive, send, picture, message, readmessage, hotelnumber)
