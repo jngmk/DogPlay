@@ -127,10 +127,11 @@ class preReservationAdapter(var context: Context, var reservations:ArrayList<Res
                                             call: Call<Any>,
                                             response: Response<Any>
                                         ) {
+                                            Log.d("이거", reservation.finishdate.toString())
                                             server.updateReservation(InsertReservation(reservation.count,"hey",
-                                                LocalDateTime.of(reservation.finishdate[0],reservation.finishdate[1],reservation.finishdate[2],reservation.finishdate[3],reservation.finishdate[4],reservation.finishdate[5]).toString(),
+                                                LocalDateTime.of(reservation.finishdate[0],reservation.finishdate[1],reservation.finishdate[2],reservation.finishdate[3],reservation.finishdate[4]).toString(),
                                                 reservation.hotelnumber,reservation.id,reservation.paidid,reservation.phone!!,reservation.roomname,
-                                                LocalDateTime.of(reservation.finishdate[0],reservation.finishdate[1],reservation.finishdate[2],reservation.finishdate[3],reservation.finishdate[4],reservation.finishdate[5]).toString(),
+                                                LocalDateTime.of(reservation.finishdate[0],reservation.finishdate[1],reservation.finishdate[2],reservation.finishdate[3],reservation.finishdate[4]).toString(),
                                                 reservation.userid,2)).enqueue(object :Callback<Any>{
                                                 override fun onFailure(call: Call<Any>, t: Throwable) {
                                                 }
@@ -142,6 +143,8 @@ class preReservationAdapter(var context: Context, var reservations:ArrayList<Res
                                                 }
                                             })
                                             Toast.makeText(context,"리뷰 등록이 완료되었습니다.",Toast.LENGTH_SHORT).show()
+                                            holder.itemView.writeBtn.text = "리뷰를 작성하셨습니다."
+                                            holder.itemView.writeBtn.setTextColor(Color.parseColor("#aaaaaa"))
                                         }
 
                                     })
