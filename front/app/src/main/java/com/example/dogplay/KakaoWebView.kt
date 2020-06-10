@@ -52,52 +52,55 @@ class KakaoWebView :AppCompatActivity(){
                     }
                     return true
                 } else if (url.startsWith("http://")){
-                    var pg_token = url.split("pg_token=")[1]
-                    Log.d("Http로 왔어", pg_token)
-                    server!!.insertPaid(InsertPaid("",0,0,Supplier.SelectPayForm.cid,
-                    0,Supplier.SelectPayForm.partner_order_id,pg_token,Supplier.ResponseTid,Supplier.UserId)).enqueue(object :Callback<PaidResponse>{
-                        override fun onFailure(call: Call<PaidResponse>, t: Throwable) {
-                            Log.d("실패", t.toString())
-                        }
-                        override fun onResponse(call: Call<PaidResponse>, response: Response<PaidResponse>) {
-                            Log.d("Paid Insert 성공", response.body().toString())
-//                            server.insertReservation(InsertReservation())
-                            Log.d(Supplier.SelectDateApi[0], Supplier.SelectDateApi[1])
-                            for (i in Supplier.SelectPayRoom){
-                                Log.d("하나씩 뽑아서 보여주자", i.toString())
-                                server.insertReservation(
-                                    InsertReservation(i.value,"강아지",Supplier.SelectDateApi[1],Supplier.SelectHotel.data.HotelStar.hotelnumber,
-                                0,response.body()!!.data,"010-0101-2020",i.key.first,Supplier.SelectDateApi[0],Supplier.UserId,0))
-                                    .enqueue(object :Callback<Any>{
-                                        override fun onFailure(call: Call<Any>, t: Throwable) {
-                                            Log.d("예약목록 추가 실패", t.toString())
-                                        }
-                                        override fun onResponse(
-                                            call: Call<Any>,
-                                            response: Response<Any>
-                                        ) {
-                                            Log.d("예약 목록 추가 성공", response.body().toString())
-                                            server.deleteCartById(Supplier.UserId).enqueue(object :Callback<Any>{
-                                                override fun onFailure(
-                                                    call: Call<Any>,
-                                                    t: Throwable
-                                                ) {
-                                                }
-                                                override fun onResponse(
-                                                    call: Call<Any>,
-                                                    response: Response<Any>
-                                                ) {
-                                                    Log.d("장바구니 삭제 완료", "삭제!")
-                                                }
-
-                                            })
-                                        }
-
-                                    })
+                    if(url == "http://k02a4021.p.ssafy.io:8080/api/v1/paid/usercancel"){
+                    } else {
+                        var pg_token = url.split("pg_token=")[1]
+                        Log.d("Http로 왔어", pg_token)
+                        server!!.insertPaid(InsertPaid("",0,0,Supplier.SelectPayForm.cid,
+                            0,Supplier.SelectPayForm.partner_order_id,pg_token,Supplier.ResponseTid,Supplier.UserId)).enqueue(object :Callback<PaidResponse>{
+                            override fun onFailure(call: Call<PaidResponse>, t: Throwable) {
+                                Log.d("실패", t.toString())
                             }
-                            Log.d("한번 목록을 보자", Supplier.SelectPayRoom.toString())
-                        }
-                    })
+                            override fun onResponse(call: Call<PaidResponse>, response: Response<PaidResponse>) {
+                                Log.d("Paid Insert 성공", response.body().toString())
+//                            server.insertReservation(InsertReservation())
+                                Log.d(Supplier.SelectDateApi[0], Supplier.SelectDateApi[1])
+                                for (i in Supplier.SelectPayRoom){
+                                    Log.d("하나씩 뽑아서 보여주자", i.toString())
+                                    server.insertReservation(
+                                        InsertReservation(i.value,"강아지",Supplier.SelectDateApi[1],Supplier.SelectHotel.data.HotelStar.hotelnumber,
+                                            0,response.body()!!.data,"010-0101-2020",i.key.first,Supplier.SelectDateApi[0],Supplier.UserId,0))
+                                        .enqueue(object :Callback<Any>{
+                                            override fun onFailure(call: Call<Any>, t: Throwable) {
+                                                Log.d("예약목록 추가 실패", t.toString())
+                                            }
+                                            override fun onResponse(
+                                                call: Call<Any>,
+                                                response: Response<Any>
+                                            ) {
+                                                Log.d("예약 목록 추가 성공", response.body().toString())
+                                                server.deleteCartById(Supplier.UserId).enqueue(object :Callback<Any>{
+                                                    override fun onFailure(
+                                                        call: Call<Any>,
+                                                        t: Throwable
+                                                    ) {
+                                                    }
+                                                    override fun onResponse(
+                                                        call: Call<Any>,
+                                                        response: Response<Any>
+                                                    ) {
+                                                        Log.d("장바구니 삭제 완료", "삭제!")
+                                                    }
+
+                                                })
+                                            }
+
+                                        })
+                                }
+                                Log.d("한번 목록을 보자", Supplier.SelectPayRoom.toString())
+                            }
+                        })
+                    }
                     onBackPressed()
                 }
                 view!!.loadUrl(url)
