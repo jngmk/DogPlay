@@ -49,19 +49,47 @@ class HotelAdapter(var context:Context, var hotels:ArrayList<Hotel>) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val server = server()
         val hotel = hotels[position]
         holder.setData(hotel,position)
         var picture = hotel.picture
-        var like = 0
+        var likes = 0
+        server!!.checkLike(hotel.hotelnumber,Supplier.UserId)
+            .enqueue(object :Callback<checkLikes>{
+                override fun onFailure(call: Call<checkLikes>, t: Throwable) {
+                }
+                override fun onResponse(call: Call<checkLikes>, response: Response<checkLikes>) {
+                    likes = response.body()!!.data
+                    if (likes == 0){
+                        holder.itemView.like.setImageResource(R.drawable.empty_heart)
+                    } else{
+                        holder.itemView.like.setImageResource(R.drawable.full_heart)
+                    }
+                }
+            })
         holder.itemView.like.setOnClickListener {
-            if (like == 1){
-                holder.itemView.like.setImageResource(R.drawable.empty_heart)
-                like = 0
+            if (likes == 1){
+                server.deleteLike(hotel.hotelnumber,Supplier.UserId)
+                    .enqueue(object :Callback<Any>{
+                        override fun onFailure(call: Call<Any>, t: Throwable) {
+                        }
+                        override fun onResponse(call: Call<Any>, response: Response<Any>) {
+                            holder.itemView.like.setImageResource(R.drawable.empty_heart)
+                            likes = 0
+                        }
+                    })
+
             } else{
-                holder.itemView.like.setImageResource(R.drawable.full_heart)
-                like = 1
+                server.insertLike(insertLike(hotel.hotelnumber,Supplier.UserId))
+                    .enqueue(object :Callback<Any>{
+                        override fun onFailure(call: Call<Any>, t: Throwable) {
+                        }
+                        override fun onResponse(call: Call<Any>, response: Response<Any>) {
+                            holder.itemView.like.setImageResource(R.drawable.full_heart)
+                            likes = 1
+                        }
+                    })
             }
-            Log.d("좋아요 버튼!","조아요")
         }
         if (picture != null){
             Glide.with(holder.itemView)
