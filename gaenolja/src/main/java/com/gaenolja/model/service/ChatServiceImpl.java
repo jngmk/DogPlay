@@ -30,6 +30,20 @@ public class ChatServiceImpl implements ChatService {
 	}
 	
 	@Override
+	public boolean searchbyhotel(String hotelnumber, String send) {
+		try {
+			HashMap<Object, Object> map = new HashMap<Object, Object>();
+			map.put("hotelnumber", hotelnumber);
+			map.put("send", send);
+			int cnt = dao.searchbyhotel(map);
+			if (cnt > 0) return true;
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	@Override
 	public List<Chat> searchbyreceive(String receive) {
 		try {
 			List<Chat> chat = dao.searchbyreceive(receive);

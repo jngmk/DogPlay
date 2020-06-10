@@ -14,6 +14,7 @@ public interface ChatService {
 	public List<Chat> searchbytwo(String receive, String send);
 	public Chat search(int id);
 	public List<Chat> searchbychatid(int chatid);
+	public boolean searchbyhotel(String hotelnumber, String send);
 	public boolean searchnew(String receive, String send);
 	public boolean checkunread(String receive);
 	public LocalDateTime insert(Chat chat);

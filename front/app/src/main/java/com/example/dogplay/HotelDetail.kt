@@ -50,9 +50,9 @@ class HotelDetail:AppCompatActivity(), OnMapReadyCallback{
                 override fun onResponse(call: Call<checkLikes>, response: Response<checkLikes>) {
                     likes = response.body()!!.data
                     if ( likes == 0){
-                        like.setImageResource(R.drawable.empty_heart)
+                        like.setImageResource(R.drawable.heart_empty_foreground)
                     } else{
-                        like.setImageResource(R.drawable.full_heart)
+                        like.setImageResource(R.drawable.heart_fulled_foreground)
                     }
                 }
             })
@@ -64,7 +64,7 @@ class HotelDetail:AppCompatActivity(), OnMapReadyCallback{
                         override fun onFailure(call: Call<Any>, t: Throwable) {
                         }
                         override fun onResponse(call: Call<Any>, response: Response<Any>) {
-                            like.setImageResource(R.drawable.full_heart)
+                            like.setImageResource(R.drawable.heart_fulled_foreground)
                             likes = 1
                         }
                     })
@@ -74,7 +74,7 @@ class HotelDetail:AppCompatActivity(), OnMapReadyCallback{
                         override fun onFailure(call: Call<Any>, t: Throwable) {
                         }
                         override fun onResponse(call: Call<Any>, response: Response<Any>) {
-                            like.setImageResource(R.drawable.empty_heart)
+                            like.setImageResource(R.drawable.heart_empty_foreground)
                             likes = 0
                         }
                     })
