@@ -178,7 +178,7 @@ class OwnerEnrollHotel : AppCompatActivity() {
             else if (pictures.size == 0) {
                 Toast.makeText(this, "호텔 사진을 등록해주세요.", Toast.LENGTH_LONG).show()
             }
-            else if (edtEnrollHotelAddress.text == null || edtEnrollHotelAddress.text.toString() == "") {
+            else if (edtEnrollHotelAddressDetail.text == null || edtEnrollHotelAddressDetail.text.toString() == "") {
                 Toast.makeText(this, "호텔 주소를 입력해주세요.", Toast.LENGTH_LONG).show()
             }
             else if (edtEnrollHotelContact.text == null && edtEnrollHotelContact.text.toString() == "") {

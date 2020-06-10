@@ -10,36 +10,39 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         >
-        <ImageView
-            android:id="@+id/BackBtn"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@drawable/plus"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cvImg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="15dp"
+            android:layout_marginLeft="25dp"
+            app:cardCornerRadius="50dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_margin="15dp"
-            />
-        <ImageView
-            android:id="@+id/hotelImg"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            app:layout_constraintTop_toTopOf="@+id/BackBtn"
-            app:layout_constraintLeft_toRightOf="@+id/BackBtn"
-            android:layout_marginLeft="15dp"
-            android:src="@drawable/dog"
-            android:background="@drawable/rounded2"
-            android:scaleType="centerCrop"
-            />
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/hotelImg"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/dog" />
+
+        </androidx.cardview.widget.CardView>
+
         <TextView
             android:id="@+id/hotelName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="도그윈 애견호텔"
-            android:textSize="20dp"
-            app:layout_constraintTop_toTopOf="@+id/BackBtn"
-            app:layout_constraintBottom_toBottomOf="@id/BackBtn"
-            app:layout_constraintLeft_toRightOf="@+id/hotelImg"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toTopOf="@+id/cvImg"
+            app:layout_constraintBottom_toBottomOf="@id/cvImg"
+            app:layout_constraintLeft_toRightOf="@+id/cvImg"
             android:layout_marginLeft="15dp"
             />
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -73,8 +76,8 @@
 
         <ImageView
             android:id="@+id/takePhoto"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -87,7 +90,7 @@
             android:maxHeight="100dp"
             android:layout_marginLeft="65dp"
             android:hint="Message"
-            android:textSize="25dp"
+            android:textSize="15sp"
             android:layout_marginRight="70dp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -95,8 +98,8 @@
             />
         <ImageView
             android:id="@+id/sendBtn"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_margin="15dp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"

@@ -51,7 +51,8 @@
     <string name="EnrollHotelName">호텔 이름을 입력해주세요</string>
     <string name="EnrollHotelImgDescription">여기를 눌러서 사진을 추가해주세요</string>
     <string name="plus">+</string>
-    <string name="EnrollHotelAddress">주소를 입력해주세요</string>
+    <string name="EnrollHotelAddress">주소를 검색해주세요</string>
+    <string name="EnrollHotelAddressDetail">상세주소를 입력해주세요</string>
     <string name="EnrollHotelAddressDescription">호텔의 주소를 알려주세요</string>
     <string name="EnrollHotelContactDescription">대표 연락처를 알려주세요</string>
     <string name="EnrollHotelContact">\'-\' 를 포함해서 입력해주세요</string>
