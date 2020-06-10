@@ -101,7 +101,8 @@ class DirectMessage: AppCompatActivity() {
                             chat.picture,
                             chat.message,
                             chat.created,
-                            1
+                            1,
+                            chat.hotelnumber
                         )
                     ).enqueue(object : Callback<Any> {
                         override fun onFailure(call: Call<Any>, t: Throwable) {
@@ -131,6 +132,7 @@ class DirectMessage: AppCompatActivity() {
 
             override fun onResponse(call: Call<DMDTO>, response: Response<DMDTO>) {
                 Log.d("DM", response.body().toString())
+                val ChatData = response.body()!!.data[0]
                 val chatid = response.body()!!.data[0].chatid
                 var receiver: String
                 if (response.body()!!.data[0].receive == Supplier.UserId) {
@@ -148,7 +150,8 @@ class DirectMessage: AppCompatActivity() {
                         pic,
                         0,
                         receiver,
-                        Supplier.UserId
+                        Supplier.UserId,
+                        ChatData.hotelnumber
                     )
                 ).enqueue(object : Callback<DMSend> {
                     override fun onFailure(call: Call<DMSend>, t: Throwable) {

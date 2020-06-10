@@ -229,7 +229,8 @@ data class ChatIn(
     val picture:String,
     val message:String,
     val created:ArrayList<Int>,
-    val readmessage:Int
+    val readmessage:Int,
+    val hotelnumber: String
 )
 
 data class ChatInsertForm(
@@ -536,8 +537,33 @@ interface Service {
         @Body params:getChatRoom
     ):Call<chatRoom>
 
+    @GET("/api/v1/likes/checklikes")
+    fun checkLike(
+        @Query("hotelnumber") hotelnumber: String,
+        @Query("userid") userid: String
+    ):Call<checkLikes>
 
+    @POST("/api/v1/likes/insert")
+    fun insertLike(
+        @Body params: insertLike
+    ):Call<Any>
+
+    @DELETE("/api/v1/likes/delete/hotel")
+    fun deleteLike(
+        @Query("hotelnumber")hotelnumber: String,
+        @Query("userid")userid: String
+    ):Call<Any>
 }
+data class insertLike(
+    val hotelnumber: String,
+    val userid: String
+)
+
+data class checkLikes(
+    @SerializedName("data")
+    val data:Int
+)
+
 data class getChatRoom(
     val id:Int
 )
@@ -703,7 +729,8 @@ data class ChatInsert(
     val picture: String,
     val readmessage: Int,
     val receive: String,
-    val send: String
+    val send: String,
+    val hotelnumber: String
 )
 
 // hotel image

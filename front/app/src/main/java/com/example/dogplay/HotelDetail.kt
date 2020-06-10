@@ -37,30 +37,53 @@ class HotelDetail:AppCompatActivity(), OnMapReadyCallback{
     private lateinit var mViewPager: ViewPager2
     private var hotelPictures: ArrayList<HotelPicture> = ArrayList()
     private var roomPictures: ArrayList<HotelPicture> = ArrayList()
+    val server = server()
     var likes = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.hotel_detail)
-        if (likes == 0){
-            like.setImageResource(R.drawable.empty_heart)
-        } else{
-            like.setImageResource(R.drawable.full_heart)
-        }
+        server!!.checkLike(Supplier.SelectHotel.data.HotelStar.hotelnumber,Supplier.UserId)
+            .enqueue(object :Callback<checkLikes>{
+                override fun onFailure(call: Call<checkLikes>, t: Throwable) {
+                }
+                override fun onResponse(call: Call<checkLikes>, response: Response<checkLikes>) {
+                    likes = response.body()!!.data
+                    if ( likes == 0){
+                        like.setImageResource(R.drawable.empty_heart)
+                    } else{
+                        like.setImageResource(R.drawable.full_heart)
+                    }
+                }
+            })
+
         like.setOnClickListener{
             if (likes == 0){
-                like.setImageResource(R.drawable.full_heart)
-                likes = 1
+                server.insertLike(insertLike(Supplier.SelectHotel.data.HotelStar.hotelnumber,Supplier.UserId))
+                    .enqueue(object :Callback<Any>{
+                        override fun onFailure(call: Call<Any>, t: Throwable) {
+                        }
+                        override fun onResponse(call: Call<Any>, response: Response<Any>) {
+                            like.setImageResource(R.drawable.full_heart)
+                            likes = 1
+                        }
+                    })
             } else{
-                like.setImageResource(R.drawable.empty_heart)
-                likes = 0
+                server.deleteLike(Supplier.SelectHotel.data.HotelStar.hotelnumber,Supplier.UserId)
+                    .enqueue(object :Callback<Any>{
+                        override fun onFailure(call: Call<Any>, t: Throwable) {
+                        }
+                        override fun onResponse(call: Call<Any>, response: Response<Any>) {
+                            like.setImageResource(R.drawable.empty_heart)
+                            likes = 0
+                        }
+                    })
             }
         }
         mViewPager = mainImg
 
         getPicture()
 
-        val server = server()
         paybtn.setOnClickListener{
             server!!.searchCartById(Supplier.UserId).enqueue(object :Callback<responseCartDTO>{
                 override fun onFailure(call: Call<responseCartDTO>, t: Throwable) {
@@ -106,7 +129,7 @@ class HotelDetail:AppCompatActivity(), OnMapReadyCallback{
                             ) {
                                 Log.d("챗룸을 받나",response.body()!!.data.toString())
                                 server!!.PostChatInsert(ChatInsert(response.body()!!.data,"",0,"${Supplier.SelectHotel.data.HotelStar.userid.split('@')[0]}님에게 문의드립니다.",
-                                    "",1,"${Supplier.SelectHotel.data.HotelStar.userid}", "${Supplier.UserId}")).enqueue(object :Callback<DMSend>{
+                                    "",1,"${Supplier.SelectHotel.data.HotelStar.userid}", "${Supplier.UserId}",Supplier.SelectHotel.data.HotelStar.hotelnumber)).enqueue(object :Callback<DMSend>{
                                     override fun onFailure(call: Call<DMSend>, t: Throwable) {
                                         TODO("Not yet implemented")
                                     }
@@ -124,9 +147,8 @@ class HotelDetail:AppCompatActivity(), OnMapReadyCallback{
                     } else {
                         val chatid = response.body()!!.data[0].chatid
                         server!!.PostChatInsert(ChatInsert(chatid,"",0,"${Supplier.SelectHotel.data.HotelStar.userid.split('@')[0]}님에게 문의드립니다.",
-                            "",1,"${Supplier.SelectHotel.data.HotelStar.userid}", "${Supplier.UserId}")).enqueue(object :Callback<DMSend>{
+                            "",1,"${Supplier.SelectHotel.data.HotelStar.userid}", "${Supplier.UserId}",Supplier.SelectHotel.data.HotelStar.hotelnumber)).enqueue(object :Callback<DMSend>{
                             override fun onFailure(call: Call<DMSend>, t: Throwable) {
-                                TODO("Not yet implemented")
                             }
 
                             override fun onResponse(call: Call<DMSend>, response: Response<DMSend>) {
