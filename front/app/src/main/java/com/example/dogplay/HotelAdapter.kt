@@ -61,9 +61,9 @@ class HotelAdapter(var context:Context, var hotels:ArrayList<Hotel>) :
                 override fun onResponse(call: Call<checkLikes>, response: Response<checkLikes>) {
                     likes = response.body()!!.data
                     if (likes == 0){
-                        holder.itemView.like.setImageResource(R.drawable.empty_heart)
+                        holder.itemView.like.setImageResource(R.drawable.heart_empty_foreground)
                     } else{
-                        holder.itemView.like.setImageResource(R.drawable.full_heart)
+                        holder.itemView.like.setImageResource(R.drawable.heart_fulled_foreground)
                     }
                 }
             })
@@ -74,7 +74,7 @@ class HotelAdapter(var context:Context, var hotels:ArrayList<Hotel>) :
                         override fun onFailure(call: Call<Any>, t: Throwable) {
                         }
                         override fun onResponse(call: Call<Any>, response: Response<Any>) {
-                            holder.itemView.like.setImageResource(R.drawable.empty_heart)
+                            holder.itemView.like.setImageResource(R.drawable.heart_empty_foreground)
                             likes = 0
                         }
                     })
@@ -85,7 +85,7 @@ class HotelAdapter(var context:Context, var hotels:ArrayList<Hotel>) :
                         override fun onFailure(call: Call<Any>, t: Throwable) {
                         }
                         override fun onResponse(call: Call<Any>, response: Response<Any>) {
-                            holder.itemView.like.setImageResource(R.drawable.full_heart)
+                            holder.itemView.like.setImageResource(R.drawable.heart_fulled_foreground)
                             likes = 1
                         }
                     })

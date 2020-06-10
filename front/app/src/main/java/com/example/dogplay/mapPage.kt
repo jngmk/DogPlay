@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.location.Address
+import android.location.Geocoder
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -40,6 +42,10 @@ import kotlinx.android.synthetic.main.map_page.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.IOException
+import java.lang.IllegalArgumentException
+import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.coroutines.coroutineContext
 
 
@@ -103,6 +109,7 @@ class mapPage : Fragment() {
             // 지도 중앙 값
             val centerLatLng:LatLng = mMap.projection.visibleRegion.latLngBounds.center
             getData(centerLatLng.latitude, centerLatLng.longitude)
+//            getCurrentAddress(centerLatLng.latitude, centerLatLng.longitude)
         }
         btnGoCurPos.setOnClickListener {
             if (mMapCurLatitude != null && mMapCurLongitude != null) {
@@ -273,6 +280,7 @@ class mapPage : Fragment() {
                 if (!mapFocus) {
                     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(now, 14f))
                     getData(latitude, longitude)
+                    getCurrentAddress(latitude, longitude)
                     mapFocus = true
                 }
                 mMapCurLatitude = latitude
@@ -280,8 +288,27 @@ class mapPage : Fragment() {
 //                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 17f))
 //                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 17f))
 
-                Log.d("MapsActivity", "위도: $latitude, 경도: $longitude")
+//                Log.d("MapsActivity", "위도: $latitude, 경도: $longitude")
             }
+        }
+    }
+
+    private fun getCurrentAddress(latitude: Double, longitude: Double) {
+        val geocoder = Geocoder(context, Locale.KOREA)
+
+        try {
+            val addresses = geocoder.getFromLocation(latitude, longitude, 5)
+
+            if (addresses == null || addresses.size == 0) {
+                Toast.makeText(context, "현재 주소를 찾을 수 없습니다.", Toast.LENGTH_LONG).show()
+            } else {
+                val address = addresses[0].getAddressLine(0).toString()
+                MutableSupplier.currentAddress.postValue(address)
+            }
+        } catch (ioException: IOException) {
+            Toast.makeText(context, "네트워크 문제가 발생했습니다. 다시 시도해주세요.", Toast.LENGTH_LONG).show()
+        } catch (illegalArgumentException: IllegalArgumentException) {
+            Toast.makeText(context, "잘못된 GPS 접근입니다. 다시 시도해주세요.", Toast.LENGTH_LONG).show()
         }
     }
 

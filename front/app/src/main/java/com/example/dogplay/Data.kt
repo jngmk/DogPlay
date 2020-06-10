@@ -60,12 +60,14 @@ object Supplier{
     var dogsSelected: ArrayList<DogInfo> = ArrayList()
     var dogs: ArrayList<DogInfo> = ArrayList()
     var dogEdit: DogInfo = DogInfo()
+    var currentAddress = "내 위치"
 }
 
 object MutableSupplier {
     var user: MutableLiveData<User> = MutableLiveData()
     var dogsSelected: MutableLiveData<ArrayList<DogInfo>> = MutableLiveData()
     var dogs: MutableLiveData<ArrayList<DogInfo>> = MutableLiveData()
+    var currentAddress: MutableLiveData<String> = MutableLiveData("내 위치")
 }
 //class UserSupplier {
 //    private var _user: User = User()

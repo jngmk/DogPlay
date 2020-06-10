@@ -62,6 +62,14 @@ class searchPage : Fragment() {
             Supplier.dogsSelected = dogs
         })
 
+//        curadd.text = Supplier.currentAddress
+
+        MutableSupplier.currentAddress.observe(viewLifecycleOwner, Observer {
+            address ->
+            curadd.text = address
+            Supplier.currentAddress = address
+        })
+
         searchBar.setOnQueryTextListener(object :SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {
                 Log.d("서치바", query)
@@ -180,6 +188,7 @@ class searchPage : Fragment() {
     override fun onResume() {
         super.onResume()
 
+//        curadd.text = Supplier.currentAddress
         curdate.text = "${Supplier.SelectDateMain[0]} ~ ${Supplier.SelectDateMain[1]}"
 
 //        val retrofit = Retrofit.Builder()
