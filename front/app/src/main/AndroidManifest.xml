@@ -22,7 +22,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".AddMyDogInfo"></activity>
+        <activity android:name=".SearchAddress"></activity>
+        <activity android:name=".ui.owner.SearchAddress" />
+        <activity android:name=".AddMyDogInfo" />
         <activity android:name=".AddMyDog" />
         <activity android:name=".UserInfo" />
         <activity android:name=".ui.owner.OwnerEnrollHotelRoom" />
@@ -39,18 +41,16 @@
         <activity android:name=".ui.owner.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MyReview"/>
-        <activity android:name=".LikeHotel"/>
-        <activity android:name=".ui.owner.LoginMain">
-        </activity>
+        <activity android:name=".MyReview" />
+        <activity android:name=".LikeHotel" />
+        <activity android:name=".ui.owner.LoginMain" />
         <activity
             android:name=".MainActivity"
-            android:windowSoftInputMode="adjustResize|stateHidden">
-        </activity>
-<!--        <activity android:name=".MainActivity" />-->
+            android:windowSoftInputMode="adjustResize|stateHidden" /> <!-- <activity android:name=".MainActivity" /> -->
         <activity android:name=".HotelDetail" />
         <activity android:name=".InfoDetail" />
         <activity android:name=".CalendarView" />

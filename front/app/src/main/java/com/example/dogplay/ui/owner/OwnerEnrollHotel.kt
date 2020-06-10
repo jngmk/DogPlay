@@ -1,16 +1,19 @@
 package com.example.dogplay.ui.owner
 
+import android.annotation.SuppressLint
 import android.app.ActionBar
 import android.app.Activity
 import android.content.ContentValues
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.ImageDecoder
+import android.location.Geocoder
 import android.media.Image
 import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.provider.MediaStore
 import android.text.InputType
 import android.text.Layout
@@ -20,9 +23,13 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.JavascriptInterface
+import android.webkit.WebChromeClient
+import android.webkit.WebView
 import android.widget.*
 import com.google.firebase.storage.FirebaseStorage
 import androidx.annotation.RequiresApi
+import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.AppCompatCheckBox
 import androidx.core.view.children
 import androidx.core.view.marginStart
@@ -42,6 +49,8 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.ByteArrayOutputStream
+import java.util.*
+import kotlin.collections.ArrayList
 
 class OwnerEnrollHotel : AppCompatActivity() {
     private lateinit var mViewPager2: ViewPager2
@@ -49,15 +58,16 @@ class OwnerEnrollHotel : AppCompatActivity() {
     private lateinit var mRecyclerView: RecyclerView
     private lateinit var mHotelDetailLayout: LinearLayout
     private lateinit var firestore: FirebaseFirestore
-//    private lateinit var imageRef: StorageReference
+    private lateinit var webView: WebView
+    private lateinit var mButton: TextView
     private lateinit var userId: String
-//    private var hotelPicture: HotelPicture = HotelPicture(0,"","","")
+    private lateinit var address: TextView
     private var hotelHash: HotelHashToPost = HotelHashToPost()
     private var hotelData: HotelInfoToPost = HotelInfoToPost()
     private var hotelDetailsLayoutIdx = 3
     private val hotelDetailsIdx: ArrayList<Int> = ArrayList()
     private val hotelDetails: ArrayList<ArrayList<EditText>> = ArrayList()
-    private var storageReferenence = FirebaseStorage.getInstance().getReference()
+    private var storageReferenence = FirebaseStorage.getInstance().reference
     private val pictures: ArrayList<Bitmap> = ArrayList()
     private val uris: ArrayList<Uri> = ArrayList()
     private val IMAGE_GALLERY_REQUEST_CODE = 1001
@@ -67,13 +77,19 @@ class OwnerEnrollHotel : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_owner_enorll_hotel)
 
+//        initWebView()
+
         mViewPager2 = vpEnrollHotelImg
         mRecyclerView = rcyEnrollHotelTag
         mHotelDetailLayout = layoutEnrollHotelDetail
+        webView = daumWebView
+        mButton = btnEnrollHotelData
         userId = Supplier.user.userid
 
         firestore = FirebaseFirestore.getInstance()
         firestore.firestoreSettings = FirebaseFirestoreSettings.Builder().build()
+
+        address = btnEnrollHotelAddress
 
         getHashTag()
 
@@ -82,6 +98,13 @@ class OwnerEnrollHotel : AppCompatActivity() {
         }
         btnEnrollHotelImg.setOnClickListener {
             getImages()
+        }
+        btnEnrollHotelAddress.setOnClickListener {
+            webView.visibility = View.VISIBLE
+//            mButton.visibility = View.GONE
+            initWebView()
+            // webview url load. php 파일 주소
+            webView.loadUrl("http://k02a4021.p.ssafy.io/daum_address.php")
         }
         btnExitEnrollHotel.setOnClickListener {
             val idx = mViewPager2.currentItem
@@ -178,7 +201,7 @@ class OwnerEnrollHotel : AppCompatActivity() {
             else if (pictures.size == 0) {
                 Toast.makeText(this, "호텔 사진을 등록해주세요.", Toast.LENGTH_LONG).show()
             }
-            else if (edtEnrollHotelAddressDetail.text == null || edtEnrollHotelAddressDetail.text.toString() == "") {
+            else if (txtEnrollHotelAddress.text == null || txtEnrollHotelAddress.text.toString() == "") {
                 Toast.makeText(this, "호텔 주소를 입력해주세요.", Toast.LENGTH_LONG).show()
             }
             else if (edtEnrollHotelContact.text == null && edtEnrollHotelContact.text.toString() == "") {
@@ -193,7 +216,40 @@ class OwnerEnrollHotel : AppCompatActivity() {
             else {
                 postData()
             }
-//            postData()
+        }
+    }
+
+    @SuppressLint("SetJavaScriptEnabled", "AddJavascriptInterface", "JavascriptInterface")
+    private fun initWebView() {
+        // WebView 설정
+        webView = findViewById(R.id.daumWebView)
+
+        // JavaScript 허용
+        webView.settings.javaScriptEnabled = true
+
+        // JavaScript의 window.open 허용
+        webView.settings.javaScriptCanOpenWindowsAutomatically = true
+
+        // JavaScript이벤트에 대응할 함수를 정의 한 클래스를 붙여줌
+        webView.addJavascriptInterface(AndroidBridge(), "DogPlay")
+
+        // web client 를 chrome 으로 설정
+        webView.webChromeClient = WebChromeClient()
+    }
+
+    inner class AndroidBridge {
+        @JavascriptInterface
+        fun setAddress(arg1: String, arg2: String, arg3: String) {
+            Handler().post {
+                run() {
+                    address.text = "$arg2, $arg3"
+
+                    // WebView를 초기화 하지않으면 재사용할 수 없음
+//                    initWebView()
+                }
+            }
+            webView.visibility = View.GONE
+//            mButton.visibility = View.VISIBLE
         }
 
     }
@@ -230,14 +286,32 @@ class OwnerEnrollHotel : AppCompatActivity() {
     }
 
     private fun postData() {
+        val mainAddress = address.text.toString()
+        val detailAddress = findViewById<EditText>(R.id.edtEnrollHotelAddressDetail).text.toString()
         hotelData.apply {
             userid = userId
             hotelname = findViewById<EditText>(R.id.edtEnrollHotelName).text.toString()
             hotelnumber = findViewById<EditText>(R.id.edtEnrollBN).text.toString()
-            address = findViewById<EditText>(R.id.edtEnrollHotelAddress).text.toString()
+            address = "$mainAddress $detailAddress"
             contact = findViewById<EditText>(R.id.edtEnrollHotelContact).text.toString()
             info = findViewById<EditText>(R.id.edtEnrollInfo).text.toString()
         }
+        // 위도 경도 추가하기
+        val geocoder = Geocoder(this, Locale.KOREA)
+        val addresses = geocoder.getFromLocationName(mainAddress, 10)
+
+        if (addresses == null || addresses.size == 0) {
+            Toast.makeText(this, "현재 주소로 위도 경도를 찾을 수 없습니다.", Toast.LENGTH_LONG).show()
+        } else {
+            val address = addresses[0]
+            if (address.hasLatitude()) {
+                hotelData.latitude = address.latitude
+            }
+            if (address.hasLongitude()) {
+                hotelData.longitude = address.longitude
+            }
+        }
+
         // Details 추가하기
         val title1 = findViewById<EditText>(R.id.edtEnrollHotelDetailTitle1).text.toString()
         val content1 = findViewById<EditText>(R.id.edtEnrollHotelDetailContent1).text.toString()
