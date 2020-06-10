@@ -11,6 +11,13 @@ public class Chat {
 	private String message;
 	private LocalDateTime created;
 	private int readmessage;
+	private String hotelnumber;
+	public String getHotelnumber() {
+		return hotelnumber;
+	}
+	public void setHotelnumber(String hotelnumber) {
+		this.hotelnumber = hotelnumber;
+	}
 	public int getId() {
 		return id;
 	}
