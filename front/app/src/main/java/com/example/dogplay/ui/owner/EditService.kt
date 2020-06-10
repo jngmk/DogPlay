@@ -97,6 +97,13 @@ data class roomPhotoDTO(
     var data:Array<HashMap<String,Any>>
 )
 
+data class responseReviewDTO(
+    var reviewid: Int = 0,
+    var userid: String = "",
+    var content: String = "",
+    var heart: Int = 0
+)
+
 interface EditService {
     @GET("/api/v1/hotelpicture/searchbyhotel/name")
     fun getRoomPhotoInfo(
@@ -143,11 +150,8 @@ interface EditService {
 
     @POST("/api/v1/response/insert")
     fun reReview(
-        @Field("reviewid") reviewid: Int,
-        @Field("userid") userid:String,
-        @Field("content") content: String,
-        @Field("heart") heart: Int
-    ):Call<RereviewDTO>
+        @Body params: responseReviewDTO
+    ):Call<ReturnData>
 
     @GET("/api/v1/hotelroom/searchbyroom/hotelnumber")
     fun searchHotelRoomDetail(

@@ -81,14 +81,17 @@ class HostReReview : AppCompatActivity() {
             var resultText = et_rereview.text.toString()
             if (responseData == null) {
                 // 답글달기
-                server.reReview(reviewId, username, resultText, 0).enqueue(object: Callback<RereviewDTO> {
-                    override fun onFailure(call: Call<RereviewDTO>, t: Throwable) {
+                server.reReview(responseReviewDTO(reviewId, username, resultText, 0)).enqueue(object: Callback<ReturnData> {
+                    override fun onFailure(call: Call<ReturnData>, t: Throwable) {
                         Log.d("faile", t.toString())
-                        Log.d("faile", "실패-----------------------------------")
+                        Log.d("faile", "실패------------------888-----------------")
                     }
-                    override fun onResponse(call: Call<RereviewDTO>, response: Response<RereviewDTO>) {
+                    override fun onResponse(call: Call<ReturnData>, response: Response<ReturnData>) {
                         Log.d("success", response.toString())
                         Log.d("success", "성공-----------------------------------")
+                        val intent = Intent(this@HostReReview, MainActivity::class.java)
+                        startActivity(intent)
+                        finish()
                     }
                 })
             } else {
