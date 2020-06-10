@@ -39,79 +39,79 @@ class chatPage : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        val server = server()
-        server!!.searchChatWithUserId(Supplier.UserId).enqueue(object :Callback<ChatMainDTO>{
-            override fun onFailure(call: Call<ChatMainDTO>, t: Throwable) {
-                Log.d("왜 안될까잉?", t.toString())
-            }
-
-            override fun onResponse(call: Call<ChatMainDTO>, response: Response<ChatMainDTO>) {
-                Log.d("테스트 채팅 정보", response.body().toString())
-                var chatData = response.body()!!.data
-                val layoutManager = LinearLayoutManager(context)
-                layoutManager.orientation = LinearLayoutManager.VERTICAL
-                chatrv.layoutManager = layoutManager
-                val adapter = ChatAdapter(requireContext(), chatData)
-                chatrv.adapter = adapter
-                chatSearch.setOnQueryTextListener(object :SearchView.OnQueryTextListener{
-                    override fun onQueryTextSubmit(query: String?): Boolean {
-                        TODO("Not yet implemented")
-                    }
-
-                    override fun onQueryTextChange(newText: String?): Boolean {
-                        var newChat = ArrayList<ChatMain>()
-                        for (i in chatData){
-                            if(newText!! in i.chat.receive || newText in i.chat.send){
-                                newChat.add(i)
-                            }
-                        }
-                        val adapter = ChatAdapter(requireContext(),newChat)
-                        chatrv.adapter = adapter
-                        return false
-                    }
-                })
-            }
-        })
+//        val server = server()
+//        server!!.searchChatWithUserId(Supplier.UserId).enqueue(object :Callback<ChatMainDTO>{
+//            override fun onFailure(call: Call<ChatMainDTO>, t: Throwable) {
+//                Log.d("왜 안될까잉?", t.toString())
+//            }
+//
+//            override fun onResponse(call: Call<ChatMainDTO>, response: Response<ChatMainDTO>) {
+//                Log.d("테스트 채팅 정보", response.body().toString())
+//                var chatData = response.body()!!.data
+//                val layoutManager = LinearLayoutManager(context)
+//                layoutManager.orientation = LinearLayoutManager.VERTICAL
+//                chatrv.layoutManager = layoutManager
+//                val adapter = ChatAdapter(requireContext(), chatData)
+//                chatrv.adapter = adapter
+//                chatSearch.setOnQueryTextListener(object :SearchView.OnQueryTextListener{
+//                    override fun onQueryTextSubmit(query: String?): Boolean {
+//                        TODO("Not yet implemented")
+//                    }
+//
+//                    override fun onQueryTextChange(newText: String?): Boolean {
+//                        var newChat = ArrayList<ChatMain>()
+//                        for (i in chatData){
+//                            if(newText!! in i.chat.receive || newText in i.chat.send){
+//                                newChat.add(i)
+//                            }
+//                        }
+//                        val adapter = ChatAdapter(requireContext(),newChat)
+//                        chatrv.adapter = adapter
+//                        return false
+//                    }
+//                })
+//            }
+//        })
     }
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+//    override fun onActivityCreated(savedInstanceState: Bundle?) {
+//        super.onActivityCreated(savedInstanceState)
 
 
-        val server = server()
-        server!!.searchChatWithUserId(Supplier.UserId).enqueue(object :Callback<ChatMainDTO>{
-            override fun onFailure(call: Call<ChatMainDTO>, t: Throwable) {
-                Log.d("왜 안될까잉?", t.toString())
-            }
-
-            override fun onResponse(call: Call<ChatMainDTO>, response: Response<ChatMainDTO>) {
-                Log.d("테스트 채팅 정보", response.body().toString())
-                var chatData = response.body()!!.data
-                val layoutManager = LinearLayoutManager(context)
-                layoutManager.orientation = LinearLayoutManager.VERTICAL
-                chatrv.layoutManager = layoutManager
-                val adapter = ChatAdapter(requireContext(), chatData)
-                chatrv.adapter = adapter
-                chatSearch.setOnQueryTextListener(object :SearchView.OnQueryTextListener{
-                    override fun onQueryTextSubmit(query: String?): Boolean {
-                        TODO("Not yet implemented")
-                    }
-
-                    override fun onQueryTextChange(newText: String?): Boolean {
-                        var newChat = ArrayList<ChatMain>()
-                        for (i in chatData){
-                            if(newText!! in i.chat.receive || newText in i.chat.send){
-                                newChat.add(i)
-                            }
-                        }
-                        val adapter = ChatAdapter(requireContext(),newChat)
-                        chatrv.adapter = adapter
-                        return false
-                    }
-                })
-            }
-        })
-
-    }
+//        val server = server()
+//        server!!.searchChatWithUserId(Supplier.UserId).enqueue(object :Callback<ChatMainDTO>{
+//            override fun onFailure(call: Call<ChatMainDTO>, t: Throwable) {
+//                Log.d("왜 안될까잉?", t.toString())
+//            }
+//
+//            override fun onResponse(call: Call<ChatMainDTO>, response: Response<ChatMainDTO>) {
+//                Log.d("테스트 채팅 정보", response.body().toString())
+//                var chatData = response.body()!!.data
+//                val layoutManager = LinearLayoutManager(context)
+//                layoutManager.orientation = LinearLayoutManager.VERTICAL
+//                chatrv.layoutManager = layoutManager
+//                val adapter = ChatAdapter(requireContext(), chatData)
+//                chatrv.adapter = adapter
+//                chatSearch.setOnQueryTextListener(object :SearchView.OnQueryTextListener{
+//                    override fun onQueryTextSubmit(query: String?): Boolean {
+//                        TODO("Not yet implemented")
+//                    }
+//
+//                    override fun onQueryTextChange(newText: String?): Boolean {
+//                        var newChat = ArrayList<ChatMain>()
+//                        for (i in chatData){
+//                            if(newText!! in i.chat.receive || newText in i.chat.send){
+//                                newChat.add(i)
+//                            }
+//                        }
+//                        val adapter = ChatAdapter(requireContext(),newChat)
+//                        chatrv.adapter = adapter
+//                        return false
+//                    }
+//                })
+//            }
+//        })
+//
+//    }
 }
 
 class ChatAdapter(var context: Context, var chattings:ArrayList<ChatMain>) :
